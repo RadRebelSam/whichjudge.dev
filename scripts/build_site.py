@@ -53,7 +53,7 @@ def pct(x) -> str:
     return f"{x * 100:.1f}%"
 
 
-def build_tasks(copy, summary, calib, tfidf):
+def build_tasks(copy, summary, calib, tfidf, errors):
     by_id = {r["task_id"]: r for r in summary}
     tf_by_id = {r["task_id"]: r for r in tfidf}
     out = []
@@ -82,6 +82,16 @@ def build_tasks(copy, summary, calib, tfidf):
             known.add(round(gate["accuracy"] * 100, 1))
             known.add(round(gate["coverage"] * 100, 1))
         known.add(round(abs(s["jev_acc"] - s["mini_acc"]) * 100, 1))
+        prof = errors.get(tid, {})
+        for arm in prof.values():
+            for stats in arm.get("per_class", {}).values():
+                for field in ("recall", "missed_rate", "false_positive_rate"):
+                    if stats.get(field) is not None:
+                        known.add(round(stats[field] * 100, 1))
+            for gate in arm.get("recall_at_gate", {}).values():
+                for stats in gate.values():
+                    if stats.get("recall_on_covered") is not None:
+                        known.add(round(stats["recall_on_covered"] * 100, 1))
         for field in ("why", "gate"):
             for raw in re.findall(r"(\d+\.?\d*)\s*(?:%|pt)", c[field]):
                 # Match at the precision the sentence was written at: "89%" may round
@@ -108,6 +118,7 @@ def build_tasks(copy, summary, calib, tfidf):
         ]
         out.append({
             "id": tid,
+            "n": n,
             "title": c["title"],
             "replaces": c["replaces"],
             "dataset": c["dataset"],
@@ -164,6 +175,7 @@ def build_tasks(copy, summary, calib, tfidf):
                 k: {"cov": v["coverage"], "acc": round(v["accuracy"], 3)}
                 for k, v in s["jev_gates"].items()
             },
+            "errors": errors.get(tid),
         })
     return out
 
@@ -187,7 +199,7 @@ def render_decision_page(t, run, site) -> str:
     ns_tag = " (ns)" if t["ns"] else ""
     title = f"{t['title']}: Jev vs gpt-4o-mini vs TF-IDF | {site['name']}"
     desc = (
-        f"{t['title']} on {t['dataset']}, n={run['n']} frozen gold. "
+        f"{t['title']} on {t['dataset']}, n={t['n']} frozen gold. "
         f"Jev {pct(t['jev']['acc'])}, gpt-4o-mini {pct(t['mini']['acc'])}, "
         f"TF-IDF {pct(t['tfidf']['acc'])}. Verdict: {verdict}. ECE {t['ece']['ece']}."
     )
@@ -270,7 +282,7 @@ def render_decision_page(t, run, site) -> str:
 <p><strong>Replaces:</strong> {e(t['replaces'])}<br>
 <strong>Gold:</strong> <a href="{e(t['sourceUrl'])}" rel="noopener">{e(t['sourceName'])}</a>
 {' via <a href="' + e(t['mirrorUrl']) + '" rel="noopener">a CC0 mirror</a>' if t.get('mirrorUrl') else ''}
-&mdash; {e(t['dataset'])}, n={run['n']}, seed={run['seed']}<br>
+&mdash; {e(t['dataset'])}, n={t['n']}, seed={run['seed']}<br>
 <strong>Labels:</strong> <code>{e(t['labels'])}</code></p>
 <table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
@@ -294,7 +306,7 @@ Every call is stored with its request, response and SHA-256 in
 <pre><code>git clone {e(site['repo'])}
 python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
 python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
-<p>Independent bench, not affiliated with TypeSafe AI. Public gold labels, n={run['n']},
+<p>Independent bench, not affiliated with TypeSafe AI. Public gold labels, n={t['n']},
 not a procurement study. <a href="../index.html">All {run['tasks']} decisions</a> &middot;
 <a href="{e(site['repo'])}">source and data</a> &middot;
 <a href="mailto:{e(site['contact'])}">{e(site['contact'])}</a></p>
@@ -373,15 +385,20 @@ def main() -> None:
     summary = load(RESULTS / "summary.json")
     calib = load(RESULTS / "calibration.json")
     tfidf = load(RESULTS / "tfidf_baseline_summary.json")
+    errors = load(RESULTS / "error_profile.json")
     manifest = load(RESULTS / "manifest.json")
     curve_path = RESULTS / "cost_curve.json"
     curve = load(curve_path) if curve_path.exists() else None
 
-    tasks = build_tasks(copy, summary, calib, tfidf)
-    n_values = {row["n"] for row in summary}
-    if len(n_values) != 1:
-        raise SystemExit(f"tasks disagree on n: {n_values}")
-    n = n_values.pop()
+    tasks = build_tasks(copy, summary, calib, tfidf, errors)
+    # Tasks may differ in size. Prompt injection only has 662 rows in existence, so
+    # freezing 500 would leave nothing to train the classical baseline on. The site
+    # shows each task's own n instead of claiming one number for all of them.
+    sizes = sorted({row["n"] for row in summary})
+    counts = {}
+    for row in summary:
+        counts[row["n"]] = counts.get(row["n"], 0) + 1
+    n = max(counts, key=counts.get)
 
     run = {
         "date": manifest["finished_utc"][:10],
@@ -389,9 +406,12 @@ def main() -> None:
         "modelJev": "jev-1.13.0",
         "modelMini": "gpt-4o-mini-2024-07-18",
         "n": n,
+        "nMin": sizes[0],
+        "nMax": sizes[-1],
         "seed": manifest["seed"],
         "tasks": len(tasks),
-        "note": (f"Frozen samples (seed={manifest['seed']}, n={n}). Wilson 95% CI on accuracy. "
+        "note": (f"Frozen samples (seed={manifest['seed']}, n={sizes[0]}-{sizes[-1]} per task). "
+                 "Wilson 95% CI on accuracy. "
                  "McNemar on paired errors. Full receipts in results/receipts/. "
                  "APIs do not sign responses."),
     }

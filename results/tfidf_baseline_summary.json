@@ -1,5 +1,36 @@
 [
   {
+    "task_id": "prompt_injection",
+    "n": 300,
+    "train_n": 361,
+    "train_note": "deepset rows outside the frozen 300",
+    "acc": 0.8566666666666667,
+    "wilson": {
+      "k": 257,
+      "n": 300,
+      "p": 0.8566666666666667,
+      "lo": 0.8124985303950185,
+      "hi": 0.8918158228732633
+    },
+    "fit_ms": 22.224600019399077,
+    "predict_total_ms": 9.032499976456165,
+    "predict_p50_ms": 0.030108333254853886,
+    "mcnemar_vs_jev": {
+      "a_only_correct": 44,
+      "b_only_correct": 27,
+      "discordant": 71,
+      "p_value": 0.057584115072875815,
+      "winner": "ns"
+    },
+    "mcnemar_vs_mini": {
+      "a_only_correct": 45,
+      "b_only_correct": 31,
+      "discordant": 76,
+      "p_value": 0.1359083978473705,
+      "winner": "ns"
+    }
+  },
+  {
     "task_id": "civil_toxicity",
     "n": 500,
     "train_n": 60000,
@@ -12,9 +43,9 @@
       "lo": 0.7924518552217157,
       "hi": 0.8585463950220116
     },
-    "fit_ms": 9941.907200030982,
-    "predict_total_ms": 41.06830002274364,
-    "predict_p50_ms": 0.08213660004548728,
+    "fit_ms": 9913.219599984586,
+    "predict_total_ms": 36.923700012266636,
+    "predict_p50_ms": 0.07384740002453327,
     "mcnemar_vs_jev": {
       "a_only_correct": 75,
       "b_only_correct": 51,
@@ -43,9 +74,9 @@
       "lo": 0.8355045607103054,
       "hi": 0.8948837200509497
     },
-    "fit_ms": 59554.46980003035,
-    "predict_total_ms": 159.7810999955982,
-    "predict_p50_ms": 0.3195621999911964,
+    "fit_ms": 55848.37890003109,
+    "predict_total_ms": 131.11429999116808,
+    "predict_p50_ms": 0.26222859998233616,
     "mcnemar_vs_jev": {
       "a_only_correct": 47,
       "b_only_correct": 27,
@@ -74,9 +105,9 @@
       "lo": 0.9064785429161282,
       "hi": 0.9509337866731715
     },
-    "fit_ms": 1409.6964999916963,
-    "predict_total_ms": 11.252299998886883,
-    "predict_p50_ms": 0.022504599997773767,
+    "fit_ms": 853.8804999552667,
+    "predict_total_ms": 9.705700038466603,
+    "predict_p50_ms": 0.019411400076933205,
     "mcnemar_vs_jev": {
       "a_only_correct": 119,
       "b_only_correct": 12,
@@ -105,9 +136,9 @@
       "lo": 0.943815226738503,
       "hi": 0.9771091272648186
     },
-    "fit_ms": 349.09969998989254,
-    "predict_total_ms": 17.522400012239814,
-    "predict_p50_ms": 0.03504480002447963,
+    "fit_ms": 240.42570003075525,
+    "predict_total_ms": 19.866099988576025,
+    "predict_p50_ms": 0.03973219997715205,
     "mcnemar_vs_jev": {
       "a_only_correct": 9,
       "b_only_correct": 9,
@@ -136,9 +167,9 @@
       "lo": 0.790317702710052,
       "hi": 0.856711046007799
     },
-    "fit_ms": 2582.834799948614,
-    "predict_total_ms": 20.204200001899153,
-    "predict_p50_ms": 0.040408400003798306,
+    "fit_ms": 1980.544199992437,
+    "predict_total_ms": 17.070400004740804,
+    "predict_p50_ms": 0.03414080000948161,
     "mcnemar_vs_jev": {
       "a_only_correct": 8,
       "b_only_correct": 80,
@@ -167,9 +198,9 @@
       "lo": 0.8794606777802376,
       "hi": 0.9303176334985452
     },
-    "fit_ms": 28154.853100015316,
-    "predict_total_ms": 57.596500031650066,
-    "predict_p50_ms": 0.11519300006330013,
+    "fit_ms": 20170.39569996996,
+    "predict_total_ms": 38.48280000966042,
+    "predict_p50_ms": 0.07696560001932085,
     "mcnemar_vs_jev": {
       "a_only_correct": 42,
       "b_only_correct": 16,
@@ -198,9 +229,9 @@
       "lo": 0.5949709219022378,
       "hi": 0.6789246833832329
     },
-    "fit_ms": 5973.055200011004,
-    "predict_total_ms": 21.24899998307228,
-    "predict_p50_ms": 0.04249799996614456,
+    "fit_ms": 4413.5216000140645,
+    "predict_total_ms": 13.358799973502755,
+    "predict_p50_ms": 0.02671759994700551,
     "mcnemar_vs_jev": {
       "a_only_correct": 66,
       "b_only_correct": 116,
@@ -229,9 +260,9 @@
       "lo": 0.6977463146741062,
       "hi": 0.7746243669051839
     },
-    "fit_ms": 2922.3571000038646,
-    "predict_total_ms": 35.68589995848015,
-    "predict_p50_ms": 0.0713717999169603,
+    "fit_ms": 791.5975999785587,
+    "predict_total_ms": 16.93749998230487,
+    "predict_p50_ms": 0.03387499996460974,
     "mcnemar_vs_jev": {
       "a_only_correct": 57,
       "b_only_correct": 71,
@@ -260,9 +291,9 @@
       "lo": 0.4961743505261478,
       "hi": 0.5832156799913801
     },
-    "fit_ms": 1772.2695000120439,
-    "predict_total_ms": 29.545600002165884,
-    "predict_p50_ms": 0.05909120000433177,
+    "fit_ms": 631.3231000094675,
+    "predict_total_ms": 16.160300001502037,
+    "predict_p50_ms": 0.032320600003004074,
     "mcnemar_vs_jev": {
       "a_only_correct": 133,
       "b_only_correct": 194,
@@ -291,9 +322,9 @@
       "lo": 0.5990414871027679,
       "hi": 0.6827931212344555
     },
-    "fit_ms": 303.7355999695137,
-    "predict_total_ms": 18.873099994380027,
-    "predict_p50_ms": 0.037746199988760054,
+    "fit_ms": 183.55100002372637,
+    "predict_total_ms": 20.043500000610948,
+    "predict_p50_ms": 0.040087000001221895,
     "mcnemar_vs_jev": {
       "a_only_correct": 45,
       "b_only_correct": 123,

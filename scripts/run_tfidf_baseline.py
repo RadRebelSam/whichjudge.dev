@@ -247,8 +247,24 @@ def civil_train() -> pd.DataFrame:
     return pd.concat(parts, ignore_index=True)
 
 
+def injection_train() -> pd.DataFrame:
+    """The 361 deepset rows the frozen 300 did not take."""
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from prepare_injection import load_all, LABELS
+
+    df = load_all()
+    df["text"] = df["text"].astype(str).str.strip()
+    df = df[df["text"].str.len() >= 10].drop_duplicates(subset=["text"])
+    df["gold"] = df["label"].map(LABELS)
+    return df.reset_index(drop=True)
+
+
 def main():
     out = []
+
+    out.append(run_one("prompt_injection", injection_train(), "text",
+                       "deepset rows outside the frozen 300"))
 
     out.append(run_one("civil_toxicity", civil_train(), "text",
                        "Civil Comments official train, balanced"))

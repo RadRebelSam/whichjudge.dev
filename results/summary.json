@@ -1,5 +1,67 @@
 [
   {
+    "task_id": "prompt_injection",
+    "title": "Prompt-injection screen",
+    "n": 300,
+    "jev_acc": 0.8,
+    "mini_acc": 0.81,
+    "jev_p50_ms": 857.6301999855787,
+    "mini_p50_ms": 1130.237900011707,
+    "jev_p95_ms": 1219.6477000252344,
+    "mini_p95_ms": 1629.1613000212237,
+    "jev_mean_conf": 0.8662666666666672,
+    "jev_cost": 0.005379486,
+    "mini_cost": 0.0058032,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.89,
+        "accuracy": 0.8389513108614233
+      },
+      "0.6": {
+        "coverage": 0.86,
+        "accuracy": 0.8527131782945736
+      },
+      "0.7": {
+        "coverage": 0.8366666666666667,
+        "accuracy": 0.852589641434263
+      },
+      "0.8": {
+        "coverage": 0.7933333333333333,
+        "accuracy": 0.8739495798319328
+      },
+      "0.9": {
+        "coverage": 0.7133333333333334,
+        "accuracy": 0.9065420560747663
+      }
+    },
+    "schema_sha256": "5845f69fd9acff8d989c35135bea36d96166a64d518063165832f41e551d2de8",
+    "samples_sha256": "a56df9a7f033f95a3401b16bcd6537bda2acc0d50fbf54f72eb24c91d637a9f6",
+    "jev_wilson": {
+      "k": 240,
+      "n": 300,
+      "p": 0.8,
+      "lo": 0.7510701139033206,
+      "hi": 0.8413438280980382
+    },
+    "mini_wilson": {
+      "k": 243,
+      "n": 300,
+      "p": 0.81,
+      "lo": 0.7617952561979654,
+      "hi": 0.8503658172034386
+    },
+    "mcnemar": {
+      "jev_only_correct": 14,
+      "mini_only_correct": 17,
+      "discordant": 31,
+      "chi2_cc": 0.12903225806451613,
+      "p_value": 0.7194375444233914,
+      "significant_0_05": false,
+      "winner": "ns"
+    },
+    "run_id": "2026-09-20T20:54:25.282133+00:00"
+  },
+  {
     "task_id": "civil_toxicity",
     "title": "Comment toxicity gate",
     "n": 500,

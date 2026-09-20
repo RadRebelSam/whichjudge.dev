@@ -33,6 +33,7 @@ whichjudge/
     run_tfidf_baseline.py   TF-IDF + LR on leftover official train
     prepare_cfpb.py         freeze 500 CFPB complaints, labels joined from the Bureau
     prepare_civil.py        freeze 500 Civil Comments (CC0) for the toxicity row
+    prepare_injection.py    freeze 300 prompt-injection rows (n is capped by the source)
     calibrate.py            ECE + reliability bins from receipts (no API)
     cost_curve.py           cost and latency vs input length; finds the crossover
     redact_text.py          strip third-party text to hashes before publishing
@@ -95,7 +96,7 @@ BANKING77 is collapsed from 77 fine intents → 8 queues by keyword (see `coarse
 
 ---
 
-## Results, n=500 per task, seed 7
+## Results, seed 7, n=500 per task except prompt injection (n=300)
 
 Wilson 95% CI. McNemar on paired errors. `ns` = p >= 0.05, meaning the accuracy gap
 is noise and neither model should be crowned.
@@ -103,6 +104,7 @@ is noise and neither model should be crowned.
 | Decision | n | Jev | Mini | McNemar | ECE | Verdict |
 |---|---|---|---|---|---|---|
 | Consumer complaint routing | 500 | 82.8% [79.2%-85.9%] | 81.0% | ns p=0.253 | 0.100 | ns |
+| Prompt-injection screen | 300 | 80.0% [75.1%-84.1%] | 81.0% | ns p=0.719 | 0.134 | ns |
 | Comment toxicity gate | 500 | 78.0% [74.2%-81.4%] | 77.0% | ns p=0.688 | 0.075 | ns |
 | SMS spam gate | 500 | 96.4% [94.4%-97.7%] | 96.4% | ns p=0.773 | 0.016 | ns |
 | Review polarity | 500 | 97.0% [95.1%-98.2%] | 96.4% | ns p=0.546 | 0.015 | ns |
@@ -112,6 +114,30 @@ is noise and neither model should be crowned.
 | News topic | 500 | 85.6% [82.3%-88.4%] | 82.6% | jev p=0.00933 | 0.096 | Replace |
 | Banking queue routing | 500 | 71.8% [67.7%-75.6%] | 64.4% | jev p=3.23e-05 | 0.213 | Replace |
 | Hate-speech screen | 500 | 66.2% [61.9%-70.2%] | 74.0% | mini p=0.00258 | 0.187 | Don't |
+
+### Accuracy is the wrong number for a security gate
+
+The prompt-injection row looks fine on accuracy: Jev 80.0%,
+Mini 81.0%, tied at p=0.719.
+Split it by class and the picture changes:
+
+| | Jev | 4o-mini |
+|---|---|---|
+| Injections caught | 60.0% | 62.7% |
+| Injections missed | 60 of 150 | 56 of 150 |
+| Legitimate text wrongly blocked | 0.0% | 0.7% |
+
+Both models are biased hard toward letting text through. They almost never block a
+legitimate request, and they miss roughly four injections in ten.
+
+The quit line does not rescue it either. Raising Jev's threshold from 0.5 to 0.9 moves
+injection recall from 60.0% to only
+66.3%, while coverage falls, so the misses
+move to a human rather than disappearing. That is a documented exception to this site's
+own headline, and it stays on the page.
+
+`results/error_profile.json` carries per-class recall and recall-at-gate for every row,
+and the build refuses to publish a sentence quoting a rate it cannot find there.
 
 ### The Don't verdict does not survive a change of gold
 
@@ -145,6 +171,7 @@ frozen 500 (`scripts/run_tfidf_baseline.py`):
 | Decision | TF-IDF | vs Jev | vs Mini |
 |---|---|---|---|
 | Consumer complaint routing | 86.8% | TF-IDF wins | TF-IDF wins |
+| Prompt-injection screen | 85.7% | ns | ns |
 | Comment toxicity gate | 82.8% | TF-IDF wins | TF-IDF wins |
 | SMS spam gate | 96.4% | ns | ns |
 | Review polarity | 82.6% | Jev wins | Mini wins |
@@ -216,7 +243,7 @@ n=500 on public academic gold is still not a procurement study.
 
 ```bash
 python3 scripts/run_eval.py          # hits both APIs, writes receipts     (~$0.12)
-python3 scripts/calibrate.py         # ECE from those receipts             (no API)
+python3 scripts/calibrate.py         # ECE + per-class error profile        (no API)
 python3 scripts/run_tfidf_baseline.py  # classical baseline                (no API)
 python3 scripts/cost_curve.py        # cost vs length                      (~$0.01)
 python3 scripts/redact_text.py       # strip tweet text before committing  (no API)

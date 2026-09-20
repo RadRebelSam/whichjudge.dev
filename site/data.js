@@ -204,18 +204,225 @@ const COST_CURVE = {
 
 const RUN = {
   "date": "2026-09-20",
-  "runId": "2026-09-20T20:14:57.094834+00:00",
+  "runId": "2026-09-20T20:54:25.282133+00:00",
   "modelJev": "jev-1.13.0",
   "modelMini": "gpt-4o-mini-2024-07-18",
   "n": 500,
+  "nMin": 300,
+  "nMax": 500,
   "seed": 7,
-  "tasks": 10,
-  "note": "Frozen samples (seed=7, n=500). Wilson 95% CI on accuracy. McNemar on paired errors. Full receipts in results/receipts/. APIs do not sign responses."
+  "tasks": 11,
+  "note": "Frozen samples (seed=7, n=300-500 per task). Wilson 95% CI on accuracy. McNemar on paired errors. Full receipts in results/receipts/. APIs do not sign responses."
 };
 
 const TASKS = [
   {
+    "id": "prompt_injection",
+    "n": 300,
+    "title": "Prompt-injection screen",
+    "replaces": "LLM guard deciding whether untrusted input may reach an agent",
+    "dataset": "deepset/prompt-injections, train + test, multilingual",
+    "labels": "injection / legitimate",
+    "verdict": "mix",
+    "ns": true,
+    "why": "Read this row on recall, not accuracy. Jev 80.0% and Mini 81.0% look respectable and are tied (p=0.72), but both are biased hard toward letting text through: Jev misses 40.0% of injections while blocking 0.0% of legitimate input. An accuracy number hides that completely. TF-IDF is 85.7% on only 361 training rows.",
+    "gate": "The quit line does not rescue this one. Raising Jev's threshold from 0.5 to 0.9 moves injection recall from 60.0% to only 66.3% while dropping coverage, so the misses move to a human rather than disappearing. Neither model is a standalone security gate here.",
+    "sourceName": "deepset/prompt-injections",
+    "sourceUrl": "https://huggingface.co/datasets/deepset/prompt-injections",
+    "mirrorUrl": null,
+    "samplesSha": "a56df9a7f033",
+    "schemaSha": "5845f69fd9ac",
+    "jev": {
+      "acc": 0.8,
+      "lo": 0.751,
+      "hi": 0.841,
+      "p50": 858,
+      "p95": 1220,
+      "conf": 0.866,
+      "cost": 0.005379486,
+      "perM": 17.93
+    },
+    "mini": {
+      "acc": 0.81,
+      "lo": 0.762,
+      "hi": 0.85,
+      "p50": 1130,
+      "p95": 1629,
+      "cost": 0.0058032,
+      "perM": 19.34
+    },
+    "mcnemar": {
+      "p": 0.719,
+      "winner": "ns",
+      "b": 14,
+      "c": 17
+    },
+    "tfidf": {
+      "acc": 0.8566666666666667,
+      "lo": 0.812,
+      "hi": 0.892,
+      "p50us": 30,
+      "trainN": 361,
+      "vsJev": "ns",
+      "vsMini": "ns"
+    },
+    "ece": {
+      "ece": 0.134,
+      "mce": 0.377,
+      "bins": [
+        {
+          "lo": 0.5,
+          "n": 12,
+          "conf": 0.547,
+          "acc": 0.5
+        },
+        {
+          "lo": 0.6,
+          "n": 11,
+          "conf": 0.635,
+          "acc": 0.636
+        },
+        {
+          "lo": 0.7,
+          "n": 19,
+          "conf": 0.745,
+          "acc": 0.368
+        },
+        {
+          "lo": 0.8,
+          "n": 20,
+          "conf": 0.855,
+          "acc": 0.6
+        },
+        {
+          "lo": 0.9,
+          "n": 238,
+          "conf": 0.988,
+          "acc": 0.874
+        }
+      ]
+    },
+    "gates": {
+      "0.5": {
+        "cov": 0.89,
+        "acc": 0.839
+      },
+      "0.6": {
+        "cov": 0.86,
+        "acc": 0.853
+      },
+      "0.7": {
+        "cov": 0.8366666666666667,
+        "acc": 0.853
+      },
+      "0.8": {
+        "cov": 0.7933333333333333,
+        "acc": 0.874
+      },
+      "0.9": {
+        "cov": 0.7133333333333334,
+        "acc": 0.907
+      }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "injection": {
+            "n": 150,
+            "recall": 0.6,
+            "missed": 60,
+            "missed_rate": 0.4,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          },
+          "legitimate": {
+            "n": 150,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 60,
+            "false_positive_rate": 0.4
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "injection": {
+              "covered": 150,
+              "recall_on_covered": 0.6
+            },
+            "legitimate": {
+              "covered": 150,
+              "recall_on_covered": 1.0
+            }
+          },
+          "0.6": {
+            "injection": {
+              "covered": 138,
+              "recall_on_covered": 0.6087
+            },
+            "legitimate": {
+              "covered": 150,
+              "recall_on_covered": 1.0
+            }
+          },
+          "0.7": {
+            "injection": {
+              "covered": 127,
+              "recall_on_covered": 0.6063
+            },
+            "legitimate": {
+              "covered": 150,
+              "recall_on_covered": 1.0
+            }
+          },
+          "0.8": {
+            "injection": {
+              "covered": 108,
+              "recall_on_covered": 0.6481
+            },
+            "legitimate": {
+              "covered": 150,
+              "recall_on_covered": 1.0
+            }
+          },
+          "0.9": {
+            "injection": {
+              "covered": 89,
+              "recall_on_covered": 0.6629
+            },
+            "legitimate": {
+              "covered": 149,
+              "recall_on_covered": 1.0
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "injection": {
+            "n": 150,
+            "recall": 0.6267,
+            "missed": 56,
+            "missed_rate": 0.3733,
+            "false_positives": 1,
+            "false_positive_rate": 0.0067
+          },
+          "legitimate": {
+            "n": 150,
+            "recall": 0.9933,
+            "missed": 1,
+            "missed_rate": 0.0067,
+            "false_positives": 56,
+            "false_positive_rate": 0.3733
+          }
+        },
+        "recall_at_gate": {}
+      }
+    }
+  },
+  {
     "id": "cfpb_queue_route",
+    "n": 500,
     "title": "Consumer complaint routing",
     "replaces": "LLM classifier routing inbound financial complaints to a product queue",
     "dataset": "CFPB Consumer Complaint Database, 8 product queues",
@@ -258,7 +465,7 @@ const TASKS = [
       "acc": 0.868,
       "lo": 0.836,
       "hi": 0.895,
-      "p50us": 320,
+      "p50us": 262,
       "trainN": 63392,
       "vsJev": "tfidf",
       "vsMini": "tfidf"
@@ -326,10 +533,322 @@ const TASKS = [
         "cov": 0.756,
         "acc": 0.918
       }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "bank_account": {
+            "n": 63,
+            "recall": 0.8254,
+            "missed": 11,
+            "missed_rate": 0.1746,
+            "false_positives": 19,
+            "false_positive_rate": 0.0435
+          },
+          "cards": {
+            "n": 62,
+            "recall": 0.8548,
+            "missed": 9,
+            "missed_rate": 0.1452,
+            "false_positives": 9,
+            "false_positive_rate": 0.0205
+          },
+          "credit_reporting": {
+            "n": 62,
+            "recall": 0.9677,
+            "missed": 2,
+            "missed_rate": 0.0323,
+            "false_positives": 31,
+            "false_positive_rate": 0.0708
+          },
+          "debt_collection": {
+            "n": 62,
+            "recall": 0.6774,
+            "missed": 20,
+            "missed_rate": 0.3226,
+            "false_positives": 12,
+            "false_positive_rate": 0.0274
+          },
+          "loans": {
+            "n": 64,
+            "recall": 0.6875,
+            "missed": 20,
+            "missed_rate": 0.3125,
+            "false_positives": 3,
+            "false_positive_rate": 0.0069
+          },
+          "money_transfer": {
+            "n": 62,
+            "recall": 0.7742,
+            "missed": 14,
+            "missed_rate": 0.2258,
+            "false_positives": 7,
+            "false_positive_rate": 0.016
+          },
+          "mortgage": {
+            "n": 63,
+            "recall": 0.9048,
+            "missed": 6,
+            "missed_rate": 0.0952,
+            "false_positives": 5,
+            "false_positive_rate": 0.0114
+          },
+          "student_loan": {
+            "n": 62,
+            "recall": 0.9355,
+            "missed": 4,
+            "missed_rate": 0.0645,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "bank_account": {
+              "covered": 63,
+              "recall_on_covered": 0.8254
+            },
+            "cards": {
+              "covered": 62,
+              "recall_on_covered": 0.8548
+            },
+            "credit_reporting": {
+              "covered": 62,
+              "recall_on_covered": 0.9677
+            },
+            "debt_collection": {
+              "covered": 62,
+              "recall_on_covered": 0.6774
+            },
+            "loans": {
+              "covered": 64,
+              "recall_on_covered": 0.6875
+            },
+            "money_transfer": {
+              "covered": 62,
+              "recall_on_covered": 0.7742
+            },
+            "mortgage": {
+              "covered": 62,
+              "recall_on_covered": 0.9194
+            },
+            "student_loan": {
+              "covered": 61,
+              "recall_on_covered": 0.9508
+            }
+          },
+          "0.6": {
+            "bank_account": {
+              "covered": 59,
+              "recall_on_covered": 0.8305
+            },
+            "cards": {
+              "covered": 60,
+              "recall_on_covered": 0.8667
+            },
+            "credit_reporting": {
+              "covered": 62,
+              "recall_on_covered": 0.9677
+            },
+            "debt_collection": {
+              "covered": 55,
+              "recall_on_covered": 0.7273
+            },
+            "loans": {
+              "covered": 61,
+              "recall_on_covered": 0.7213
+            },
+            "money_transfer": {
+              "covered": 62,
+              "recall_on_covered": 0.7742
+            },
+            "mortgage": {
+              "covered": 62,
+              "recall_on_covered": 0.9194
+            },
+            "student_loan": {
+              "covered": 61,
+              "recall_on_covered": 0.9508
+            }
+          },
+          "0.7": {
+            "bank_account": {
+              "covered": 54,
+              "recall_on_covered": 0.8519
+            },
+            "cards": {
+              "covered": 57,
+              "recall_on_covered": 0.8947
+            },
+            "credit_reporting": {
+              "covered": 61,
+              "recall_on_covered": 0.9836
+            },
+            "debt_collection": {
+              "covered": 50,
+              "recall_on_covered": 0.74
+            },
+            "loans": {
+              "covered": 57,
+              "recall_on_covered": 0.7544
+            },
+            "money_transfer": {
+              "covered": 58,
+              "recall_on_covered": 0.8103
+            },
+            "mortgage": {
+              "covered": 60,
+              "recall_on_covered": 0.9333
+            },
+            "student_loan": {
+              "covered": 57,
+              "recall_on_covered": 0.9825
+            }
+          },
+          "0.8": {
+            "bank_account": {
+              "covered": 51,
+              "recall_on_covered": 0.8824
+            },
+            "cards": {
+              "covered": 53,
+              "recall_on_covered": 0.9623
+            },
+            "credit_reporting": {
+              "covered": 58,
+              "recall_on_covered": 0.9828
+            },
+            "debt_collection": {
+              "covered": 47,
+              "recall_on_covered": 0.7447
+            },
+            "loans": {
+              "covered": 54,
+              "recall_on_covered": 0.7593
+            },
+            "money_transfer": {
+              "covered": 52,
+              "recall_on_covered": 0.8462
+            },
+            "mortgage": {
+              "covered": 57,
+              "recall_on_covered": 0.9474
+            },
+            "student_loan": {
+              "covered": 55,
+              "recall_on_covered": 0.9818
+            }
+          },
+          "0.9": {
+            "bank_account": {
+              "covered": 48,
+              "recall_on_covered": 0.8958
+            },
+            "cards": {
+              "covered": 47,
+              "recall_on_covered": 0.9787
+            },
+            "credit_reporting": {
+              "covered": 57,
+              "recall_on_covered": 0.9825
+            },
+            "debt_collection": {
+              "covered": 42,
+              "recall_on_covered": 0.7143
+            },
+            "loans": {
+              "covered": 43,
+              "recall_on_covered": 0.814
+            },
+            "money_transfer": {
+              "covered": 41,
+              "recall_on_covered": 0.9024
+            },
+            "mortgage": {
+              "covered": 56,
+              "recall_on_covered": 0.9643
+            },
+            "student_loan": {
+              "covered": 53,
+              "recall_on_covered": 0.9811
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "bank_account": {
+            "n": 63,
+            "recall": 0.8254,
+            "missed": 11,
+            "missed_rate": 0.1746,
+            "false_positives": 16,
+            "false_positive_rate": 0.0366
+          },
+          "cards": {
+            "n": 62,
+            "recall": 0.8548,
+            "missed": 9,
+            "missed_rate": 0.1452,
+            "false_positives": 15,
+            "false_positive_rate": 0.0342
+          },
+          "credit_reporting": {
+            "n": 62,
+            "recall": 0.9194,
+            "missed": 5,
+            "missed_rate": 0.0806,
+            "false_positives": 33,
+            "false_positive_rate": 0.0753
+          },
+          "debt_collection": {
+            "n": 62,
+            "recall": 0.6774,
+            "missed": 20,
+            "missed_rate": 0.3226,
+            "false_positives": 15,
+            "false_positive_rate": 0.0342
+          },
+          "loans": {
+            "n": 64,
+            "recall": 0.6875,
+            "missed": 20,
+            "missed_rate": 0.3125,
+            "false_positives": 7,
+            "false_positive_rate": 0.0161
+          },
+          "money_transfer": {
+            "n": 62,
+            "recall": 0.6935,
+            "missed": 19,
+            "missed_rate": 0.3065,
+            "false_positives": 5,
+            "false_positive_rate": 0.0114
+          },
+          "mortgage": {
+            "n": 63,
+            "recall": 0.9048,
+            "missed": 6,
+            "missed_rate": 0.0952,
+            "false_positives": 4,
+            "false_positive_rate": 0.0092
+          },
+          "student_loan": {
+            "n": 62,
+            "recall": 0.9194,
+            "missed": 5,
+            "missed_rate": 0.0806,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          }
+        },
+        "recall_at_gate": {}
+      }
     }
   },
   {
     "id": "civil_toxicity",
+    "n": 500,
     "title": "Comment toxicity gate",
     "replaces": "Toxicity classifier gating user comments before publication",
     "dataset": "Civil Comments test split (CC0)",
@@ -372,7 +891,7 @@ const TASKS = [
       "acc": 0.828,
       "lo": 0.792,
       "hi": 0.859,
-      "p50us": 82,
+      "p50us": 74,
       "trainN": 60000,
       "vsJev": "tfidf",
       "vsMini": "tfidf"
@@ -434,10 +953,106 @@ const TASKS = [
         "cov": 0.432,
         "acc": 0.931
       }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "not_toxic": {
+            "n": 250,
+            "recall": 0.84,
+            "missed": 40,
+            "missed_rate": 0.16,
+            "false_positives": 70,
+            "false_positive_rate": 0.28
+          },
+          "toxic": {
+            "n": 250,
+            "recall": 0.72,
+            "missed": 70,
+            "missed_rate": 0.28,
+            "false_positives": 40,
+            "false_positive_rate": 0.16
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "not_toxic": {
+              "covered": 250,
+              "recall_on_covered": 0.84
+            },
+            "toxic": {
+              "covered": 250,
+              "recall_on_covered": 0.72
+            }
+          },
+          "0.6": {
+            "not_toxic": {
+              "covered": 226,
+              "recall_on_covered": 0.8805
+            },
+            "toxic": {
+              "covered": 223,
+              "recall_on_covered": 0.7399
+            }
+          },
+          "0.7": {
+            "not_toxic": {
+              "covered": 208,
+              "recall_on_covered": 0.899
+            },
+            "toxic": {
+              "covered": 191,
+              "recall_on_covered": 0.7539
+            }
+          },
+          "0.8": {
+            "not_toxic": {
+              "covered": 189,
+              "recall_on_covered": 0.9259
+            },
+            "toxic": {
+              "covered": 154,
+              "recall_on_covered": 0.7922
+            }
+          },
+          "0.9": {
+            "not_toxic": {
+              "covered": 160,
+              "recall_on_covered": 0.9625
+            },
+            "toxic": {
+              "covered": 107,
+              "recall_on_covered": 0.8318
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "not_toxic": {
+            "n": 250,
+            "recall": 0.672,
+            "missed": 82,
+            "missed_rate": 0.328,
+            "false_positives": 33,
+            "false_positive_rate": 0.132
+          },
+          "toxic": {
+            "n": 250,
+            "recall": 0.868,
+            "missed": 33,
+            "missed_rate": 0.132,
+            "false_positives": 82,
+            "false_positive_rate": 0.328
+          }
+        },
+        "recall_at_gate": {}
+      }
     }
   },
   {
     "id": "sms_spam",
+    "n": 500,
     "title": "SMS spam gate",
     "replaces": "Spam vs ham classifier on inbound SMS",
     "dataset": "UCI SMS Spam",
@@ -480,7 +1095,7 @@ const TASKS = [
       "acc": 0.964,
       "lo": 0.944,
       "hi": 0.977,
-      "p50us": 35,
+      "p50us": 40,
       "trainN": 4968,
       "vsJev": "ns",
       "vsMini": "ns"
@@ -542,10 +1157,106 @@ const TASKS = [
         "cov": 0.8,
         "acc": 0.99
       }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "ham": {
+            "n": 250,
+            "recall": 0.968,
+            "missed": 8,
+            "missed_rate": 0.032,
+            "false_positives": 10,
+            "false_positive_rate": 0.04
+          },
+          "spam": {
+            "n": 250,
+            "recall": 0.96,
+            "missed": 10,
+            "missed_rate": 0.04,
+            "false_positives": 8,
+            "false_positive_rate": 0.032
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "ham": {
+              "covered": 250,
+              "recall_on_covered": 0.968
+            },
+            "spam": {
+              "covered": 250,
+              "recall_on_covered": 0.96
+            }
+          },
+          "0.6": {
+            "ham": {
+              "covered": 243,
+              "recall_on_covered": 0.9712
+            },
+            "spam": {
+              "covered": 248,
+              "recall_on_covered": 0.9677
+            }
+          },
+          "0.7": {
+            "ham": {
+              "covered": 233,
+              "recall_on_covered": 0.97
+            },
+            "spam": {
+              "covered": 245,
+              "recall_on_covered": 0.9714
+            }
+          },
+          "0.8": {
+            "ham": {
+              "covered": 219,
+              "recall_on_covered": 0.9863
+            },
+            "spam": {
+              "covered": 238,
+              "recall_on_covered": 0.979
+            }
+          },
+          "0.9": {
+            "ham": {
+              "covered": 193,
+              "recall_on_covered": 0.9896
+            },
+            "spam": {
+              "covered": 233,
+              "recall_on_covered": 0.9871
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "ham": {
+            "n": 250,
+            "recall": 0.952,
+            "missed": 12,
+            "missed_rate": 0.048,
+            "false_positives": 6,
+            "false_positive_rate": 0.024
+          },
+          "spam": {
+            "n": 250,
+            "recall": 0.976,
+            "missed": 6,
+            "missed_rate": 0.024,
+            "false_positives": 12,
+            "false_positive_rate": 0.048
+          }
+        },
+        "recall_at_gate": {}
+      }
     }
   },
   {
     "id": "review_sentiment",
+    "n": 500,
     "title": "Review polarity",
     "replaces": "Binary review sentiment",
     "dataset": "SST-2 validation",
@@ -588,7 +1299,7 @@ const TASKS = [
       "acc": 0.826,
       "lo": 0.79,
       "hi": 0.857,
-      "p50us": 40,
+      "p50us": 34,
       "trainN": 67349,
       "vsJev": "jev",
       "vsMini": "mini"
@@ -650,10 +1361,106 @@ const TASKS = [
         "cov": 0.806,
         "acc": 0.988
       }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "negative": {
+            "n": 250,
+            "recall": 0.976,
+            "missed": 6,
+            "missed_rate": 0.024,
+            "false_positives": 9,
+            "false_positive_rate": 0.036
+          },
+          "positive": {
+            "n": 250,
+            "recall": 0.964,
+            "missed": 9,
+            "missed_rate": 0.036,
+            "false_positives": 6,
+            "false_positive_rate": 0.024
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "negative": {
+              "covered": 250,
+              "recall_on_covered": 0.976
+            },
+            "positive": {
+              "covered": 250,
+              "recall_on_covered": 0.964
+            }
+          },
+          "0.6": {
+            "negative": {
+              "covered": 247,
+              "recall_on_covered": 0.9798
+            },
+            "positive": {
+              "covered": 247,
+              "recall_on_covered": 0.9676
+            }
+          },
+          "0.7": {
+            "negative": {
+              "covered": 244,
+              "recall_on_covered": 0.9877
+            },
+            "positive": {
+              "covered": 242,
+              "recall_on_covered": 0.9711
+            }
+          },
+          "0.8": {
+            "negative": {
+              "covered": 242,
+              "recall_on_covered": 0.9917
+            },
+            "positive": {
+              "covered": 229,
+              "recall_on_covered": 0.9782
+            }
+          },
+          "0.9": {
+            "negative": {
+              "covered": 230,
+              "recall_on_covered": 0.9913
+            },
+            "positive": {
+              "covered": 212,
+              "recall_on_covered": 0.9764
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "negative": {
+            "n": 250,
+            "recall": 0.984,
+            "missed": 4,
+            "missed_rate": 0.016,
+            "false_positives": 14,
+            "false_positive_rate": 0.056
+          },
+          "positive": {
+            "n": 250,
+            "recall": 0.944,
+            "missed": 14,
+            "missed_rate": 0.056,
+            "false_positives": 4,
+            "false_positive_rate": 0.016
+          }
+        },
+        "recall_at_gate": {}
+      }
     }
   },
   {
     "id": "message_emotion",
+    "n": 500,
     "title": "Message emotion",
     "replaces": "4-way emotion classifier on short messages",
     "dataset": "tweet_eval emotion",
@@ -696,7 +1503,7 @@ const TASKS = [
       "acc": 0.642,
       "lo": 0.599,
       "hi": 0.683,
-      "p50us": 38,
+      "p50us": 40,
       "trainN": 3257,
       "vsJev": "jev",
       "vsMini": "mini"
@@ -764,10 +1571,178 @@ const TASKS = [
         "cov": 0.616,
         "acc": 0.909
       }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "anger": {
+            "n": 126,
+            "recall": 0.8413,
+            "missed": 20,
+            "missed_rate": 0.1587,
+            "false_positives": 35,
+            "false_positive_rate": 0.0936
+          },
+          "joy": {
+            "n": 125,
+            "recall": 0.88,
+            "missed": 15,
+            "missed_rate": 0.12,
+            "false_positives": 33,
+            "false_positive_rate": 0.088
+          },
+          "optimism": {
+            "n": 123,
+            "recall": 0.626,
+            "missed": 46,
+            "missed_rate": 0.374,
+            "false_positives": 9,
+            "false_positive_rate": 0.0239
+          },
+          "sadness": {
+            "n": 126,
+            "recall": 0.8413,
+            "missed": 20,
+            "missed_rate": 0.1587,
+            "false_positives": 24,
+            "false_positive_rate": 0.0642
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "anger": {
+              "covered": 124,
+              "recall_on_covered": 0.8468
+            },
+            "joy": {
+              "covered": 121,
+              "recall_on_covered": 0.8843
+            },
+            "optimism": {
+              "covered": 118,
+              "recall_on_covered": 0.6356
+            },
+            "sadness": {
+              "covered": 125,
+              "recall_on_covered": 0.848
+            }
+          },
+          "0.6": {
+            "anger": {
+              "covered": 114,
+              "recall_on_covered": 0.8684
+            },
+            "joy": {
+              "covered": 116,
+              "recall_on_covered": 0.9052
+            },
+            "optimism": {
+              "covered": 104,
+              "recall_on_covered": 0.6827
+            },
+            "sadness": {
+              "covered": 115,
+              "recall_on_covered": 0.8696
+            }
+          },
+          "0.7": {
+            "anger": {
+              "covered": 105,
+              "recall_on_covered": 0.9238
+            },
+            "joy": {
+              "covered": 109,
+              "recall_on_covered": 0.9174
+            },
+            "optimism": {
+              "covered": 89,
+              "recall_on_covered": 0.6966
+            },
+            "sadness": {
+              "covered": 103,
+              "recall_on_covered": 0.8932
+            }
+          },
+          "0.8": {
+            "anger": {
+              "covered": 97,
+              "recall_on_covered": 0.9485
+            },
+            "joy": {
+              "covered": 104,
+              "recall_on_covered": 0.9231
+            },
+            "optimism": {
+              "covered": 72,
+              "recall_on_covered": 0.7222
+            },
+            "sadness": {
+              "covered": 93,
+              "recall_on_covered": 0.9032
+            }
+          },
+          "0.9": {
+            "anger": {
+              "covered": 92,
+              "recall_on_covered": 0.9565
+            },
+            "joy": {
+              "covered": 94,
+              "recall_on_covered": 0.9574
+            },
+            "optimism": {
+              "covered": 60,
+              "recall_on_covered": 0.7333
+            },
+            "sadness": {
+              "covered": 85,
+              "recall_on_covered": 0.9059
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "anger": {
+            "n": 126,
+            "recall": 0.8492,
+            "missed": 19,
+            "missed_rate": 0.1508,
+            "false_positives": 25,
+            "false_positive_rate": 0.0668
+          },
+          "joy": {
+            "n": 125,
+            "recall": 0.904,
+            "missed": 12,
+            "missed_rate": 0.096,
+            "false_positives": 50,
+            "false_positive_rate": 0.1333
+          },
+          "optimism": {
+            "n": 123,
+            "recall": 0.3659,
+            "missed": 78,
+            "missed_rate": 0.6341,
+            "false_positives": 5,
+            "false_positive_rate": 0.0133
+          },
+          "sadness": {
+            "n": 126,
+            "recall": 0.873,
+            "missed": 16,
+            "missed_rate": 0.127,
+            "false_positives": 45,
+            "false_positive_rate": 0.1203
+          }
+        },
+        "recall_at_gate": {}
+      }
     }
   },
   {
     "id": "content_offensive",
+    "n": 500,
     "title": "Offensive language screen",
     "replaces": "Offensive-content classifier",
     "dataset": "tweet_eval offensive",
@@ -810,7 +1785,7 @@ const TASKS = [
       "acc": 0.738,
       "lo": 0.698,
       "hi": 0.775,
-      "p50us": 71,
+      "p50us": 34,
       "trainN": 11912,
       "vsJev": "ns",
       "vsMini": "ns"
@@ -872,10 +1847,106 @@ const TASKS = [
         "cov": 0.508,
         "acc": 0.89
       }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "not_offensive": {
+            "n": 256,
+            "recall": 0.8984,
+            "missed": 26,
+            "missed_rate": 0.1016,
+            "false_positives": 91,
+            "false_positive_rate": 0.373
+          },
+          "offensive": {
+            "n": 244,
+            "recall": 0.627,
+            "missed": 91,
+            "missed_rate": 0.373,
+            "false_positives": 26,
+            "false_positive_rate": 0.1016
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "not_offensive": {
+              "covered": 256,
+              "recall_on_covered": 0.8984
+            },
+            "offensive": {
+              "covered": 244,
+              "recall_on_covered": 0.627
+            }
+          },
+          "0.6": {
+            "not_offensive": {
+              "covered": 244,
+              "recall_on_covered": 0.9057
+            },
+            "offensive": {
+              "covered": 216,
+              "recall_on_covered": 0.6481
+            }
+          },
+          "0.7": {
+            "not_offensive": {
+              "covered": 231,
+              "recall_on_covered": 0.9221
+            },
+            "offensive": {
+              "covered": 183,
+              "recall_on_covered": 0.6721
+            }
+          },
+          "0.8": {
+            "not_offensive": {
+              "covered": 214,
+              "recall_on_covered": 0.9393
+            },
+            "offensive": {
+              "covered": 157,
+              "recall_on_covered": 0.6879
+            }
+          },
+          "0.9": {
+            "not_offensive": {
+              "covered": 185,
+              "recall_on_covered": 0.9514
+            },
+            "offensive": {
+              "covered": 116,
+              "recall_on_covered": 0.7328
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "not_offensive": {
+            "n": 256,
+            "recall": 0.8359,
+            "missed": 42,
+            "missed_rate": 0.1641,
+            "false_positives": 104,
+            "false_positive_rate": 0.4262
+          },
+          "offensive": {
+            "n": 244,
+            "recall": 0.5738,
+            "missed": 104,
+            "missed_rate": 0.4262,
+            "false_positives": 42,
+            "false_positive_rate": 0.1641
+          }
+        },
+        "recall_at_gate": {}
+      }
     }
   },
   {
     "id": "tweet_sentiment",
+    "n": 500,
     "title": "Social sentiment (3-way)",
     "replaces": "Negative / neutral / positive on tweets",
     "dataset": "tweet_eval sentiment",
@@ -918,7 +1989,7 @@ const TASKS = [
       "acc": 0.638,
       "lo": 0.595,
       "hi": 0.679,
-      "p50us": 42,
+      "p50us": 27,
       "trainN": 45615,
       "vsJev": "jev",
       "vsMini": "mini"
@@ -986,10 +2057,142 @@ const TASKS = [
         "cov": 0.584,
         "acc": 0.829
       }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "negative": {
+            "n": 167,
+            "recall": 0.9162,
+            "missed": 14,
+            "missed_rate": 0.0838,
+            "false_positives": 78,
+            "false_positive_rate": 0.2342
+          },
+          "neutral": {
+            "n": 167,
+            "recall": 0.4551,
+            "missed": 91,
+            "missed_rate": 0.5449,
+            "false_positives": 25,
+            "false_positive_rate": 0.0751
+          },
+          "positive": {
+            "n": 166,
+            "recall": 0.8434,
+            "missed": 26,
+            "missed_rate": 0.1566,
+            "false_positives": 28,
+            "false_positive_rate": 0.0838
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "negative": {
+              "covered": 165,
+              "recall_on_covered": 0.9212
+            },
+            "neutral": {
+              "covered": 164,
+              "recall_on_covered": 0.4573
+            },
+            "positive": {
+              "covered": 160,
+              "recall_on_covered": 0.8688
+            }
+          },
+          "0.6": {
+            "negative": {
+              "covered": 157,
+              "recall_on_covered": 0.9427
+            },
+            "neutral": {
+              "covered": 142,
+              "recall_on_covered": 0.4577
+            },
+            "positive": {
+              "covered": 152,
+              "recall_on_covered": 0.8947
+            }
+          },
+          "0.7": {
+            "negative": {
+              "covered": 150,
+              "recall_on_covered": 0.9667
+            },
+            "neutral": {
+              "covered": 122,
+              "recall_on_covered": 0.4672
+            },
+            "positive": {
+              "covered": 140,
+              "recall_on_covered": 0.9143
+            }
+          },
+          "0.8": {
+            "negative": {
+              "covered": 141,
+              "recall_on_covered": 0.9716
+            },
+            "neutral": {
+              "covered": 105,
+              "recall_on_covered": 0.4381
+            },
+            "positive": {
+              "covered": 126,
+              "recall_on_covered": 0.9286
+            }
+          },
+          "0.9": {
+            "negative": {
+              "covered": 132,
+              "recall_on_covered": 0.9773
+            },
+            "neutral": {
+              "covered": 86,
+              "recall_on_covered": 0.3953
+            },
+            "positive": {
+              "covered": 108,
+              "recall_on_covered": 0.9537
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "negative": {
+            "n": 167,
+            "recall": 0.8323,
+            "missed": 28,
+            "missed_rate": 0.1677,
+            "false_positives": 46,
+            "false_positive_rate": 0.1381
+          },
+          "neutral": {
+            "n": 167,
+            "recall": 0.5269,
+            "missed": 79,
+            "missed_rate": 0.4731,
+            "false_positives": 53,
+            "false_positive_rate": 0.1592
+          },
+          "positive": {
+            "n": 166,
+            "recall": 0.8193,
+            "missed": 30,
+            "missed_rate": 0.1807,
+            "false_positives": 38,
+            "false_positive_rate": 0.1138
+          }
+        },
+        "recall_at_gate": {}
+      }
     }
   },
   {
     "id": "news_topic",
+    "n": 500,
     "title": "News topic",
     "replaces": "4-way news classifier",
     "dataset": "AG News test",
@@ -1032,7 +2235,7 @@ const TASKS = [
       "acc": 0.908,
       "lo": 0.879,
       "hi": 0.93,
-      "p50us": 115,
+      "p50us": 77,
       "trainN": 120000,
       "vsJev": "tfidf",
       "vsMini": "tfidf"
@@ -1094,10 +2297,178 @@ const TASKS = [
         "cov": 0.84,
         "acc": 0.929
       }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "business": {
+            "n": 125,
+            "recall": 0.936,
+            "missed": 8,
+            "missed_rate": 0.064,
+            "false_positives": 47,
+            "false_positive_rate": 0.1253
+          },
+          "sci_tech": {
+            "n": 125,
+            "recall": 0.656,
+            "missed": 43,
+            "missed_rate": 0.344,
+            "false_positives": 9,
+            "false_positive_rate": 0.024
+          },
+          "sports": {
+            "n": 125,
+            "recall": 0.984,
+            "missed": 2,
+            "missed_rate": 0.016,
+            "false_positives": 2,
+            "false_positive_rate": 0.0053
+          },
+          "world": {
+            "n": 125,
+            "recall": 0.848,
+            "missed": 19,
+            "missed_rate": 0.152,
+            "false_positives": 14,
+            "false_positive_rate": 0.0373
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "business": {
+              "covered": 125,
+              "recall_on_covered": 0.936
+            },
+            "sci_tech": {
+              "covered": 125,
+              "recall_on_covered": 0.656
+            },
+            "sports": {
+              "covered": 125,
+              "recall_on_covered": 0.984
+            },
+            "world": {
+              "covered": 125,
+              "recall_on_covered": 0.848
+            }
+          },
+          "0.6": {
+            "business": {
+              "covered": 124,
+              "recall_on_covered": 0.9435
+            },
+            "sci_tech": {
+              "covered": 115,
+              "recall_on_covered": 0.6696
+            },
+            "sports": {
+              "covered": 125,
+              "recall_on_covered": 0.984
+            },
+            "world": {
+              "covered": 124,
+              "recall_on_covered": 0.8548
+            }
+          },
+          "0.7": {
+            "business": {
+              "covered": 121,
+              "recall_on_covered": 0.9587
+            },
+            "sci_tech": {
+              "covered": 100,
+              "recall_on_covered": 0.69
+            },
+            "sports": {
+              "covered": 125,
+              "recall_on_covered": 0.984
+            },
+            "world": {
+              "covered": 123,
+              "recall_on_covered": 0.8618
+            }
+          },
+          "0.8": {
+            "business": {
+              "covered": 119,
+              "recall_on_covered": 0.958
+            },
+            "sci_tech": {
+              "covered": 86,
+              "recall_on_covered": 0.7442
+            },
+            "sports": {
+              "covered": 123,
+              "recall_on_covered": 0.9919
+            },
+            "world": {
+              "covered": 120,
+              "recall_on_covered": 0.875
+            }
+          },
+          "0.9": {
+            "business": {
+              "covered": 112,
+              "recall_on_covered": 0.9821
+            },
+            "sci_tech": {
+              "covered": 75,
+              "recall_on_covered": 0.8
+            },
+            "sports": {
+              "covered": 120,
+              "recall_on_covered": 0.9917
+            },
+            "world": {
+              "covered": 115,
+              "recall_on_covered": 0.8957
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "business": {
+            "n": 125,
+            "recall": 0.952,
+            "missed": 6,
+            "missed_rate": 0.048,
+            "false_positives": 59,
+            "false_positive_rate": 0.1573
+          },
+          "sci_tech": {
+            "n": 125,
+            "recall": 0.616,
+            "missed": 48,
+            "missed_rate": 0.384,
+            "false_positives": 12,
+            "false_positive_rate": 0.032
+          },
+          "sports": {
+            "n": 125,
+            "recall": 0.96,
+            "missed": 5,
+            "missed_rate": 0.04,
+            "false_positives": 3,
+            "false_positive_rate": 0.008
+          },
+          "world": {
+            "n": 125,
+            "recall": 0.776,
+            "missed": 28,
+            "missed_rate": 0.224,
+            "false_positives": 13,
+            "false_positive_rate": 0.0347
+          }
+        },
+        "recall_at_gate": {}
+      }
     }
   },
   {
     "id": "banking_coarse_route",
+    "n": 500,
     "title": "Banking queue routing",
     "replaces": "Support-queue classifier on banking tickets",
     "dataset": "BANKING77 test, collapsed 77 → 8 queues",
@@ -1140,7 +2511,7 @@ const TASKS = [
       "acc": 0.932,
       "lo": 0.906,
       "hi": 0.951,
-      "p50us": 23,
+      "p50us": 19,
       "trainN": 10003,
       "vsJev": "tfidf",
       "vsMini": "tfidf"
@@ -1214,10 +2585,322 @@ const TASKS = [
         "cov": 0.776,
         "acc": 0.804
       }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "account": {
+            "n": 63,
+            "recall": 0.8571,
+            "missed": 9,
+            "missed_rate": 0.1429,
+            "false_positives": 2,
+            "false_positive_rate": 0.0046
+          },
+          "cards": {
+            "n": 62,
+            "recall": 0.6774,
+            "missed": 20,
+            "missed_rate": 0.3226,
+            "false_positives": 5,
+            "false_positive_rate": 0.0114
+          },
+          "cash_atm": {
+            "n": 63,
+            "recall": 0.5873,
+            "missed": 26,
+            "missed_rate": 0.4127,
+            "false_positives": 2,
+            "false_positive_rate": 0.0046
+          },
+          "fx": {
+            "n": 62,
+            "recall": 0.9516,
+            "missed": 3,
+            "missed_rate": 0.0484,
+            "false_positives": 12,
+            "false_positive_rate": 0.0274
+          },
+          "other": {
+            "n": 62,
+            "recall": 0.0484,
+            "missed": 59,
+            "missed_rate": 0.9516,
+            "false_positives": 8,
+            "false_positive_rate": 0.0183
+          },
+          "payments_fees": {
+            "n": 62,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 60,
+            "false_positive_rate": 0.137
+          },
+          "top_up": {
+            "n": 62,
+            "recall": 0.8871,
+            "missed": 7,
+            "missed_rate": 0.1129,
+            "false_positives": 43,
+            "false_positive_rate": 0.0982
+          },
+          "transfers": {
+            "n": 64,
+            "recall": 0.7344,
+            "missed": 17,
+            "missed_rate": 0.2656,
+            "false_positives": 9,
+            "false_positive_rate": 0.0206
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "account": {
+              "covered": 62,
+              "recall_on_covered": 0.871
+            },
+            "cards": {
+              "covered": 61,
+              "recall_on_covered": 0.6885
+            },
+            "cash_atm": {
+              "covered": 59,
+              "recall_on_covered": 0.6102
+            },
+            "fx": {
+              "covered": 62,
+              "recall_on_covered": 0.9516
+            },
+            "other": {
+              "covered": 62,
+              "recall_on_covered": 0.0484
+            },
+            "payments_fees": {
+              "covered": 62,
+              "recall_on_covered": 1.0
+            },
+            "top_up": {
+              "covered": 62,
+              "recall_on_covered": 0.8871
+            },
+            "transfers": {
+              "covered": 64,
+              "recall_on_covered": 0.7344
+            }
+          },
+          "0.6": {
+            "account": {
+              "covered": 59,
+              "recall_on_covered": 0.8983
+            },
+            "cards": {
+              "covered": 57,
+              "recall_on_covered": 0.7368
+            },
+            "cash_atm": {
+              "covered": 50,
+              "recall_on_covered": 0.6
+            },
+            "fx": {
+              "covered": 61,
+              "recall_on_covered": 0.9508
+            },
+            "other": {
+              "covered": 61,
+              "recall_on_covered": 0.0328
+            },
+            "payments_fees": {
+              "covered": 62,
+              "recall_on_covered": 1.0
+            },
+            "top_up": {
+              "covered": 62,
+              "recall_on_covered": 0.8871
+            },
+            "transfers": {
+              "covered": 62,
+              "recall_on_covered": 0.7419
+            }
+          },
+          "0.7": {
+            "account": {
+              "covered": 58,
+              "recall_on_covered": 0.9138
+            },
+            "cards": {
+              "covered": 55,
+              "recall_on_covered": 0.7636
+            },
+            "cash_atm": {
+              "covered": 45,
+              "recall_on_covered": 0.6
+            },
+            "fx": {
+              "covered": 60,
+              "recall_on_covered": 0.9667
+            },
+            "other": {
+              "covered": 60,
+              "recall_on_covered": 0.0333
+            },
+            "payments_fees": {
+              "covered": 62,
+              "recall_on_covered": 1.0
+            },
+            "top_up": {
+              "covered": 61,
+              "recall_on_covered": 0.9016
+            },
+            "transfers": {
+              "covered": 61,
+              "recall_on_covered": 0.7541
+            }
+          },
+          "0.8": {
+            "account": {
+              "covered": 55,
+              "recall_on_covered": 0.9455
+            },
+            "cards": {
+              "covered": 50,
+              "recall_on_covered": 0.78
+            },
+            "cash_atm": {
+              "covered": 40,
+              "recall_on_covered": 0.6
+            },
+            "fx": {
+              "covered": 60,
+              "recall_on_covered": 0.9667
+            },
+            "other": {
+              "covered": 55,
+              "recall_on_covered": 0.0182
+            },
+            "payments_fees": {
+              "covered": 62,
+              "recall_on_covered": 1.0
+            },
+            "top_up": {
+              "covered": 59,
+              "recall_on_covered": 0.9153
+            },
+            "transfers": {
+              "covered": 54,
+              "recall_on_covered": 0.8333
+            }
+          },
+          "0.9": {
+            "account": {
+              "covered": 50,
+              "recall_on_covered": 0.96
+            },
+            "cards": {
+              "covered": 45,
+              "recall_on_covered": 0.8
+            },
+            "cash_atm": {
+              "covered": 32,
+              "recall_on_covered": 0.625
+            },
+            "fx": {
+              "covered": 56,
+              "recall_on_covered": 0.9643
+            },
+            "other": {
+              "covered": 44,
+              "recall_on_covered": 0.0
+            },
+            "payments_fees": {
+              "covered": 61,
+              "recall_on_covered": 1.0
+            },
+            "top_up": {
+              "covered": 56,
+              "recall_on_covered": 0.9286
+            },
+            "transfers": {
+              "covered": 48,
+              "recall_on_covered": 0.8958
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "account": {
+            "n": 63,
+            "recall": 0.4444,
+            "missed": 35,
+            "missed_rate": 0.5556,
+            "false_positives": 31,
+            "false_positive_rate": 0.0709
+          },
+          "cards": {
+            "n": 62,
+            "recall": 0.6774,
+            "missed": 20,
+            "missed_rate": 0.3226,
+            "false_positives": 11,
+            "false_positive_rate": 0.0251
+          },
+          "cash_atm": {
+            "n": 63,
+            "recall": 0.6508,
+            "missed": 22,
+            "missed_rate": 0.3492,
+            "false_positives": 3,
+            "false_positive_rate": 0.0069
+          },
+          "fx": {
+            "n": 62,
+            "recall": 0.9677,
+            "missed": 2,
+            "missed_rate": 0.0323,
+            "false_positives": 9,
+            "false_positive_rate": 0.0205
+          },
+          "other": {
+            "n": 62,
+            "recall": 0.0645,
+            "missed": 58,
+            "missed_rate": 0.9355,
+            "false_positives": 47,
+            "false_positive_rate": 0.1073
+          },
+          "payments_fees": {
+            "n": 62,
+            "recall": 0.7258,
+            "missed": 17,
+            "missed_rate": 0.2742,
+            "false_positives": 37,
+            "false_positive_rate": 0.0845
+          },
+          "top_up": {
+            "n": 62,
+            "recall": 0.8871,
+            "missed": 7,
+            "missed_rate": 0.1129,
+            "false_positives": 33,
+            "false_positive_rate": 0.0753
+          },
+          "transfers": {
+            "n": 64,
+            "recall": 0.7344,
+            "missed": 17,
+            "missed_rate": 0.2656,
+            "false_positives": 7,
+            "false_positive_rate": 0.0161
+          }
+        },
+        "recall_at_gate": {}
+      }
     }
   },
   {
     "id": "content_hate",
+    "n": 500,
     "title": "Hate-speech screen",
     "replaces": "Hate vs not-hate classifier",
     "dataset": "tweet_eval hate",
@@ -1260,7 +2943,7 @@ const TASKS = [
       "acc": 0.54,
       "lo": 0.496,
       "hi": 0.583,
-      "p50us": 59,
+      "p50us": 32,
       "trainN": 8962,
       "vsJev": "jev",
       "vsMini": "mini"
@@ -1321,6 +3004,101 @@ const TASKS = [
       "0.9": {
         "cov": 0.326,
         "acc": 0.816
+      }
+    },
+    "errors": {
+      "jev": {
+        "per_class": {
+          "hate": {
+            "n": 250,
+            "recall": 0.508,
+            "missed": 123,
+            "missed_rate": 0.492,
+            "false_positives": 46,
+            "false_positive_rate": 0.184
+          },
+          "not_hate": {
+            "n": 250,
+            "recall": 0.816,
+            "missed": 46,
+            "missed_rate": 0.184,
+            "false_positives": 123,
+            "false_positive_rate": 0.492
+          }
+        },
+        "recall_at_gate": {
+          "0.5": {
+            "hate": {
+              "covered": 250,
+              "recall_on_covered": 0.508
+            },
+            "not_hate": {
+              "covered": 250,
+              "recall_on_covered": 0.816
+            }
+          },
+          "0.6": {
+            "hate": {
+              "covered": 227,
+              "recall_on_covered": 0.489
+            },
+            "not_hate": {
+              "covered": 229,
+              "recall_on_covered": 0.8384
+            }
+          },
+          "0.7": {
+            "hate": {
+              "covered": 187,
+              "recall_on_covered": 0.4759
+            },
+            "not_hate": {
+              "covered": 203,
+              "recall_on_covered": 0.8621
+            }
+          },
+          "0.8": {
+            "hate": {
+              "covered": 146,
+              "recall_on_covered": 0.4932
+            },
+            "not_hate": {
+              "covered": 175,
+              "recall_on_covered": 0.8857
+            }
+          },
+          "0.9": {
+            "hate": {
+              "covered": 100,
+              "recall_on_covered": 0.51
+            },
+            "not_hate": {
+              "covered": 133,
+              "recall_on_covered": 0.9398
+            }
+          }
+        }
+      },
+      "mini": {
+        "per_class": {
+          "hate": {
+            "n": 250,
+            "recall": 0.804,
+            "missed": 49,
+            "missed_rate": 0.196,
+            "false_positives": 81,
+            "false_positive_rate": 0.324
+          },
+          "not_hate": {
+            "n": 250,
+            "recall": 0.676,
+            "missed": 81,
+            "missed_rate": 0.324,
+            "false_positives": 49,
+            "false_positive_rate": 0.196
+          }
+        },
+        "recall_at_gate": {}
       }
     }
   }

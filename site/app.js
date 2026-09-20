@@ -119,7 +119,7 @@ function render() {
     <header class="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
       <div class="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6">
         <div>
-          <p class="mono text-[11px] tracking-[0.18em] text-zinc-500 uppercase">whichjudge.dev · which model for this decision · n=${RUN.n} · seed=${RUN.seed}</p>
+          <p class="mono text-[11px] tracking-[0.18em] text-zinc-500 uppercase">whichjudge.dev · which model for this decision · n=${RUN.nMin === RUN.nMax ? RUN.n : RUN.nMin + '–' + RUN.nMax} per task · seed=${RUN.seed}</p>
           <h1 class="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">You don't need a better model. You need a quit line.</h1>
           <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
             Judge here means the cheap in-loop decision (route, gate, score) — not grading an agent transcript.
@@ -135,7 +135,7 @@ function render() {
     <main class="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
       <section class="card-grid mb-8">
         ${statCard("Quit line", "≥ 0.7", "Jev confidence. Below this, don't auto.")}
-        ${statCard(c.best.title + " @ 0.7", pct(c.best.gates["0.7"].acc), "on " + pct(c.best.gates["0.7"].cov) + " of traffic · n=" + RUN.n)}
+        ${statCard(c.best.title + " @ 0.7", pct(c.best.gates["0.7"].acc), "on " + pct(c.best.gates["0.7"].cov) + " of traffic · n=" + c.best.n)}
         ${statCard("Trustworthy gates", `${c.lowEce}/${TASKS.length}`, "ECE ≤ 0.1. The rest cannot carry a threshold.")}
         ${statCard("Don't (sig)", String(c.dont), "Hate: Mini wins. Kept on the homepage.")}
         ${statCard(`TF-IDF wins ${c.tfidfWins}`, c.tfidfNames || "none", "If you have labels, skip both APIs")}
@@ -168,7 +168,7 @@ function render() {
           ${rows.map((t) => rowHtml(t, false)).join("")}
         </div>
         <p class="border-t border-zinc-200 px-4 py-3 text-xs text-zinc-500 dark:border-zinc-800">
-          Accuracy from ${RUN.n}×2 receipts. Click a row for the full breakdown. Don't stays on the homepage. ns is grey on purpose.
+          Accuracy recounted from stored receipts. Click a row for the full breakdown. Don't stays on the homepage. ns is grey on purpose.
         </p>
       </section>
 
@@ -219,7 +219,7 @@ function render() {
     </main>
     <footer class="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
       <div class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-6 text-xs leading-relaxed text-zinc-500 sm:flex-row sm:items-start sm:justify-between sm:px-6">
-        <p class="max-w-xl">Independent bench. Not affiliated with TypeSafe AI. Public gold labels, n=${RUN.n}, not a procurement study. Do not auto-route on high ECE rows (banking, hate).</p>
+        <p class="max-w-xl">Independent bench. Not affiliated with TypeSafe AI. Public gold labels, not a procurement study. Do not auto-route on high ECE rows (banking, hate).</p>
         <p class="flex flex-wrap gap-x-4 gap-y-1">
           <a class="underline decoration-zinc-300 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200" href="mailto:${SITE.contact}">${SITE.contact}</a>
           <a class="underline decoration-zinc-300 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200" href="${SITE.xUrl}" rel="noopener">@${SITE.x}</a>
@@ -392,6 +392,42 @@ function rowHtml(t, on) {
 }
 
 
+function errorProfileHtml(t) {
+  if (!t.errors) return "";
+  const classes = Object.keys(t.errors.jev.per_class);
+  const rows = classes.map((cls) => {
+    const j = t.errors.jev.per_class[cls];
+    const m = t.errors.mini.per_class[cls];
+    const weak = j.recall < 0.75;
+    return `
+      <tr class="border-t border-zinc-100 dark:border-zinc-800">
+        <td class="py-1.5 pr-3 font-medium">${cls}</td>
+        <td class="py-1.5 pr-3 text-right tabular-nums ${weak ? "text-red-700 dark:text-red-400" : ""}">${pct(j.recall)}</td>
+        <td class="py-1.5 pr-3 text-right tabular-nums text-zinc-500">${pct(m.recall)}</td>
+        <td class="py-1.5 text-right tabular-nums text-zinc-500">${j.missed} of ${j.n}</td>
+      </tr>`;
+  }).join("");
+  return `
+    <div class="mt-5">
+      <p class="text-[11px] tracking-wide text-zinc-500 uppercase">Which way it is wrong</p>
+      <table class="mt-2 w-full text-sm">
+        <thead class="text-[11px] tracking-wide text-zinc-500 uppercase">
+          <tr>
+            <th class="pb-1 text-left font-medium">Class</th>
+            <th class="pb-1 text-right font-medium">Jev recall</th>
+            <th class="pb-1 text-right font-medium">Mini recall</th>
+            <th class="pb-1 text-right font-medium">Jev missed</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <p class="mt-2 text-xs leading-relaxed text-zinc-500">
+        Accuracy averages these. When one class matters more than the other, read the row that matters.
+      </p>
+    </div>
+  `;
+}
+
 function modalHtml(t) {
   return `
     <div data-modal-backdrop class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-zinc-900/50 p-4 backdrop-blur-sm sm:p-8">
@@ -429,8 +465,10 @@ function detailHtml(t) {
         ${metric("$ / million", usd(t.jev.perM) + " vs " + usd(t.mini.perM))}
         ${metric("ECE (p_chosen)", t.ece.ece.toFixed(3) + " · MCE " + t.ece.mce.toFixed(3))}
         ${metric("Replacing", t.replaces)}
+        ${metric("Sample size", "n=" + t.n + " · seed " + RUN.seed)}
         ${metric("Gold", `<a class="underline decoration-zinc-300 underline-offset-2" href="${t.sourceUrl}" rel="noopener">${t.sourceName}</a>` + (t.mirrorUrl ? ` via <a class="underline decoration-zinc-300 underline-offset-2" href="${t.mirrorUrl}" rel="noopener">CC0 mirror</a>` : ""))}
       </dl>
+      ${errorProfileHtml(t)}
       <div class="mt-5">
         <p class="text-[11px] tracking-wide text-zinc-500 uppercase">Accuracy bar</p>
         <div class="mt-2 space-y-2">

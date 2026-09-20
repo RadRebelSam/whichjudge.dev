@@ -13,6 +13,19 @@
   },
   "tasks": [
     {
+      "id": "prompt_injection",
+      "title": "Prompt-injection screen",
+      "replaces": "LLM guard deciding whether untrusted input may reach an agent",
+      "dataset": "deepset/prompt-injections, train + test, multilingual",
+      "labels": "injection / legitimate",
+      "verdict": "mix",
+      "ns": true,
+      "sourceName": "deepset/prompt-injections",
+      "sourceUrl": "https://huggingface.co/datasets/deepset/prompt-injections",
+      "why": "Read this row on recall, not accuracy. Jev 80.0% and Mini 81.0% look respectable and are tied (p=0.72), but both are biased hard toward letting text through: Jev misses 40.0% of injections while blocking 0.0% of legitimate input. An accuracy number hides that completely. TF-IDF is 85.7% on only 361 training rows.",
+      "gate": "The quit line does not rescue this one. Raising Jev's threshold from 0.5 to 0.9 moves injection recall from 60.0% to only 66.3% while dropping coverage, so the misses move to a human rather than disappearing. Neither model is a standalone security gate here."
+    },
+    {
       "id": "cfpb_queue_route",
       "title": "Consumer complaint routing",
       "replaces": "LLM classifier routing inbound financial complaints to a product queue",

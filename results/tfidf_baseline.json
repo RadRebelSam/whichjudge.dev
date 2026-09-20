@@ -1,5 +1,1538 @@
 [
   {
+    "task_id": "prompt_injection",
+    "n": 300,
+    "train_n": 361,
+    "train_note": "deepset rows outside the frozen 300",
+    "acc": 0.8566666666666667,
+    "wilson": {
+      "k": 257,
+      "n": 300,
+      "p": 0.8566666666666667,
+      "lo": 0.8124985303950185,
+      "hi": 0.8918158228732633
+    },
+    "fit_ms": 22.224600019399077,
+    "predict_total_ms": 9.032499976456165,
+    "predict_p50_ms": 0.030108333254853886,
+    "mcnemar_vs_jev": {
+      "a_only_correct": 44,
+      "b_only_correct": 27,
+      "discordant": 71,
+      "p_value": 0.057584115072875815,
+      "winner": "ns"
+    },
+    "mcnemar_vs_mini": {
+      "a_only_correct": 45,
+      "b_only_correct": 31,
+      "discordant": 76,
+      "p_value": 0.1359083978473705,
+      "winner": "ns"
+    },
+    "preds": [
+      {
+        "id": 0,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 1,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 2,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 3,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 4,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 5,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 6,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 7,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 8,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 9,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 10,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 11,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 12,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 13,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 14,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 15,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 16,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 17,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 18,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 19,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 20,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 21,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 22,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 23,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 24,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 25,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 26,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 27,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 28,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 29,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 30,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 31,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 32,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 33,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 34,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 35,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 36,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 37,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 38,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 39,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 40,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 41,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 42,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 43,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 44,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 45,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 46,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 47,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 48,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 49,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 50,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 51,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 52,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 53,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 54,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 55,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 56,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 57,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 58,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 59,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 60,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 61,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 62,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 63,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 64,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 65,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 66,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 67,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 68,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 69,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 70,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 71,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 72,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 73,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 74,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 75,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 76,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 77,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 78,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 79,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 80,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 81,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 82,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 83,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 84,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 85,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 86,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 87,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 88,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 89,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 90,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 91,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 92,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 93,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 94,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 95,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 96,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 97,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 98,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 99,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 100,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 101,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 102,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 103,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 104,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 105,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 106,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 107,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 108,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 109,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 110,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 111,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 112,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 113,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 114,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 115,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 116,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 117,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 118,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 119,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 120,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 121,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 122,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 123,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 124,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 125,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 126,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 127,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 128,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 129,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 130,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 131,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 132,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 133,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 134,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 135,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 136,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 137,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 138,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 139,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 140,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 141,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 142,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 143,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 144,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 145,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 146,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 147,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 148,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 149,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 150,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 151,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 152,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 153,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 154,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 155,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 156,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 157,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 158,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 159,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 160,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 161,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 162,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 163,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 164,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 165,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 166,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 167,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 168,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 169,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 170,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 171,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 172,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 173,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 174,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 175,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 176,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 177,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 178,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 179,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 180,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 181,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 182,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 183,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 184,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 185,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 186,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 187,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 188,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 189,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 190,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 191,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 192,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 193,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 194,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 195,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 196,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 197,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 198,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 199,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 200,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 201,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 202,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 203,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 204,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 205,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 206,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 207,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 208,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 209,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 210,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 211,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 212,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 213,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 214,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 215,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 216,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 217,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 218,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 219,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 220,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 221,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 222,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 223,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 224,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 225,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 226,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 227,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 228,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 229,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 230,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 231,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 232,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 233,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 234,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 235,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 236,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 237,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 238,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 239,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 240,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 241,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 242,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 243,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 244,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 245,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 246,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 247,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 248,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 249,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 250,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 251,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 252,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 253,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 254,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 255,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 256,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 257,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 258,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 259,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 260,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 261,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 262,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 263,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 264,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 265,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 266,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 267,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 268,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 269,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 270,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 271,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 272,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 273,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 274,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 275,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 276,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 277,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 278,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 279,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 280,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 281,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 282,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 283,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 284,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 285,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 286,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 287,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 288,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 289,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 290,
+        "gold": "injection",
+        "pred": "legitimate"
+      },
+      {
+        "id": 291,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 292,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 293,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 294,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 295,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 296,
+        "gold": "injection",
+        "pred": "injection"
+      },
+      {
+        "id": 297,
+        "gold": "legitimate",
+        "pred": "legitimate"
+      },
+      {
+        "id": 298,
+        "gold": "legitimate",
+        "pred": "injection"
+      },
+      {
+        "id": 299,
+        "gold": "injection",
+        "pred": "injection"
+      }
+    ]
+  },
+  {
     "task_id": "civil_toxicity",
     "n": 500,
     "train_n": 60000,
@@ -12,9 +1545,9 @@
       "lo": 0.7924518552217157,
       "hi": 0.8585463950220116
     },
-    "fit_ms": 9941.907200030982,
-    "predict_total_ms": 41.06830002274364,
-    "predict_p50_ms": 0.08213660004548728,
+    "fit_ms": 9913.219599984586,
+    "predict_total_ms": 36.923700012266636,
+    "predict_p50_ms": 0.07384740002453327,
     "mcnemar_vs_jev": {
       "a_only_correct": 75,
       "b_only_correct": 51,
@@ -2545,9 +4078,9 @@
       "lo": 0.8355045607103054,
       "hi": 0.8948837200509497
     },
-    "fit_ms": 59554.46980003035,
-    "predict_total_ms": 159.7810999955982,
-    "predict_p50_ms": 0.3195621999911964,
+    "fit_ms": 55848.37890003109,
+    "predict_total_ms": 131.11429999116808,
+    "predict_p50_ms": 0.26222859998233616,
     "mcnemar_vs_jev": {
       "a_only_correct": 47,
       "b_only_correct": 27,
@@ -5078,9 +6611,9 @@
       "lo": 0.9064785429161282,
       "hi": 0.9509337866731715
     },
-    "fit_ms": 1409.6964999916963,
-    "predict_total_ms": 11.252299998886883,
-    "predict_p50_ms": 0.022504599997773767,
+    "fit_ms": 853.8804999552667,
+    "predict_total_ms": 9.705700038466603,
+    "predict_p50_ms": 0.019411400076933205,
     "mcnemar_vs_jev": {
       "a_only_correct": 119,
       "b_only_correct": 12,
@@ -7611,9 +9144,9 @@
       "lo": 0.943815226738503,
       "hi": 0.9771091272648186
     },
-    "fit_ms": 349.09969998989254,
-    "predict_total_ms": 17.522400012239814,
-    "predict_p50_ms": 0.03504480002447963,
+    "fit_ms": 240.42570003075525,
+    "predict_total_ms": 19.866099988576025,
+    "predict_p50_ms": 0.03973219997715205,
     "mcnemar_vs_jev": {
       "a_only_correct": 9,
       "b_only_correct": 9,
@@ -10144,9 +11677,9 @@
       "lo": 0.790317702710052,
       "hi": 0.856711046007799
     },
-    "fit_ms": 2582.834799948614,
-    "predict_total_ms": 20.204200001899153,
-    "predict_p50_ms": 0.040408400003798306,
+    "fit_ms": 1980.544199992437,
+    "predict_total_ms": 17.070400004740804,
+    "predict_p50_ms": 0.03414080000948161,
     "mcnemar_vs_jev": {
       "a_only_correct": 8,
       "b_only_correct": 80,
@@ -12677,9 +14210,9 @@
       "lo": 0.8794606777802376,
       "hi": 0.9303176334985452
     },
-    "fit_ms": 28154.853100015316,
-    "predict_total_ms": 57.596500031650066,
-    "predict_p50_ms": 0.11519300006330013,
+    "fit_ms": 20170.39569996996,
+    "predict_total_ms": 38.48280000966042,
+    "predict_p50_ms": 0.07696560001932085,
     "mcnemar_vs_jev": {
       "a_only_correct": 42,
       "b_only_correct": 16,
@@ -15210,9 +16743,9 @@
       "lo": 0.5949709219022378,
       "hi": 0.6789246833832329
     },
-    "fit_ms": 5973.055200011004,
-    "predict_total_ms": 21.24899998307228,
-    "predict_p50_ms": 0.04249799996614456,
+    "fit_ms": 4413.5216000140645,
+    "predict_total_ms": 13.358799973502755,
+    "predict_p50_ms": 0.02671759994700551,
     "mcnemar_vs_jev": {
       "a_only_correct": 66,
       "b_only_correct": 116,
@@ -17743,9 +19276,9 @@
       "lo": 0.6977463146741062,
       "hi": 0.7746243669051839
     },
-    "fit_ms": 2922.3571000038646,
-    "predict_total_ms": 35.68589995848015,
-    "predict_p50_ms": 0.0713717999169603,
+    "fit_ms": 791.5975999785587,
+    "predict_total_ms": 16.93749998230487,
+    "predict_p50_ms": 0.03387499996460974,
     "mcnemar_vs_jev": {
       "a_only_correct": 57,
       "b_only_correct": 71,
@@ -20276,9 +21809,9 @@
       "lo": 0.4961743505261478,
       "hi": 0.5832156799913801
     },
-    "fit_ms": 1772.2695000120439,
-    "predict_total_ms": 29.545600002165884,
-    "predict_p50_ms": 0.05909120000433177,
+    "fit_ms": 631.3231000094675,
+    "predict_total_ms": 16.160300001502037,
+    "predict_p50_ms": 0.032320600003004074,
     "mcnemar_vs_jev": {
       "a_only_correct": 133,
       "b_only_correct": 194,
@@ -22809,9 +24342,9 @@
       "lo": 0.5990414871027679,
       "hi": 0.6827931212344555
     },
-    "fit_ms": 303.7355999695137,
-    "predict_total_ms": 18.873099994380027,
-    "predict_p50_ms": 0.037746199988760054,
+    "fit_ms": 183.55100002372637,
+    "predict_total_ms": 20.043500000610948,
+    "predict_p50_ms": 0.040087000001221895,
     "mcnemar_vs_jev": {
       "a_only_correct": 45,
       "b_only_correct": 123,

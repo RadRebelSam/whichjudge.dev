@@ -14,6 +14,7 @@ text, so each source has to be cleared on its own terms.
 | Task | Source | Upstream | Status |
 |---|---|---|---|
 | `cfpb_queue_route` | CFPB Consumer Complaint Database | text: [`BEE-spoke-data/consumer-finance-complaints`](https://huggingface.co/datasets/BEE-spoke-data/consumer-finance-complaints) (CC0); labels: [CFPB export](https://www.consumerfinance.gov/data-research/consumer-complaints/) | US federal government work, see note |
+| `prompt_injection` | deepset prompt injections | [`deepset/prompt-injections`](https://huggingface.co/datasets/deepset/prompt-injections) | Apache-2.0, text redistributable |
 | `civil_toxicity` | Civil Comments | [`google/civil_comments`](https://huggingface.co/datasets/google/civil_comments) test split | CC0, text redistributable |
 | `sms_spam` | UCI SMS Spam Collection | [`ucirvine/sms_spam`](https://huggingface.co/datasets/ucirvine/sms_spam) | verify |
 | `review_sentiment` | SST-2 validation (Stanford Sentiment Treebank) | [`stanfordnlp/sst2`](https://huggingface.co/datasets/stanfordnlp/sst2) | verify |

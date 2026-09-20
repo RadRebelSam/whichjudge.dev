@@ -1,7 +1,7 @@
 {
-  "run_id": "2026-09-20T20:14:57.094834+00:00",
-  "finished_utc": "2026-09-20T20:16:32.235430+00:00",
-  "started_utc": "2026-09-20T20:14:57.094834+00:00",
+  "run_id": "2026-09-20T20:54:25.282133+00:00",
+  "finished_utc": "2026-09-20T20:55:26.489357+00:00",
+  "started_utc": "2026-09-20T20:54:25.282133+00:00",
   "latency_environment": {
     "host": "Windows-10-10.0.19045-SP0",
     "python": "3.11.3",
@@ -20,6 +20,7 @@
     "data/content_offensive.jsonl": "758493aec454eeb35c05a47ccbc08fd4c5604cee2c693764b1fbed0911ab8280",
     "data/message_emotion.jsonl": "2e89ceb054d4188b3fdc41914075bae9daf72390e76e8e03c46c4bc30013771f",
     "data/news_topic.jsonl": "99022757d6029d96b16c20ac6517fa95dbf1ad3441dde570f3a1560c0ec2b3d3",
+    "data/prompt_injection.jsonl": "a56df9a7f033f95a3401b16bcd6537bda2acc0d50fbf54f72eb24c91d637a9f6",
     "data/review_sentiment.jsonl": "231657cc2621b2bd379f7c931c3fa1f11e0df5c1db6cbbfeadb19dc529255eb2",
     "data/sms_spam.jsonl": "7005ef00450f0a83518938e1e603ad0291dc6025f817dc0bb9a854358e126777",
     "data/tweet_sentiment.jsonl": "caecb184d45d3ba003e851d0e29b8255884b64dcaa9e7b5000e8397492d39984",
@@ -30,14 +31,16 @@
     "schemas/content_offensive.json": "badd1d31df936632c8259df9071c15c617f73a7b0c3001270fe27e7def832b76",
     "schemas/message_emotion.json": "efdd874ce200c81fe6f3a83f790d878d02a408a549151c58e5cbecf5122429ab",
     "schemas/news_topic.json": "5e5fb6174e853b40f244ba2961df3e18978b1bbaf1216c4136760dd4f8106399",
+    "schemas/prompt_injection.json": "5845f69fd9acff8d989c35135bea36d96166a64d518063165832f41e551d2de8",
     "schemas/review_sentiment.json": "2263bdb7d8ae0c7f944e8b14b2bd4e645498704b55ff813a7bec3a2c56457ec7",
     "schemas/sms_spam.json": "07b1bf25a365768581c3564bd7c62f6a6d0137e6617c362e8e4f0b0e74481e0f",
     "schemas/tweet_sentiment.json": "07949a6e028a4d14f9b010d23a2e5e9088b259d70956bcb6b8f21ef05d123502",
-    "scripts/run_eval.py": "2f54ca007e0871705338c61bb7ea0f48fbff7ba00a50d09fe60b40caf8d22237",
+    "scripts/run_eval.py": "72b7b34cfa8c63d1d6419b1d294eabeb12e7a8ab3edd365bc3baf2fd3ac0a195",
     "scripts/prepare_samples.py": "bf5f04dc1d0adc9b03789a59df8b3db335fdb2e926f5d0e3fac8b1806265667f",
     "scripts/verify_run.py": "fa244b0a246ceb32a96abd388b41d979cdfac4ee061741039e7901d9c8c4e7ec"
   },
   "schema_sha256": {
+    "prompt_injection": "5845f69fd9acff8d989c35135bea36d96166a64d518063165832f41e551d2de8",
     "civil_toxicity": "e571e26e7968df2dcdf810a238b4243e7a3d33993983d0c1add52fc73e79fd10",
     "cfpb_queue_route": "9020180fc20d79e77b55ff7c3170c809270e18eee19b58575fe7d475c1fba3f5",
     "banking_coarse_route": "4aa35879a4f2a01ef4e2be5dca792b87b377db70a0122545bd4b39a50f20e8ec",
@@ -50,6 +53,68 @@
     "message_emotion": "efdd874ce200c81fe6f3a83f790d878d02a408a549151c58e5cbecf5122429ab"
   },
   "tasks": [
+    {
+      "task_id": "prompt_injection",
+      "title": "Prompt-injection screen",
+      "n": 300,
+      "jev_acc": 0.8,
+      "mini_acc": 0.81,
+      "jev_p50_ms": 857.6301999855787,
+      "mini_p50_ms": 1130.237900011707,
+      "jev_p95_ms": 1219.6477000252344,
+      "mini_p95_ms": 1629.1613000212237,
+      "jev_mean_conf": 0.8662666666666672,
+      "jev_cost": 0.005379486,
+      "mini_cost": 0.0058032,
+      "jev_gates": {
+        "0.5": {
+          "coverage": 0.89,
+          "accuracy": 0.8389513108614233
+        },
+        "0.6": {
+          "coverage": 0.86,
+          "accuracy": 0.8527131782945736
+        },
+        "0.7": {
+          "coverage": 0.8366666666666667,
+          "accuracy": 0.852589641434263
+        },
+        "0.8": {
+          "coverage": 0.7933333333333333,
+          "accuracy": 0.8739495798319328
+        },
+        "0.9": {
+          "coverage": 0.7133333333333334,
+          "accuracy": 0.9065420560747663
+        }
+      },
+      "schema_sha256": "5845f69fd9acff8d989c35135bea36d96166a64d518063165832f41e551d2de8",
+      "samples_sha256": "a56df9a7f033f95a3401b16bcd6537bda2acc0d50fbf54f72eb24c91d637a9f6",
+      "jev_wilson": {
+        "k": 240,
+        "n": 300,
+        "p": 0.8,
+        "lo": 0.7510701139033206,
+        "hi": 0.8413438280980382
+      },
+      "mini_wilson": {
+        "k": 243,
+        "n": 300,
+        "p": 0.81,
+        "lo": 0.7617952561979654,
+        "hi": 0.8503658172034386
+      },
+      "mcnemar": {
+        "jev_only_correct": 14,
+        "mini_only_correct": 17,
+        "discordant": 31,
+        "chi2_cc": 0.12903225806451613,
+        "p_value": 0.7194375444233914,
+        "significant_0_05": false,
+        "winner": "ns"
+      },
+      "run_id": "2026-09-20T20:54:25.282133+00:00"
+    },
     {
       "task_id": "civil_toxicity",
       "title": "Comment toxicity gate",

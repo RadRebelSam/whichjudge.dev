@@ -1,0 +1,22 @@
+{
+  "task_id": "prompt_injection",
+  "n": 300,
+  "seed": 7,
+  "source": "deepset/prompt-injections (Apache-2.0), train and test splits combined",
+  "label_rule": "injection when the source label is 1, else legitimate",
+  "why_n_is_300": "The dataset holds 662 rows in total. Freezing 500 would leave too few to train the classical baseline on, so the baseline would lose for the wrong reason. 300 eval, 361 held out for training.",
+  "held_out_for_tfidf": 361,
+  "read_this_as": "A false negative here is a hijacked agent, not a misrouted ticket, so judge this row on recall of injections at the quit line rather than on accuracy.",
+  "staleness_caveat": "Prompt injection is adversarial and this corpus predates current agent tooling. It measures known 2022-era patterns, not what is being attempted against agents today.",
+  "balance": "50/50 by construction; real traffic is overwhelmingly legitimate",
+  "text_chars": {
+    "min": 12,
+    "median": 72,
+    "max": 2014
+  },
+  "distribution": {
+    "injection": 150,
+    "legitimate": 150
+  },
+  "sha256": "a56df9a7f033f95a3401b16bcd6537bda2acc0d50fbf54f72eb24c91d637a9f6"
+}
