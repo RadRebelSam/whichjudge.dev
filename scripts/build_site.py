@@ -111,7 +111,9 @@ def build_tasks(copy, summary, calib, tfidf, errors):
                 for stats in gate.values():
                     if stats.get("recall_on_covered") is not None:
                         known.add(round(stats["recall_on_covered"] * 100, 1))
-        for field in ("why", "gate"):
+        for field in ("why", "gate", "rowNote"):
+            if not c.get(field):
+                continue
             for raw in re.findall(r"(\d+\.?\d*)\s*(?:%|pt)", c[field]):
                 # Match at the precision the sentence was written at: "89%" may round
                 # a measured 88.8, but "98.6%" must be a measured 98.6, not 98.9.
@@ -147,6 +149,8 @@ def build_tasks(copy, summary, calib, tfidf, errors):
             "why": c["why"],
             "gate": c["gate"],
             "goldTier": c["goldTier"],
+            "rowNote": c.get("rowNote"),
+            "rowNoteKind": c.get("rowNoteKind"),
             "goldNote": c["goldNote"],
             "sourceName": c["sourceName"],
             "sourceUrl": c["sourceUrl"],

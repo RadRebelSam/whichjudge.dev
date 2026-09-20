@@ -25,7 +25,9 @@
       "why": "Read this row on recall, not accuracy. Jev 80.0% and Mini 81.0% look respectable and are tied (p=0.72), but both are biased hard toward letting text through: Jev misses 40.0% of injections while blocking 0.0% of legitimate input. An accuracy number hides that completely. TF-IDF is 85.7% on only 361 training rows.",
       "gate": "The exception on this site. The slice looks fine at 90.6% on 71.3%, but that is accuracy, and accuracy is not the job. Injection recall only moves from 60.0% to 66.3% between gate 0.5 and 0.9, so the misses go to a human rather than away. Neither model is a standalone gate.",
       "goldTier": "research",
-      "goldNote": "Curated research corpus, predates current agent tooling"
+      "goldNote": "Curated research corpus, predates current agent tooling",
+      "rowNoteKind": "warn",
+      "rowNote": "Misses 40.0% of injections. Gating does not fix it."
     },
     {
       "id": "cfpb_queue_route",
@@ -41,7 +43,9 @@
       "sourceUrl": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
       "mirrorUrl": "https://huggingface.co/datasets/BEE-spoke-data/consumer-finance-complaints",
       "goldTier": "live",
-      "goldNote": "Live system: a regulator routes these daily and the filer picks the label"
+      "goldNote": "Live system: a regulator routes these daily and the filer picks the label",
+      "rowNoteKind": "info",
+      "rowNote": "TF-IDF beats both APIs at 86.8%."
     },
     {
       "id": "civil_toxicity",
@@ -56,7 +60,9 @@
       "sourceName": "google/civil_comments",
       "sourceUrl": "https://huggingface.co/datasets/google/civil_comments",
       "goldTier": "real",
-      "goldNote": "Real content from a news site, labels from crowd annotators"
+      "goldNote": "Real content from a news site, labels from crowd annotators",
+      "rowNoteKind": "warn",
+      "rowNote": "Misses 28.0% of toxic comments. Mini misses only 13.2% but wrongly blocks 32.8%."
     },
     {
       "id": "sms_spam",
@@ -116,7 +122,9 @@
       "sourceName": "cardiffnlp/tweet_eval",
       "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
       "goldTier": "research",
-      "goldNote": "Academic benchmark"
+      "goldNote": "Academic benchmark",
+      "rowNoteKind": "warn",
+      "rowNote": "Misses 37.3% of offensive posts."
     },
     {
       "id": "tweet_sentiment",
@@ -146,7 +154,9 @@
       "sourceName": "fancyzhx/ag_news",
       "sourceUrl": "https://huggingface.co/datasets/fancyzhx/ag_news",
       "goldTier": "research",
-      "goldNote": "Academic benchmark"
+      "goldNote": "Academic benchmark",
+      "rowNoteKind": "info",
+      "rowNote": "Replace is vs Mini only. TF-IDF beats both at 90.8%."
     },
     {
       "id": "banking_coarse_route",
@@ -161,7 +171,9 @@
       "sourceName": "PolyAI BANKING77",
       "sourceUrl": "https://github.com/PolyAI-LDN/task-specific-datasets",
       "goldTier": "research",
-      "goldNote": "Research corpus of customer queries, intents collapsed by keyword"
+      "goldNote": "Research corpus of customer queries, intents collapsed by keyword",
+      "rowNoteKind": "info",
+      "rowNote": "Replace is vs Mini only. TF-IDF beats both at 93.2%."
     },
     {
       "id": "content_hate",
@@ -176,7 +188,9 @@
       "sourceName": "cardiffnlp/tweet_eval",
       "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
       "goldTier": "research",
-      "goldNote": "Academic benchmark"
+      "goldNote": "Academic benchmark",
+      "rowNoteKind": "info",
+      "rowNote": "Don't is this dataset's verdict: on CC0 gold the gap disappears."
     }
   ],
   "calls": {
@@ -188,7 +202,7 @@
     },
     "contribute": {
       "heading": "Have labelled data for a real decision?",
-      "body": "Every task here is public academic gold, which is comparable but not production. The decisions worth measuring are the ones people actually run: support-queue routing, prompt-injection screening, PR risk gating, refund eligibility. Those need labelled examples, and nobody has published them. If you have a few hundred rows you can share, or a public set worth adding, I will measure it and publish the row. Your data does not get republished unless you say so.",
+      "body": "Nine of the eleven rows are public academic gold: comparable, but not production. Only CFPB complaint routing rests on a live system's own labels, and only Civil Comments uses real user text. The decisions worth measuring are the ones people actually run: support-queue routing, injection screening, PR risk gating, refund eligibility. Those need labelled examples and almost nobody publishes them. If you have a few hundred rows you can share, or a public set worth adding, I will measure it and publish the row. Your data does not get republished unless you say so.",
       "cta": "Offer a dataset",
       "subject": "WhichJudge dataset"
     }

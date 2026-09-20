@@ -11,7 +11,7 @@ const FILTERS = [
 
 // Header and rows share this exact template. The old markup used <th> cells for the
 // header and a CSS grid for the rows, which is why the columns never lined up.
-const GRID = "minmax(0,1.35fr) 5.2rem minmax(4rem,0.6fr) minmax(4rem,0.6fr) minmax(4rem,0.6fr) 3.6rem minmax(6.5rem,0.9fr)";
+const GRID = "minmax(0,1.9fr) 5rem minmax(3.8rem,0.55fr) minmax(3.8rem,0.55fr) minmax(3.8rem,0.55fr) 3.4rem minmax(6rem,0.8fr)";
 
 const receiptCache = {};
 let modalOpen = false;
@@ -165,7 +165,7 @@ function render() {
             <span class="w-1 shrink-0"></span>
             <span class="grid w-full min-w-0 items-end gap-3 px-4 py-3" style="grid-template-columns: ${GRID}">
               <span>Decision</span>
-              <span>Verdict</span>
+              <span>vs Mini</span>
               <span class="text-right">Jev</span>
               <span class="text-right">4o-mini</span>
               <span class="text-right">TF-IDF</span>
@@ -181,7 +181,7 @@ function render() {
       </section>
 
       <section class="mt-6 rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
-        <h2 class="text-sm font-semibold">Monthly bill on this schema</h2>
+        <h2 class="text-sm font-semibold">Monthly bill on ${open.title.toLowerCase()}</h2>
         <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Uses measured $/call × volume. Jev is not cheaper here: the question text is longer, so input tokens dominate. Official 40-200× / 400× claims are vs large generative models, not vs 4o-mini on these tasks.</p>
         <label class="mt-4 flex flex-col gap-2 text-sm sm:flex-row sm:items-center">
           <span class="shrink-0 text-zinc-500">Calls / month</span>
@@ -200,9 +200,9 @@ function render() {
           <ul class="mt-3 space-y-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Auto slice</span> - the strongest threshold that still leaves at least half the traffic automated, and what it buys against ungated accuracy. Picked by that rule from the measured gates, not by hand.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ECE</span> - whether you may read the confidence as a probability. It is <em>not</em> whether gating helps. Gating only needs the model to rank its own answers, so a badly calibrated row can still gate well: banking has the worst ECE here and still gains ${(() => { const b = TASKS.find((t) => t.id === "banking_coarse_route"); return b ? (b.autoSlice.lift * 100).toFixed(1) : "0"; })()}pt. What high ECE costs you is the right to quote the number.</li>
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Replace</span> - McNemar p<0.05 and Jev ≥ Mini. Latency is extra. Cost is not the reason (see $/M).</li>
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ns</span> - accuracy gap is noise. Do not crown a winner on 1-2pt.</li>
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Don't</span> - Mini significantly better. Hate-speech stays on the homepage on purpose.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Replace / Mix / Don't / ns</span> - these compare Jev against 4o-mini and nothing else. They do not say whether you should automate the decision (see Auto slice), whether the confidence can be quoted (see ECE), or whether a trained classifier would beat both (see TF-IDF). Banking is Replace, has the worst ECE here, and loses to TF-IDF by 21 points. One badge cannot carry three findings.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ns</span> - accuracy gap is noise. Do not crown a winner on 1-2pt. On the safety rows, ignore accuracy entirely and read the miss rate in red.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Don't</span> - Mini significantly better on that dataset. Hate speech stays up on purpose, and the Civil Comments row shows the same judgement on CC0 gold where the gap disappears.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">TF-IDF</span> - $0, ~0.03ms, leftover train never overlapping the frozen 500. If it wins, skip both APIs.</li>
           </ul>
           <p class="mt-4 text-xs leading-relaxed text-zinc-500">${RUN.note}</p>
@@ -394,10 +394,11 @@ function rowHtml(t, on) {
     <button type="button" data-task="${t.id}"
       class="flex w-full items-stretch border-b border-zinc-100 text-left last:border-0 dark:border-zinc-800 ${on ? "bg-zinc-100 dark:bg-zinc-800/80" : "hover:bg-zinc-50 dark:hover:bg-zinc-800/40"}">
       <span class="w-1 shrink-0 ${v.cls}" style="background: var(--v)"></span>
-      <span class="grid w-full min-w-0 items-center gap-3 px-4 py-3" style="grid-template-columns: ${GRID}">
+      <span class="grid w-full min-w-0 items-start gap-3 px-4 py-3" style="grid-template-columns: ${GRID}">
         <span class="min-w-0">
-          <span class="block truncate font-medium">${t.title}</span>
+          <span class="block font-medium leading-snug">${t.title}</span>
           <span class="block truncate text-xs text-zinc-500">${goldBadge(t)} ${t.sourceName}</span>
+          ${t.rowNote ? `<span class="mt-0.5 block text-[11px] leading-snug ${t.rowNoteKind === "warn" ? "font-medium text-red-700 dark:text-red-400" : "text-zinc-500"}">${t.rowNote}</span>` : ""}
         </span>
         <span><span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${v.chip}">${v.label}</span></span>
         <span class="text-right tabular-nums">${pct(t.jev.acc)}<span class="block text-[10px] font-normal text-zinc-400">${pct(t.jev.lo)}-${pct(t.jev.hi)}</span></span>
