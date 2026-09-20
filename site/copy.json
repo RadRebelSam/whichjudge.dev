@@ -24,6 +24,17 @@
       "gate": "At >=0.7: 88.2% on 88.0% of complaints. ECE 0.100 is borderline, and the 0.9 bin is the weak spot, so gate at 0.9 (91.8% on 75.6%) if a misroute is expensive."
     },
     {
+      "id": "civil_toxicity",
+      "title": "Comment toxicity gate",
+      "replaces": "Toxicity classifier gating user comments before publication",
+      "dataset": "Civil Comments test split (CC0)",
+      "labels": "toxic / not_toxic",
+      "verdict": "mix",
+      "ns": true,
+      "why": "The same decision as the hate-speech row, on clean CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF wins again at 82.8%. Read this next to the hate row: the Don't verdict there does not survive a change of gold, so it was a fact about that dataset more than about Jev.",
+      "gate": "Calibration is usable here (ECE 0.075) unlike the hate row. At >=0.8: 91.3% on 52.8% of comments. Publish that half automatically and queue the rest."
+    },
+    {
       "id": "sms_spam",
       "title": "SMS spam gate",
       "replaces": "Spam vs ham classifier on inbound SMS",
@@ -107,7 +118,7 @@
       "dataset": "tweet_eval hate",
       "labels": "not_hate / hate",
       "verdict": "dont",
-      "why": "Mini +7.8pt (p=0.0026). Jev mean confidence 0.67, ECE 0.187. Do not use Jev as the only classifier.",
+      "why": "Mini +7.8pt (p=0.0026). Jev mean confidence 0.67 and ECE 0.187, so the confidence cannot carry a threshold either. Kept on the homepage, but compare it with the Civil Comments row: on cleaner gold for the same decision the gap disappears.",
       "gate": "If you insist: >=0.9 is 81.6% but only 32.6% coverage. Keep a specialist.",
       "ns": false
     }

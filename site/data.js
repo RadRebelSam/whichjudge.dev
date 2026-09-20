@@ -204,12 +204,12 @@ const COST_CURVE = {
 
 const RUN = {
   "date": "2026-09-20",
-  "runId": "2026-09-20T18:00:15.961406+00:00",
+  "runId": "2026-09-20T20:14:57.094834+00:00",
   "modelJev": "jev-1.13.0",
   "modelMini": "gpt-4o-mini-2024-07-18",
   "n": 500,
   "seed": 7,
-  "tasks": 9,
+  "tasks": 10,
   "note": "Frozen samples (seed=7, n=500). Wilson 95% CI on accuracy. McNemar on paired errors. Full receipts in results/receipts/. APIs do not sign responses."
 };
 
@@ -255,7 +255,7 @@ const TASKS = [
       "acc": 0.868,
       "lo": 0.836,
       "hi": 0.895,
-      "p50us": 318,
+      "p50us": 320,
       "trainN": 63392,
       "vsJev": "tfidf",
       "vsMini": "tfidf"
@@ -326,6 +326,111 @@ const TASKS = [
     }
   },
   {
+    "id": "civil_toxicity",
+    "title": "Comment toxicity gate",
+    "replaces": "Toxicity classifier gating user comments before publication",
+    "dataset": "Civil Comments test split (CC0)",
+    "labels": "toxic / not_toxic",
+    "verdict": "mix",
+    "ns": true,
+    "why": "The same decision as the hate-speech row, on clean CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF wins again at 82.8%. Read this next to the hate row: the Don't verdict there does not survive a change of gold, so it was a fact about that dataset more than about Jev.",
+    "gate": "Calibration is usable here (ECE 0.075) unlike the hate row. At >=0.8: 91.3% on 52.8% of comments. Publish that half automatically and queue the rest.",
+    "samplesSha": "e018f1952099",
+    "schemaSha": "e571e26e7968",
+    "jev": {
+      "acc": 0.78,
+      "lo": 0.742,
+      "hi": 0.814,
+      "p50": 804,
+      "p95": 1166,
+      "conf": 0.706,
+      "cost": 0.009567558,
+      "perM": 19.14
+    },
+    "mini": {
+      "acc": 0.77,
+      "lo": 0.731,
+      "hi": 0.805,
+      "p50": 1057,
+      "p95": 1495,
+      "cost": 0.0122283,
+      "perM": 24.46
+    },
+    "mcnemar": {
+      "p": 0.688,
+      "winner": "ns",
+      "b": 52,
+      "c": 47
+    },
+    "tfidf": {
+      "acc": 0.828,
+      "lo": 0.792,
+      "hi": 0.859,
+      "p50us": 82,
+      "trainN": 60000,
+      "vsJev": "tfidf",
+      "vsMini": "tfidf"
+    },
+    "ece": {
+      "ece": 0.075,
+      "mce": 0.138,
+      "bins": [
+        {
+          "lo": 0.5,
+          "n": 51,
+          "conf": 0.544,
+          "acc": 0.51
+        },
+        {
+          "lo": 0.6,
+          "n": 50,
+          "conf": 0.65,
+          "acc": 0.66
+        },
+        {
+          "lo": 0.7,
+          "n": 56,
+          "conf": 0.745,
+          "acc": 0.607
+        },
+        {
+          "lo": 0.8,
+          "n": 76,
+          "conf": 0.846,
+          "acc": 0.711
+        },
+        {
+          "lo": 0.9,
+          "n": 267,
+          "conf": 0.975,
+          "acc": 0.91
+        }
+      ]
+    },
+    "gates": {
+      "0.5": {
+        "cov": 0.738,
+        "acc": 0.846
+      },
+      "0.6": {
+        "cov": 0.68,
+        "acc": 0.865
+      },
+      "0.7": {
+        "cov": 0.62,
+        "acc": 0.884
+      },
+      "0.8": {
+        "cov": 0.528,
+        "acc": 0.913
+      },
+      "0.9": {
+        "cov": 0.432,
+        "acc": 0.931
+      }
+    }
+  },
+  {
     "id": "sms_spam",
     "title": "SMS spam gate",
     "replaces": "Spam vs ham classifier on inbound SMS",
@@ -366,7 +471,7 @@ const TASKS = [
       "acc": 0.964,
       "lo": 0.944,
       "hi": 0.977,
-      "p50us": 28,
+      "p50us": 35,
       "trainN": 4968,
       "vsJev": "ns",
       "vsMini": "ns"
@@ -471,7 +576,7 @@ const TASKS = [
       "acc": 0.826,
       "lo": 0.79,
       "hi": 0.857,
-      "p50us": 29,
+      "p50us": 40,
       "trainN": 67349,
       "vsJev": "jev",
       "vsMini": "mini"
@@ -576,7 +681,7 @@ const TASKS = [
       "acc": 0.642,
       "lo": 0.599,
       "hi": 0.683,
-      "p50us": 26,
+      "p50us": 38,
       "trainN": 3257,
       "vsJev": "jev",
       "vsMini": "mini"
@@ -687,7 +792,7 @@ const TASKS = [
       "acc": 0.738,
       "lo": 0.698,
       "hi": 0.775,
-      "p50us": 37,
+      "p50us": 71,
       "trainN": 11912,
       "vsJev": "ns",
       "vsMini": "ns"
@@ -792,7 +897,7 @@ const TASKS = [
       "acc": 0.638,
       "lo": 0.595,
       "hi": 0.679,
-      "p50us": 27,
+      "p50us": 42,
       "trainN": 45615,
       "vsJev": "jev",
       "vsMini": "mini"
@@ -903,7 +1008,7 @@ const TASKS = [
       "acc": 0.908,
       "lo": 0.879,
       "hi": 0.93,
-      "p50us": 65,
+      "p50us": 115,
       "trainN": 120000,
       "vsJev": "tfidf",
       "vsMini": "tfidf"
@@ -1008,7 +1113,7 @@ const TASKS = [
       "acc": 0.932,
       "lo": 0.906,
       "hi": 0.951,
-      "p50us": 19,
+      "p50us": 23,
       "trainN": 10003,
       "vsJev": "tfidf",
       "vsMini": "tfidf"
@@ -1092,7 +1197,7 @@ const TASKS = [
     "labels": "not_hate / hate",
     "verdict": "dont",
     "ns": false,
-    "why": "Mini +7.8pt (p=0.0026). Jev mean confidence 0.67, ECE 0.187. Do not use Jev as the only classifier.",
+    "why": "Mini +7.8pt (p=0.0026). Jev mean confidence 0.67 and ECE 0.187, so the confidence cannot carry a threshold either. Kept on the homepage, but compare it with the Civil Comments row: on cleaner gold for the same decision the gap disappears.",
     "gate": "If you insist: >=0.9 is 81.6% but only 32.6% coverage. Keep a specialist.",
     "samplesSha": "5bc4134ab919",
     "schemaSha": "c656daeea6fd",
@@ -1125,7 +1230,7 @@ const TASKS = [
       "acc": 0.54,
       "lo": 0.496,
       "hi": 0.583,
-      "p50us": 32,
+      "p50us": 59,
       "trainN": 8962,
       "vsJev": "jev",
       "vsMini": "mini"

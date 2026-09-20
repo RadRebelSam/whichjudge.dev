@@ -1,0 +1,25 @@
+{
+  "task_id": "civil_toxicity",
+  "title": "Comment toxicity gate",
+  "question_key": "toxic",
+  "questions": {
+    "toxic": {
+      "type": "choice",
+      "instructions": "Would a majority of ordinary readers rate this comment as toxic, meaning rude, disrespectful, or likely to make someone leave the discussion? Judge the comment itself, not the opinion it holds: a strongly worded but civil disagreement is not toxic.",
+      "criteria": {
+        "toxic": "Insulting, demeaning, hateful, obscene, or threatening toward a person or group",
+        "not_toxic": "Civil, even if blunt, critical, sarcastic, or strongly opinionated"
+      }
+    }
+  },
+  "openai_prompt": "Would a majority of ordinary readers rate this comment as toxic, meaning rude, disrespectful, or likely to make someone leave the discussion? Judge the comment itself, not the opinion it holds. Reply with JSON {\"label\": <one of: toxic, not_toxic>}.",
+  "labels": [
+    "toxic",
+    "not_toxic"
+  ],
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "jev_model_requested": "jev-latest",
+  "mini_endpoint": "https://api.openai.com/v1/chat/completions",
+  "mini_model": "gpt-4o-mini",
+  "mini_temperature": 0
+}

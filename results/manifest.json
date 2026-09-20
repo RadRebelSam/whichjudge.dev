@@ -1,7 +1,7 @@
 {
-  "run_id": "2026-09-20T18:00:15.961406+00:00",
-  "finished_utc": "2026-09-20T18:02:03.266627+00:00",
-  "started_utc": "2026-09-20T18:00:15.961406+00:00",
+  "run_id": "2026-09-20T20:14:57.094834+00:00",
+  "finished_utc": "2026-09-20T20:16:32.235430+00:00",
+  "started_utc": "2026-09-20T20:14:57.094834+00:00",
   "latency_environment": {
     "host": "Windows-10-10.0.19045-SP0",
     "python": "3.11.3",
@@ -15,6 +15,7 @@
   "file_sha256": {
     "data/banking_coarse_route.jsonl": "2d6c984f02c99d3dc7973874dc7cae0eee57657e088b56b9a2fa28588bd1fde6",
     "data/cfpb_queue_route.jsonl": "708d19757cb0c88bd6ed28c1522a5c603562de97847474229833ef6529ed48c8",
+    "data/civil_toxicity.jsonl": "e018f1952099ae5fe45ea86e504bde156c2b537b4d24f3eb3a0f6342016ee5f8",
     "data/content_hate.jsonl": "5bc4134ab919ad8ba4baf42153ed78d0094610f780d94276d9f2cf8c6668b666",
     "data/content_offensive.jsonl": "758493aec454eeb35c05a47ccbc08fd4c5604cee2c693764b1fbed0911ab8280",
     "data/message_emotion.jsonl": "2e89ceb054d4188b3fdc41914075bae9daf72390e76e8e03c46c4bc30013771f",
@@ -24,6 +25,7 @@
     "data/tweet_sentiment.jsonl": "caecb184d45d3ba003e851d0e29b8255884b64dcaa9e7b5000e8397492d39984",
     "schemas/banking_coarse_route.json": "4aa35879a4f2a01ef4e2be5dca792b87b377db70a0122545bd4b39a50f20e8ec",
     "schemas/cfpb_queue_route.json": "9020180fc20d79e77b55ff7c3170c809270e18eee19b58575fe7d475c1fba3f5",
+    "schemas/civil_toxicity.json": "e571e26e7968df2dcdf810a238b4243e7a3d33993983d0c1add52fc73e79fd10",
     "schemas/content_hate.json": "c656daeea6fd24ecfbcfb56227654fa65787087c46bd17bbccd3b62b5be6dda3",
     "schemas/content_offensive.json": "badd1d31df936632c8259df9071c15c617f73a7b0c3001270fe27e7def832b76",
     "schemas/message_emotion.json": "efdd874ce200c81fe6f3a83f790d878d02a408a549151c58e5cbecf5122429ab",
@@ -31,11 +33,12 @@
     "schemas/review_sentiment.json": "2263bdb7d8ae0c7f944e8b14b2bd4e645498704b55ff813a7bec3a2c56457ec7",
     "schemas/sms_spam.json": "07b1bf25a365768581c3564bd7c62f6a6d0137e6617c362e8e4f0b0e74481e0f",
     "schemas/tweet_sentiment.json": "07949a6e028a4d14f9b010d23a2e5e9088b259d70956bcb6b8f21ef05d123502",
-    "scripts/run_eval.py": "874a8caf146f85381b054bb1854535431b30f45c8d9faf10d0bfb9d2ba03e0a1",
+    "scripts/run_eval.py": "2f54ca007e0871705338c61bb7ea0f48fbff7ba00a50d09fe60b40caf8d22237",
     "scripts/prepare_samples.py": "bf5f04dc1d0adc9b03789a59df8b3db335fdb2e926f5d0e3fac8b1806265667f",
     "scripts/verify_run.py": "fa244b0a246ceb32a96abd388b41d979cdfac4ee061741039e7901d9c8c4e7ec"
   },
   "schema_sha256": {
+    "civil_toxicity": "e571e26e7968df2dcdf810a238b4243e7a3d33993983d0c1add52fc73e79fd10",
     "cfpb_queue_route": "9020180fc20d79e77b55ff7c3170c809270e18eee19b58575fe7d475c1fba3f5",
     "banking_coarse_route": "4aa35879a4f2a01ef4e2be5dca792b87b377db70a0122545bd4b39a50f20e8ec",
     "news_topic": "5e5fb6174e853b40f244ba2961df3e18978b1bbaf1216c4136760dd4f8106399",
@@ -47,6 +50,68 @@
     "message_emotion": "efdd874ce200c81fe6f3a83f790d878d02a408a549151c58e5cbecf5122429ab"
   },
   "tasks": [
+    {
+      "task_id": "civil_toxicity",
+      "title": "Comment toxicity gate",
+      "n": 500,
+      "jev_acc": 0.78,
+      "mini_acc": 0.77,
+      "jev_p50_ms": 803.7144999834709,
+      "mini_p50_ms": 1057.1434000157751,
+      "jev_p95_ms": 1166.474300029222,
+      "mini_p95_ms": 1495.2366999932565,
+      "jev_mean_conf": 0.7062600000000001,
+      "jev_cost": 0.009567558,
+      "mini_cost": 0.0122283,
+      "jev_gates": {
+        "0.5": {
+          "coverage": 0.738,
+          "accuracy": 0.8455284552845529
+        },
+        "0.6": {
+          "coverage": 0.68,
+          "accuracy": 0.8647058823529412
+        },
+        "0.7": {
+          "coverage": 0.62,
+          "accuracy": 0.8838709677419355
+        },
+        "0.8": {
+          "coverage": 0.528,
+          "accuracy": 0.9128787878787878
+        },
+        "0.9": {
+          "coverage": 0.432,
+          "accuracy": 0.9305555555555556
+        }
+      },
+      "schema_sha256": "e571e26e7968df2dcdf810a238b4243e7a3d33993983d0c1add52fc73e79fd10",
+      "samples_sha256": "e018f1952099ae5fe45ea86e504bde156c2b537b4d24f3eb3a0f6342016ee5f8",
+      "jev_wilson": {
+        "k": 390,
+        "n": 500,
+        "p": 0.78,
+        "lo": 0.7416305610182787,
+        "hi": 0.8140996526044155
+      },
+      "mini_wilson": {
+        "k": 385,
+        "n": 500,
+        "p": 0.77,
+        "lo": 0.7311370330150648,
+        "hi": 0.8047456729782474
+      },
+      "mcnemar": {
+        "jev_only_correct": 52,
+        "mini_only_correct": 47,
+        "discordant": 99,
+        "chi2_cc": 0.16161616161616163,
+        "p_value": 0.6876728942554104,
+        "significant_0_05": false,
+        "winner": "ns"
+      },
+      "run_id": "2026-09-20T20:14:57.094834+00:00"
+    },
     {
       "task_id": "cfpb_queue_route",
       "title": "Consumer complaint routing",

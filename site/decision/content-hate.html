@@ -18,7 +18,7 @@
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>Hate-speech screen</h1>
 <p><span class="verdict">Don&#x27;t</span></p>
-<p>Mini +7.8pt (p=0.0026). Jev mean confidence 0.67, ECE 0.187. Do not use Jev as the only classifier.</p>
+<p>Mini +7.8pt (p=0.0026). Jev mean confidence 0.67 and ECE 0.187, so the confidence cannot carry a threshold either. Kept on the homepage, but compare it with the Civil Comments row: on cleaner gold for the same decision the gap disappears.</p>
 <p><strong>Replaces:</strong> Hate vs not-hate classifier<br>
 <strong>Gold:</strong> tweet_eval hate, n=500, seed=7<br>
 <strong>Labels:</strong> <code>not_hate / hate</code></p>
@@ -27,7 +27,7 @@
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>66.2%</td><td>[61.9% - 70.2%]</td><td>840 ms</td><td>$14.88</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>74.0%</td><td>[70.0% - 77.7%]</td><td>1072 ms</td><td>$14.36</td></tr>
-        <tr><td>TF-IDF + LR (train n=8,962)</td><td>54.0%</td><td>[49.6% - 58.3%]</td><td>32 us</td><td>$0</td></tr>
+        <tr><td>TF-IDF + LR (train n=8,962)</td><td>54.0%</td><td>[49.6% - 58.3%]</td><td>59 us</td><td>$0</td></tr>
   </tbody>
 </table>
 <p><strong>McNemar Jev vs Mini:</strong> mini, p=0.00258
@@ -47,7 +47,7 @@ Every call is stored with its request, response and SHA-256 in
 python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
 python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
 <p>Independent bench, not affiliated with TypeSafe AI. Public gold labels, n=500,
-not a procurement study. <a href="../index.html">All 9 decisions</a> &middot;
+not a procurement study. <a href="../index.html">All 10 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
 </body>

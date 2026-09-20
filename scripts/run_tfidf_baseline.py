@@ -225,8 +225,33 @@ def cfpb_train() -> pd.DataFrame:
     return pd.concat(parts, ignore_index=True)
 
 
+def civil_train() -> pd.DataFrame:
+    """Civil Comments train split, balanced, never touching the frozen test rows."""
+    import sys
+    import urllib.request
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from prepare_civil import TOXIC_AT, MIN_CHARS, MAX_CHARS
+
+    local = RAW / "civil_comments_train.parquet"
+    if not local.exists():
+        url = ("https://huggingface.co/datasets/google/civil_comments/resolve/main/"
+               "data/train-00000-of-00002.parquet")
+        print(f"downloading {url}")
+        urllib.request.urlretrieve(url, local)
+    df = pd.read_parquet(local, columns=["text", "toxicity"])
+    df["text"] = df["text"].astype(str).str.strip()
+    df = df[df["text"].str.len().between(MIN_CHARS, MAX_CHARS)]
+    df["gold"] = (df["toxicity"] >= TOXIC_AT).map({True: "toxic", False: "not_toxic"})
+    n = min(30000, int(df["gold"].value_counts().min()))
+    parts = [g.sample(n=n, random_state=7) for _, g in df.groupby("gold")]
+    return pd.concat(parts, ignore_index=True)
+
+
 def main():
     out = []
+
+    out.append(run_one("civil_toxicity", civil_train(), "text",
+                       "Civil Comments official train, balanced"))
 
     out.append(run_one("cfpb_queue_route", cfpb_train(), "text",
                        "CFPB complaints outside the frozen 500, capped at 8000 per queue"))

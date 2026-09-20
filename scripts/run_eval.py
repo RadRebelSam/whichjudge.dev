@@ -32,6 +32,34 @@ JEV_MODEL_REQ = "jev-latest"
 MINI_MODEL = "gpt-4o-mini"
 
 TASKS = {
+    "civil_toxicity": {
+        "title": "Comment toxicity gate",
+        "replaces": "Toxicity classifier gating user comments before publication",
+        "question_key": "toxic",
+        "kind": "choice",
+        "questions": {
+            "toxic": {
+                "type": "choice",
+                "instructions": (
+                    "Would a majority of ordinary readers rate this comment as toxic, "
+                    "meaning rude, disrespectful, or likely to make someone leave the "
+                    "discussion? Judge the comment itself, not the opinion it holds: "
+                    "a strongly worded but civil disagreement is not toxic."
+                ),
+                "criteria": {
+                    "toxic": "Insulting, demeaning, hateful, obscene, or threatening toward a person or group",
+                    "not_toxic": "Civil, even if blunt, critical, sarcastic, or strongly opinionated",
+                },
+            }
+        },
+        "openai_prompt": (
+            "Would a majority of ordinary readers rate this comment as toxic, meaning rude, "
+            "disrespectful, or likely to make someone leave the discussion? Judge the comment "
+            "itself, not the opinion it holds. "
+            "Reply with JSON {\"label\": <one of: toxic, not_toxic>}."
+        ),
+        "labels": ["toxic", "not_toxic"],
+    },
     "cfpb_queue_route": {
         "title": "Consumer complaint routing",
         "replaces": "LLM classifier routing inbound financial complaints to a product queue",

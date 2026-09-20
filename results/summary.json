@@ -1,5 +1,67 @@
 [
   {
+    "task_id": "civil_toxicity",
+    "title": "Comment toxicity gate",
+    "n": 500,
+    "jev_acc": 0.78,
+    "mini_acc": 0.77,
+    "jev_p50_ms": 803.7144999834709,
+    "mini_p50_ms": 1057.1434000157751,
+    "jev_p95_ms": 1166.474300029222,
+    "mini_p95_ms": 1495.2366999932565,
+    "jev_mean_conf": 0.7062600000000001,
+    "jev_cost": 0.009567558,
+    "mini_cost": 0.0122283,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.738,
+        "accuracy": 0.8455284552845529
+      },
+      "0.6": {
+        "coverage": 0.68,
+        "accuracy": 0.8647058823529412
+      },
+      "0.7": {
+        "coverage": 0.62,
+        "accuracy": 0.8838709677419355
+      },
+      "0.8": {
+        "coverage": 0.528,
+        "accuracy": 0.9128787878787878
+      },
+      "0.9": {
+        "coverage": 0.432,
+        "accuracy": 0.9305555555555556
+      }
+    },
+    "schema_sha256": "e571e26e7968df2dcdf810a238b4243e7a3d33993983d0c1add52fc73e79fd10",
+    "samples_sha256": "e018f1952099ae5fe45ea86e504bde156c2b537b4d24f3eb3a0f6342016ee5f8",
+    "jev_wilson": {
+      "k": 390,
+      "n": 500,
+      "p": 0.78,
+      "lo": 0.7416305610182787,
+      "hi": 0.8140996526044155
+    },
+    "mini_wilson": {
+      "k": 385,
+      "n": 500,
+      "p": 0.77,
+      "lo": 0.7311370330150648,
+      "hi": 0.8047456729782474
+    },
+    "mcnemar": {
+      "jev_only_correct": 52,
+      "mini_only_correct": 47,
+      "discordant": 99,
+      "chi2_cc": 0.16161616161616163,
+      "p_value": 0.6876728942554104,
+      "significant_0_05": false,
+      "winner": "ns"
+    },
+    "run_id": "2026-09-20T20:14:57.094834+00:00"
+  },
+  {
     "task_id": "cfpb_queue_route",
     "title": "Consumer complaint routing",
     "n": 500,

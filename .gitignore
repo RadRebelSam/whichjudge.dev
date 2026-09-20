@@ -29,3 +29,7 @@ tmp/
 # Rehydrated third-party text. The public repo ships hashes; scripts/rehydrate.py
 # rebuilds these locally. Never commit them.
 data/*.text.jsonl
+
+# Leftovers from the original Gumloop export and local backups
+jev_replace_bench/
+summary_backup.json

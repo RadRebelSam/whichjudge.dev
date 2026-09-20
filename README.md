@@ -32,6 +32,7 @@ whichjudge/
     verify_run.py           recount accuracy; check SHA-256 (no API)
     run_tfidf_baseline.py   TF-IDF + LR on leftover official train
     prepare_cfpb.py         freeze 500 CFPB complaints, labels joined from the Bureau
+    prepare_civil.py        freeze 500 Civil Comments (CC0) for the toxicity row
     calibrate.py            ECE + reliability bins from receipts (no API)
     cost_curve.py           cost and latency vs input length; finds the crossover
     redact_text.py          strip third-party text to hashes before publishing
@@ -102,6 +103,7 @@ is noise and neither model should be crowned.
 | Decision | n | Jev | Mini | McNemar | ECE | Verdict |
 |---|---|---|---|---|---|---|
 | Consumer complaint routing | 500 | 82.8% [79.2%-85.9%] | 81.0% | ns p=0.253 | 0.100 | ns |
+| Comment toxicity gate | 500 | 78.0% [74.2%-81.4%] | 77.0% | ns p=0.688 | 0.075 | ns |
 | SMS spam gate | 500 | 96.4% [94.4%-97.7%] | 96.4% | ns p=0.773 | 0.016 | ns |
 | Review polarity | 500 | 97.0% [95.1%-98.2%] | 96.4% | ns p=0.546 | 0.015 | ns |
 | Message emotion | 500 | 79.8% [76.1%-83.1%] | 75.0% | jev p=0.00528 | 0.083 | Replace |
@@ -110,6 +112,23 @@ is noise and neither model should be crowned.
 | News topic | 500 | 85.6% [82.3%-88.4%] | 82.6% | jev p=0.00933 | 0.096 | Replace |
 | Banking queue routing | 500 | 71.8% [67.7%-75.6%] | 64.4% | jev p=3.23e-05 | 0.213 | Replace |
 | Hate-speech screen | 500 | 66.2% [61.9%-70.2%] | 74.0% | mini p=0.00258 | 0.187 | Don't |
+
+### The Don't verdict does not survive a change of gold
+
+Two rows, one decision, different labels:
+
+| | TweetEval hate | Civil Comments (CC0) |
+|---|---|---|
+| Jev | 66.2% | 78.0% |
+| 4o-mini | 74.0% | 77.0% |
+| McNemar | Mini wins, p=0.00258 | ns, p=0.688 |
+| ECE | 0.187 | 0.075 |
+
+On TweetEval, Mini wins by 7.8 points and Jev's
+confidence is too badly calibrated to gate on. On CC0 gold for the same judgement the
+models tie and the confidence becomes usable. So the Don't was mostly a fact about that
+dataset. Both rows stay up: deleting the inconvenient one would be the opposite of the
+point.
 
 **Consumer complaint routing is the only production decision here.** The CFPB runs it
 live, the consumer writes the narrative and picks the product, and the complaint is
@@ -126,6 +145,7 @@ frozen 500 (`scripts/run_tfidf_baseline.py`):
 | Decision | TF-IDF | vs Jev | vs Mini |
 |---|---|---|---|
 | Consumer complaint routing | 86.8% | TF-IDF wins | TF-IDF wins |
+| Comment toxicity gate | 82.8% | TF-IDF wins | TF-IDF wins |
 | SMS spam gate | 96.4% | ns | ns |
 | Review polarity | 82.6% | Jev wins | Mini wins |
 | Message emotion | 64.2% | Jev wins | Mini wins |

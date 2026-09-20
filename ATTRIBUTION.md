@@ -14,6 +14,7 @@ text, so each source has to be cleared on its own terms.
 | Task | Source | Upstream | Status |
 |---|---|---|---|
 | `cfpb_queue_route` | CFPB Consumer Complaint Database | text: `BEE-spoke-data/consumer-finance-complaints` (CC0); labels: `files.consumerfinance.gov/ccdb/complaints.csv.zip` | US federal government work, see note |
+| `civil_toxicity` | Civil Comments | `google/civil_comments` test split | CC0, text redistributable |
 | `sms_spam` | UCI SMS Spam Collection | `ucirvine/sms_spam` | verify |
 | `review_sentiment` | SST-2 validation (Stanford Sentiment Treebank) | `stanfordnlp/sst2` | verify |
 | `news_topic` | AG News test | `fancyzhx/ag_news` | verify |
@@ -39,6 +40,18 @@ launch. Personal details are redacted as `XXXX` by the Bureau before publication
 The label is selected by the person filing the complaint, not by an expert annotator,
 and the product taxonomy has been renamed several times. The eight queues collapse that
 history; the mapping is in `scripts/prepare_cfpb.py` and the meta file records it.
+
+## Civil Comments is the clean-licence route
+
+`civil_toxicity` is CC0, so its text ships in this repo with no redaction and no
+rehydration step. It covers the same judgement as the TweetEval hate row, which is why
+both are published: one shows what the verdict looks like on thin gold with an awkward
+licence, the other on clean gold that can simply be handed to a reader.
+
+The label is the fraction of crowd annotators who called a comment toxic, thresholded
+at 0.5. That is a crowd majority, not an expert ruling, and 99 of the 500 rows sit
+between 0.4 and 0.6, so a fifth of the set is genuinely contested. The meta file
+records that count rather than hiding it.
 
 ## How the TweetEval question is handled
 
