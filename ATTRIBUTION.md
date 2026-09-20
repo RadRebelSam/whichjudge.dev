@@ -61,7 +61,6 @@ and so inherit those datasets' terms.
 
 ## CFPB: two sources on purpose
 
-## CFPB: two sources on purpose
 
 The Bureau's own bulk export carries no narratives, and its search API refuses scripted
 clients, so the complaint text comes from a CC0 mirror on Hugging Face. The **gold
@@ -109,7 +108,7 @@ tasks are running in the reduced mode rather than quietly skipping them.
 
 ### Why, stated plainly
 
-Four of the eight tasks are tweet text. Platform terms for X/Twitter content have
+Four of the eleven rows are tweet text. Platform terms for X/Twitter content have
 historically allowed sharing **tweet IDs** rather than **tweet text**, which is why
 many research corpora ship IDs plus a rehydration script. TweetEval itself
 distributes text, but that does not automatically transfer the right to redistribute

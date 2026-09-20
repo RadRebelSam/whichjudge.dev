@@ -35,6 +35,14 @@ jobs:
       - name: Site is generated from results/
         run: python scripts/build_site.py --check
 
+      # --check only proves the site matches what the generator would emit today.
+      # These are the cross-checks it cannot make: published text that should have
+      # been redacted, numbers typed into app.js by hand, prose citing a model with
+      # no column, a badge crowning a winner the test refused, and docs still
+      # describing an older number of rows. Every one has happened here.
+      - name: Audit for leaks, stale numbers and uncited columns
+        run: python scripts/audit_site.py
+
       - name: Upload site
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3

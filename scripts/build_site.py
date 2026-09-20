@@ -72,6 +72,15 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern):
                 f"{tid}: copy.json says ns={c['ns']} but McNemar p={mc['p_value']:.3g} "
                 f"means ns={derived_ns}. Fix the copy, not the number."
             )
+        # The reverse direction matters just as much: a row may not claim a winner
+        # over Mini when McNemar declined to give it one. "neither" is about all the
+        # models at once, so it is allowed to sit on top of an ns row.
+        if derived_ns and c["verdict"] in ("replace", "dont"):
+            raise SystemExit(
+                f"{tid}: copy.json claims verdict={c['verdict']} but McNemar is ns "
+                f"(p={mc['p_value']:.3g}). Use \"mix\" or \"neither\"; the badge must not "
+                f"crown a winner the test refused to."
+            )
 
         auto = None
         for gate, v in sorted(s["jev_gates"].items()):
@@ -239,8 +248,15 @@ def render_data_js(run, tasks, site, calls, curve) -> str:
 def render_decision_page(t, run, site) -> str:
     slug = t["id"].replace("_", "-")
     url = f"{site['domain']}/decision/{slug}.html"
-    verdict = VERDICT_TEXT[t["verdict"]]
-    ns_tag = " (ns)" if t["ns"] else ""
+    # "Replace (ns)" said two opposite things at once. McNemar refusing to crown a
+    # winner outranks the editorial verdict, exactly as the table shows it.
+    if t["verdict"] == "neither":
+        verdict = "Neither"
+    elif t["ns"]:
+        verdict = "ns"
+    else:
+        verdict = VERDICT_TEXT[t["verdict"]]
+    ns_tag = ""
     title = f"{t['title']}: Jev vs gpt-4o-mini vs TF-IDF | {site['name']}"
     desc = (
         f"{t['title']} on {t['dataset']}, n={t['n']} frozen gold. "
@@ -284,6 +300,11 @@ def render_decision_page(t, run, site) -> str:
          f"[{pct(t['tfidf']['lo'])} - {pct(t['tfidf']['hi'])}]",
          f"{t['tfidf']['p50us']} us", "$0"),
     ]
+    if t.get("modern"):
+        m = t["modern"]
+        rows.insert(2, (m["model"], pct(m["acc"]),
+                        f"[{pct(m['lo'])} - {pct(m['hi'])}]",
+                        f"{m['p50']} ms", f"{m['tokens']} tok/call"))
     tbody = "\n".join(
         "        <tr>" + "".join(f"<td>{e(c)}</td>" for c in r) + "</tr>" for r in rows
     )
@@ -505,6 +526,11 @@ def main() -> None:
                  "McNemar on paired errors. Full receipts in results/receipts/. "
                  "APIs do not sign responses."),
     }
+
+    modern_name = next((t["modern"]["model"] for t in tasks if t.get("modern")), None)
+    site["description"] = site["descriptionTemplate"].format(
+        tasks=len(tasks), modern=modern_name or "no current model column",
+        nmin=sizes[0], nmax=sizes[-1])
 
     drift: list = []
     write(SITE / "data.js", render_data_js(run, tasks, site, copy["calls"], curve), check, drift)

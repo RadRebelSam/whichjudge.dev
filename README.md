@@ -40,6 +40,7 @@ whichjudge/
     redact_text.py          strip third-party text to hashes before publishing
     rehydrate.py            restore that text from upstream, hash-checked
     build_site.py           GENERATE site from results/ (--check gates CI)
+    audit_site.py           CI cross-checks --check cannot make
   data/                     FROZEN samples + meta (n=500, injection n=300)
   schemas/                  frozen questions + Mini prompts
   results/                  summary, calibration.json, tfidf_*.json
@@ -52,8 +53,9 @@ whichjudge/
     sitemap.xml robots.txt  GENERATED
 ```
 
-Before any public launch, read `ATTRIBUTION.md`: four of the eight tasks are tweet
-text, and redistributing that from this repo is not automatically cleared.
+`ATTRIBUTION.md` records what each row may and may not redistribute. Seven of the
+eleven ship a SHA-256 of the text rather than the text; `scripts/rehydrate.py`
+restores them.
 
 `data/*.jsonl` is the source of truth for which 500 examples.
 `results/*.json` is the first run’s parsed predictions.
@@ -76,14 +78,14 @@ cp .env.example .env
 set -a && source .env && set +a
 
 # Frozen samples are already in data/. Skip prepare unless you change seed/N.
-python3 scripts/run_eval.py                 # all 8 tasks
+python3 scripts/run_eval.py                 # every task
 python3 scripts/run_eval.py sms_spam        # one task
 ```
 
 Jev: `POST https://api.typesafe.ai/v1/systemone` with `model: jev-latest` (resolved to `jev-1.13.0` on 2026-09-20).
 Mini: `POST https://api.openai.com/v1/chat/completions`, `temperature: 0`, `response_format: json_object`.
 
-Cost of an 8-task n=500 run is about **$0.12** total (Jev ~$0.006, Mini ~$0.005). Output tokens on Jev are free; Mini is $0.15 / $0.60 per million in/out.
+A full run across every task is about **$0.12** total on the two paid arms. Output tokens on Jev are free; Mini is $0.15 / $0.60 per million in/out.
 
 ### Rebuild samples (optional)
 
@@ -314,6 +316,7 @@ python3 scripts/cost_curve.py        # cost vs length                      (~$0.
 python3 scripts/redact_text.py       # strip tweet text before committing  (no API)
 python3 scripts/build_site.py        # regenerate every published number   (no API)
 python3 scripts/verify_run.py        # must print ALL CHECKS PASSED        (no API)
+python3 scripts/audit_site.py        # leaks, stale numbers, uncited columns (no API)
 ```
 
 Set `WHICHJUDGE_REGION` before `run_eval.py` so the latency numbers are attributable.

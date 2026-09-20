@@ -4,21 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SMS spam gate: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
-<meta name="description" content="SMS spam gate on UCI SMS Spam, n=500 frozen gold. Jev 96.4%, gpt-4o-mini 96.4%, TF-IDF 96.4%. Verdict: Replace. ECE 0.016.">
+<meta name="description" content="SMS spam gate on UCI SMS Spam, n=500 frozen gold. Jev 96.4%, gpt-4o-mini 96.4%, TF-IDF 96.4%. Verdict: ns. ECE 0.016.">
 <link rel="canonical" href="https://whichjudge.dev/decision/sms-spam.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SMS spam gate: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
-<meta property="og:description" content="SMS spam gate on UCI SMS Spam, n=500 frozen gold. Jev 96.4%, gpt-4o-mini 96.4%, TF-IDF 96.4%. Verdict: Replace. ECE 0.016.">
+<meta property="og:description" content="SMS spam gate on UCI SMS Spam, n=500 frozen gold. Jev 96.4%, gpt-4o-mini 96.4%, TF-IDF 96.4%. Verdict: ns. ECE 0.016.">
 <meta property="og:url" content="https://whichjudge.dev/decision/sms-spam.html">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "SMS spam gate - cheap decision model bake-off", "description": "SMS spam gate on UCI SMS Spam, n=500 frozen gold. Jev 96.4%, gpt-4o-mini 96.4%, TF-IDF 96.4%. Verdict: Replace. ECE 0.016.", "url": "https://whichjudge.dev/decision/sms-spam.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "UCI SMS Spam", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/sms_spam.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.964}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.964}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.964}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.016}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "SMS spam gate - cheap decision model bake-off", "description": "SMS spam gate on UCI SMS Spam, n=500 frozen gold. Jev 96.4%, gpt-4o-mini 96.4%, TF-IDF 96.4%. Verdict: ns. ECE 0.016.", "url": "https://whichjudge.dev/decision/sms-spam.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "UCI SMS Spam", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/sms_spam.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.964}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.964}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.964}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.016}]}</script>
 <style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>SMS spam gate</h1>
-<p><span class="verdict">Replace (ns)</span></p>
+<p><span class="verdict">ns</span></p>
 <p>Dead heat: Jev 96.4, Mini 96.4, TF-IDF 96.4. Classical ML is enough here. Nothing separates the three.</p>
 <p><strong>Replaces:</strong> Spam vs ham classifier on inbound SMS<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/ucirvine/sms_spam" rel="noopener">ucirvine/sms_spam</a>
@@ -30,6 +30,7 @@
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>96.4%</td><td>[94.4% - 97.7%]</td><td>807 ms</td><td>$15.21</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>96.4%</td><td>[94.4% - 97.7%]</td><td>1057 ms</td><td>$13.35</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>94.6%</td><td>[92.3% - 96.3%]</td><td>996 ms</td><td>71.1 tok/call</td></tr>
         <tr><td>TF-IDF + LR (train n=4,968)</td><td>96.4%</td><td>[94.4% - 97.7%]</td><td>40 us</td><td>$0</td></tr>
   </tbody>
 </table>

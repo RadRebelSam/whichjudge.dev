@@ -4,21 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Review polarity: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
-<meta name="description" content="Review polarity on SST-2 validation, n=500 frozen gold. Jev 97.0%, gpt-4o-mini 96.4%, TF-IDF 82.6%. Verdict: Replace. ECE 0.015.">
+<meta name="description" content="Review polarity on SST-2 validation, n=500 frozen gold. Jev 97.0%, gpt-4o-mini 96.4%, TF-IDF 82.6%. Verdict: ns. ECE 0.015.">
 <link rel="canonical" href="https://whichjudge.dev/decision/review-sentiment.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Review polarity: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
-<meta property="og:description" content="Review polarity on SST-2 validation, n=500 frozen gold. Jev 97.0%, gpt-4o-mini 96.4%, TF-IDF 82.6%. Verdict: Replace. ECE 0.015.">
+<meta property="og:description" content="Review polarity on SST-2 validation, n=500 frozen gold. Jev 97.0%, gpt-4o-mini 96.4%, TF-IDF 82.6%. Verdict: ns. ECE 0.015.">
 <meta property="og:url" content="https://whichjudge.dev/decision/review-sentiment.html">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Review polarity - cheap decision model bake-off", "description": "Review polarity on SST-2 validation, n=500 frozen gold. Jev 97.0%, gpt-4o-mini 96.4%, TF-IDF 82.6%. Verdict: Replace. ECE 0.015.", "url": "https://whichjudge.dev/decision/review-sentiment.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "SST-2 validation", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/review_sentiment.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.97}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.964}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.826}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.015}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Review polarity - cheap decision model bake-off", "description": "Review polarity on SST-2 validation, n=500 frozen gold. Jev 97.0%, gpt-4o-mini 96.4%, TF-IDF 82.6%. Verdict: ns. ECE 0.015.", "url": "https://whichjudge.dev/decision/review-sentiment.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "SST-2 validation", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/review_sentiment.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.97}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.964}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.826}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.015}]}</script>
 <style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>Review polarity</h1>
-<p><span class="verdict">Replace (ns)</span></p>
+<p><span class="verdict">ns</span></p>
 <p>Tied (McNemar p=0.55). 97.0% vs 96.4%. TF-IDF drops to 82.6%, so the models earn their keep against classical, not against each other.</p>
 <p><strong>Replaces:</strong> Binary review sentiment<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/stanfordnlp/sst2" rel="noopener">stanfordnlp/sst2</a>
@@ -30,6 +30,7 @@
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>97.0%</td><td>[95.1% - 98.2%]</td><td>812 ms</td><td>$14.09</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>96.4%</td><td>[94.4% - 97.7%]</td><td>1037 ms</td><td>$12.35</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>94.8%</td><td>[92.5% - 96.4%]</td><td>1000 ms</td><td>64.4 tok/call</td></tr>
         <tr><td>TF-IDF + LR (train n=67,349)</td><td>82.6%</td><td>[79.0% - 85.7%]</td><td>34 us</td><td>$0</td></tr>
   </tbody>
 </table>

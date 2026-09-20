@@ -5,11 +5,12 @@ const SITE = {
   "name": "WhichJudge",
   "tagline": "which model for this decision",
   "headline": "You don't need a better model. You need a quit line.",
-  "description": "Independent bake-off of cheap in-loop decision models. Jev vs gpt-4o-mini vs TF-IDF on 8 classification decisions, n=500 frozen public gold, full per-call receipts.",
   "repo": "https://github.com/RadRebelSam/whichjudge.dev",
   "contact": "contact@radrebeldeveloper.com",
   "x": "RadRebelDev",
-  "xUrl": "https://x.com/RadRebelDev"
+  "xUrl": "https://x.com/RadRebelDev",
+  "descriptionTemplate": "Independent bake-off of cheap in-loop decision models on {tasks} decisions: Jev vs gpt-4o-mini vs {modern} vs TF-IDF, n={nmin}-{nmax} frozen gold, full per-call receipts.",
+  "description": "Independent bake-off of cheap in-loop decision models on 11 decisions: Jev vs gpt-4o-mini vs gpt-5.4-mini-2026-03-17 vs TF-IDF, n=300-500 frozen gold, full per-call receipts."
 };
 
 const CALLS = {
@@ -468,7 +469,7 @@ const TASKS = [
     "replaces": "LLM classifier routing inbound financial complaints to a product queue",
     "dataset": "CFPB Consumer Complaint Database, 8 product queues",
     "labels": "credit_reporting / debt_collection / cards / bank_account / mortgage / money_transfer / loans / student_loan",
-    "verdict": "replace",
+    "verdict": "mix",
     "ns": true,
     "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, so this is also the first row where Jev is the cheaper API: $33.89 against $53.21 per million decisions.",
     "gate": "At >=0.9: 91.8% on 75.6% of complaints, 9.0pt above ungated. ECE 0.100 means do not repeat the confidence figure to anyone as a probability; it does not stop you thresholding on it.",
@@ -1228,7 +1229,7 @@ const TASKS = [
     "replaces": "Spam vs ham classifier on inbound SMS",
     "dataset": "UCI SMS Spam",
     "labels": "ham / spam",
-    "verdict": "replace",
+    "verdict": "mix",
     "ns": true,
     "why": "Dead heat: Jev 96.4, Mini 96.4, TF-IDF 96.4. Classical ML is enough here. Nothing separates the three.",
     "gate": "Already at 96.4% ungated, so the gate has little left to buy: 99.0% on 80.0% at >=0.9, 2.6pt. Low ECE rows gain least because there is no headroom.",
@@ -1473,7 +1474,7 @@ const TASKS = [
     "replaces": "Binary review sentiment",
     "dataset": "SST-2 validation",
     "labels": "negative / positive",
-    "verdict": "replace",
+    "verdict": "mix",
     "ns": true,
     "why": "Tied (McNemar p=0.55). 97.0% vs 96.4%. TF-IDF drops to 82.6%, so the models earn their keep against classical, not against each other.",
     "gate": "Lowest ECE on the board at 0.015, so the confidence can be quoted directly, but the gate only adds 1.8pt (98.8% on 80.6%). Little headroom left.",

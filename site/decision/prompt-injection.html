@@ -18,7 +18,7 @@
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>Prompt-injection screen</h1>
-<p><span class="verdict">Neither (ns)</span></p>
+<p><span class="verdict">Neither</span></p>
 <p>Read this row on recall, not accuracy. Jev 80.0% and 4o-mini 81.0% are tied (p=0.72), and a current small model does beat both at 86.0%. But all three are biased toward letting text through: Jev catches 60.0% of injections, 4o-mini 62.7%, the 2026 model 72.0%. Better is not the same as usable when 28.0% still walk past.</p>
 <p><strong>Replaces:</strong> LLM guard deciding whether untrusted input may reach an agent<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/deepset/prompt-injections" rel="noopener">deepset/prompt-injections</a>
@@ -30,6 +30,7 @@
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>80.0%</td><td>[75.1% - 84.1%]</td><td>858 ms</td><td>$17.93</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>81.0%</td><td>[76.2% - 85.0%]</td><td>1130 ms</td><td>$19.34</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>86.0%</td><td>[81.6% - 89.5%]</td><td>931 ms</td><td>108.3 tok/call</td></tr>
         <tr><td>TF-IDF + LR (train n=361)</td><td>85.7%</td><td>[81.2% - 89.2%]</td><td>30 us</td><td>$0</td></tr>
   </tbody>
 </table>
