@@ -204,16 +204,127 @@ const COST_CURVE = {
 
 const RUN = {
   "date": "2026-09-20",
-  "runId": "2026-09-20T17:16:26.262207+00:00",
+  "runId": "2026-09-20T18:00:15.961406+00:00",
   "modelJev": "jev-1.13.0",
   "modelMini": "gpt-4o-mini-2024-07-18",
   "n": 500,
   "seed": 7,
-  "tasks": 8,
+  "tasks": 9,
   "note": "Frozen samples (seed=7, n=500). Wilson 95% CI on accuracy. McNemar on paired errors. Full receipts in results/receipts/. APIs do not sign responses."
 };
 
 const TASKS = [
+  {
+    "id": "cfpb_queue_route",
+    "title": "Consumer complaint routing",
+    "replaces": "LLM classifier routing inbound financial complaints to a product queue",
+    "dataset": "CFPB Consumer Complaint Database, 8 product queues",
+    "labels": "credit_reporting / debt_collection / cards / bank_account / mortgage / money_transfer / loans / student_loan",
+    "verdict": "replace",
+    "ns": true,
+    "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, so this is also the first row where Jev is the cheaper API: $33.89 against $53.21 per million decisions.",
+    "gate": "At >=0.7: 88.2% on 88.0% of complaints. ECE 0.100 is borderline, and the 0.9 bin is the weak spot, so gate at 0.9 (91.8% on 75.6%) if a misroute is expensive.",
+    "samplesSha": "708d19757cb0",
+    "schemaSha": "9020180fc20d",
+    "jev": {
+      "acc": 0.828,
+      "lo": 0.792,
+      "hi": 0.859,
+      "p50": 856,
+      "p95": 1463,
+      "conf": 0.916,
+      "cost": 0.016944564000000002,
+      "perM": 33.89
+    },
+    "mini": {
+      "acc": 0.81,
+      "lo": 0.773,
+      "hi": 0.842,
+      "p50": 1104,
+      "p95": 1611,
+      "cost": 0.026607150000000003,
+      "perM": 53.21
+    },
+    "mcnemar": {
+      "p": 0.253,
+      "winner": "ns",
+      "b": 29,
+      "c": 20
+    },
+    "tfidf": {
+      "acc": 0.868,
+      "lo": 0.836,
+      "hi": 0.895,
+      "p50us": 318,
+      "trainN": 63392,
+      "vsJev": "tfidf",
+      "vsMini": "tfidf"
+    },
+    "ece": {
+      "ece": 0.1,
+      "mce": 0.435,
+      "bins": [
+        {
+          "lo": 0.4,
+          "n": 2,
+          "conf": 0.435,
+          "acc": 0.0
+        },
+        {
+          "lo": 0.5,
+          "n": 16,
+          "conf": 0.544,
+          "acc": 0.375
+        },
+        {
+          "lo": 0.6,
+          "n": 28,
+          "conf": 0.635,
+          "acc": 0.429
+        },
+        {
+          "lo": 0.7,
+          "n": 27,
+          "conf": 0.734,
+          "acc": 0.556
+        },
+        {
+          "lo": 0.8,
+          "n": 40,
+          "conf": 0.847,
+          "acc": 0.7
+        },
+        {
+          "lo": 0.9,
+          "n": 387,
+          "conf": 0.99,
+          "acc": 0.912
+        }
+      ]
+    },
+    "gates": {
+      "0.5": {
+        "cov": 0.974,
+        "acc": 0.844
+      },
+      "0.6": {
+        "cov": 0.93,
+        "acc": 0.86
+      },
+      "0.7": {
+        "cov": 0.88,
+        "acc": 0.882
+      },
+      "0.8": {
+        "cov": 0.834,
+        "acc": 0.897
+      },
+      "0.9": {
+        "cov": 0.756,
+        "acc": 0.918
+      }
+    }
+  },
   {
     "id": "sms_spam",
     "title": "SMS spam gate",
@@ -255,7 +366,7 @@ const TASKS = [
       "acc": 0.964,
       "lo": 0.944,
       "hi": 0.977,
-      "p50us": 27,
+      "p50us": 28,
       "trainN": 4968,
       "vsJev": "ns",
       "vsMini": "ns"
@@ -360,7 +471,7 @@ const TASKS = [
       "acc": 0.826,
       "lo": 0.79,
       "hi": 0.857,
-      "p50us": 32,
+      "p50us": 29,
       "trainN": 67349,
       "vsJev": "jev",
       "vsMini": "mini"
@@ -465,7 +576,7 @@ const TASKS = [
       "acc": 0.642,
       "lo": 0.599,
       "hi": 0.683,
-      "p50us": 24,
+      "p50us": 26,
       "trainN": 3257,
       "vsJev": "jev",
       "vsMini": "mini"
@@ -576,7 +687,7 @@ const TASKS = [
       "acc": 0.738,
       "lo": 0.698,
       "hi": 0.775,
-      "p50us": 35,
+      "p50us": 37,
       "trainN": 11912,
       "vsJev": "ns",
       "vsMini": "ns"
@@ -681,7 +792,7 @@ const TASKS = [
       "acc": 0.638,
       "lo": 0.595,
       "hi": 0.679,
-      "p50us": 37,
+      "p50us": 27,
       "trainN": 45615,
       "vsJev": "jev",
       "vsMini": "mini"
@@ -792,7 +903,7 @@ const TASKS = [
       "acc": 0.908,
       "lo": 0.879,
       "hi": 0.93,
-      "p50us": 79,
+      "p50us": 65,
       "trainN": 120000,
       "vsJev": "tfidf",
       "vsMini": "tfidf"

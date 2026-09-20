@@ -1,5 +1,67 @@
 [
   {
+    "task_id": "cfpb_queue_route",
+    "title": "Consumer complaint routing",
+    "n": 500,
+    "jev_acc": 0.828,
+    "mini_acc": 0.81,
+    "jev_p50_ms": 855.7097999728285,
+    "mini_p50_ms": 1104.1794000193477,
+    "jev_p95_ms": 1462.748999998439,
+    "mini_p95_ms": 1610.8224999625236,
+    "jev_mean_conf": 0.9163800000000007,
+    "jev_cost": 0.016944564000000002,
+    "mini_cost": 0.026607150000000003,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.974,
+        "accuracy": 0.8439425051334702
+      },
+      "0.6": {
+        "coverage": 0.93,
+        "accuracy": 0.8602150537634409
+      },
+      "0.7": {
+        "coverage": 0.88,
+        "accuracy": 0.8818181818181818
+      },
+      "0.8": {
+        "coverage": 0.834,
+        "accuracy": 0.8968824940047961
+      },
+      "0.9": {
+        "coverage": 0.756,
+        "accuracy": 0.917989417989418
+      }
+    },
+    "schema_sha256": "9020180fc20d79e77b55ff7c3170c809270e18eee19b58575fe7d475c1fba3f5",
+    "samples_sha256": "708d19757cb0c88bd6ed28c1522a5c603562de97847474229833ef6529ed48c8",
+    "jev_wilson": {
+      "k": 414,
+      "n": 500,
+      "p": 0.828,
+      "lo": 0.7924518552217157,
+      "hi": 0.8585463950220116
+    },
+    "mini_wilson": {
+      "k": 405,
+      "n": 500,
+      "p": 0.81,
+      "lo": 0.7732995724391238,
+      "hi": 0.8419731640717161
+    },
+    "mcnemar": {
+      "jev_only_correct": 29,
+      "mini_only_correct": 20,
+      "discordant": 49,
+      "chi2_cc": 1.3061224489795917,
+      "p_value": 0.2530979089471156,
+      "significant_0_05": false,
+      "winner": "ns"
+    },
+    "run_id": "2026-09-20T18:00:15.961406+00:00"
+  },
+  {
     "task_id": "banking_coarse_route",
     "title": "Banking support queue routing",
     "n": 500,

@@ -13,6 +13,17 @@
   },
   "tasks": [
     {
+      "id": "cfpb_queue_route",
+      "title": "Consumer complaint routing",
+      "replaces": "LLM classifier routing inbound financial complaints to a product queue",
+      "dataset": "CFPB Consumer Complaint Database, 8 product queues",
+      "labels": "credit_reporting / debt_collection / cards / bank_account / mortgage / money_transfer / loans / student_loan",
+      "verdict": "replace",
+      "ns": true,
+      "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, so this is also the first row where Jev is the cheaper API: $33.89 against $53.21 per million decisions.",
+      "gate": "At >=0.7: 88.2% on 88.0% of complaints. ECE 0.100 is borderline, and the 0.9 bin is the weak spot, so gate at 0.9 (91.8% on 75.6%) if a misroute is expensive."
+    },
+    {
       "id": "sms_spam",
       "title": "SMS spam gate",
       "replaces": "Spam vs ham classifier on inbound SMS",

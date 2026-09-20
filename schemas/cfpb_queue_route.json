@@ -1,0 +1,37 @@
+{
+  "task_id": "cfpb_queue_route",
+  "title": "Consumer complaint routing",
+  "question_key": "queue",
+  "questions": {
+    "queue": {
+      "type": "choice",
+      "instructions": "Which product queue should handle this consumer complaint? Decide from the financial product the complaint is actually about, not from who the complaint is against.",
+      "criteria": {
+        "credit_reporting": "Credit reports, credit bureaus, credit repair, inaccurate or disputed items on a consumer report, identity theft on a report",
+        "debt_collection": "A collector pursuing an alleged debt: contact methods, validation, threats, or a debt the consumer says is not theirs",
+        "cards": "Credit cards and prepaid cards: charges, rewards, limits, interest, disputes on the card itself",
+        "bank_account": "Checking, savings or other deposit accounts: fees, holds, overdrafts, closures, unauthorised transactions",
+        "mortgage": "Home loans: origination, servicing, escrow, modification, foreclosure",
+        "money_transfer": "Money transfers, remittances, virtual currency, and money services",
+        "loans": "Vehicle loans or leases, payday, title, personal and other instalment loans",
+        "student_loan": "Federal or private student loans, servicing, repayment plans, forgiveness"
+      }
+    }
+  },
+  "openai_prompt": "Route this consumer financial complaint to exactly one product queue. Decide from the financial product the complaint is about, not from who it is against. Reply with JSON {\"label\": <one of: credit_reporting, debt_collection, cards, bank_account, mortgage, money_transfer, loans, student_loan>}.",
+  "labels": [
+    "credit_reporting",
+    "debt_collection",
+    "cards",
+    "bank_account",
+    "mortgage",
+    "money_transfer",
+    "loans",
+    "student_loan"
+  ],
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "jev_model_requested": "jev-latest",
+  "mini_endpoint": "https://api.openai.com/v1/chat/completions",
+  "mini_model": "gpt-4o-mini",
+  "mini_temperature": 0
+}

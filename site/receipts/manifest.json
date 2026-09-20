@@ -1,7 +1,7 @@
 {
-  "run_id": "2026-09-20T17:16:26.262207+00:00",
-  "finished_utc": "2026-09-20T17:29:13.561459+00:00",
-  "started_utc": "2026-09-20T17:16:26.262207+00:00",
+  "run_id": "2026-09-20T18:00:15.961406+00:00",
+  "finished_utc": "2026-09-20T18:02:03.266627+00:00",
+  "started_utc": "2026-09-20T18:00:15.961406+00:00",
   "latency_environment": {
     "host": "Windows-10-10.0.19045-SP0",
     "python": "3.11.3",
@@ -14,14 +14,20 @@
   "mini_model": "gpt-4o-mini",
   "file_sha256": {
     "data/banking_coarse_route.jsonl": "2d6c984f02c99d3dc7973874dc7cae0eee57657e088b56b9a2fa28588bd1fde6",
+    "data/cfpb_queue_route.jsonl": "708d19757cb0c88bd6ed28c1522a5c603562de97847474229833ef6529ed48c8",
     "data/content_hate.jsonl": "5bc4134ab919ad8ba4baf42153ed78d0094610f780d94276d9f2cf8c6668b666",
+    "data/content_hate.text.jsonl": "384ede2c79bc64fba833b98020ddf030f3ed31c8a2623151d2974a21ddb897fb",
     "data/content_offensive.jsonl": "758493aec454eeb35c05a47ccbc08fd4c5604cee2c693764b1fbed0911ab8280",
+    "data/content_offensive.text.jsonl": "35b9cc8e5385be17fc34c735396e03fea4df4f73028a373c26a3e79cb2b1f1b7",
     "data/message_emotion.jsonl": "2e89ceb054d4188b3fdc41914075bae9daf72390e76e8e03c46c4bc30013771f",
+    "data/message_emotion.text.jsonl": "c1b59043b424e4208dd77030c16ddb92d0cec8859533bd771eab67f9456f7080",
     "data/news_topic.jsonl": "99022757d6029d96b16c20ac6517fa95dbf1ad3441dde570f3a1560c0ec2b3d3",
     "data/review_sentiment.jsonl": "231657cc2621b2bd379f7c931c3fa1f11e0df5c1db6cbbfeadb19dc529255eb2",
     "data/sms_spam.jsonl": "7005ef00450f0a83518938e1e603ad0291dc6025f817dc0bb9a854358e126777",
     "data/tweet_sentiment.jsonl": "caecb184d45d3ba003e851d0e29b8255884b64dcaa9e7b5000e8397492d39984",
+    "data/tweet_sentiment.text.jsonl": "a36eb0dbddca0e58e2a39a9325210fb37d2b0297999c5564dc27fa98cba720d8",
     "schemas/banking_coarse_route.json": "4aa35879a4f2a01ef4e2be5dca792b87b377db70a0122545bd4b39a50f20e8ec",
+    "schemas/cfpb_queue_route.json": "9020180fc20d79e77b55ff7c3170c809270e18eee19b58575fe7d475c1fba3f5",
     "schemas/content_hate.json": "c656daeea6fd24ecfbcfb56227654fa65787087c46bd17bbccd3b62b5be6dda3",
     "schemas/content_offensive.json": "badd1d31df936632c8259df9071c15c617f73a7b0c3001270fe27e7def832b76",
     "schemas/message_emotion.json": "efdd874ce200c81fe6f3a83f790d878d02a408a549151c58e5cbecf5122429ab",
@@ -29,11 +35,12 @@
     "schemas/review_sentiment.json": "2263bdb7d8ae0c7f944e8b14b2bd4e645498704b55ff813a7bec3a2c56457ec7",
     "schemas/sms_spam.json": "07b1bf25a365768581c3564bd7c62f6a6d0137e6617c362e8e4f0b0e74481e0f",
     "schemas/tweet_sentiment.json": "07949a6e028a4d14f9b010d23a2e5e9088b259d70956bcb6b8f21ef05d123502",
-    "scripts/run_eval.py": "b89f400ff8fa666706618384141db0b36d9409ca8a0c7e5ae1043b05b0c94331",
+    "scripts/run_eval.py": "874a8caf146f85381b054bb1854535431b30f45c8d9faf10d0bfb9d2ba03e0a1",
     "scripts/prepare_samples.py": "bf5f04dc1d0adc9b03789a59df8b3db335fdb2e926f5d0e3fac8b1806265667f",
-    "scripts/verify_run.py": "8f12b042cbc98101e00fbd30850b477e74d0a40262064ccf7bcc06cd197689a3"
+    "scripts/verify_run.py": "fa244b0a246ceb32a96abd388b41d979cdfac4ee061741039e7901d9c8c4e7ec"
   },
   "schema_sha256": {
+    "cfpb_queue_route": "9020180fc20d79e77b55ff7c3170c809270e18eee19b58575fe7d475c1fba3f5",
     "banking_coarse_route": "4aa35879a4f2a01ef4e2be5dca792b87b377db70a0122545bd4b39a50f20e8ec",
     "news_topic": "5e5fb6174e853b40f244ba2961df3e18978b1bbaf1216c4136760dd4f8106399",
     "tweet_sentiment": "07949a6e028a4d14f9b010d23a2e5e9088b259d70956bcb6b8f21ef05d123502",
@@ -44,6 +51,68 @@
     "message_emotion": "efdd874ce200c81fe6f3a83f790d878d02a408a549151c58e5cbecf5122429ab"
   },
   "tasks": [
+    {
+      "task_id": "cfpb_queue_route",
+      "title": "Consumer complaint routing",
+      "n": 500,
+      "jev_acc": 0.828,
+      "mini_acc": 0.81,
+      "jev_p50_ms": 855.7097999728285,
+      "mini_p50_ms": 1104.1794000193477,
+      "jev_p95_ms": 1462.748999998439,
+      "mini_p95_ms": 1610.8224999625236,
+      "jev_mean_conf": 0.9163800000000007,
+      "jev_cost": 0.016944564000000002,
+      "mini_cost": 0.026607150000000003,
+      "jev_gates": {
+        "0.5": {
+          "coverage": 0.974,
+          "accuracy": 0.8439425051334702
+        },
+        "0.6": {
+          "coverage": 0.93,
+          "accuracy": 0.8602150537634409
+        },
+        "0.7": {
+          "coverage": 0.88,
+          "accuracy": 0.8818181818181818
+        },
+        "0.8": {
+          "coverage": 0.834,
+          "accuracy": 0.8968824940047961
+        },
+        "0.9": {
+          "coverage": 0.756,
+          "accuracy": 0.917989417989418
+        }
+      },
+      "schema_sha256": "9020180fc20d79e77b55ff7c3170c809270e18eee19b58575fe7d475c1fba3f5",
+      "samples_sha256": "708d19757cb0c88bd6ed28c1522a5c603562de97847474229833ef6529ed48c8",
+      "jev_wilson": {
+        "k": 414,
+        "n": 500,
+        "p": 0.828,
+        "lo": 0.7924518552217157,
+        "hi": 0.8585463950220116
+      },
+      "mini_wilson": {
+        "k": 405,
+        "n": 500,
+        "p": 0.81,
+        "lo": 0.7732995724391238,
+        "hi": 0.8419731640717161
+      },
+      "mcnemar": {
+        "jev_only_correct": 29,
+        "mini_only_correct": 20,
+        "discordant": 49,
+        "chi2_cc": 1.3061224489795917,
+        "p_value": 0.2530979089471156,
+        "significant_0_05": false,
+        "winner": "ns"
+      },
+      "run_id": "2026-09-20T18:00:15.961406+00:00"
+    },
     {
       "task_id": "banking_coarse_route",
       "title": "Banking support queue routing",
@@ -202,7 +271,7 @@
         }
       },
       "schema_sha256": "07949a6e028a4d14f9b010d23a2e5e9088b259d70956bcb6b8f21ef05d123502",
-      "samples_sha256": "5b683e997a0eb1b119e7fe48c5e91fa901040598c705bf99f2f4ef3fe1412225",
+      "samples_sha256": "caecb184d45d3ba003e851d0e29b8255884b64dcaa9e7b5000e8397492d39984",
       "jev_wilson": {
         "k": 369,
         "n": 500,
@@ -225,7 +294,8 @@
         "p_value": 0.5761501220305789,
         "significant_0_05": false,
         "winner": "ns"
-      }
+      },
+      "samples_sha256_original": "5b683e997a0eb1b119e7fe48c5e91fa901040598c705bf99f2f4ef3fe1412225"
     },
     {
       "task_id": "review_sentiment",
@@ -385,7 +455,7 @@
         }
       },
       "schema_sha256": "badd1d31df936632c8259df9071c15c617f73a7b0c3001270fe27e7def832b76",
-      "samples_sha256": "dd42d193283aec78fd13f2301d5e11ef6c38a902a8ff86ede1ca57131fac5b69",
+      "samples_sha256": "758493aec454eeb35c05a47ccbc08fd4c5604cee2c693764b1fbed0911ab8280",
       "jev_wilson": {
         "k": 383,
         "n": 500,
@@ -408,7 +478,8 @@
         "p_value": 0.007868934200841282,
         "significant_0_05": true,
         "winner": "jev"
-      }
+      },
+      "samples_sha256_original": "dd42d193283aec78fd13f2301d5e11ef6c38a902a8ff86ede1ca57131fac5b69"
     },
     {
       "task_id": "content_hate",
@@ -446,7 +517,7 @@
         }
       },
       "schema_sha256": "c656daeea6fd24ecfbcfb56227654fa65787087c46bd17bbccd3b62b5be6dda3",
-      "samples_sha256": "2ec09cb6cd44f4d1089eae7ac1d96159784273766449a63079e0e4a4455a7875",
+      "samples_sha256": "5bc4134ab919ad8ba4baf42153ed78d0094610f780d94276d9f2cf8c6668b666",
       "jev_wilson": {
         "k": 331,
         "n": 500,
@@ -469,7 +540,8 @@
         "p_value": 0.0025817132440585132,
         "significant_0_05": true,
         "winner": "mini"
-      }
+      },
+      "samples_sha256_original": "2ec09cb6cd44f4d1089eae7ac1d96159784273766449a63079e0e4a4455a7875"
     },
     {
       "task_id": "message_emotion",
@@ -507,7 +579,7 @@
         }
       },
       "schema_sha256": "efdd874ce200c81fe6f3a83f790d878d02a408a549151c58e5cbecf5122429ab",
-      "samples_sha256": "577389d55ca5404211c01d640079a463d447da99ab327a0983613e5b2edb69d5",
+      "samples_sha256": "2e89ceb054d4188b3fdc41914075bae9daf72390e76e8e03c46c4bc30013771f",
       "jev_wilson": {
         "k": 399,
         "n": 500,
@@ -530,15 +602,9 @@
         "p_value": 0.005284500162983997,
         "significant_0_05": true,
         "winner": "jev"
-      }
+      },
+      "samples_sha256_original": "577389d55ca5404211c01d640079a463d447da99ab327a0983613e5b2edb69d5"
     }
   ],
-  "caveat": "Receipts include full request/response JSON and SHA-256 of canonical JSON. APIs do not sign responses. Independent proof is: re-run scripts/run_eval.py on data/*.jsonl and diff results/summary.json, or run scripts/verify_run.py to check hashes and recount accuracy.",
-  "redacted_tasks": [
-    "message_emotion",
-    "content_offensive",
-    "content_hate",
-    "tweet_sentiment"
-  ],
-  "redaction_note": "Text removed for redistribution reasons; restore with scripts/rehydrate.py and verify against text_sha256."
+  "caveat": "Receipts include full request/response JSON and SHA-256 of canonical JSON. APIs do not sign responses. Independent proof is: re-run scripts/run_eval.py on data/*.jsonl and diff results/summary.json, or run scripts/verify_run.py to check hashes and recount accuracy."
 }

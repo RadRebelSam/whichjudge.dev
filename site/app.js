@@ -2,7 +2,7 @@
 // Edit site/copy.json for wording; numbers only change by re-running the eval.
 
 const FILTERS = [
-  { id: "all", label: "All 8" },
+  { id: "all", label: `All ${TASKS.length}` },
   { id: "replace", label: "Replace" },
   { id: "mix", label: "Mix" },
   { id: "dont", label: "Don't" },
@@ -157,7 +157,7 @@ function render() {
             </table>
           </div>
           <p class="border-t border-zinc-200 px-4 py-3 text-xs text-zinc-500 dark:border-zinc-800">
-            Accuracy from 500×2 receipts. Don't stays on the homepage. ns is grey on purpose.
+            Accuracy from ${RUN.n}×2 receipts. Don't stays on the homepage. ns is grey on purpose.
           </p>
         </section>
         <section class="min-w-0">${open ? detailHtml(open) : ""}</section>

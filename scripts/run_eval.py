@@ -32,6 +32,48 @@ JEV_MODEL_REQ = "jev-latest"
 MINI_MODEL = "gpt-4o-mini"
 
 TASKS = {
+    "cfpb_queue_route": {
+        "title": "Consumer complaint routing",
+        "replaces": "LLM classifier routing inbound financial complaints to a product queue",
+        "question_key": "queue",
+        "kind": "choice",
+        "questions": {
+            "queue": {
+                "type": "choice",
+                "instructions": (
+                    "Which product queue should handle this consumer complaint? "
+                    "Decide from the financial product the complaint is actually about, "
+                    "not from who the complaint is against."
+                ),
+                "criteria": {
+                    "credit_reporting": "Credit reports, credit bureaus, credit repair, inaccurate or disputed items on a consumer report, identity theft on a report",
+                    "debt_collection": "A collector pursuing an alleged debt: contact methods, validation, threats, or a debt the consumer says is not theirs",
+                    "cards": "Credit cards and prepaid cards: charges, rewards, limits, interest, disputes on the card itself",
+                    "bank_account": "Checking, savings or other deposit accounts: fees, holds, overdrafts, closures, unauthorised transactions",
+                    "mortgage": "Home loans: origination, servicing, escrow, modification, foreclosure",
+                    "money_transfer": "Money transfers, remittances, virtual currency, and money services",
+                    "loans": "Vehicle loans or leases, payday, title, personal and other instalment loans",
+                    "student_loan": "Federal or private student loans, servicing, repayment plans, forgiveness",
+                },
+            }
+        },
+        "openai_prompt": (
+            "Route this consumer financial complaint to exactly one product queue. "
+            "Decide from the financial product the complaint is about, not from who it is against. "
+            "Reply with JSON {\"label\": <one of: credit_reporting, debt_collection, cards, "
+            "bank_account, mortgage, money_transfer, loans, student_loan>}."
+        ),
+        "labels": [
+            "credit_reporting",
+            "debt_collection",
+            "cards",
+            "bank_account",
+            "mortgage",
+            "money_transfer",
+            "loans",
+            "student_loan",
+        ],
+    },
     "banking_coarse_route": {
         "title": "Banking support queue routing",
         "replaces": "GPT-4o-mini intent/queue classifier on banking tickets",
@@ -659,9 +701,26 @@ def main() -> None:
                 "jev_wilson": out["jev"]["wilson"],
                 "mini_wilson": out["gpt4o_mini"]["wilson"],
                 "mcnemar": mcnemar(out["jev_preds"], out["gpt4o_mini_preds"]),
+                "run_id": started,
             }
         )
-    dump_json(RESULTS / "summary.json", summary)
+
+    # Running a subset must not delete the rows it did not touch. Merge into the
+    # existing summary, keep each row's own run_id so a mixed table is visibly
+    # mixed, and emit tasks in the canonical TASKS order.
+    summary_path = RESULTS / "summary.json"
+    merged = {}
+    if summary_path.exists():
+        for row in json.loads(summary_path.read_text(encoding="utf-8")):
+            merged[row["task_id"]] = row
+    for row in summary:
+        merged[row["task_id"]] = row
+    summary = [merged[t] for t in TASKS if t in merged]
+    stale = {r["run_id"] for r in summary if r.get("run_id") and r["run_id"] != started}
+    if stale:
+        print(f"\nNOTE: {len(summary) - len(ids)} row(s) carry results from an earlier run.")
+        print("      Re-run every task before publishing a table that compares them.")
+    dump_json(summary_path, summary)
     write_manifest(summary, schema_hashes, started)
     print("\nSUMMARY")
     for s in summary:

@@ -99,6 +99,22 @@ def load_eval(task_id: str) -> list[dict]:
     with (DATA / f"{task_id}.jsonl").open(encoding="utf-8") as f:
         for line in f:
             rows.append(json.loads(line))
+    # Redacted tasks ship hashes instead of text; scripts/rehydrate.py puts the
+    # text back in a sidecar. Without it this baseline cannot train or score.
+    sidecar = DATA / f"{task_id}.text.jsonl"
+    if sidecar.exists():
+        texts = {}
+        with sidecar.open(encoding="utf-8") as f:
+            for line in f:
+                r = json.loads(line)
+                texts[r["id"]] = r["text"]
+        for row in rows:
+            row.setdefault("text", texts.get(row["id"]))
+    if any(r.get("text") is None for r in rows):
+        raise SystemExit(
+            f"{task_id}: text is redacted and no sidecar found. "
+            f"Run scripts/rehydrate.py first."
+        )
     return rows
 
 
@@ -190,8 +206,30 @@ def run_one(task_id, train_df, text_col, note):
     return pack(task_id, ev, preds, tn, fit_ms, pred_ms, p50, note, d["jev_preds"], d["gpt4o_mini_preds"])
 
 
+def cfpb_train() -> pd.DataFrame:
+    """CFPB complaints the frozen 500 never used, mapped to the same eight queues."""
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from prepare_cfpb import MIRROR_PARQUET, PRODUCT_TO_QUEUE, MIN_CHARS, MAX_CHARS
+
+    df = pd.read_parquet(MIRROR_PARQUET,
+                         columns=["Complaint ID", "Product", "Consumer complaint narrative"])
+    df = df.rename(columns={"Consumer complaint narrative": "text"})
+    df["text"] = df["text"].astype(str).str.strip()
+    df = df[df["text"].str.len().between(MIN_CHARS, MAX_CHARS)]
+    df["gold"] = df["Product"].map(PRODUCT_TO_QUEUE)
+    df = df[df["gold"].notna()]
+    # Cap per class so the classical baseline is not just predicting the majority
+    # queue: credit reporting alone is over half the database.
+    parts = [g.sample(n=min(8000, len(g)), random_state=7) for _, g in df.groupby("gold")]
+    return pd.concat(parts, ignore_index=True)
+
+
 def main():
     out = []
+
+    out.append(run_one("cfpb_queue_route", cfpb_train(), "text",
+                       "CFPB complaints outside the frozen 500, capped at 8000 per queue"))
 
     bank_tr = pd.read_csv(RAW / "banking_train.csv")
     bank_tr["gold"] = bank_tr["category"].map(coarse_banking)
