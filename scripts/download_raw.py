@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Download the public datasets used to build data/*.jsonl.
 
-Raw files land in raw/. You do not need them to re-run the eval —
+Raw files land in raw/. You do not need them to re-run the eval -
 the frozen 48-row samples are already in data/. Use this only if you
 want to rebuild the samples with a different seed or N.
 """

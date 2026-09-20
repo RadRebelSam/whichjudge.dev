@@ -119,10 +119,10 @@ function render() {
     <header class="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
       <div class="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6">
         <div>
-          <p class="mono text-[11px] tracking-[0.18em] text-zinc-500 uppercase">whichjudge.dev · which model for this decision · n=${RUN.nMin === RUN.nMax ? RUN.n : RUN.nMin + '–' + RUN.nMax} per task · seed=${RUN.seed}</p>
+          <p class="mono text-[11px] tracking-[0.18em] text-zinc-500 uppercase">whichjudge.dev · which model for this decision · n=${RUN.nMin === RUN.nMax ? RUN.n : RUN.nMin + '-' + RUN.nMax} per task · seed=${RUN.seed}</p>
           <h1 class="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">You don't need a better model. You need a quit line.</h1>
           <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Judge here means the cheap in-loop decision (route, gate, score) — not grading an agent transcript.
+            Judge here means the cheap in-loop decision (route, gate, score) - not grading an agent transcript.
             On ${c.best.title.toLowerCase()}, where confidence is best calibrated (ECE ${c.best.ece.ece}), Jev at ≥ 0.7 is
             <span class="font-medium text-zinc-900 dark:text-zinc-100">${pct(c.best.gates["0.7"].acc)} accurate on ${pct(c.best.gates["0.7"].cov)} of traffic</span>.
             Auto that slice. Mix the rest. Grey ns = accuracy gap is noise.
@@ -174,7 +174,7 @@ function render() {
 
       <section class="mt-6 rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
         <h2 class="text-sm font-semibold">Monthly bill on this schema</h2>
-        <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Uses measured $/call × volume. Jev is not cheaper here: the question text is longer, so input tokens dominate. Official 40–200× / 400× claims are vs large generative models, not vs 4o-mini on these tasks.</p>
+        <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Uses measured $/call × volume. Jev is not cheaper here: the question text is longer, so input tokens dominate. Official 40-200× / 400× claims are vs large generative models, not vs 4o-mini on these tasks.</p>
         <label class="mt-4 flex flex-col gap-2 text-sm sm:flex-row sm:items-center">
           <span class="shrink-0 text-zinc-500">Calls / month</span>
           <input id="vol" type="number" min="1000" step="1000" value="${monthlyCalls}" class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 tabular-nums dark:border-zinc-700 dark:bg-zinc-950" />
@@ -190,11 +190,11 @@ function render() {
         <article class="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
           <h2 class="text-sm font-semibold">How to read this</h2>
           <ul class="mt-3 space-y-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Quit line</span> — auto only when Jev p(chosen) ≥ 0.7 (or 0.8 on offensive). Justified where ECE is low (SMS 0.013, reviews 0.019). Not justified on hate (ECE 0.19) or banking (0.22).</li>
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Replace</span> — McNemar p<0.05 and Jev ≥ Mini. Latency is extra. Cost is not the reason (see $/M).</li>
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ns</span> — accuracy gap is noise. Do not crown a winner on 1–2pt.</li>
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Don't</span> — Mini significantly better. Hate-speech stays on the homepage on purpose.</li>
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">TF-IDF</span> — $0, ~0.03ms, leftover train never overlapping the frozen 500. If it wins, skip both APIs.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Quit line</span> - auto only when Jev p(chosen) ≥ 0.7 (or 0.8 on offensive). Justified where ECE is low (SMS 0.013, reviews 0.019). Not justified on hate (ECE 0.19) or banking (0.22).</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Replace</span> - McNemar p<0.05 and Jev ≥ Mini. Latency is extra. Cost is not the reason (see $/M).</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ns</span> - accuracy gap is noise. Do not crown a winner on 1-2pt.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Don't</span> - Mini significantly better. Hate-speech stays on the homepage on purpose.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">TF-IDF</span> - $0, ~0.03ms, leftover train never overlapping the frozen 500. If it wins, skip both APIs.</li>
           </ul>
           <p class="mt-4 text-xs leading-relaxed text-zinc-500">${RUN.note}</p>
         </article>
@@ -362,7 +362,7 @@ function cardHtml(t, on) {
           <span>Mini ${pct(t.mini.acc)}</span>
           <span>TF-IDF ${pct(t.tfidf.acc)}</span>
         </span>
-        <span class="mt-1 block text-xs text-zinc-500">≥0.7 ${g ? pct(g.acc) + " on " + pct(g.cov) : "—"} · ${ms(t.jev.p50)}</span>
+        <span class="mt-1 block text-xs text-zinc-500">≥0.7 ${g ? pct(g.acc) + " on " + pct(g.cov) : "-"} · ${ms(t.jev.p50)}</span>
       </span>
     </button>
   `;
@@ -382,7 +382,7 @@ function rowHtml(t, on) {
           <span class="block truncate text-xs text-zinc-500">${t.sourceName}</span>
         </span>
         <span><span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${v.chip}">${v.label}</span></span>
-        <span class="text-right tabular-nums">${pct(t.jev.acc)}<span class="block text-[10px] font-normal text-zinc-400">${pct(t.jev.lo)}–${pct(t.jev.hi)}</span></span>
+        <span class="text-right tabular-nums">${pct(t.jev.acc)}<span class="block text-[10px] font-normal text-zinc-400">${pct(t.jev.lo)}-${pct(t.jev.hi)}</span></span>
         <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${pct(t.mini.acc)}<span class="block text-[10px] text-zinc-400">${dLabel}</span></span>
         <span class="text-right tabular-nums ${t.tfidf.vsJev === "tfidf" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${pct(t.tfidf.acc)}<span class="block text-[10px] font-normal text-zinc-400">$0</span></span>
         <span class="mono text-right text-xs tabular-nums text-zinc-600 dark:text-zinc-400">${ms(t.jev.p50)}<span class="block text-[10px] text-zinc-400">vs ${ms(t.mini.p50)}</span></span>
@@ -455,9 +455,9 @@ function detailHtml(t) {
       </div>
       <p class="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">${t.why}</p>
       <dl class="mt-5 grid grid-cols-2 gap-3 text-sm">
-        ${metric("Jev accuracy", pct(t.jev.acc) + "  [" + pct(t.jev.lo) + "–" + pct(t.jev.hi) + "]")}
-        ${metric("Mini accuracy", pct(t.mini.acc) + "  [" + pct(t.mini.lo) + "–" + pct(t.mini.hi) + "]")}
-        ${metric("TF-IDF + LR", pct(t.tfidf.acc) + "  [" + pct(t.tfidf.lo) + "–" + pct(t.tfidf.hi) + "] · train " + t.tfidf.trainN.toLocaleString())}
+        ${metric("Jev accuracy", pct(t.jev.acc) + "  [" + pct(t.jev.lo) + "-" + pct(t.jev.hi) + "]")}
+        ${metric("Mini accuracy", pct(t.mini.acc) + "  [" + pct(t.mini.lo) + "-" + pct(t.mini.hi) + "]")}
+        ${metric("TF-IDF + LR", pct(t.tfidf.acc) + "  [" + pct(t.tfidf.lo) + "-" + pct(t.tfidf.hi) + "] · train " + t.tfidf.trainN.toLocaleString())}
         ${metric("McNemar vs Mini", t.ns ? "ns  p=" + t.mcnemar.p : t.mcnemar.winner + "  p=" + t.mcnemar.p)}
         ${metric("TF-IDF vs Jev", t.tfidf.vsJev)}
         ${metric("Jev p50 / p95", ms(t.jev.p50) + " / " + ms(t.jev.p95))}

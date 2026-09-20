@@ -4,9 +4,9 @@ Replacement matrix for cheap **judge / decision** models.
 
 Rows are decisions you already pay an LLM to make (spam gate, ticket route, hate screen).
 Columns are models. First bake-off: **Jev `jev-1.13.0`** vs **`gpt-4o-mini`**.
-The next System One–style model is another column, not another site.
+The next System One-style model is another column, not another site.
 
-**Calibration (ECE on p_chosen, 10 bins, n=500):** SMS 0.013, reviews 0.019, emotion 0.084, news 0.091, offensive 0.113, sentiment 0.146, hate 0.188, banking 0.215. Quit line ≥0.7 is honest on SMS/reviews; banking's 0.9-bin is 99% confident and 80% accurate — do not auto-route there.
+**Calibration (ECE on p_chosen, 10 bins, `scripts/calibrate.py`):** sms spam gate 0.016, review polarity 0.015, comment toxicity gate 0.075, message emotion 0.083, news topic 0.096, consumer complaint routing 0.100, offensive language screen 0.110, prompt-injection screen 0.134, social sentiment (3-way) 0.141, hate-speech screen 0.187, banking queue routing 0.213. A quit line is only honest where ECE is low. Do not auto-route on the high ones.
 
 Domain: [whichjudge.dev](https://whichjudge.dev). **Judge = in-loop decision**, not “grade this agent.” Do not rename. Eyebrow: “which model for this decision.” Contact: contact@radrebeldeveloper.com
 
@@ -223,7 +223,7 @@ ratio moves with where you measure from, so `results/manifest.json` records the
 machine and `WHICHJUDGE_REGION`. Treat any latency claim, including this one, as
 local to its client.
 
-## Provenance — four layers
+## Provenance - four layers
 
 1. **Frozen inputs.** `data/*.jsonl` (seed=7, n=500) and `schemas/*.json`. SHA-256 in `results/manifest.json`. The four TweetEval tasks ship a SHA-256 of each text instead of the text; `scripts/rehydrate.py` restores and re-checks it. See `ATTRIBUTION.md`.
 2. **Per-call receipts.** `results/receipts/<task>.json` (full JSON). `site/receipts/` is a slimmer copy for the UI. Open a row → Open 500 receipts.
@@ -233,7 +233,7 @@ local to its client.
    before and after hashes, and the verifier prints them. `data/`, `schemas/` and
    `results/receipts/` are never in that list: any drift there is a hard failure. Independent bake-off: `python3 scripts/run_eval.py` with your keys, then diff `results/summary.json`.
 
-APIs do not cryptographically sign responses. Receipts stop silent edits of the summary table. They do not prove a third party issued the JSON — only a re-run does.
+APIs do not cryptographically sign responses. Receipts stop silent edits of the summary table. They do not prove a third party issued the JSON - only a re-run does.
 
 n=500 on public academic gold is still not a procurement study.
 
@@ -282,3 +282,5 @@ disagrees.
 
 Deployment is GitHub Pages from this repo. CI will not publish a site whose table
 fails `verify_run.py` or drifts from `results/`.
+
+---

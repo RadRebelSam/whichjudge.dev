@@ -282,7 +282,7 @@ def render_decision_page(t, run, site) -> str:
 <p><strong>Replaces:</strong> {e(t['replaces'])}<br>
 <strong>Gold:</strong> <a href="{e(t['sourceUrl'])}" rel="noopener">{e(t['sourceName'])}</a>
 {' via <a href="' + e(t['mirrorUrl']) + '" rel="noopener">a CC0 mirror</a>' if t.get('mirrorUrl') else ''}
-&mdash; {e(t['dataset'])}, n={t['n']}, seed={run['seed']}<br>
+- {e(t['dataset'])}, n={t['n']}, seed={run['seed']}<br>
 <strong>Labels:</strong> <code>{e(t['labels'])}</code></p>
 <table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
