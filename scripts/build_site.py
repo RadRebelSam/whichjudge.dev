@@ -376,6 +376,44 @@ def render_sitemap(tasks, site, run) -> str:
             f"{body}\n</urlset>\n")
 
 
+def render_404(site, run, tasks) -> str:
+    """GitHub serves its own generic 404 otherwise, which reads as a dead project."""
+    links = "\n".join(
+        f'    <li><a href="/decision/{t["id"].replace("_", "-")}.html">{e(t["title"])}</a></li>'
+        for t in tasks)
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not found - {e(site['name'])}</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+body{{max-width:44rem;margin:0 auto;padding:3rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}}
+h1{{font-size:1.5rem;margin:0 0 .5rem}}
+ul{{padding-left:1.1rem}}
+li{{margin:.15rem 0}}
+a{{color:#18181b}}
+.muted{{color:#71717a;font-size:13px}}
+@media (prefers-color-scheme:dark){{body{{color:#e4e4e7;background:#09090b}}a{{color:#e4e4e7}}}}
+</style>
+</head>
+<body>
+<h1>That page does not exist</h1>
+<p>Nothing is broken; this URL just is not one of ours. The bench has
+{run['tasks']} decisions, each on its own page:</p>
+<ul>
+{links}
+</ul>
+<p><a href="/">All {run['tasks']} decisions in one table</a> &middot;
+<a href="{e(site['repo'])}">Source and data</a></p>
+<p class="muted">Independent bench. Not affiliated with TypeSafe AI.</p>
+</body>
+</html>
+"""
+
+
 def render_robots(site) -> str:
     return f"User-agent: *\nAllow: /\n\nSitemap: {site['domain']}/sitemap.xml\n"
 
@@ -475,6 +513,7 @@ def main() -> None:
         write(SITE / "decision" / f"{slug}.html", render_decision_page(t, run, site), check, drift)
     write(SITE / "sitemap.xml", render_sitemap(tasks, site, run), check, drift)
     write(SITE / "robots.txt", render_robots(site), check, drift)
+    write(SITE / "404.html", render_404(site, run, tasks), check, drift)
 
     index = SITE / "index.html"
     src = index.read_text(encoding="utf-8")

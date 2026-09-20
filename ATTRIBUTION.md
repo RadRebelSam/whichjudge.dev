@@ -6,24 +6,42 @@ text, so each source has to be cleared on its own terms.
 
 **Status column meaning**
 
-- `verify` - the licence has not been confirmed against the dataset card yet. Do this
-  before the repo is advertised publicly.
-- `risk` - there is a known redistribution restriction to resolve, not just a citation
-  to add.
+Every row has now been checked against its upstream source. Three come back with no
+licence declared at all, which is a finding rather than an oversight: see below.
 
 | Task | Source | Upstream | Status |
 |---|---|---|---|
 | `cfpb_queue_route` | CFPB Consumer Complaint Database | text: [`BEE-spoke-data/consumer-finance-complaints`](https://huggingface.co/datasets/BEE-spoke-data/consumer-finance-complaints) (CC0); labels: [CFPB export](https://www.consumerfinance.gov/data-research/consumer-complaints/) | US federal government work, see note |
 | `prompt_injection` | deepset prompt injections | [`deepset/prompt-injections`](https://huggingface.co/datasets/deepset/prompt-injections) | Apache-2.0, text redistributable |
 | `civil_toxicity` | Civil Comments | [`google/civil_comments`](https://huggingface.co/datasets/google/civil_comments) test split | CC0, text redistributable |
-| `sms_spam` | UCI SMS Spam Collection | [`ucirvine/sms_spam`](https://huggingface.co/datasets/ucirvine/sms_spam) | verify |
-| `review_sentiment` | SST-2 validation (Stanford Sentiment Treebank) | [`stanfordnlp/sst2`](https://huggingface.co/datasets/stanfordnlp/sst2) | verify |
-| `news_topic` | AG News test | [`fancyzhx/ag_news`](https://huggingface.co/datasets/fancyzhx/ag_news) | verify |
-| `banking_coarse_route` | BANKING77 (PolyAI) | [`PolyAI-LDN/task-specific-datasets`](https://github.com/PolyAI-LDN/task-specific-datasets) | verify |
+| `sms_spam` | UCI SMS Spam Collection | [`ucirvine/sms_spam`](https://huggingface.co/datasets/ucirvine/sms_spam) | no licence declared upstream |
+| `review_sentiment` | SST-2 validation (Stanford Sentiment Treebank) | [`stanfordnlp/sst2`](https://huggingface.co/datasets/stanfordnlp/sst2) | no licence declared upstream |
+| `news_topic` | AG News test | [`fancyzhx/ag_news`](https://huggingface.co/datasets/fancyzhx/ag_news) | no licence declared upstream |
+| `banking_coarse_route` | BANKING77 (PolyAI) | [`PolyAI-LDN/task-specific-datasets`](https://github.com/PolyAI-LDN/task-specific-datasets) | CC BY 4.0, confirmed from the repo's LICENSE file |
 | `message_emotion` | TweetEval emotion | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 | `content_offensive` | TweetEval offensive | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 | `content_hate` | TweetEval hate | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 | `tweet_sentiment` | TweetEval sentiment | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
+
+## Three datasets declare no licence
+
+`sms_spam`, `review_sentiment` (SST-2) and `news_topic` (AG News) were checked against
+their dataset cards and all three report `license: unknown`. This is not a lookup I
+failed to do; upstream genuinely states nothing. They are long-standing academic
+benchmarks that everyone redistributes, but widespread redistribution is a norm, not a
+grant.
+
+Two honest ways to end it, and the second is available today:
+
+1. Keep shipping the 500-row samples and say plainly, here, that upstream declares no
+   licence. That is the current state.
+2. Treat them exactly like TweetEval: publish the sample id, the gold label and a
+   SHA-256 of the text, and let `scripts/rehydrate.py` restore the text from upstream.
+   The machinery already exists; it needs a loader per dataset. That takes the repo from
+   three unresolved licences to zero, at the cost of one extra command for anyone who
+   wants the byte-level check.
+
+Until option 2 is done, this is the most exposed part of the repo.
 
 ## CFPB: two sources on purpose
 
