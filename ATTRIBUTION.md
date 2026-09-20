@@ -13,16 +13,16 @@ text, so each source has to be cleared on its own terms.
 
 | Task | Source | Upstream | Status |
 |---|---|---|---|
-| `cfpb_queue_route` | CFPB Consumer Complaint Database | text: `BEE-spoke-data/consumer-finance-complaints` (CC0); labels: `files.consumerfinance.gov/ccdb/complaints.csv.zip` | US federal government work, see note |
-| `civil_toxicity` | Civil Comments | `google/civil_comments` test split | CC0, text redistributable |
-| `sms_spam` | UCI SMS Spam Collection | `ucirvine/sms_spam` | verify |
-| `review_sentiment` | SST-2 validation (Stanford Sentiment Treebank) | `stanfordnlp/sst2` | verify |
-| `news_topic` | AG News test | `fancyzhx/ag_news` | verify |
-| `banking_coarse_route` | BANKING77 (PolyAI) | `PolyAI-LDN/task-specific-datasets` | verify |
-| `message_emotion` | TweetEval emotion | `cardiffnlp/tweet_eval` | text not redistributed |
-| `content_offensive` | TweetEval offensive | `cardiffnlp/tweet_eval` | text not redistributed |
-| `content_hate` | TweetEval hate | `cardiffnlp/tweet_eval` | text not redistributed |
-| `tweet_sentiment` | TweetEval sentiment | `cardiffnlp/tweet_eval` | text not redistributed |
+| `cfpb_queue_route` | CFPB Consumer Complaint Database | text: [`BEE-spoke-data/consumer-finance-complaints`](https://huggingface.co/datasets/BEE-spoke-data/consumer-finance-complaints) (CC0); labels: [CFPB export](https://www.consumerfinance.gov/data-research/consumer-complaints/) | US federal government work, see note |
+| `civil_toxicity` | Civil Comments | [`google/civil_comments`](https://huggingface.co/datasets/google/civil_comments) test split | CC0, text redistributable |
+| `sms_spam` | UCI SMS Spam Collection | [`ucirvine/sms_spam`](https://huggingface.co/datasets/ucirvine/sms_spam) | verify |
+| `review_sentiment` | SST-2 validation (Stanford Sentiment Treebank) | [`stanfordnlp/sst2`](https://huggingface.co/datasets/stanfordnlp/sst2) | verify |
+| `news_topic` | AG News test | [`fancyzhx/ag_news`](https://huggingface.co/datasets/fancyzhx/ag_news) | verify |
+| `banking_coarse_route` | BANKING77 (PolyAI) | [`PolyAI-LDN/task-specific-datasets`](https://github.com/PolyAI-LDN/task-specific-datasets) | verify |
+| `message_emotion` | TweetEval emotion | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
+| `content_offensive` | TweetEval offensive | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
+| `content_hate` | TweetEval hate | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
+| `tweet_sentiment` | TweetEval sentiment | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 
 ## CFPB: two sources on purpose
 

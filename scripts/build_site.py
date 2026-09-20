@@ -116,6 +116,9 @@ def build_tasks(copy, summary, calib, tfidf):
             "ns": derived_ns,
             "why": c["why"],
             "gate": c["gate"],
+            "sourceName": c["sourceName"],
+            "sourceUrl": c["sourceUrl"],
+            "mirrorUrl": c.get("mirrorUrl"),
             "samplesSha": s["samples_sha256"][:12],
             "schemaSha": s["schema_sha256"][:12],
             "jev": {
@@ -265,7 +268,9 @@ def render_decision_page(t, run, site) -> str:
 <p><span class="verdict">{e(verdict)}{ns_tag}</span></p>
 <p>{e(t['why'])}</p>
 <p><strong>Replaces:</strong> {e(t['replaces'])}<br>
-<strong>Gold:</strong> {e(t['dataset'])}, n={run['n']}, seed={run['seed']}<br>
+<strong>Gold:</strong> <a href="{e(t['sourceUrl'])}" rel="noopener">{e(t['sourceName'])}</a>
+{' via <a href="' + e(t['mirrorUrl']) + '" rel="noopener">a CC0 mirror</a>' if t.get('mirrorUrl') else ''}
+&mdash; {e(t['dataset'])}, n={run['n']}, seed={run['seed']}<br>
 <strong>Labels:</strong> <code>{e(t['labels'])}</code></p>
 <table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>

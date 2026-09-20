@@ -21,7 +21,9 @@
 <p><span class="verdict">Replace</span></p>
 <p>TF-IDF 93.2% beats both neural judges (p&lt;1e-19) if you have labels. Jev still beats Mini among APIs by 7.4pt. Do not pay for a model on this task if you can train one.</p>
 <p><strong>Replaces:</strong> Support-queue classifier on banking tickets<br>
-<strong>Gold:</strong> BANKING77 test, collapsed 77 → 8 queues, n=500, seed=7<br>
+<strong>Gold:</strong> <a href="https://github.com/PolyAI-LDN/task-specific-datasets" rel="noopener">PolyAI BANKING77</a>
+
+&mdash; BANKING77 test, collapsed 77 → 8 queues, n=500, seed=7<br>
 <strong>Labels:</strong> <code>cards / top_up / cash_atm / transfers / fx / account / payments_fees / other</code></p>
 <table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>

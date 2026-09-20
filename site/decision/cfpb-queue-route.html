@@ -21,7 +21,9 @@
 <p><span class="verdict">Replace (ns)</span></p>
 <p>The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, so this is also the first row where Jev is the cheaper API: $33.89 against $53.21 per million decisions.</p>
 <p><strong>Replaces:</strong> LLM classifier routing inbound financial complaints to a product queue<br>
-<strong>Gold:</strong> CFPB Consumer Complaint Database, 8 product queues, n=500, seed=7<br>
+<strong>Gold:</strong> <a href="https://www.consumerfinance.gov/data-research/consumer-complaints/" rel="noopener">CFPB Consumer Complaint Database</a>
+ via <a href="https://huggingface.co/datasets/BEE-spoke-data/consumer-finance-complaints" rel="noopener">a CC0 mirror</a>
+&mdash; CFPB Consumer Complaint Database, 8 product queues, n=500, seed=7<br>
 <strong>Labels:</strong> <code>credit_reporting / debt_collection / cards / bank_account / mortgage / money_transfer / loans / student_loan</code></p>
 <table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>

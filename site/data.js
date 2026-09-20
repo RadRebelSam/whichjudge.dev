@@ -224,6 +224,9 @@ const TASKS = [
     "ns": true,
     "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, so this is also the first row where Jev is the cheaper API: $33.89 against $53.21 per million decisions.",
     "gate": "At >=0.7: 88.2% on 88.0% of complaints. ECE 0.100 is borderline, and the 0.9 bin is the weak spot, so gate at 0.9 (91.8% on 75.6%) if a misroute is expensive.",
+    "sourceName": "CFPB Consumer Complaint Database",
+    "sourceUrl": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
+    "mirrorUrl": "https://huggingface.co/datasets/BEE-spoke-data/consumer-finance-complaints",
     "samplesSha": "708d19757cb0",
     "schemaSha": "9020180fc20d",
     "jev": {
@@ -335,6 +338,9 @@ const TASKS = [
     "ns": true,
     "why": "The same decision as the hate-speech row, on clean CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF wins again at 82.8%. Read this next to the hate row: the Don't verdict there does not survive a change of gold, so it was a fact about that dataset more than about Jev.",
     "gate": "Calibration is usable here (ECE 0.075) unlike the hate row. At >=0.8: 91.3% on 52.8% of comments. Publish that half automatically and queue the rest.",
+    "sourceName": "google/civil_comments",
+    "sourceUrl": "https://huggingface.co/datasets/google/civil_comments",
+    "mirrorUrl": null,
     "samplesSha": "e018f1952099",
     "schemaSha": "e571e26e7968",
     "jev": {
@@ -440,6 +446,9 @@ const TASKS = [
     "ns": true,
     "why": "Dead heat: Jev 96.4, Mini 96.4, TF-IDF 96.4. Classical ML is enough here. Nothing separates the three.",
     "gate": "No accuracy reason to switch either way. At >=0.7: 98.9% on 88.8% of traffic.",
+    "sourceName": "ucirvine/sms_spam",
+    "sourceUrl": "https://huggingface.co/datasets/ucirvine/sms_spam",
+    "mirrorUrl": null,
     "samplesSha": "7005ef00450f",
     "schemaSha": "07b1bf25a365",
     "jev": {
@@ -545,6 +554,9 @@ const TASKS = [
     "ns": true,
     "why": "Tied (McNemar p=0.55). 97.0% vs 96.4%. TF-IDF drops to 82.6%, so the models earn their keep against classical, not against each other.",
     "gate": "Best-calibrated task on the board (ECE 0.015). At >=0.7: 98.5% on 91.8% of reviews.",
+    "sourceName": "stanfordnlp/sst2",
+    "sourceUrl": "https://huggingface.co/datasets/stanfordnlp/sst2",
+    "mirrorUrl": null,
     "samplesSha": "231657cc2621",
     "schemaSha": "2263bdb7d8ae",
     "jev": {
@@ -650,6 +662,9 @@ const TASKS = [
     "ns": false,
     "why": "Jev +4.8pt, McNemar p=0.0053. Optimism vs joy is still the messy pair. TF-IDF trails badly at 64.2%.",
     "gate": "Use Jev in-loop. At >=0.7: 88.5% on 74.8% of traffic.",
+    "sourceName": "cardiffnlp/tweet_eval",
+    "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
+    "mirrorUrl": null,
     "samplesSha": "2e89ceb054d4",
     "schemaSha": "efdd874ce200",
     "jev": {
@@ -761,6 +776,9 @@ const TASKS = [
     "ns": false,
     "why": "Jev +5.8pt, McNemar p=0.0079. Mean confidence is only 0.75, so the gate is the product, not the headline accuracy.",
     "gate": "Auto at >=0.9 (89.0% on 50.8%). At >=0.7 it is 84.4% on 68.0%. Rest to a human.",
+    "sourceName": "cardiffnlp/tweet_eval",
+    "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
+    "mirrorUrl": null,
     "samplesSha": "758493aec454",
     "schemaSha": "badd1d31df93",
     "jev": {
@@ -866,6 +884,9 @@ const TASKS = [
     "ns": true,
     "why": "Coin flip vs Mini (p=0.58). Neutral is still the killer class. ECE 0.141 means the confidence number is shaky too.",
     "gate": "Jev if confidence >=0.7 (80.6% on 74.2%); Mini or a human on the rest.",
+    "sourceName": "cardiffnlp/tweet_eval",
+    "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
+    "mirrorUrl": null,
     "samplesSha": "caecb184d45d",
     "schemaSha": "07949a6e028a",
     "jev": {
@@ -977,6 +998,9 @@ const TASKS = [
     "ns": false,
     "why": "TF-IDF 90.8% beats Jev 85.6% and Mini 82.6% after training on 120k rows. Among the APIs Jev wins by 3.0pt (p=0.0093). If you have labels, skip both models.",
     "gate": "Jev first among APIs. At >=0.7: 90.1% on 90.6% of articles.",
+    "sourceName": "fancyzhx/ag_news",
+    "sourceUrl": "https://huggingface.co/datasets/fancyzhx/ag_news",
+    "mirrorUrl": null,
     "samplesSha": "99022757d602",
     "schemaSha": "5e5fb6174e85",
     "jev": {
@@ -1082,6 +1106,9 @@ const TASKS = [
     "ns": false,
     "why": "TF-IDF 93.2% beats both neural judges (p<1e-19) if you have labels. Jev still beats Mini among APIs by 7.4pt. Do not pay for a model on this task if you can train one.",
     "gate": "ECE 0.213, the worst on the board: do not auto-route on confidence here. At >=0.7 it is only 74.9% on 91.0%.",
+    "sourceName": "PolyAI BANKING77",
+    "sourceUrl": "https://github.com/PolyAI-LDN/task-specific-datasets",
+    "mirrorUrl": null,
     "samplesSha": "2d6c984f02c9",
     "schemaSha": "4aa35879a4f2",
     "jev": {
@@ -1199,6 +1226,9 @@ const TASKS = [
     "ns": false,
     "why": "Mini +7.8pt (p=0.0026). Jev mean confidence 0.67 and ECE 0.187, so the confidence cannot carry a threshold either. Kept on the homepage, but compare it with the Civil Comments row: on cleaner gold for the same decision the gap disappears.",
     "gate": "If you insist: >=0.9 is 81.6% but only 32.6% coverage. Keep a specialist.",
+    "sourceName": "cardiffnlp/tweet_eval",
+    "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
+    "mirrorUrl": null,
     "samplesSha": "5bc4134ab919",
     "schemaSha": "c656daeea6fd",
     "jev": {

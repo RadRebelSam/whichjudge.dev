@@ -8,7 +8,12 @@ const FILTERS = [
   { id: "dont", label: "Don't" },
 ];
 
+// Header and rows share this exact template. The old markup used <th> cells for the
+// header and a CSS grid for the rows, which is why the columns never lined up.
+const GRID = "minmax(0,1.7fr) 5rem minmax(4.5rem,0.7fr) minmax(4.5rem,0.7fr) minmax(4.5rem,0.7fr) minmax(6rem,0.9fr)";
+
 const receiptCache = {};
+let modalOpen = false;
 let receiptOpenId = null;
 let sampleOpen = null;
 
@@ -73,6 +78,16 @@ function counts() {
   };
 }
 
+function closeModal() {
+  modalOpen = false;
+  receiptOpenId = null;
+  render();
+}
+
+document.addEventListener("keydown", (ev) => {
+  if (ev.key === "Escape" && modalOpen) closeModal();
+});
+
 let filter = "all";
 let openId = TASKS[0].id;
 let monthlyCalls = 1000000;
@@ -134,34 +149,28 @@ function render() {
         }).join("")}
       </div>
 
-      <div class="flex flex-col gap-6 md:grid md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-        <section class="min-w-0 rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-          <div class="space-y-2 p-3 md:hidden">
-            ${rows.map((t) => cardHtml(t, open && open.id === t.id)).join("")}
+      <section class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="space-y-2 p-3 md:hidden">
+          ${rows.map((t) => cardHtml(t, false)).join("")}
+        </div>
+        <div class="hidden md:block">
+          <div class="flex items-stretch border-b border-zinc-200 text-[11px] tracking-wide text-zinc-500 uppercase dark:border-zinc-800">
+            <span class="w-1 shrink-0"></span>
+            <span class="grid w-full min-w-0 items-end gap-3 px-4 py-3" style="grid-template-columns: ${GRID}">
+              <span>Decision</span>
+              <span>Verdict</span>
+              <span class="text-right">Jev</span>
+              <span class="text-right">4o-mini</span>
+              <span class="text-right">TF-IDF</span>
+              <span class="text-right">p50</span>
+            </span>
           </div>
-          <div class="table-wrapper hidden md:block">
-            <table class="w-full min-w-[42rem] text-left text-sm">
-              <thead class="border-b border-zinc-200 text-[11px] tracking-wide text-zinc-500 uppercase dark:border-zinc-800">
-                <tr>
-                  <th class="px-4 py-3 font-medium">Decision</th>
-                  <th class="px-3 py-3 font-medium">Verdict</th>
-                  <th class="px-3 py-3 font-medium">Jev</th>
-                  <th class="px-3 py-3 font-medium">4o-mini</th>
-                  <th class="px-3 py-3 font-medium">TF-IDF</th>
-                  <th class="px-3 py-3 font-medium">p50</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${rows.map((t) => rowHtml(t, open && open.id === t.id)).join("")}
-              </tbody>
-            </table>
-          </div>
-          <p class="border-t border-zinc-200 px-4 py-3 text-xs text-zinc-500 dark:border-zinc-800">
-            Accuracy from ${RUN.n}×2 receipts. Don't stays on the homepage. ns is grey on purpose.
-          </p>
-        </section>
-        <section class="min-w-0">${open ? detailHtml(open) : ""}</section>
-      </div>
+          ${rows.map((t) => rowHtml(t, false)).join("")}
+        </div>
+        <p class="border-t border-zinc-200 px-4 py-3 text-xs text-zinc-500 dark:border-zinc-800">
+          Accuracy from ${RUN.n}×2 receipts. Click a row for the full breakdown. Don't stays on the homepage. ns is grey on purpose.
+        </p>
+      </section>
 
       <section class="mt-6 rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
         <h2 class="text-sm font-semibold">Monthly bill on this schema</h2>
@@ -176,8 +185,6 @@ function render() {
           ${metric("Delta", usd((open.jev.perM - open.mini.perM) * monthlyCalls / 1e6) + (open.jev.perM > open.mini.perM ? " Jev costs more" : " Jev cheaper"))}
         </div>
       </section>
-
-      <section id="receipts-panel" class="mt-6"></section>
 
       <section class="mt-10 grid gap-4 md:grid-cols-2">
         <article class="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
@@ -222,6 +229,7 @@ function render() {
         </p>
       </div>
     </footer>
+    ${modalOpen && open ? modalHtml(open) : ""}
   `;
 
   app.querySelectorAll("[data-filter]").forEach((btn) => {
@@ -243,9 +251,19 @@ function render() {
     btn.addEventListener("click", () => {
       openId = btn.getAttribute("data-task");
       sampleOpen = null;
+      receiptOpenId = null;
+      modalOpen = true;
       render();
     });
   });
+  const backdrop = app.querySelector("[data-modal-backdrop]");
+  if (backdrop) {
+    backdrop.addEventListener("click", (ev) => {
+      if (ev.target === backdrop) closeModal();
+    });
+    const close = app.querySelector("[data-modal-close]");
+    if (close) close.addEventListener("click", closeModal);
+  }
   const loadBtn = app.querySelector("[data-load-receipts]");
   if (loadBtn) {
     loadBtn.addEventListener("click", () => {
@@ -253,7 +271,8 @@ function render() {
       renderReceipts(open.id);
     });
   }
-  if (receiptOpenId === open.id) renderReceipts(open.id);
+  document.body.style.overflow = modalOpen ? "hidden" : "";
+  if (modalOpen && receiptOpenId === open.id) renderReceipts(open.id);
 }
 
 function statCard(label, value, sub) {
@@ -354,24 +373,35 @@ function rowHtml(t, on) {
   const d = deltaAcc(t);
   const dLabel = (d >= 0 ? "+" : "") + (d * 100).toFixed(1) + "pt";
   return `
-    <tr>
-      <td colspan="6" class="p-0">
-        <button type="button" data-task="${t.id}" class="flex w-full items-stretch text-left ${on ? "bg-zinc-100 dark:bg-zinc-800/80" : "hover:bg-zinc-50 dark:hover:bg-zinc-800/40"}">
-          <span class="w-1 shrink-0 ${v.cls}" style="background: var(--v)"></span>
-          <span class="grid w-full min-w-0 grid-cols-[minmax(0,1.2fr)_auto_minmax(4rem,0.6fr)_minmax(4rem,0.6fr)_minmax(4rem,0.6fr)_minmax(5rem,0.7fr)] items-center gap-0 px-3 py-3 sm:px-4">
-            <span class="min-w-0">
-              <span class="block truncate font-medium">${t.title}</span>
-              <span class="block truncate text-xs text-zinc-500">${t.dataset}</span>
-            </span>
-            <span class="px-2"><span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${v.chip}">${v.label}</span></span>
-            <span class="tabular-nums">${pct(t.jev.acc)}<span class="block text-[10px] font-normal text-zinc-400">${pct(t.jev.lo)}–${pct(t.jev.hi)}</span></span>
-            <span class="tabular-nums text-zinc-600 dark:text-zinc-400">${pct(t.mini.acc)} <span class="text-[11px] text-zinc-400">${dLabel}</span></span>
-            <span class="tabular-nums ${t.tfidf.vsJev === "tfidf" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${pct(t.tfidf.acc)}<span class="block text-[10px] font-normal text-zinc-400">$0</span></span>
-            <span class="mono text-xs tabular-nums text-zinc-600 dark:text-zinc-400">${ms(t.jev.p50)} <span class="text-zinc-400">/</span> ${ms(t.mini.p50)}</span>
-          </span>
-        </button>
-      </td>
-    </tr>
+    <button type="button" data-task="${t.id}"
+      class="flex w-full items-stretch border-b border-zinc-100 text-left last:border-0 dark:border-zinc-800 ${on ? "bg-zinc-100 dark:bg-zinc-800/80" : "hover:bg-zinc-50 dark:hover:bg-zinc-800/40"}">
+      <span class="w-1 shrink-0 ${v.cls}" style="background: var(--v)"></span>
+      <span class="grid w-full min-w-0 items-center gap-3 px-4 py-3" style="grid-template-columns: ${GRID}">
+        <span class="min-w-0">
+          <span class="block truncate font-medium">${t.title}</span>
+          <span class="block truncate text-xs text-zinc-500">${t.sourceName}</span>
+        </span>
+        <span><span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${v.chip}">${v.label}</span></span>
+        <span class="text-right tabular-nums">${pct(t.jev.acc)}<span class="block text-[10px] font-normal text-zinc-400">${pct(t.jev.lo)}–${pct(t.jev.hi)}</span></span>
+        <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${pct(t.mini.acc)}<span class="block text-[10px] text-zinc-400">${dLabel}</span></span>
+        <span class="text-right tabular-nums ${t.tfidf.vsJev === "tfidf" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${pct(t.tfidf.acc)}<span class="block text-[10px] font-normal text-zinc-400">$0</span></span>
+        <span class="mono text-right text-xs tabular-nums text-zinc-600 dark:text-zinc-400">${ms(t.jev.p50)}<span class="block text-[10px] text-zinc-400">vs ${ms(t.mini.p50)}</span></span>
+      </span>
+    </button>
+  `;
+}
+
+
+function modalHtml(t) {
+  return `
+    <div data-modal-backdrop class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-zinc-900/50 p-4 backdrop-blur-sm sm:p-8">
+      <div role="dialog" aria-modal="true" aria-label="${t.title}" class="relative w-full max-w-2xl">
+        <button type="button" data-modal-close aria-label="Close"
+          class="absolute right-3 top-3 z-10 rounded-lg border border-zinc-300 bg-white px-2 py-1 text-sm text-zinc-600 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800">Esc</button>
+        ${detailHtml(t)}
+        <section id="receipts-panel" class="mt-4"></section>
+      </div>
+    </div>
   `;
 }
 
@@ -399,6 +429,7 @@ function detailHtml(t) {
         ${metric("$ / million", usd(t.jev.perM) + " vs " + usd(t.mini.perM))}
         ${metric("ECE (p_chosen)", t.ece.ece.toFixed(3) + " · MCE " + t.ece.mce.toFixed(3))}
         ${metric("Replacing", t.replaces)}
+        ${metric("Gold", `<a class="underline decoration-zinc-300 underline-offset-2" href="${t.sourceUrl}" rel="noopener">${t.sourceName}</a>` + (t.mirrorUrl ? ` via <a class="underline decoration-zinc-300 underline-offset-2" href="${t.mirrorUrl}" rel="noopener">CC0 mirror</a>` : ""))}
       </dl>
       <div class="mt-5">
         <p class="text-[11px] tracking-wide text-zinc-500 uppercase">Accuracy bar</p>
