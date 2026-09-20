@@ -630,6 +630,10 @@ def run_task(task_id: str, workers: int = 10) -> dict:
 def write_manifest(summary: list[dict], schema_hashes: dict[str, str], started: str) -> None:
     files = {}
     for path in sorted((DATA).glob("*.jsonl")):
+        # data/<task>.text.jsonl is rehydrated locally and never committed, so it
+        # must not be pinned here or a fresh clone reports it missing.
+        if path.name.endswith(".text.jsonl"):
+            continue
         files[f"data/{path.name}"] = sha256_file(path)
     for path in sorted(SCHEMAS.glob("*.json")):
         files[f"schemas/{path.name}"] = sha256_file(path)
