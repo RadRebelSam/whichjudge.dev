@@ -37,11 +37,16 @@
 (6 Jev-only correct, 6 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> ns.</p>
 <h2>Quit line</h2>
-<p>No accuracy reason to switch either way. At &gt;=0.7: 98.9% on 88.8% of traffic.</p>
-<p>At Jev confidence &ge; 0.7: 98.9% accurate on 88.8% of traffic.
-Expected calibration error on this task is <strong>0.016</strong>
-(max bin gap 0.278). High ECE means the confidence number is not
-trustworthy enough to auto-route on.</p>
+<p>Already at 96.4% ungated, so the gate has little left to buy: 99.0% on 80.0% at &gt;=0.9, 2.6pt. Low ECE rows gain least because there is no headroom.</p>
+<p><strong>Auto slice:</strong> at Jev confidence &ge; 0.9,
+99.0% accurate on 80.0% of traffic, which is
++2.6pt against 96.4% ungated. That threshold is the strongest
+one still covering at least half the traffic, picked by rule from the measured gates.</p>
+<p><strong>Calibration:</strong> ECE 0.016 (max bin gap 0.278).
+ECE says whether the confidence can be read as a probability. It does not say whether
+gating helps: thresholding only needs the model to rank its own answers, so a badly
+calibrated task can still gate well. High ECE costs you the right to quote the number,
+not the right to threshold on it.</p>
 <h2>Verify this</h2>
 <p>Frozen samples <code>7005ef00450f</code>, schema <code>07b1bf25a365</code>.
 Every call is stored with its request, response and SHA-256 in

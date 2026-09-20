@@ -18,12 +18,14 @@
       "replaces": "LLM guard deciding whether untrusted input may reach an agent",
       "dataset": "deepset/prompt-injections, train + test, multilingual",
       "labels": "injection / legitimate",
-      "verdict": "mix",
+      "verdict": "neither",
       "ns": true,
       "sourceName": "deepset/prompt-injections",
       "sourceUrl": "https://huggingface.co/datasets/deepset/prompt-injections",
       "why": "Read this row on recall, not accuracy. Jev 80.0% and Mini 81.0% look respectable and are tied (p=0.72), but both are biased hard toward letting text through: Jev misses 40.0% of injections while blocking 0.0% of legitimate input. An accuracy number hides that completely. TF-IDF is 85.7% on only 361 training rows.",
-      "gate": "The quit line does not rescue this one. Raising Jev's threshold from 0.5 to 0.9 moves injection recall from 60.0% to only 66.3% while dropping coverage, so the misses move to a human rather than disappearing. Neither model is a standalone security gate here."
+      "gate": "The exception on this site. The slice looks fine at 90.6% on 71.3%, but that is accuracy, and accuracy is not the job. Injection recall only moves from 60.0% to 66.3% between gate 0.5 and 0.9, so the misses go to a human rather than away. Neither model is a standalone gate.",
+      "goldTier": "research",
+      "goldNote": "Curated research corpus, predates current agent tooling"
     },
     {
       "id": "cfpb_queue_route",
@@ -34,10 +36,12 @@
       "verdict": "replace",
       "ns": true,
       "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, so this is also the first row where Jev is the cheaper API: $33.89 against $53.21 per million decisions.",
-      "gate": "At >=0.7: 88.2% on 88.0% of complaints. ECE 0.100 is borderline, and the 0.9 bin is the weak spot, so gate at 0.9 (91.8% on 75.6%) if a misroute is expensive.",
+      "gate": "At >=0.9: 91.8% on 75.6% of complaints, 9.0pt above ungated. ECE 0.100 means do not repeat the confidence figure to anyone as a probability; it does not stop you thresholding on it.",
       "sourceName": "CFPB Consumer Complaint Database",
       "sourceUrl": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
-      "mirrorUrl": "https://huggingface.co/datasets/BEE-spoke-data/consumer-finance-complaints"
+      "mirrorUrl": "https://huggingface.co/datasets/BEE-spoke-data/consumer-finance-complaints",
+      "goldTier": "live",
+      "goldNote": "Live system: a regulator routes these daily and the filer picks the label"
     },
     {
       "id": "civil_toxicity",
@@ -48,9 +52,11 @@
       "verdict": "mix",
       "ns": true,
       "why": "The same decision as the hate-speech row, on clean CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF wins again at 82.8%. Read this next to the hate row: the Don't verdict there does not survive a change of gold, so it was a fact about that dataset more than about Jev.",
-      "gate": "Calibration is usable here (ECE 0.075) unlike the hate row. At >=0.8: 91.3% on 52.8% of comments. Publish that half automatically and queue the rest.",
+      "gate": "Best-behaved gate here: 91.3% on 52.8% of comments at >=0.8, 13.3pt above ungated, and ECE 0.075 is low enough to state the confidence out loud. Publish that half automatically and queue the rest.",
       "sourceName": "google/civil_comments",
-      "sourceUrl": "https://huggingface.co/datasets/google/civil_comments"
+      "sourceUrl": "https://huggingface.co/datasets/google/civil_comments",
+      "goldTier": "real",
+      "goldNote": "Real content from a news site, labels from crowd annotators"
     },
     {
       "id": "sms_spam",
@@ -60,10 +66,12 @@
       "labels": "ham / spam",
       "verdict": "replace",
       "why": "Dead heat: Jev 96.4, Mini 96.4, TF-IDF 96.4. Classical ML is enough here. Nothing separates the three.",
-      "gate": "No accuracy reason to switch either way. At >=0.7: 98.9% on 88.8% of traffic.",
+      "gate": "Already at 96.4% ungated, so the gate has little left to buy: 99.0% on 80.0% at >=0.9, 2.6pt. Low ECE rows gain least because there is no headroom.",
       "ns": true,
       "sourceName": "ucirvine/sms_spam",
-      "sourceUrl": "https://huggingface.co/datasets/ucirvine/sms_spam"
+      "sourceUrl": "https://huggingface.co/datasets/ucirvine/sms_spam",
+      "goldTier": "research",
+      "goldNote": "Academic benchmark"
     },
     {
       "id": "review_sentiment",
@@ -73,10 +81,12 @@
       "labels": "negative / positive",
       "verdict": "replace",
       "why": "Tied (McNemar p=0.55). 97.0% vs 96.4%. TF-IDF drops to 82.6%, so the models earn their keep against classical, not against each other.",
-      "gate": "Best-calibrated task on the board (ECE 0.015). At >=0.7: 98.5% on 91.8% of reviews.",
+      "gate": "Lowest ECE on the board at 0.015, so the confidence can be quoted directly, but the gate only adds 1.8pt (98.8% on 80.6%). Little headroom left.",
       "ns": true,
       "sourceName": "stanfordnlp/sst2",
-      "sourceUrl": "https://huggingface.co/datasets/stanfordnlp/sst2"
+      "sourceUrl": "https://huggingface.co/datasets/stanfordnlp/sst2",
+      "goldTier": "research",
+      "goldNote": "Academic benchmark"
     },
     {
       "id": "message_emotion",
@@ -89,7 +99,9 @@
       "gate": "Use Jev in-loop. At >=0.7: 88.5% on 74.8% of traffic.",
       "ns": false,
       "sourceName": "cardiffnlp/tweet_eval",
-      "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval"
+      "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
+      "goldTier": "research",
+      "goldNote": "Academic benchmark"
     },
     {
       "id": "content_offensive",
@@ -99,10 +111,12 @@
       "labels": "not_offensive / offensive",
       "verdict": "replace",
       "why": "Jev +5.8pt, McNemar p=0.0079. Mean confidence is only 0.75, so the gate is the product, not the headline accuracy.",
-      "gate": "Auto at >=0.9 (89.0% on 50.8%). At >=0.7 it is 84.4% on 68.0%. Rest to a human.",
+      "gate": "At >=0.9: 89.0% on 50.8% of posts, 12.4pt above ungated, the second largest gain on the board. Rest to a human.",
       "ns": false,
       "sourceName": "cardiffnlp/tweet_eval",
-      "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval"
+      "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
+      "goldTier": "research",
+      "goldNote": "Academic benchmark"
     },
     {
       "id": "tweet_sentiment",
@@ -115,7 +129,9 @@
       "gate": "Jev if confidence >=0.7 (80.6% on 74.2%); Mini or a human on the rest.",
       "ns": true,
       "sourceName": "cardiffnlp/tweet_eval",
-      "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval"
+      "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
+      "goldTier": "research",
+      "goldNote": "Academic benchmark"
     },
     {
       "id": "news_topic",
@@ -128,7 +144,9 @@
       "gate": "Jev first among APIs. At >=0.7: 90.1% on 90.6% of articles.",
       "ns": false,
       "sourceName": "fancyzhx/ag_news",
-      "sourceUrl": "https://huggingface.co/datasets/fancyzhx/ag_news"
+      "sourceUrl": "https://huggingface.co/datasets/fancyzhx/ag_news",
+      "goldTier": "research",
+      "goldNote": "Academic benchmark"
     },
     {
       "id": "banking_coarse_route",
@@ -138,10 +156,12 @@
       "labels": "cards / top_up / cash_atm / transfers / fx / account / payments_fees / other",
       "verdict": "replace",
       "why": "TF-IDF 93.2% beats both neural judges (p<1e-19) if you have labels. Jev still beats Mini among APIs by 7.4pt. Do not pay for a model on this task if you can train one.",
-      "gate": "ECE 0.213, the worst on the board: do not auto-route on confidence here. At >=0.7 it is only 74.9% on 91.0%.",
+      "gate": "Gating works here even though the calibration does not: at >=0.9 it is 80.4% on 77.6% of tickets, 8.6pt above ungated. What ECE 0.213 costs you is the right to quote the confidence as a probability, not the right to threshold on it.",
       "ns": false,
       "sourceName": "PolyAI BANKING77",
-      "sourceUrl": "https://github.com/PolyAI-LDN/task-specific-datasets"
+      "sourceUrl": "https://github.com/PolyAI-LDN/task-specific-datasets",
+      "goldTier": "research",
+      "goldNote": "Research corpus of customer queries, intents collapsed by keyword"
     },
     {
       "id": "content_hate",
@@ -151,10 +171,12 @@
       "labels": "not_hate / hate",
       "verdict": "dont",
       "why": "Mini +7.8pt (p=0.0026). Jev mean confidence 0.67 and ECE 0.187, so the confidence cannot carry a threshold either. Kept on the homepage, but compare it with the Civil Comments row: on cleaner gold for the same decision the gap disappears.",
-      "gate": "If you insist: >=0.9 is 81.6% but only 32.6% coverage. Keep a specialist.",
+      "gate": "Gating buys least here of any row: 72.3% on 57.0% at >=0.7, only 6.1pt above ungated, and Mini is better anyway. Keep a specialist.",
       "ns": false,
       "sourceName": "cardiffnlp/tweet_eval",
-      "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval"
+      "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
+      "goldTier": "research",
+      "goldNote": "Academic benchmark"
     }
   ],
   "calls": {

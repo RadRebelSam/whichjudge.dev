@@ -4,21 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prompt-injection screen: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
-<meta name="description" content="Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=300 frozen gold. Jev 80.0%, gpt-4o-mini 81.0%, TF-IDF 85.7%. Verdict: Mix. ECE 0.134.">
+<meta name="description" content="Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=300 frozen gold. Jev 80.0%, gpt-4o-mini 81.0%, TF-IDF 85.7%. Verdict: Neither. ECE 0.134.">
 <link rel="canonical" href="https://whichjudge.dev/decision/prompt-injection.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Prompt-injection screen: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
-<meta property="og:description" content="Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=300 frozen gold. Jev 80.0%, gpt-4o-mini 81.0%, TF-IDF 85.7%. Verdict: Mix. ECE 0.134.">
+<meta property="og:description" content="Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=300 frozen gold. Jev 80.0%, gpt-4o-mini 81.0%, TF-IDF 85.7%. Verdict: Neither. ECE 0.134.">
 <meta property="og:url" content="https://whichjudge.dev/decision/prompt-injection.html">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Prompt-injection screen - cheap decision model bake-off", "description": "Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=300 frozen gold. Jev 80.0%, gpt-4o-mini 81.0%, TF-IDF 85.7%. Verdict: Mix. ECE 0.134.", "url": "https://whichjudge.dev/decision/prompt-injection.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "deepset/prompt-injections, train + test, multilingual", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/prompt_injection.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.8}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.81}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.8566666666666667}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.134}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Prompt-injection screen - cheap decision model bake-off", "description": "Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=300 frozen gold. Jev 80.0%, gpt-4o-mini 81.0%, TF-IDF 85.7%. Verdict: Neither. ECE 0.134.", "url": "https://whichjudge.dev/decision/prompt-injection.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "deepset/prompt-injections, train + test, multilingual", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/prompt_injection.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.8}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.81}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.8566666666666667}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.134}]}</script>
 <style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>Prompt-injection screen</h1>
-<p><span class="verdict">Mix (ns)</span></p>
+<p><span class="verdict">Neither (ns)</span></p>
 <p>Read this row on recall, not accuracy. Jev 80.0% and Mini 81.0% look respectable and are tied (p=0.72), but both are biased hard toward letting text through: Jev misses 40.0% of injections while blocking 0.0% of legitimate input. An accuracy number hides that completely. TF-IDF is 85.7% on only 361 training rows.</p>
 <p><strong>Replaces:</strong> LLM guard deciding whether untrusted input may reach an agent<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/deepset/prompt-injections" rel="noopener">deepset/prompt-injections</a>
@@ -37,11 +37,16 @@
 (14 Jev-only correct, 17 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> ns.</p>
 <h2>Quit line</h2>
-<p>The quit line does not rescue this one. Raising Jev&#x27;s threshold from 0.5 to 0.9 moves injection recall from 60.0% to only 66.3% while dropping coverage, so the misses move to a human rather than disappearing. Neither model is a standalone security gate here.</p>
-<p>At Jev confidence &ge; 0.7: 85.3% accurate on 83.7% of traffic.
-Expected calibration error on this task is <strong>0.134</strong>
-(max bin gap 0.377). High ECE means the confidence number is not
-trustworthy enough to auto-route on.</p>
+<p>The exception on this site. The slice looks fine at 90.6% on 71.3%, but that is accuracy, and accuracy is not the job. Injection recall only moves from 60.0% to 66.3% between gate 0.5 and 0.9, so the misses go to a human rather than away. Neither model is a standalone gate.</p>
+<p><strong>Auto slice:</strong> at Jev confidence &ge; 0.9,
+90.6% accurate on 71.3% of traffic, which is
++10.7pt against 80.0% ungated. That threshold is the strongest
+one still covering at least half the traffic, picked by rule from the measured gates.</p>
+<p><strong>Calibration:</strong> ECE 0.134 (max bin gap 0.377).
+ECE says whether the confidence can be read as a probability. It does not say whether
+gating helps: thresholding only needs the model to rank its own answers, so a badly
+calibrated task can still gate well. High ECE costs you the right to quote the number,
+not the right to threshold on it.</p>
 <h2>Verify this</h2>
 <p>Frozen samples <code>a56df9a7f033</code>, schema <code>5845f69fd9ac</code>.
 Every call is stored with its request, response and SHA-256 in

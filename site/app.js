@@ -6,11 +6,12 @@ const FILTERS = [
   { id: "replace", label: "Replace" },
   { id: "mix", label: "Mix" },
   { id: "dont", label: "Don't" },
+  { id: "neither", label: "Neither" },
 ];
 
 // Header and rows share this exact template. The old markup used <th> cells for the
 // header and a CSS grid for the rows, which is why the columns never lined up.
-const GRID = "minmax(0,1.7fr) 5rem minmax(4.5rem,0.7fr) minmax(4.5rem,0.7fr) minmax(4.5rem,0.7fr) minmax(6rem,0.9fr)";
+const GRID = "minmax(0,1.35fr) 5.2rem minmax(4rem,0.6fr) minmax(4rem,0.6fr) minmax(4rem,0.6fr) 3.6rem minmax(6.5rem,0.9fr)";
 
 const receiptCache = {};
 let modalOpen = false;
@@ -52,6 +53,9 @@ function speedup(task) {
 }
 
 function verdictMeta(v, ns) {
+  // Neither wins over ns on purpose: "the two models tie" is much less useful than
+  // "neither of them can be trusted with this decision on its own".
+  if (v === "neither") return { label: "Neither", cls: "verdict-dont", chip: "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300" };
   if (ns) return { label: "ns", cls: "verdict-mix", chip: "bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300" };
   if (v === "replace") return { label: "Replace", cls: "verdict-replace", chip: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300" };
   if (v === "mix") return { label: "Mix", cls: "verdict-mix", chip: "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200" };
@@ -60,17 +64,20 @@ function verdictMeta(v, ns) {
 
 function counts() {
   const tfidfWins = TASKS.filter((t) => t.tfidf.vsJev === "tfidf");
-  // Headline card shows the task where the quit line is most defensible:
-  // lowest calibration error first, then the most traffic it can auto-handle.
+  // Headline card uses the same rule as the Auto slice column, so the first screen
+  // and the table cannot disagree about which threshold is being talked about.
   const best = TASKS.slice().sort(
-    (a, b) => a.ece.ece - b.ece.ece || b.gates["0.7"].cov - a.gates["0.7"].cov
+    (a, b) => b.autoSlice.acc - a.autoSlice.acc || b.autoSlice.cov - a.autoSlice.cov
   )[0];
   return {
     replace: TASKS.filter((t) => t.verdict === "replace" && !t.ns).length,
     mix: TASKS.filter((t) => t.verdict === "mix" || t.ns).length,
     dont: TASKS.filter((t) => t.verdict === "dont" && !t.ns).length,
     ns: TASKS.filter((t) => t.ns).length,
-    lowEce: TASKS.filter((t) => t.ece.ece <= 0.1).length,
+    gateHelps: TASKS.filter((t) => t.autoSlice && t.autoSlice.lift > 0).length,
+    neither: TASKS.filter((t) => t.verdict === "neither").length,
+    liveGold: TASKS.filter((t) => t.goldTier === "live").length,
+    realGold: TASKS.filter((t) => t.goldTier !== "research").length,
     tfidfWins: tfidfWins.length,
     tfidfNames: tfidfWins.map((t) => t.shortName || t.id.split("_")[0]).join(" + "),
     best,
@@ -123,8 +130,8 @@ function render() {
           <h1 class="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">You don't need a better model. You need a quit line.</h1>
           <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
             Judge here means the cheap in-loop decision (route, gate, score) - not grading an agent transcript.
-            On ${c.best.title.toLowerCase()}, where confidence is best calibrated (ECE ${c.best.ece.ece}), Jev at ≥ 0.7 is
-            <span class="font-medium text-zinc-900 dark:text-zinc-100">${pct(c.best.gates["0.7"].acc)} accurate on ${pct(c.best.gates["0.7"].cov)} of traffic</span>.
+            On ${c.best.title.toLowerCase()}, Jev above ${c.best.autoSlice.gate} confidence is
+            <span class="font-medium text-zinc-900 dark:text-zinc-100">${pct(c.best.autoSlice.acc)} accurate on ${pct(c.best.autoSlice.cov)} of traffic</span>.
             Auto that slice. Mix the rest. Grey ns = accuracy gap is noise.
           </p>
         </div>
@@ -134,12 +141,12 @@ function render() {
 
     <main class="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
       <section class="card-grid mb-8">
-        ${statCard("Quit line", "≥ 0.7", "Jev confidence. Below this, don't auto.")}
-        ${statCard(c.best.title + " @ 0.7", pct(c.best.gates["0.7"].acc), "on " + pct(c.best.gates["0.7"].cov) + " of traffic · n=" + c.best.n)}
-        ${statCard("Trustworthy gates", `${c.lowEce}/${TASKS.length}`, "ECE ≤ 0.1. The rest cannot carry a threshold.")}
-        ${statCard("Don't (sig)", String(c.dont), "Hate: Mini wins. Kept on the homepage.")}
+        ${statCard("Auto slice rule", "≥ 50% covered", "Strongest gate that still automates half the traffic. Chosen per row, not by hand.")}
+        ${statCard(c.best.title + " @ " + c.best.autoSlice.gate, pct(c.best.autoSlice.acc), "on " + pct(c.best.autoSlice.cov) + " of traffic · n=" + c.best.n)}
+        ${statCard("Gating beats not gating", `${c.gateHelps}/${TASKS.length}`, "Every row. Lift shown per row, from the measured gates.")}
+        ${statCard("Neither model works", String(c.neither), "Prompt injection: both miss ~4 in 10. Kept on the homepage.")}
         ${statCard(`TF-IDF wins ${c.tfidfWins}`, c.tfidfNames || "none", "If you have labels, skip both APIs")}
-        ${statCard("p50 vs Mini", c.speed + "×", "same client, same minute · includes RTT")}
+        ${statCard("Non-academic gold", `${c.realGold}/${TASKS.length}`, `${c.liveGold} live system, ${c.realGold - c.liveGold} real text. Nine are benchmarks.`)}
       </section>
 
       <div class="mb-4 flex flex-wrap items-center gap-2">
@@ -162,7 +169,8 @@ function render() {
               <span class="text-right">Jev</span>
               <span class="text-right">4o-mini</span>
               <span class="text-right">TF-IDF</span>
-              <span class="text-right">p50</span>
+              <span class="text-right">ECE</span>
+              <span class="text-right">Auto slice</span>
             </span>
           </div>
           ${rows.map((t) => rowHtml(t, false)).join("")}
@@ -190,7 +198,8 @@ function render() {
         <article class="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
           <h2 class="text-sm font-semibold">How to read this</h2>
           <ul class="mt-3 space-y-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Quit line</span> - auto only when Jev p(chosen) ≥ 0.7 (or 0.8 on offensive). Justified where ECE is low (SMS 0.013, reviews 0.019). Not justified on hate (ECE 0.19) or banking (0.22).</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Auto slice</span> - the strongest threshold that still leaves at least half the traffic automated, and what it buys against ungated accuracy. Picked by that rule from the measured gates, not by hand.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ECE</span> - whether you may read the confidence as a probability. It is <em>not</em> whether gating helps. Gating only needs the model to rank its own answers, so a badly calibrated row can still gate well: banking has the worst ECE here and still gains ${(() => { const b = TASKS.find((t) => t.id === "banking_coarse_route"); return b ? (b.autoSlice.lift * 100).toFixed(1) : "0"; })()}pt. What high ECE costs you is the right to quote the number.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Replace</span> - McNemar p<0.05 and Jev ≥ Mini. Latency is extra. Cost is not the reason (see $/M).</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ns</span> - accuracy gap is noise. Do not crown a winner on 1-2pt.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Don't</span> - Mini significantly better. Hate-speech stays on the homepage on purpose.</li>
@@ -201,7 +210,7 @@ function render() {
         <article class="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
           <h2 class="text-sm font-semibold">Four layers of proof</h2>
           <ol class="mt-3 space-y-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">1. Frozen inputs.</span> seed=7, n=500, public gold, schema SHA on each row.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">1. Frozen inputs.</span> seed=${RUN.seed}, n=${RUN.nMin}-${RUN.nMax} per task, public gold, schema SHA on each row.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">2. Per-call receipts.</span> Full request/response + SHA-256. Open a row.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">3. Don't stays up.</span> Hate speech: Mini +12 pts.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">4. Re-run.</span> <span class="mono text-xs">python3 scripts/verify_run.py</span> recounts accuracy. <span class="mono text-xs">python3 scripts/run_eval.py</span> hits the APIs again.</li>
@@ -332,6 +341,15 @@ function costCurveHtml() {
   `;
 }
 
+function goldBadge(t) {
+  const m = {
+    live: ["live gold", "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300"],
+    real: ["real text", "bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300"],
+    research: ["academic", "bg-zinc-200 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"],
+  }[t.goldTier] || ["", ""];
+  return `<span class="mr-1 rounded px-1 py-0.5 text-[10px] font-medium ${m[1]}" title="${t.goldNote}">${m[0]}</span>`;
+}
+
 function callCard(c) {
   const href = `mailto:${SITE.contact}?subject=${encodeURIComponent(c.subject)}`;
   return `
@@ -379,13 +397,14 @@ function rowHtml(t, on) {
       <span class="grid w-full min-w-0 items-center gap-3 px-4 py-3" style="grid-template-columns: ${GRID}">
         <span class="min-w-0">
           <span class="block truncate font-medium">${t.title}</span>
-          <span class="block truncate text-xs text-zinc-500">${t.sourceName}</span>
+          <span class="block truncate text-xs text-zinc-500">${goldBadge(t)} ${t.sourceName}</span>
         </span>
         <span><span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${v.chip}">${v.label}</span></span>
         <span class="text-right tabular-nums">${pct(t.jev.acc)}<span class="block text-[10px] font-normal text-zinc-400">${pct(t.jev.lo)}-${pct(t.jev.hi)}</span></span>
         <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${pct(t.mini.acc)}<span class="block text-[10px] text-zinc-400">${dLabel}</span></span>
         <span class="text-right tabular-nums ${t.tfidf.vsJev === "tfidf" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${pct(t.tfidf.acc)}<span class="block text-[10px] font-normal text-zinc-400">$0</span></span>
-        <span class="mono text-right text-xs tabular-nums text-zinc-600 dark:text-zinc-400">${ms(t.jev.p50)}<span class="block text-[10px] text-zinc-400">vs ${ms(t.mini.p50)}</span></span>
+        <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${t.ece.ece.toFixed(3)}</span>
+        <span class="text-right tabular-nums">${pct(t.autoSlice.acc)}<span class="block text-[10px] font-normal text-zinc-400">on ${pct(t.autoSlice.cov)} · ${(t.autoSlice.lift * 100 >= 0 ? "+" : "") + (t.autoSlice.lift * 100).toFixed(1)}pt</span></span>
       </span>
     </button>
   `;
@@ -461,11 +480,12 @@ function detailHtml(t) {
         ${metric("McNemar vs Mini", t.ns ? "ns  p=" + t.mcnemar.p : t.mcnemar.winner + "  p=" + t.mcnemar.p)}
         ${metric("TF-IDF vs Jev", t.tfidf.vsJev)}
         ${metric("Jev p50 / p95", ms(t.jev.p50) + " / " + ms(t.jev.p95))}
-        ${metric("Mini p50", ms(t.mini.p50) + " · " + su + "× · RTT in")}
+        ${metric("Mini p50", ms(t.mini.p50) + " · " + su + "× · includes RTT, local to one client")}
         ${metric("$ / million", usd(t.jev.perM) + " vs " + usd(t.mini.perM))}
         ${metric("ECE (p_chosen)", t.ece.ece.toFixed(3) + " · MCE " + t.ece.mce.toFixed(3))}
         ${metric("Replacing", t.replaces)}
         ${metric("Sample size", "n=" + t.n + " · seed " + RUN.seed)}
+        ${metric("Gold type", t.goldNote)}
         ${metric("Gold", `<a class="underline decoration-zinc-300 underline-offset-2" href="${t.sourceUrl}" rel="noopener">${t.sourceName}</a>` + (t.mirrorUrl ? ` via <a class="underline decoration-zinc-300 underline-offset-2" href="${t.mirrorUrl}" rel="noopener">CC0 mirror</a>` : ""))}
       </dl>
       ${errorProfileHtml(t)}
@@ -498,7 +518,7 @@ function detailHtml(t) {
       </div>
       <p class="mt-4 mono break-all text-[11px] text-zinc-500">samples ${shortSha(t.samplesSha)} · schema ${shortSha(t.schemaSha)}</p>
       <p class="mt-1 text-xs text-zinc-500">Labels: ${t.labels}</p>
-      <button type="button" data-load-receipts class="mt-4 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700">Open 500 receipts</button>
+      <button type="button" data-load-receipts class="mt-4 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700">Open ${t.n * 2} receipts</button>
     </article>
   `;
 }

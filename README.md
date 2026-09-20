@@ -27,7 +27,7 @@ whichjudge/
     pages.yml               verify receipts, check site is generated, deploy to Pages
   scripts/
     download_raw.py         optional: re-fetch public datasets
-    prepare_samples.py      build data/*.jsonl (seed=7, n=500)
+    prepare_samples.py      build the academic data/*.jsonl (seed=7, n=500)
     run_eval.py             Jev vs gpt-4o-mini; writes hashed receipts
     verify_run.py           recount accuracy; check SHA-256 (no API)
     run_tfidf_baseline.py   TF-IDF + LR on leftover official train
@@ -39,7 +39,7 @@ whichjudge/
     redact_text.py          strip third-party text to hashes before publishing
     rehydrate.py            restore that text from upstream, hash-checked
     build_site.py           GENERATE site from results/ (--check gates CI)
-  data/                     FROZEN n=500 samples + meta
+  data/                     FROZEN samples + meta (n=500, injection n=300)
   schemas/                  frozen questions + Mini prompts
   results/                  summary, calibration.json, tfidf_*.json
   results/code_patches.json scripts changed after the run, with before/after hashes
@@ -115,6 +115,33 @@ is noise and neither model should be crowned.
 | Banking queue routing | 500 | 71.8% [67.7%-75.6%] | 64.4% | jev p=3.23e-05 | 0.213 | Replace |
 | Hate-speech screen | 500 | 66.2% [61.9%-70.2%] | 74.0% | mini p=0.00258 | 0.187 | Don't |
 
+### Calibration and gating are different questions
+
+ECE says whether the confidence can be read as a probability. It does **not** say
+whether thresholding helps, because gating only needs the model to rank its own
+answers correctly. A badly calibrated task can still gate well, and the two lowest-ECE
+rows here gain the least because they have no headroom left.
+
+The auto slice below is the strongest gate that still leaves at least half the traffic
+automated, selected by that rule from the measured gates rather than chosen by hand.
+
+| Decision | Gold | ECE | Auto slice (gate) | Lift vs ungated |
+|---|---|---|---|---|
+| Consumer complaint routing | live system | 0.100 | 91.8% on 75.6% (>=0.9) | +9.0pt |
+| Comment toxicity gate | real text | 0.075 | 91.3% on 52.8% (>=0.8) | +13.3pt |
+| Prompt-injection screen | academic | 0.134 | 90.6% on 71.3% (>=0.9) | +10.7pt |
+| SMS spam gate | academic | 0.016 | 99.0% on 80.0% (>=0.9) | +2.6pt |
+| Review polarity | academic | 0.015 | 98.8% on 80.6% (>=0.9) | +1.8pt |
+| Message emotion | academic | 0.083 | 90.9% on 61.6% (>=0.9) | +11.1pt |
+| Offensive language screen | academic | 0.110 | 89.0% on 50.8% (>=0.9) | +12.4pt |
+| Social sentiment (3-way) | academic | 0.141 | 82.9% on 58.4% (>=0.9) | +9.1pt |
+| News topic | academic | 0.096 | 92.9% on 84.0% (>=0.9) | +7.3pt |
+| Banking queue routing | academic | 0.213 | 80.4% on 77.6% (>=0.9) | +8.6pt |
+| Hate-speech screen | academic | 0.187 | 72.3% on 57.0% (>=0.7) | +6.1pt |
+
+Gating beats not gating on **all eleven rows**. What a high ECE costs you is the right
+to quote the confidence number as a probability, not the right to threshold on it.
+
 ### Accuracy is the wrong number for a security gate
 
 The prompt-injection row looks fine on accuracy: Jev 80.0%,
@@ -185,8 +212,7 @@ frozen 500 (`scripts/run_tfidf_baseline.py`):
 If you have labels, skip both APIs on banking routing and news topic. Predicts in
 microseconds for $0.
 
-**Calibration** decides whether a confidence threshold means anything
-(`scripts/calibrate.py`). Low ECE tasks can carry a quit line; high ECE tasks cannot.
+**Calibration** is measured by `scripts/calibrate.py`.
 Banking is 0.213 and hate is
 0.187: do not auto-route on confidence there.
 
@@ -225,8 +251,8 @@ local to its client.
 
 ## Provenance - four layers
 
-1. **Frozen inputs.** `data/*.jsonl` (seed=7, n=500) and `schemas/*.json`. SHA-256 in `results/manifest.json`. The four TweetEval tasks ship a SHA-256 of each text instead of the text; `scripts/rehydrate.py` restores and re-checks it. See `ATTRIBUTION.md`.
-2. **Per-call receipts.** `results/receipts/<task>.json` (full JSON). `site/receipts/` is a slimmer copy for the UI. Open a row → Open 500 receipts.
+1. **Frozen inputs.** `data/*.jsonl` (seed=7, n=500 per task except prompt injection at n=300) and `schemas/*.json`. SHA-256 in `results/manifest.json`. The four TweetEval tasks ship a SHA-256 of each text instead of the text; `scripts/rehydrate.py` restores and re-checks it. See `ATTRIBUTION.md`.
+2. **Per-call receipts.** `results/receipts/<task>.json` (full JSON). `site/receipts/` is a slimmer copy for the UI. Open a row, then open that task's receipts.
 3. **Don't stays on the homepage.** Hate-speech: Mini wins by 7.8 points, and the row is kept in full view.
 4. **Re-run / recount.** No API: `python3 scripts/verify_run.py` (must print ALL CHECKS PASSED).
    Scripts patched after the run are listed in `results/code_patches.json` with their
@@ -235,7 +261,9 @@ local to its client.
 
 APIs do not cryptographically sign responses. Receipts stop silent edits of the summary table. They do not prove a third party issued the JSON - only a re-run does.
 
-n=500 on public academic gold is still not a procurement study.
+Eleven rows, of which one rests on a live system's own labels and one on real
+user text with research labels. The other nine are academic benchmarks. That is
+stated per row on the site, and it is still not a procurement study.
 
 ---
 
