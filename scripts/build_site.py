@@ -250,6 +250,7 @@ def render_decision_page(t, run, site) -> str:
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{e(url)}">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
@@ -332,6 +333,7 @@ def render_index_meta(site, run, tasks) -> str:
     }
     return "\n".join([
         META_START,
+        '  <link rel="icon" href="/favicon.svg" type="image/svg+xml">',
         f'  <meta name="description" content="{e(desc)}">',
         f'  <link rel="canonical" href="{e(site["domain"])}/">',
         '  <meta property="og:type" content="website">',
