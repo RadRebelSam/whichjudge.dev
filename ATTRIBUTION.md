@@ -1,8 +1,12 @@
 # Dataset attribution and redistribution status
 
-`data/*.jsonl` contains 500 rows sampled from each public dataset below, with the
-original text and the original gold label. Publishing this repo redistributes that
-text, so each source has to be cleared on its own terms.
+`data/*.jsonl` holds the frozen sample for each dataset below: the sample id, the gold
+label, and either the text or a SHA-256 of it.
+
+**7 of the 11 rows ship the hash, not the text.** Only the four
+datasets with an explicit grant or public-domain status ship their text. So publishing
+this repo does not redistribute anything whose terms are unclear; `scripts/rehydrate.py`
+restores the rest locally from upstream.
 
 **Status column meaning**
 

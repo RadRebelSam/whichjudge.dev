@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Offensive language screen: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<title>Offensive language screen: Jev vs 3 other models, measured | WhichJudge</title>
 <meta name="description" content="Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: Replace. ECE 0.11.">
 <link rel="canonical" href="https://whichjudge.dev/decision/content-offensive.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Offensive language screen: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:title" content="Offensive language screen: Jev vs 3 other models, measured | WhichJudge">
 <meta property="og:description" content="Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: Replace. ECE 0.11.">
 <meta property="og:url" content="https://whichjudge.dev/decision/content-offensive.html">
 <meta name="twitter:card" content="summary">
@@ -26,11 +26,11 @@
 - tweet_eval offensive, n=500, seed=7<br>
 <strong>Labels:</strong> <code>not_offensive / offensive</code></p>
 <table>
-  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>76.6%</td><td>[72.7% - 80.1%]</td><td>803 ms</td><td>$15.37</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>70.8%</td><td>[66.7% - 74.6%]</td><td>1055 ms</td><td>$15.1</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>74.2%</td><td>[70.2% - 77.8%]</td><td>998 ms</td><td>81.0 tok/call</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>74.2%</td><td>[70.2% - 77.8%]</td><td>998 ms</td><td>unpriced (81.0 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=11,912)</td><td>73.8%</td><td>[69.8% - 77.5%]</td><td>34 us</td><td>$0</td></tr>
   </tbody>
 </table>

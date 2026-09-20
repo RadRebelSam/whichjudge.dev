@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Consumer complaint routing: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<title>Consumer complaint routing: Jev vs 3 other models, measured | WhichJudge</title>
 <meta name="description" content="Consumer complaint routing on CFPB Consumer Complaint Database, 8 product queues, n=500 frozen gold. Jev 82.8%, gpt-4o-mini 81.0%, TF-IDF 86.8%. Verdict: ns. ECE 0.1.">
 <link rel="canonical" href="https://whichjudge.dev/decision/cfpb-queue-route.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Consumer complaint routing: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:title" content="Consumer complaint routing: Jev vs 3 other models, measured | WhichJudge">
 <meta property="og:description" content="Consumer complaint routing on CFPB Consumer Complaint Database, 8 product queues, n=500 frozen gold. Jev 82.8%, gpt-4o-mini 81.0%, TF-IDF 86.8%. Verdict: ns. ECE 0.1.">
 <meta property="og:url" content="https://whichjudge.dev/decision/cfpb-queue-route.html">
 <meta name="twitter:card" content="summary">
@@ -26,11 +26,11 @@
 - CFPB Consumer Complaint Database, 8 product queues, n=500, seed=7<br>
 <strong>Labels:</strong> <code>credit_reporting / debt_collection / cards / bank_account / mortgage / money_transfer / loans / student_loan</code></p>
 <table>
-  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>82.8%</td><td>[79.2% - 85.9%]</td><td>856 ms</td><td>$33.89</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>81.0%</td><td>[77.3% - 84.2%]</td><td>1104 ms</td><td>$53.21</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>78.6%</td><td>[74.8% - 82.0%]</td><td>979 ms</td><td>334.5 tok/call</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>78.6%</td><td>[74.8% - 82.0%]</td><td>979 ms</td><td>unpriced (334.5 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=63,392)</td><td>86.8%</td><td>[83.6% - 89.5%]</td><td>262 us</td><td>$0</td></tr>
   </tbody>
 </table>

@@ -257,7 +257,9 @@ def render_decision_page(t, run, site) -> str:
     else:
         verdict = VERDICT_TEXT[t["verdict"]]
     ns_tag = ""
-    title = f"{t['title']}: Jev vs gpt-4o-mini vs TF-IDF | {site['name']}"
+    # rows in the comparison table: Jev, 4o-mini, TF-IDF, plus the current model
+    others = 2 + (1 if t.get("modern") else 0)
+    title = f"{t['title']}: Jev vs {others} other models, measured | {site['name']}"
     desc = (
         f"{t['title']} on {t['dataset']}, n={t['n']} frozen gold. "
         f"Jev {pct(t['jev']['acc'])}, gpt-4o-mini {pct(t['mini']['acc'])}, "
@@ -302,9 +304,12 @@ def render_decision_page(t, run, site) -> str:
     ]
     if t.get("modern"):
         m = t["modern"]
+        # No published price was confirmed for this model, so the cost cell says so
+        # rather than borrowing the column for a token count, which is a different unit.
         rows.insert(2, (m["model"], pct(m["acc"]),
                         f"[{pct(m['lo'])} - {pct(m['hi'])}]",
-                        f"{m['p50']} ms", f"{m['tokens']} tok/call"))
+                        f"{m['p50']} ms",
+                        f"unpriced ({m['tokens']} tok/call)"))
     tbody = "\n".join(
         "        <tr>" + "".join(f"<td>{e(c)}</td>" for c in r) + "</tr>" for r in rows
     )
@@ -351,7 +356,7 @@ def render_decision_page(t, run, site) -> str:
 - {e(t['dataset'])}, n={t['n']}, seed={run['seed']}<br>
 <strong>Labels:</strong> <code>{e(t['labels'])}</code></p>
 <table>
-  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
 {tbody}
   </tbody>

@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SMS spam gate: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<title>SMS spam gate: Jev vs 3 other models, measured | WhichJudge</title>
 <meta name="description" content="SMS spam gate on UCI SMS Spam, n=500 frozen gold. Jev 96.4%, gpt-4o-mini 96.4%, TF-IDF 96.4%. Verdict: ns. ECE 0.016.">
 <link rel="canonical" href="https://whichjudge.dev/decision/sms-spam.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SMS spam gate: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:title" content="SMS spam gate: Jev vs 3 other models, measured | WhichJudge">
 <meta property="og:description" content="SMS spam gate on UCI SMS Spam, n=500 frozen gold. Jev 96.4%, gpt-4o-mini 96.4%, TF-IDF 96.4%. Verdict: ns. ECE 0.016.">
 <meta property="og:url" content="https://whichjudge.dev/decision/sms-spam.html">
 <meta name="twitter:card" content="summary">
@@ -26,11 +26,11 @@
 - UCI SMS Spam, n=500, seed=7<br>
 <strong>Labels:</strong> <code>ham / spam</code></p>
 <table>
-  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>96.4%</td><td>[94.4% - 97.7%]</td><td>807 ms</td><td>$15.21</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>96.4%</td><td>[94.4% - 97.7%]</td><td>1057 ms</td><td>$13.35</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>94.6%</td><td>[92.3% - 96.3%]</td><td>996 ms</td><td>71.1 tok/call</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>94.6%</td><td>[92.3% - 96.3%]</td><td>996 ms</td><td>unpriced (71.1 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=4,968)</td><td>96.4%</td><td>[94.4% - 97.7%]</td><td>40 us</td><td>$0</td></tr>
   </tbody>
 </table>

@@ -137,6 +137,12 @@ function render() {
             On ${c.best.title.toLowerCase()}, Jev above ${c.best.autoSlice.gate} confidence is
             <span class="font-medium text-zinc-900 dark:text-zinc-100">${pct(c.best.autoSlice.acc)} accurate on ${pct(c.best.autoSlice.cov)} of traffic</span>.
             Auto that slice. Mix the rest. Grey ns = accuracy gap is noise.
+            ${(() => {
+              const x = TASKS.find((t) => t.verdict === "neither");
+              if (!x || !x.errors) return "";
+              const worst = Object.entries(x.errors.jev.per_class).sort((a, b) => a[1].recall - b[1].recall)[0];
+              return `<span class="mt-2 block font-medium text-red-700 dark:text-red-400">It does not always work: on ${x.title.toLowerCase()} the quit line barely helps and Jev misses ${pct(worst[1].missed_rate)} of ${worst[0]}.</span>`;
+            })()}
           </p>
         </div>
         <p class="mono text-xs text-zinc-500">whichjudge.dev</p>
@@ -146,6 +152,13 @@ function render() {
     <main class="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
       <section class="card-grid mb-8">
         ${statCard("Auto slice rule", "≥ 50% covered", "Strongest gate that still automates half the traffic. Chosen per row, not by hand.")}
+        ${(() => {
+          const x = TASKS.find((t) => t.verdict === "neither");
+          if (!x || !x.errors) return "";
+          const worst = Object.entries(x.errors.jev.per_class).sort((a, b) => a[1].recall - b[1].recall)[0];
+          return statCard("Where it fails", pct(worst[1].missed_rate) + " missed",
+            x.title.toLowerCase() + ": " + worst[0] + " Jev never flags. Gating does not fix it.");
+        })()}
         ${statCard(c.best.title + " @ " + c.best.autoSlice.gate, pct(c.best.autoSlice.acc), "on " + pct(c.best.autoSlice.cov) + " of traffic · n=" + c.best.n)}
         ${statCard("Gating beats not gating", `${c.gateHelps}/${TASKS.length}`, "Every row. Lift shown per row, from the measured gates.")}
         ${statCard("Neither model works", String(c.neither), "Prompt injection: both miss ~4 in 10. Kept on the homepage.")}
@@ -412,7 +425,11 @@ function rowHtml(t, on) {
           <span class="block truncate text-xs text-zinc-500">${goldBadge(t)} ${t.sourceName}</span>
           ${t.rowNote ? `<span class="mt-0.5 block text-[11px] leading-snug ${t.rowNoteKind === "warn" ? "font-medium text-red-700 dark:text-red-400" : "text-zinc-500"}">${t.rowNote}</span>` : ""}
         </span>
-        <span><span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${v.chip}">${v.label}</span></span>
+        <span class="leading-tight">
+          <span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${v.chip}">${v.label}</span>
+          ${t.tfidf.vsJev === "tfidf" ? `<span class="mt-1 block text-[10px] font-medium text-amber-700 dark:text-amber-500">TF-IDF wins</span>` : ""}
+          ${t.modern && t.modern.vsJev === "modern" ? `<span class="mt-0.5 block text-[10px] text-zinc-500">2026 wins</span>` : ""}
+        </span>
         <span class="text-right tabular-nums">${pct(t.jev.acc)}<span class="block text-[10px] font-normal text-zinc-400">${pct(t.jev.lo)}-${pct(t.jev.hi)}</span></span>
         <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${pct(t.mini.acc)}<span class="block text-[10px] text-zinc-400">${dLabel}</span></span>
         <span class="text-right tabular-nums ${t.modern && t.modern.vsJev === "modern" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${t.modern ? pct(t.modern.acc) : "-"}<span class="block text-[10px] font-normal text-zinc-400">${t.modern ? (t.modern.vsJev === "modern" ? "beats Jev" : t.modern.vsJev === "jev" ? "loses" : "ns") : ""}</span></span>

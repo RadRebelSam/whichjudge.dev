@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Comment toxicity gate: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<title>Comment toxicity gate: Jev vs 3 other models, measured | WhichJudge</title>
 <meta name="description" content="Comment toxicity gate on Civil Comments test split (CC0), n=500 frozen gold. Jev 78.0%, gpt-4o-mini 77.0%, TF-IDF 82.8%. Verdict: ns. ECE 0.075.">
 <link rel="canonical" href="https://whichjudge.dev/decision/civil-toxicity.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Comment toxicity gate: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:title" content="Comment toxicity gate: Jev vs 3 other models, measured | WhichJudge">
 <meta property="og:description" content="Comment toxicity gate on Civil Comments test split (CC0), n=500 frozen gold. Jev 78.0%, gpt-4o-mini 77.0%, TF-IDF 82.8%. Verdict: ns. ECE 0.075.">
 <meta property="og:url" content="https://whichjudge.dev/decision/civil-toxicity.html">
 <meta name="twitter:card" content="summary">
@@ -26,11 +26,11 @@
 - Civil Comments test split (CC0), n=500, seed=7<br>
 <strong>Labels:</strong> <code>toxic / not_toxic</code></p>
 <table>
-  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>78.0%</td><td>[74.2% - 81.4%]</td><td>804 ms</td><td>$19.14</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>77.0%</td><td>[73.1% - 80.5%]</td><td>1057 ms</td><td>$24.46</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>76.6%</td><td>[72.7% - 80.1%]</td><td>966 ms</td><td>141.5 tok/call</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>76.6%</td><td>[72.7% - 80.1%]</td><td>966 ms</td><td>unpriced (141.5 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=60,000)</td><td>82.8%</td><td>[79.2% - 85.9%]</td><td>74 us</td><td>$0</td></tr>
   </tbody>
 </table>

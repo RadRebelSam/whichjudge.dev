@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Social sentiment (3-way): Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<title>Social sentiment (3-way): Jev vs 3 other models, measured | WhichJudge</title>
 <meta name="description" content="Social sentiment (3-way) on tweet_eval sentiment, n=500 frozen gold. Jev 73.8%, gpt-4o-mini 72.6%, TF-IDF 63.8%. Verdict: ns. ECE 0.141.">
 <link rel="canonical" href="https://whichjudge.dev/decision/tweet-sentiment.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Social sentiment (3-way): Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:title" content="Social sentiment (3-way): Jev vs 3 other models, measured | WhichJudge">
 <meta property="og:description" content="Social sentiment (3-way) on tweet_eval sentiment, n=500 frozen gold. Jev 73.8%, gpt-4o-mini 72.6%, TF-IDF 63.8%. Verdict: ns. ECE 0.141.">
 <meta property="og:url" content="https://whichjudge.dev/decision/tweet-sentiment.html">
 <meta name="twitter:card" content="summary">
@@ -26,11 +26,11 @@
 - tweet_eval sentiment, n=500, seed=7<br>
 <strong>Labels:</strong> <code>negative / neutral / positive</code></p>
 <table>
-  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>73.8%</td><td>[69.8% - 77.5%]</td><td>844 ms</td><td>$15.47</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>72.6%</td><td>[68.5% - 76.3%]</td><td>1059 ms</td><td>$12.36</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>74.4%</td><td>[70.4% - 78.0%]</td><td>1025 ms</td><td>64.7 tok/call</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>74.4%</td><td>[70.4% - 78.0%]</td><td>1025 ms</td><td>unpriced (64.7 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=45,615)</td><td>63.8%</td><td>[59.5% - 67.9%]</td><td>27 us</td><td>$0</td></tr>
   </tbody>
 </table>

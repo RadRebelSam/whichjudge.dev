@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Review polarity: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<title>Review polarity: Jev vs 3 other models, measured | WhichJudge</title>
 <meta name="description" content="Review polarity on SST-2 validation, n=500 frozen gold. Jev 97.0%, gpt-4o-mini 96.4%, TF-IDF 82.6%. Verdict: ns. ECE 0.015.">
 <link rel="canonical" href="https://whichjudge.dev/decision/review-sentiment.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Review polarity: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:title" content="Review polarity: Jev vs 3 other models, measured | WhichJudge">
 <meta property="og:description" content="Review polarity on SST-2 validation, n=500 frozen gold. Jev 97.0%, gpt-4o-mini 96.4%, TF-IDF 82.6%. Verdict: ns. ECE 0.015.">
 <meta property="og:url" content="https://whichjudge.dev/decision/review-sentiment.html">
 <meta name="twitter:card" content="summary">
@@ -26,11 +26,11 @@
 - SST-2 validation, n=500, seed=7<br>
 <strong>Labels:</strong> <code>negative / positive</code></p>
 <table>
-  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>97.0%</td><td>[95.1% - 98.2%]</td><td>812 ms</td><td>$14.09</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>96.4%</td><td>[94.4% - 97.7%]</td><td>1037 ms</td><td>$12.35</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>94.8%</td><td>[92.5% - 96.4%]</td><td>1000 ms</td><td>64.4 tok/call</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>94.8%</td><td>[92.5% - 96.4%]</td><td>1000 ms</td><td>unpriced (64.4 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=67,349)</td><td>82.6%</td><td>[79.0% - 85.7%]</td><td>34 us</td><td>$0</td></tr>
   </tbody>
 </table>

@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hate-speech screen: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<title>Hate-speech screen: Jev vs 3 other models, measured | WhichJudge</title>
 <meta name="description" content="Hate-speech screen on tweet_eval hate, n=500 frozen gold. Jev 66.2%, gpt-4o-mini 74.0%, TF-IDF 54.0%. Verdict: Don&#x27;t. ECE 0.187.">
 <link rel="canonical" href="https://whichjudge.dev/decision/content-hate.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hate-speech screen: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:title" content="Hate-speech screen: Jev vs 3 other models, measured | WhichJudge">
 <meta property="og:description" content="Hate-speech screen on tweet_eval hate, n=500 frozen gold. Jev 66.2%, gpt-4o-mini 74.0%, TF-IDF 54.0%. Verdict: Don&#x27;t. ECE 0.187.">
 <meta property="og:url" content="https://whichjudge.dev/decision/content-hate.html">
 <meta name="twitter:card" content="summary">
@@ -26,11 +26,11 @@
 - tweet_eval hate, n=500, seed=7<br>
 <strong>Labels:</strong> <code>not_hate / hate</code></p>
 <table>
-  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>66.2%</td><td>[61.9% - 70.2%]</td><td>840 ms</td><td>$14.88</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>74.0%</td><td>[70.0% - 77.7%]</td><td>1072 ms</td><td>$14.36</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>71.0%</td><td>[66.9% - 74.8%]</td><td>992 ms</td><td>78.9 tok/call</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>71.0%</td><td>[66.9% - 74.8%]</td><td>992 ms</td><td>unpriced (78.9 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=8,962)</td><td>54.0%</td><td>[49.6% - 58.3%]</td><td>32 us</td><td>$0</td></tr>
   </tbody>
 </table>

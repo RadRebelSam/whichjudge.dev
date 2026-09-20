@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prompt-injection screen: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<title>Prompt-injection screen: Jev vs 3 other models, measured | WhichJudge</title>
 <meta name="description" content="Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=300 frozen gold. Jev 80.0%, gpt-4o-mini 81.0%, TF-IDF 85.7%. Verdict: Neither. ECE 0.134.">
 <link rel="canonical" href="https://whichjudge.dev/decision/prompt-injection.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Prompt-injection screen: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:title" content="Prompt-injection screen: Jev vs 3 other models, measured | WhichJudge">
 <meta property="og:description" content="Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=300 frozen gold. Jev 80.0%, gpt-4o-mini 81.0%, TF-IDF 85.7%. Verdict: Neither. ECE 0.134.">
 <meta property="og:url" content="https://whichjudge.dev/decision/prompt-injection.html">
 <meta name="twitter:card" content="summary">
@@ -26,11 +26,11 @@
 - deepset/prompt-injections, train + test, multilingual, n=300, seed=7<br>
 <strong>Labels:</strong> <code>injection / legitimate</code></p>
 <table>
-  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>80.0%</td><td>[75.1% - 84.1%]</td><td>858 ms</td><td>$17.93</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>81.0%</td><td>[76.2% - 85.0%]</td><td>1130 ms</td><td>$19.34</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>86.0%</td><td>[81.6% - 89.5%]</td><td>931 ms</td><td>108.3 tok/call</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>86.0%</td><td>[81.6% - 89.5%]</td><td>931 ms</td><td>unpriced (108.3 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=361)</td><td>85.7%</td><td>[81.2% - 89.2%]</td><td>30 us</td><td>$0</td></tr>
   </tbody>
 </table>

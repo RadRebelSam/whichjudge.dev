@@ -3,7 +3,7 @@
 Replacement matrix for cheap **judge / decision** models.
 
 Rows are decisions you already pay an LLM to make (spam gate, ticket route, hate screen).
-Columns are models. First bake-off: **Jev `jev-1.13.0`** vs **`gpt-4o-mini`**.
+Columns are models: **Jev `jev-1.13.0`**, **`gpt-4o-mini-2024-07-18`**, **`gpt-5.4-mini-2026-03-17`** and a TF-IDF + logistic regression baseline.
 The next System One-style model is another column, not another site.
 
 **Calibration (ECE on p_chosen, 10 bins, `scripts/calibrate.py`):** sms spam gate 0.016, review polarity 0.015, comment toxicity gate 0.075, message emotion 0.083, news topic 0.096, consumer complaint routing 0.100, offensive language screen 0.110, prompt-injection screen 0.134, social sentiment (3-way) 0.141, hate-speech screen 0.187, banking queue routing 0.213. A quit line is only honest where ECE is low. Do not auto-route on the high ones.
@@ -85,7 +85,7 @@ python3 scripts/run_eval.py sms_spam        # one task
 Jev: `POST https://api.typesafe.ai/v1/systemone` with `model: jev-latest` (resolved to `jev-1.13.0` on 2026-09-20).
 Mini: `POST https://api.openai.com/v1/chat/completions`, `temperature: 0`, `response_format: json_object`.
 
-A full run across every task is about **$0.12** total on the two paid arms. Output tokens on Jev are free; Mini is $0.15 / $0.60 per million in/out.
+A full run of the two main arms across every task is about **$0.12**. The current-model column adds roughly the same again. Output tokens on Jev are free; Mini is $0.15 / $0.60 per million in/out.
 
 ### Rebuild samples (optional)
 

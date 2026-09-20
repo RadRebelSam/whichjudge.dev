@@ -183,8 +183,118 @@ def check_task_counts() -> None:
             fail(f"ATTRIBUTION.md repeats heading {h!r} {dupes.count(h)} times")
 
 
+def check_shell_meta_matches_generated() -> None:
+    """The shell HTML is what crawlers and link previews read.
+
+    It once advertised '8 classification decisions' while data.js said eleven,
+    because the description was hand-written in copy.json instead of derived.
+    """
+    tasks = tasks_from_data_js()
+    src = (SITE / "data.js").read_text(encoding="utf-8")
+    site = json.loads(src.split("const SITE = ", 1)[1].split(";\n\nconst ", 1)[0])
+    generated = site.get("description")
+    shell = (SITE / "index.html").read_text(encoding="utf-8")
+    for attr in ('name="description"', 'property="og:description"'):
+        m = re.search(attr + r' content="([^"]*)"', shell)
+        if not m:
+            fail(f"index.html has no {attr}")
+        elif m.group(1) != generated:
+            fail(f"index.html {attr} does not match the generated SITE.description")
+    for bad in re.findall(r"\b(\d+) (?:classification )?decisions\b", shell):
+        if int(bad) != len(tasks):
+            fail(f"index.html advertises {bad} decisions, but there are {len(tasks)}")
+
+
+def check_prose_rates_match_error_profile() -> None:
+    """Recall and miss rates quoted in prose must exist in error_profile.json.
+
+    build_site.py enforces this at build time. Repeating it here means CI still
+    catches it if the generated site is committed by another route.
+    """
+    errors = load(RESULTS / "error_profile.json")
+    copy = load(SITE / "copy.json")
+    for t in copy["tasks"]:
+        prof = errors.get(t["id"], {})
+        known = set()
+        for arm in prof.values():
+            for stats in arm.get("per_class", {}).values():
+                for f_ in ("recall", "missed_rate", "false_positive_rate"):
+                    if stats.get(f_) is not None:
+                        known.add(round(stats[f_] * 100, 1))
+            for gate in arm.get("recall_at_gate", {}).values():
+                for stats in gate.values():
+                    if stats.get("recall_on_covered") is not None:
+                        known.add(round(stats["recall_on_covered"] * 100, 1))
+        blob = " ".join(str(t.get(f_) or "") for f_ in ("why", "gate", "rowNote"))
+        for phrase in re.findall(r"[Mm]isses (\d+\.?\d*)%|catches (\d+\.?\d*)%|"
+                                 r"recall (?:from |of )?(\d+\.?\d*)%", blob):
+            for raw in filter(None, phrase):
+                if float(raw) not in known:
+                    fail(f"{t['id']}: prose claims {raw}% recall/miss with no match "
+                         f"in error_profile.json")
+
+
+def check_units_in_decision_tables() -> None:
+    """A cost column must not carry a token count.
+
+    The current-model row put '334.5 tok/call' under '$/1M decisions'.
+    """
+    for t in tasks_from_data_js():
+        page = SITE / "decision" / f"{t['id'].replace('_', '-')}.html"
+        if not page.exists():
+            continue
+        html_src = page.read_text(encoding="utf-8")
+        headers = re.findall(r"<th>([^<]*)</th>", html_src)
+        cells = re.findall(r"<tr>(.*?)</tr>", html_src, re.S)
+        cost_idx = next((i for i, h in enumerate(headers) if "cost" in h.lower()
+                         or "$" in h), None)
+        if cost_idx is None:
+            continue
+        for row in cells:
+            tds = re.findall(r"<td>(.*?)</td>", row, re.S)
+            if len(tds) <= cost_idx:
+                continue
+            cell = tds[cost_idx]
+            if "tok" in cell and "$" not in cell and "unpriced" not in cell:
+                fail(f"{page.name}: token count in the cost column ({cell.strip()!r})")
+
+
+def check_titles_name_every_column() -> None:
+    """A title must not list three models when the table shows four."""
+    for t in tasks_from_data_js():
+        page = SITE / "decision" / f"{t['id'].replace('_', '-')}.html"
+        if not page.exists():
+            continue
+        html_src = page.read_text(encoding="utf-8")
+        title = re.search(r"<title>([^<]*)</title>", html_src)
+        if not title:
+            continue
+        rows = len(re.findall(r"<tr><td>", html_src))
+        named = len(re.findall(r"\bvs\b", title.group(1)))
+        if named and named + 1 < rows and not re.search(r"\d+ other models", title.group(1)):
+            fail(f"{page.name}: title names {named + 1} models but the table shows {rows}")
+
+
+def check_attribution_is_self_consistent() -> None:
+    """The opening paragraph once said the opposite of paragraph seven."""
+    text = (ROOT / "ATTRIBUTION.md").read_text(encoding="utf-8")
+    head = text[:text.index("| Task |")] if "| Task |" in text else text[:1200]
+    claims_text = re.search(r"with the\s+original text", head)
+    says_hashed = "ship the hash" in head or "SHA-256 of it" in head
+    if claims_text and says_hashed:
+        fail("ATTRIBUTION.md opening both claims raw text and hashed text")
+    if claims_text and not says_hashed:
+        fail("ATTRIBUTION.md opening says data/*.jsonl holds the original text, "
+             "but rows are redacted further down")
+
+
 def main() -> None:
     check_no_leaked_text()
+    check_shell_meta_matches_generated()
+    check_prose_rates_match_error_profile()
+    check_units_in_decision_tables()
+    check_titles_name_every_column()
+    check_attribution_is_self_consistent()
     check_numbers_in_app_js()
     check_models_named_have_columns()
     check_verdicts()

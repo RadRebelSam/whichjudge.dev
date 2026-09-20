@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Banking queue routing: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<title>Banking queue routing: Jev vs 3 other models, measured | WhichJudge</title>
 <meta name="description" content="Banking queue routing on BANKING77 test, collapsed 77 → 8 queues, n=500 frozen gold. Jev 71.8%, gpt-4o-mini 64.4%, TF-IDF 93.2%. Verdict: Replace. ECE 0.213.">
 <link rel="canonical" href="https://whichjudge.dev/decision/banking-coarse-route.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Banking queue routing: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:title" content="Banking queue routing: Jev vs 3 other models, measured | WhichJudge">
 <meta property="og:description" content="Banking queue routing on BANKING77 test, collapsed 77 → 8 queues, n=500 frozen gold. Jev 71.8%, gpt-4o-mini 64.4%, TF-IDF 93.2%. Verdict: Replace. ECE 0.213.">
 <meta property="og:url" content="https://whichjudge.dev/decision/banking-coarse-route.html">
 <meta name="twitter:card" content="summary">
@@ -26,11 +26,11 @@
 - BANKING77 test, collapsed 77 → 8 queues, n=500, seed=7<br>
 <strong>Labels:</strong> <code>cards / top_up / cash_atm / transfers / fx / account / payments_fees / other</code></p>
 <table>
-  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>71.8%</td><td>[67.7% - 75.6%]</td><td>805 ms</td><td>$20.63</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>64.4%</td><td>[60.1% - 68.5%]</td><td>1030 ms</td><td>$14.71</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>70.8%</td><td>[66.7% - 74.6%]</td><td>980 ms</td><td>77.7 tok/call</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>70.8%</td><td>[66.7% - 74.6%]</td><td>980 ms</td><td>unpriced (77.7 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=10,003)</td><td>93.2%</td><td>[90.6% - 95.1%]</td><td>19 us</td><td>$0</td></tr>
   </tbody>
 </table>
