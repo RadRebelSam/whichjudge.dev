@@ -1,0 +1,118 @@
+{
+  "note": "Editorial copy only. Every number on the site is generated from results/ by scripts/build_site.py. Do not put measurements in this file.",
+  "site": {
+    "domain": "https://whichjudge.dev",
+    "name": "WhichJudge",
+    "tagline": "which model for this decision",
+    "headline": "You don't need a better model. You need a quit line.",
+    "description": "Independent bake-off of cheap in-loop decision models. Jev vs gpt-4o-mini vs TF-IDF on 8 classification decisions, n=500 frozen public gold, full per-call receipts.",
+    "repo": "https://github.com/RadRebelSam/whichjudge.dev",
+    "contact": "contact@radrebeldeveloper.com",
+    "x": "RadRebelDev",
+    "xUrl": "https://x.com/RadRebelDev"
+  },
+  "tasks": [
+    {
+      "id": "sms_spam",
+      "title": "SMS spam gate",
+      "replaces": "Spam vs ham classifier on inbound SMS",
+      "dataset": "UCI SMS Spam",
+      "labels": "ham / spam",
+      "verdict": "replace",
+      "why": "Dead heat: Jev 96.4, Mini 96.4, TF-IDF 96.4. Classical ML is enough here. Nothing separates the three.",
+      "gate": "No accuracy reason to switch either way. At >=0.7: 98.9% on 88.8% of traffic.",
+      "ns": true
+    },
+    {
+      "id": "review_sentiment",
+      "title": "Review polarity",
+      "replaces": "Binary review sentiment",
+      "dataset": "SST-2 validation",
+      "labels": "negative / positive",
+      "verdict": "replace",
+      "why": "Tied (McNemar p=0.55). 97.0% vs 96.4%. TF-IDF drops to 82.6%, so the models earn their keep against classical, not against each other.",
+      "gate": "Best-calibrated task on the board (ECE 0.015). At >=0.7: 98.5% on 91.8% of reviews.",
+      "ns": true
+    },
+    {
+      "id": "message_emotion",
+      "title": "Message emotion",
+      "replaces": "4-way emotion classifier on short messages",
+      "dataset": "tweet_eval emotion",
+      "labels": "anger / joy / optimism / sadness",
+      "verdict": "replace",
+      "why": "Jev +4.8pt, McNemar p=0.0053. Optimism vs joy is still the messy pair. TF-IDF trails badly at 64.2%.",
+      "gate": "Use Jev in-loop. At >=0.7: 88.5% on 74.8% of traffic.",
+      "ns": false
+    },
+    {
+      "id": "content_offensive",
+      "title": "Offensive language screen",
+      "replaces": "Offensive-content classifier",
+      "dataset": "tweet_eval offensive",
+      "labels": "not_offensive / offensive",
+      "verdict": "replace",
+      "why": "Jev +5.8pt, McNemar p=0.0079. Mean confidence is only 0.75, so the gate is the product, not the headline accuracy.",
+      "gate": "Auto at >=0.9 (89.0% on 50.8%). At >=0.7 it is 84.4% on 68.0%. Rest to a human.",
+      "ns": false
+    },
+    {
+      "id": "tweet_sentiment",
+      "title": "Social sentiment (3-way)",
+      "replaces": "Negative / neutral / positive on tweets",
+      "dataset": "tweet_eval sentiment",
+      "labels": "negative / neutral / positive",
+      "verdict": "mix",
+      "why": "Coin flip vs Mini (p=0.58). Neutral is still the killer class. ECE 0.141 means the confidence number is shaky too.",
+      "gate": "Jev if confidence >=0.7 (80.6% on 74.2%); Mini or a human on the rest.",
+      "ns": true
+    },
+    {
+      "id": "news_topic",
+      "title": "News topic",
+      "replaces": "4-way news classifier",
+      "dataset": "AG News test",
+      "labels": "world / sports / business / sci_tech",
+      "verdict": "replace",
+      "why": "TF-IDF 90.8% beats Jev 85.6% and Mini 82.6% after training on 120k rows. Among the APIs Jev wins by 3.0pt (p=0.0093). If you have labels, skip both models.",
+      "gate": "Jev first among APIs. At >=0.7: 90.1% on 90.6% of articles.",
+      "ns": false
+    },
+    {
+      "id": "banking_coarse_route",
+      "title": "Banking queue routing",
+      "replaces": "Support-queue classifier on banking tickets",
+      "dataset": "BANKING77 test, collapsed 77 → 8 queues",
+      "labels": "cards / top_up / cash_atm / transfers / fx / account / payments_fees / other",
+      "verdict": "replace",
+      "why": "TF-IDF 93.2% beats both neural judges (p<1e-19) if you have labels. Jev still beats Mini among APIs by 7.4pt. Do not pay for a model on this task if you can train one.",
+      "gate": "ECE 0.213, the worst on the board: do not auto-route on confidence here. At >=0.7 it is only 74.9% on 91.0%.",
+      "ns": false
+    },
+    {
+      "id": "content_hate",
+      "title": "Hate-speech screen",
+      "replaces": "Hate vs not-hate classifier",
+      "dataset": "tweet_eval hate",
+      "labels": "not_hate / hate",
+      "verdict": "dont",
+      "why": "Mini +7.8pt (p=0.0026). Jev mean confidence 0.67, ECE 0.187. Do not use Jev as the only classifier.",
+      "gate": "If you insist: >=0.9 is 81.6% but only 32.6% coverage. Keep a specialist.",
+      "ns": false
+    }
+  ],
+  "calls": {
+    "reproduce": {
+      "heading": "Reproduce this and I will publish your numbers",
+      "body": "Receipts prove I did not edit my own table. They cannot prove the APIs said it, because in principle I could have written the receipts. Only someone else re-running it fixes that. Clone the repo, add your own keys, run scripts/run_eval.py, and send me the summary.json diff. It costs about $0.12 in API calls. Confirmed runs get a reproduced-by line on the row, credited however you want.",
+      "cta": "Send a reproduction",
+      "subject": "WhichJudge reproduction"
+    },
+    "contribute": {
+      "heading": "Have labelled data for a real decision?",
+      "body": "Every task here is public academic gold, which is comparable but not production. The decisions worth measuring are the ones people actually run: support-queue routing, prompt-injection screening, PR risk gating, refund eligibility. Those need labelled examples, and nobody has published them. If you have a few hundred rows you can share, or a public set worth adding, I will measure it and publish the row. Your data does not get republished unless you say so.",
+      "cta": "Offer a dataset",
+      "subject": "WhichJudge dataset"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "task_id": "banking_coarse_route",
+  "title": "Banking support queue routing",
+  "question_key": "queue",
+  "questions": {
+    "queue": {
+      "type": "choice",
+      "instructions": "Which support queue should handle this customer message?",
+      "criteria": {
+        "cards": "Physical or virtual card issues, PIN, contactless, linking, ordering, or card not working",
+        "top_up": "Adding money / top-up failed, pending, or limits",
+        "cash_atm": "ATM or cash withdrawal problems",
+        "transfers": "Sending or receiving transfers, beneficiaries, balance not updated after transfer",
+        "fx": "Exchange rates, currency conversion, fiat currency support",
+        "account": "Identity verification, passcode, personal details, age limit, terminate account, country support, lost phone",
+        "payments_fees": "Charges, fees, refunds, declined or reverted payments, wrong amount",
+        "other": "Anything that does not fit the queues above"
+      }
+    }
+  },
+  "openai_prompt": "Classify this banking customer message into exactly one queue. Reply with JSON {\"label\": <one of: cards, top_up, cash_atm, transfers, fx, account, payments_fees, other>}.",
+  "labels": [
+    "cards",
+    "top_up",
+    "cash_atm",
+    "transfers",
+    "fx",
+    "account",
+    "payments_fees",
+    "other"
+  ],
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "jev_model_requested": "jev-latest",
+  "mini_endpoint": "https://api.openai.com/v1/chat/completions",
+  "mini_model": "gpt-4o-mini",
+  "mini_temperature": 0
+}

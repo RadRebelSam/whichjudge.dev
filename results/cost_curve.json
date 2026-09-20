@@ -1,0 +1,174 @@
+{
+  "run_id": "2026-09-20T17:35:16.167738+00:00",
+  "finished_utc": "2026-09-20T17:35:45.834250+00:00",
+  "what_this_measures": "Billed tokens, list-price cost and latency against input length, for one fixed question. Not an accuracy measurement.",
+  "prices_usd_per_million": {
+    "jev": {
+      "input": 0.042,
+      "output": 0.0
+    },
+    "mini": {
+      "input": 0.15,
+      "output": 0.6
+    }
+  },
+  "jev_model": "jev-1.13.0",
+  "samples_per_point": 3,
+  "question": {
+    "jev": {
+      "mentions_company": {
+        "type": "noul",
+        "instructions": "Does this text name at least one company or organisation?"
+      }
+    },
+    "mini_system": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+  },
+  "input_construction": "Real sentences from the frozen samples, concatenated to hit each target length. Synthetic in length, real in vocabulary.",
+  "jev_fixed_overhead_tokens": 278,
+  "jev_overhead_vs_mini_tokens": 237.0,
+  "crossover": {
+    "content_tokens": 65,
+    "between": [
+      25,
+      50
+    ],
+    "note": "Linear interpolation between the two measured points either side."
+  },
+  "points": [
+    {
+      "target_tokens": 0,
+      "mean_chars": 2,
+      "mean_content_tokens": 41,
+      "jev_input_tokens": 278.0,
+      "jev_output_tokens": 21.0,
+      "mini_input_tokens": 41.0,
+      "mini_output_tokens": 5.0,
+      "jev_per_million": 11.68,
+      "mini_per_million": 9.15,
+      "jev_p50_ms": 300,
+      "mini_p50_ms": 1356,
+      "mini_cached_tokens": 0,
+      "cheaper": "mini"
+    },
+    {
+      "target_tokens": 25,
+      "mean_chars": 100,
+      "mean_content_tokens": 64,
+      "jev_input_tokens": 303.0,
+      "jev_output_tokens": 21.0,
+      "mini_input_tokens": 64.3,
+      "mini_output_tokens": 5.0,
+      "jev_per_million": 12.73,
+      "mini_per_million": 12.65,
+      "jev_p50_ms": 377,
+      "mini_p50_ms": 861,
+      "mini_cached_tokens": 0,
+      "cheaper": "mini"
+    },
+    {
+      "target_tokens": 50,
+      "mean_chars": 200,
+      "mean_content_tokens": 87,
+      "jev_input_tokens": 326.0,
+      "jev_output_tokens": 21.0,
+      "mini_input_tokens": 87.3,
+      "mini_output_tokens": 5.0,
+      "jev_per_million": 13.69,
+      "mini_per_million": 16.1,
+      "jev_p50_ms": 327,
+      "mini_p50_ms": 864,
+      "mini_cached_tokens": 0,
+      "cheaper": "jev"
+    },
+    {
+      "target_tokens": 100,
+      "mean_chars": 400,
+      "mean_content_tokens": 128,
+      "jev_input_tokens": 370.7,
+      "jev_output_tokens": 21.0,
+      "mini_input_tokens": 128.0,
+      "mini_output_tokens": 5.0,
+      "jev_per_million": 15.57,
+      "mini_per_million": 22.2,
+      "jev_p50_ms": 311,
+      "mini_p50_ms": 665,
+      "mini_cached_tokens": 0,
+      "cheaper": "jev"
+    },
+    {
+      "target_tokens": 200,
+      "mean_chars": 800,
+      "mean_content_tokens": 215,
+      "jev_input_tokens": 464.7,
+      "jev_output_tokens": 21.0,
+      "mini_input_tokens": 215.3,
+      "mini_output_tokens": 5.0,
+      "jev_per_million": 19.52,
+      "mini_per_million": 35.3,
+      "jev_p50_ms": 340,
+      "mini_p50_ms": 623,
+      "mini_cached_tokens": 0,
+      "cheaper": "jev"
+    },
+    {
+      "target_tokens": 400,
+      "mean_chars": 1600,
+      "mean_content_tokens": 377,
+      "jev_input_tokens": 637.3,
+      "jev_output_tokens": 21.0,
+      "mini_input_tokens": 377.0,
+      "mini_output_tokens": 5.0,
+      "jev_per_million": 26.77,
+      "mini_per_million": 59.55,
+      "jev_p50_ms": 331,
+      "mini_p50_ms": 748,
+      "mini_cached_tokens": 0,
+      "cheaper": "jev"
+    },
+    {
+      "target_tokens": 800,
+      "mean_chars": 3200,
+      "mean_content_tokens": 726,
+      "jev_input_tokens": 1003.3,
+      "jev_output_tokens": 21.0,
+      "mini_input_tokens": 726.0,
+      "mini_output_tokens": 5.0,
+      "jev_per_million": 42.14,
+      "mini_per_million": 111.9,
+      "jev_p50_ms": 318,
+      "mini_p50_ms": 680,
+      "mini_cached_tokens": 0,
+      "cheaper": "jev"
+    },
+    {
+      "target_tokens": 1600,
+      "mean_chars": 6400,
+      "mean_content_tokens": 1402,
+      "jev_input_tokens": 1725.0,
+      "jev_output_tokens": 21.0,
+      "mini_input_tokens": 1402.3,
+      "mini_output_tokens": 5.0,
+      "jev_per_million": 72.45,
+      "mini_per_million": 213.35,
+      "jev_p50_ms": 349,
+      "mini_p50_ms": 625,
+      "mini_cached_tokens": 0,
+      "cheaper": "jev"
+    },
+    {
+      "target_tokens": 3200,
+      "mean_chars": 12800,
+      "mean_content_tokens": 2784,
+      "jev_input_tokens": 3189.7,
+      "jev_output_tokens": 21.0,
+      "mini_input_tokens": 2783.7,
+      "mini_output_tokens": 5.0,
+      "jev_per_million": 133.97,
+      "mini_per_million": 420.55,
+      "jev_p50_ms": 348,
+      "mini_p50_ms": 717,
+      "mini_cached_tokens": 1408,
+      "cheaper": "jev"
+    }
+  ]
+}

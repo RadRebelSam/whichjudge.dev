@@ -1,0 +1,25 @@
+{
+  "task_id": "content_offensive",
+  "title": "Offensive language screen",
+  "question_key": "verdict",
+  "questions": {
+    "verdict": {
+      "type": "choice",
+      "instructions": "Does this tweet contain offensive language (insults, profanity targeted at someone, slurs)?",
+      "criteria": {
+        "not_offensive": "Not offensive",
+        "offensive": "Offensive"
+      }
+    }
+  },
+  "openai_prompt": "Is this tweet offensive? Reply with JSON {\"label\": <one of: not_offensive, offensive>}.",
+  "labels": [
+    "not_offensive",
+    "offensive"
+  ],
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "jev_model_requested": "jev-latest",
+  "mini_endpoint": "https://api.openai.com/v1/chat/completions",
+  "mini_model": "gpt-4o-mini",
+  "mini_temperature": 0
+}

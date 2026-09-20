@@ -1,0 +1,53 @@
+name: Verify and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Recounts every published accuracy from the stored receipts and checks
+      # the frozen samples and schemas still hash to what the run recorded.
+      - name: Receipts match the published table
+        run: python scripts/verify_run.py
+
+      # Fails if site/data.js or any decision page disagrees with results/.
+      # This is what stops the site from drifting away from the receipts.
+      - name: Site is generated from results/
+        run: python scripts/build_site.py --check
+
+      - name: Upload site
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: verify
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

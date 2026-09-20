@@ -1,0 +1,8 @@
+{
+  "dataset": "tweet_eval offensive test",
+  "n": 500,
+  "label_counts": {
+    "not_offensive": 256,
+    "offensive": 244
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "task_id": "tweet_sentiment",
+  "title": "Social message sentiment",
+  "question_key": "sentiment",
+  "questions": {
+    "sentiment": {
+      "type": "choice",
+      "instructions": "What is the sentiment of this social media message?",
+      "criteria": {
+        "negative": "Negative, angry, sad, or complaining",
+        "neutral": "Neutral, factual, or mixed without a clear valence",
+        "positive": "Positive, happy, or complimentary"
+      }
+    }
+  },
+  "openai_prompt": "Classify sentiment. Reply with JSON {\"label\": <one of: negative, neutral, positive>}.",
+  "labels": [
+    "negative",
+    "neutral",
+    "positive"
+  ],
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "jev_model_requested": "jev-latest",
+  "mini_endpoint": "https://api.openai.com/v1/chat/completions",
+  "mini_model": "gpt-4o-mini",
+  "mini_temperature": 0
+}

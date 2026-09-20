@@ -1,0 +1,25 @@
+{
+  "task_id": "sms_spam",
+  "title": "SMS spam gate",
+  "question_key": "kind",
+  "questions": {
+    "kind": {
+      "type": "choice",
+      "instructions": "Is this SMS legitimate (ham) or spam?",
+      "criteria": {
+        "ham": "Normal personal or transactional message",
+        "spam": "Unsolicited promo, phishing, prize, or scam"
+      }
+    }
+  },
+  "openai_prompt": "Classify the SMS. Reply with JSON {\"label\": <one of: ham, spam>}.",
+  "labels": [
+    "ham",
+    "spam"
+  ],
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "jev_model_requested": "jev-latest",
+  "mini_endpoint": "https://api.openai.com/v1/chat/completions",
+  "mini_model": "gpt-4o-mini",
+  "mini_temperature": 0
+}

@@ -1,0 +1,15 @@
+{
+  "dataset": "PolyAI BANKING77 test",
+  "n": 500,
+  "label_counts": {
+    "transfers": 64,
+    "cash_atm": 63,
+    "account": 63,
+    "cards": 62,
+    "payments_fees": 62,
+    "fx": 62,
+    "top_up": 62,
+    "other": 62
+  },
+  "notes": "77 fine intents collapsed by keyword into 8 support queues."
+}

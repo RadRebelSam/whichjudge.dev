@@ -1,0 +1,13 @@
+{
+  "note": "Changes made to scripts AFTER the frozen run. data/, schemas/ and results/receipts/ are untouched apart from the documented redaction; verify_run.py still recounts the published table from the receipts.",
+  "run_id": "2026-09-20T17:16:26.262207+00:00",
+  "patches": [
+    {
+      "path": "scripts/verify_run.py",
+      "run_sha256": "8f12b042cbc98101e00fbd30850b477e74d0a40262064ccf7bcc06cd197689a3",
+      "current_sha256": "fa244b0a246ceb32a96abd388b41d979cdfac4ee061741039e7901d9c8c4e7ec",
+      "patched_utc": "2026-09-20",
+      "reason": "Added support for redacted tasks: text-dependent checks now run against the per-row text_sha256 once scripts/rehydrate.py has restored the text, and are reported as reduced-mode rather than skipped when it has not. Also fixed a loop variable that shadowed the summary row. No measurement changed."
+    }
+  ]
+}

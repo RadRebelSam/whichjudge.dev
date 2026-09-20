@@ -1,0 +1,25 @@
+{
+  "task_id": "review_sentiment",
+  "title": "Review polarity",
+  "question_key": "polarity",
+  "questions": {
+    "polarity": {
+      "type": "choice",
+      "instructions": "Is this movie-review snippet positive or negative?",
+      "criteria": {
+        "negative": "Negative review",
+        "positive": "Positive review"
+      }
+    }
+  },
+  "openai_prompt": "Classify review polarity. Reply with JSON {\"label\": <one of: negative, positive>}.",
+  "labels": [
+    "negative",
+    "positive"
+  ],
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "jev_model_requested": "jev-latest",
+  "mini_endpoint": "https://api.openai.com/v1/chat/completions",
+  "mini_model": "gpt-4o-mini",
+  "mini_temperature": 0
+}

@@ -1,0 +1,494 @@
+[
+  {
+    "task_id": "banking_coarse_route",
+    "title": "Banking support queue routing",
+    "n": 500,
+    "jev_acc": 0.718,
+    "mini_acc": 0.644,
+    "jev_p50_ms": 805.3924000123516,
+    "mini_p50_ms": 1029.8013999708928,
+    "jev_p95_ms": 1128.474599972833,
+    "mini_p95_ms": 1534.268699993845,
+    "jev_mean_conf": 0.9194800000000012,
+    "jev_cost": 0.010316124000000001,
+    "mini_cost": 0.0073554,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.964,
+        "accuracy": 0.7302904564315352
+      },
+      "0.6": {
+        "coverage": 0.934,
+        "accuracy": 0.7408993576017131
+      },
+      "0.7": {
+        "coverage": 0.91,
+        "accuracy": 0.7494505494505495
+      },
+      "0.8": {
+        "coverage": 0.85,
+        "accuracy": 0.7764705882352941
+      },
+      "0.9": {
+        "coverage": 0.776,
+        "accuracy": 0.8041237113402062
+      }
+    },
+    "schema_sha256": "4aa35879a4f2a01ef4e2be5dca792b87b377db70a0122545bd4b39a50f20e8ec",
+    "samples_sha256": "2d6c984f02c99d3dc7973874dc7cae0eee57657e088b56b9a2fa28588bd1fde6",
+    "jev_wilson": {
+      "k": 359,
+      "n": 500,
+      "p": 0.718,
+      "lo": 0.6770114417638189,
+      "hi": 0.7556642245567071
+    },
+    "mini_wilson": {
+      "k": 322,
+      "n": 500,
+      "p": 0.644,
+      "lo": 0.6010779467373235,
+      "hi": 0.6847261631257764
+    },
+    "mcnemar": {
+      "jev_only_correct": 56,
+      "mini_only_correct": 19,
+      "discordant": 75,
+      "chi2_cc": 17.28,
+      "p_value": 3.225641456243767e-05,
+      "significant_0_05": true,
+      "winner": "jev"
+    }
+  },
+  {
+    "task_id": "news_topic",
+    "title": "News topic classification",
+    "n": 500,
+    "jev_acc": 0.856,
+    "mini_acc": 0.826,
+    "jev_p50_ms": 802.2038000053726,
+    "mini_p50_ms": 1070.2057000016794,
+    "jev_p95_ms": 1099.8720999923535,
+    "mini_p95_ms": 1490.3157000080682,
+    "jev_mean_conf": 0.9359200000000005,
+    "jev_cost": 0.008468880000000002,
+    "mini_cost": 0.0091893,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.966,
+        "accuracy": 0.8695652173913043
+      },
+      "0.6": {
+        "coverage": 0.938,
+        "accuracy": 0.8827292110874201
+      },
+      "0.7": {
+        "coverage": 0.906,
+        "accuracy": 0.9006622516556292
+      },
+      "0.8": {
+        "coverage": 0.864,
+        "accuracy": 0.9212962962962963
+      },
+      "0.9": {
+        "coverage": 0.84,
+        "accuracy": 0.9285714285714286
+      }
+    },
+    "schema_sha256": "5e5fb6174e853b40f244ba2961df3e18978b1bbaf1216c4136760dd4f8106399",
+    "samples_sha256": "99022757d6029d96b16c20ac6517fa95dbf1ad3441dde570f3a1560c0ec2b3d3",
+    "jev_wilson": {
+      "k": 428,
+      "n": 500,
+      "p": 0.856,
+      "lo": 0.822508879125479,
+      "hi": 0.8840623924805179
+    },
+    "mini_wilson": {
+      "k": 413,
+      "n": 500,
+      "p": 0.826,
+      "lo": 0.790317702710052,
+      "hi": 0.856711046007799
+    },
+    "mcnemar": {
+      "jev_only_correct": 22,
+      "mini_only_correct": 7,
+      "discordant": 29,
+      "chi2_cc": 6.758620689655173,
+      "p_value": 0.009329584719771558,
+      "significant_0_05": true,
+      "winner": "jev"
+    }
+  },
+  {
+    "task_id": "tweet_sentiment",
+    "title": "Social message sentiment",
+    "n": 500,
+    "jev_acc": 0.738,
+    "mini_acc": 0.726,
+    "jev_p50_ms": 843.8546999823302,
+    "mini_p50_ms": 1059.2340000439435,
+    "jev_p95_ms": 1167.4980000243522,
+    "mini_p95_ms": 1451.0005000047386,
+    "jev_mean_conf": 0.81772,
+    "jev_cost": 0.007737282000000001,
+    "mini_cost": 0.0061811999999999995,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.84,
+        "accuracy": 0.7976190476190477
+      },
+      "0.6": {
+        "coverage": 0.8,
+        "accuracy": 0.7975
+      },
+      "0.7": {
+        "coverage": 0.742,
+        "accuracy": 0.8059299191374663
+      },
+      "0.8": {
+        "coverage": 0.698,
+        "accuracy": 0.8166189111747851
+      },
+      "0.9": {
+        "coverage": 0.584,
+        "accuracy": 0.8287671232876712
+      }
+    },
+    "schema_sha256": "07949a6e028a4d14f9b010d23a2e5e9088b259d70956bcb6b8f21ef05d123502",
+    "samples_sha256": "caecb184d45d3ba003e851d0e29b8255884b64dcaa9e7b5000e8397492d39984",
+    "jev_wilson": {
+      "k": 369,
+      "n": 500,
+      "p": 0.738,
+      "lo": 0.6977463146741062,
+      "hi": 0.7746243669051839
+    },
+    "mini_wilson": {
+      "k": 363,
+      "n": 500,
+      "p": 0.726,
+      "lo": 0.6852936486809578,
+      "hi": 0.7632600237430738
+    },
+    "mcnemar": {
+      "jev_only_correct": 43,
+      "mini_only_correct": 37,
+      "discordant": 80,
+      "chi2_cc": 0.3125,
+      "p_value": 0.5761501220305789,
+      "significant_0_05": false,
+      "winner": "ns"
+    },
+    "samples_sha256_original": "5b683e997a0eb1b119e7fe48c5e91fa901040598c705bf99f2f4ef3fe1412225"
+  },
+  {
+    "task_id": "review_sentiment",
+    "title": "Review polarity",
+    "n": 500,
+    "jev_acc": 0.97,
+    "mini_acc": 0.964,
+    "jev_p50_ms": 812.0744000189006,
+    "mini_p50_ms": 1036.5974000305869,
+    "jev_p95_ms": 1258.1818000180647,
+    "mini_p95_ms": 1423.6609000363387,
+    "jev_mean_conf": 0.9243600000000005,
+    "jev_cost": 0.00704382,
+    "mini_cost": 0.00617475,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.954,
+        "accuracy": 0.9811320754716981
+      },
+      "0.6": {
+        "coverage": 0.942,
+        "accuracy": 0.9851380042462845
+      },
+      "0.7": {
+        "coverage": 0.918,
+        "accuracy": 0.9847494553376906
+      },
+      "0.8": {
+        "coverage": 0.882,
+        "accuracy": 0.9841269841269841
+      },
+      "0.9": {
+        "coverage": 0.806,
+        "accuracy": 0.9875930521091811
+      }
+    },
+    "schema_sha256": "2263bdb7d8ae0c7f944e8b14b2bd4e645498704b55ff813a7bec3a2c56457ec7",
+    "samples_sha256": "231657cc2621b2bd379f7c931c3fa1f11e0df5c1db6cbbfeadb19dc529255eb2",
+    "jev_wilson": {
+      "k": 485,
+      "n": 500,
+      "p": 0.97,
+      "lo": 0.9510959078150344,
+      "hi": 0.9817369507659165
+    },
+    "mini_wilson": {
+      "k": 482,
+      "n": 500,
+      "p": 0.964,
+      "lo": 0.943815226738503,
+      "hi": 0.9771091272648186
+    },
+    "mcnemar": {
+      "jev_only_correct": 7,
+      "mini_only_correct": 4,
+      "discordant": 11,
+      "chi2_cc": 0.36363636363636365,
+      "p_value": 0.5464935954065819,
+      "significant_0_05": false,
+      "winner": "ns"
+    }
+  },
+  {
+    "task_id": "sms_spam",
+    "title": "SMS spam gate",
+    "n": 500,
+    "jev_acc": 0.964,
+    "mini_acc": 0.964,
+    "jev_p50_ms": 806.9949999917299,
+    "mini_p50_ms": 1057.398499979172,
+    "jev_p95_ms": 1147.8312000399455,
+    "mini_p95_ms": 1464.9553999770433,
+    "jev_mean_conf": 0.9102400000000007,
+    "jev_cost": 0.007606032,
+    "mini_cost": 0.00667275,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.942,
+        "accuracy": 0.9745222929936306
+      },
+      "0.6": {
+        "coverage": 0.914,
+        "accuracy": 0.9824945295404814
+      },
+      "0.7": {
+        "coverage": 0.888,
+        "accuracy": 0.9887387387387387
+      },
+      "0.8": {
+        "coverage": 0.852,
+        "accuracy": 0.9882629107981221
+      },
+      "0.9": {
+        "coverage": 0.8,
+        "accuracy": 0.99
+      }
+    },
+    "schema_sha256": "07b1bf25a365768581c3564bd7c62f6a6d0137e6617c362e8e4f0b0e74481e0f",
+    "samples_sha256": "7005ef00450f0a83518938e1e603ad0291dc6025f817dc0bb9a854358e126777",
+    "jev_wilson": {
+      "k": 482,
+      "n": 500,
+      "p": 0.964,
+      "lo": 0.943815226738503,
+      "hi": 0.9771091272648186
+    },
+    "mini_wilson": {
+      "k": 482,
+      "n": 500,
+      "p": 0.964,
+      "lo": 0.943815226738503,
+      "hi": 0.9771091272648186
+    },
+    "mcnemar": {
+      "jev_only_correct": 6,
+      "mini_only_correct": 6,
+      "discordant": 12,
+      "chi2_cc": 0.08333333333333333,
+      "p_value": 0.7728299926844475,
+      "significant_0_05": false,
+      "winner": "ns"
+    }
+  },
+  {
+    "task_id": "content_offensive",
+    "title": "Offensive language screen",
+    "n": 500,
+    "jev_acc": 0.766,
+    "mini_acc": 0.708,
+    "jev_p50_ms": 802.5006999960169,
+    "mini_p50_ms": 1055.0608000485227,
+    "jev_p95_ms": 1151.300200028345,
+    "mini_p95_ms": 1453.3218000433408,
+    "jev_mean_conf": 0.7519199999999999,
+    "jev_cost": 0.007686420000000001,
+    "mini_cost": 0.00754755,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.79,
+        "accuracy": 0.8177215189873418
+      },
+      "0.6": {
+        "coverage": 0.742,
+        "accuracy": 0.8328840970350404
+      },
+      "0.7": {
+        "coverage": 0.68,
+        "accuracy": 0.8441176470588235
+      },
+      "0.8": {
+        "coverage": 0.602,
+        "accuracy": 0.867109634551495
+      },
+      "0.9": {
+        "coverage": 0.508,
+        "accuracy": 0.889763779527559
+      }
+    },
+    "schema_sha256": "badd1d31df936632c8259df9071c15c617f73a7b0c3001270fe27e7def832b76",
+    "samples_sha256": "758493aec454eeb35c05a47ccbc08fd4c5604cee2c693764b1fbed0911ab8280",
+    "jev_wilson": {
+      "k": 383,
+      "n": 500,
+      "p": 0.766,
+      "lo": 0.7269477983375824,
+      "hi": 0.8009959046039771
+    },
+    "mini_wilson": {
+      "k": 354,
+      "n": 500,
+      "p": 0.708,
+      "lo": 0.6666799846544007,
+      "hi": 0.7461481740367435
+    },
+    "mcnemar": {
+      "jev_only_correct": 70,
+      "mini_only_correct": 41,
+      "discordant": 111,
+      "chi2_cc": 7.063063063063063,
+      "p_value": 0.007868934200841282,
+      "significant_0_05": true,
+      "winner": "jev"
+    },
+    "samples_sha256_original": "dd42d193283aec78fd13f2301d5e11ef6c38a902a8ff86ede1ca57131fac5b69"
+  },
+  {
+    "task_id": "content_hate",
+    "title": "Hate-speech screen",
+    "n": 500,
+    "jev_acc": 0.662,
+    "mini_acc": 0.74,
+    "jev_p50_ms": 839.7506999899633,
+    "mini_p50_ms": 1071.748899994418,
+    "jev_p95_ms": 1226.3899000245146,
+    "mini_p95_ms": 1511.6320999804884,
+    "jev_mean_conf": 0.6674400000000008,
+    "jev_cost": 0.007439460000000001,
+    "mini_cost": 0.00718155,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.698,
+        "accuracy": 0.6991404011461319
+      },
+      "0.6": {
+        "coverage": 0.64,
+        "accuracy": 0.70625
+      },
+      "0.7": {
+        "coverage": 0.57,
+        "accuracy": 0.7228070175438597
+      },
+      "0.8": {
+        "coverage": 0.462,
+        "accuracy": 0.7575757575757576
+      },
+      "0.9": {
+        "coverage": 0.326,
+        "accuracy": 0.8159509202453987
+      }
+    },
+    "schema_sha256": "c656daeea6fd24ecfbcfb56227654fa65787087c46bd17bbccd3b62b5be6dda3",
+    "samples_sha256": "5bc4134ab919ad8ba4baf42153ed78d0094610f780d94276d9f2cf8c6668b666",
+    "jev_wilson": {
+      "k": 331,
+      "n": 500,
+      "p": 0.662,
+      "lo": 0.6194419387868491,
+      "hi": 0.7020876848091384
+    },
+    "mini_wilson": {
+      "k": 370,
+      "n": 500,
+      "p": 0.74,
+      "lo": 0.6998252722118725,
+      "hi": 0.7765149108932938
+    },
+    "mcnemar": {
+      "jev_only_correct": 60,
+      "mini_only_correct": 99,
+      "discordant": 159,
+      "chi2_cc": 9.081761006289309,
+      "p_value": 0.0025817132440585132,
+      "significant_0_05": true,
+      "winner": "mini"
+    },
+    "samples_sha256_original": "2ec09cb6cd44f4d1089eae7ac1d96159784273766449a63079e0e4a4455a7875"
+  },
+  {
+    "task_id": "message_emotion",
+    "title": "Message emotion",
+    "n": 500,
+    "jev_acc": 0.798,
+    "mini_acc": 0.75,
+    "jev_p50_ms": 826.5690999687649,
+    "mini_p50_ms": 1067.416800011415,
+    "jev_p95_ms": 1175.705800007563,
+    "mini_p95_ms": 1482.1024000411853,
+    "jev_mean_conf": 0.8383400000000003,
+    "jev_cost": 0.007728756,
+    "mini_cost": 0.00653205,
+    "jev_gates": {
+      "0.5": {
+        "coverage": 0.868,
+        "accuracy": 0.847926267281106
+      },
+      "0.6": {
+        "coverage": 0.81,
+        "accuracy": 0.8666666666666667
+      },
+      "0.7": {
+        "coverage": 0.748,
+        "accuracy": 0.8850267379679144
+      },
+      "0.8": {
+        "coverage": 0.71,
+        "accuracy": 0.8929577464788733
+      },
+      "0.9": {
+        "coverage": 0.616,
+        "accuracy": 0.9090909090909091
+      }
+    },
+    "schema_sha256": "efdd874ce200c81fe6f3a83f790d878d02a408a549151c58e5cbecf5122429ab",
+    "samples_sha256": "2e89ceb054d4188b3fdc41914075bae9daf72390e76e8e03c46c4bc30013771f",
+    "jev_wilson": {
+      "k": 399,
+      "n": 500,
+      "p": 0.798,
+      "lo": 0.7605963875890438,
+      "hi": 0.8308593397665378
+    },
+    "mini_wilson": {
+      "k": 375,
+      "n": 500,
+      "p": 0.75,
+      "lo": 0.7102355648988187,
+      "hi": 0.7859521258357297
+    },
+    "mcnemar": {
+      "jev_only_correct": 46,
+      "mini_only_correct": 22,
+      "discordant": 68,
+      "chi2_cc": 7.779411764705882,
+      "p_value": 0.005284500162983997,
+      "significant_0_05": true,
+      "winner": "jev"
+    },
+    "samples_sha256_original": "577389d55ca5404211c01d640079a463d447da99ab327a0983613e5b2edb69d5"
+  }
+]

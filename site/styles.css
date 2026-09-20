@@ -1,0 +1,37 @@
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+img, video, svg { max-width: 100%; height: auto; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 0.75rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.bar {
+  height: 6px;
+  border-radius: 99px;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  overflow: hidden;
+}
+.bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.verdict-replace { --v: #15803d; }
+.verdict-mix { --v: #a16207; }
+.verdict-dont { --v: #b91c1c; }
+.dark .verdict-replace { --v: #4ade80; }
+.dark .verdict-mix { --v: #facc15; }
+.dark .verdict-dont { --v: #f87171; }

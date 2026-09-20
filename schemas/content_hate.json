@@ -1,0 +1,25 @@
+{
+  "task_id": "content_hate",
+  "title": "Hate-speech screen",
+  "question_key": "verdict",
+  "questions": {
+    "verdict": {
+      "type": "choice",
+      "instructions": "Does this tweet contain hate speech targeting a protected group?",
+      "criteria": {
+        "not_hate": "Not hate speech",
+        "hate": "Hate speech"
+      }
+    }
+  },
+  "openai_prompt": "Is this tweet hate speech? Reply with JSON {\"label\": <one of: not_hate, hate>}.",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "jev_model_requested": "jev-latest",
+  "mini_endpoint": "https://api.openai.com/v1/chat/completions",
+  "mini_model": "gpt-4o-mini",
+  "mini_temperature": 0
+}

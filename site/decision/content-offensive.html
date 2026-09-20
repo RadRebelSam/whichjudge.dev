@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Offensive language screen: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<meta name="description" content="Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: Replace. ECE 0.11.">
+<link rel="canonical" href="https://whichjudge.dev/decision/content-offensive.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Offensive language screen: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:description" content="Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: Replace. ECE 0.11.">
+<meta property="og:url" content="https://whichjudge.dev/decision/content-offensive.html">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Offensive language screen - cheap decision model bake-off", "description": "Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: Replace. ECE 0.11.", "url": "https://whichjudge.dev/decision/content-offensive.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "tweet_eval offensive", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/content_offensive.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.766}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.708}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.738}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.11}]}</script>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+</head>
+<body>
+<p><a href="../index.html">WhichJudge</a> / decision</p>
+<h1>Offensive language screen</h1>
+<p><span class="verdict">Replace</span></p>
+<p>Jev +5.8pt, McNemar p=0.0079. Mean confidence is only 0.75, so the gate is the product, not the headline accuracy.</p>
+<p><strong>Replaces:</strong> Offensive-content classifier<br>
+<strong>Gold:</strong> tweet_eval offensive, n=500, seed=7<br>
+<strong>Labels:</strong> <code>not_offensive / offensive</code></p>
+<table>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <tbody>
+        <tr><td>Jev jev-1.13.0</td><td>76.6%</td><td>[72.7% - 80.1%]</td><td>803 ms</td><td>$15.37</td></tr>
+        <tr><td>gpt-4o-mini-2024-07-18</td><td>70.8%</td><td>[66.7% - 74.6%]</td><td>1055 ms</td><td>$15.1</td></tr>
+        <tr><td>TF-IDF + LR (train n=11,912)</td><td>73.8%</td><td>[69.8% - 77.5%]</td><td>35 us</td><td>$0</td></tr>
+  </tbody>
+</table>
+<p><strong>McNemar Jev vs Mini:</strong> jev, p=0.00787
+(70 Jev-only correct, 41 Mini-only correct).
+<strong>TF-IDF vs Jev:</strong> ns.</p>
+<h2>Quit line</h2>
+<p>Auto at &gt;=0.9 (89.0% on 50.8%). At &gt;=0.7 it is 84.4% on 68.0%. Rest to a human.</p>
+<p>At Jev confidence &ge; 0.7: 84.4% accurate on 68.0% of traffic.
+Expected calibration error on this task is <strong>0.11</strong>
+(max bin gap 0.163). High ECE means the confidence number is not
+trustworthy enough to auto-route on.</p>
+<h2>Verify this</h2>
+<p>Frozen samples <code>758493aec454</code>, schema <code>badd1d31df93</code>.
+Every call is stored with its request, response and SHA-256 in
+<a href="../receipts/content_offensive.json">receipts/content_offensive.json</a>.</p>
+<pre><code>git clone https://github.com/RadRebelSam/whichjudge.dev
+python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
+python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
+<p>Independent bench, not affiliated with TypeSafe AI. Public gold labels, n=500,
+not a procurement study. <a href="../index.html">All 8 decisions</a> &middot;
+<a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
+<a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
+</body>
+</html>

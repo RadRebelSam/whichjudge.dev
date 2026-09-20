@@ -1,0 +1,31 @@
+.env
+raw/
+data_n48/
+results_n48/
+__pycache__/
+*.pyc
+.DS_Store
+.claude/
+
+# Internal working notes, not part of the published bench.
+# Strategy, handoff notes and deploy runbooks stay local.
+docs/
+SESSION.md
+PLAN.md
+NOTES.md
+
+# Editor / OS noise
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# Local scratch
+*.log
+.venv/
+venv/
+tmp/
+
+# Rehydrated third-party text. The public repo ships hashes; scripts/rehydrate.py
+# rebuilds these locally. Never commit them.
+data/*.text.jsonl

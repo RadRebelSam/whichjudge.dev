@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy — WhichJudge</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    document.documentElement.classList.toggle(
+      "dark",
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    );
+  </script>
+</head>
+<body class="min-h-dvh bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
+  <main class="mx-auto w-full max-w-2xl px-4 py-10 text-sm leading-relaxed">
+    <p class="mono text-[11px] tracking-wide text-zinc-500 uppercase"><a href="index.html">whichjudge.dev</a></p>
+    <h1 class="mt-2 text-2xl font-semibold">Privacy</h1>
+    <p class="mt-4 text-zinc-600 dark:text-zinc-400">Last updated 2026-09-20. Contact: <a class="underline" href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
+    <ul class="mt-6 list-disc space-y-3 pl-5 text-zinc-700 dark:text-zinc-300">
+      <li>This is a static site. We do not run accounts, logins, or a submission form.</li>
+      <li>We do not set our own cookies. Your host or CDN may log IPs in the ordinary way; we do not sell that.</li>
+      <li>Eval text is from public datasets (UCI SMS, SST-2, AG News, tweet_eval, BANKING77). Receipts shown on the page are those public samples plus model outputs.</li>
+      <li>If you email us, we keep the message only to reply. Do not send personal data or unlabeled production dumps.</li>
+      <li>If this later uses analytics, this page will say so before it ships.</li>
+    </ul>
+    <p class="mt-8"><a class="underline" href="index.html">Back</a></p>
+  </main>
+</body>
+</html>

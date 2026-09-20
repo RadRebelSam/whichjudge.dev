@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News topic: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge</title>
+<meta name="description" content="News topic on AG News test, n=500 frozen gold. Jev 85.6%, gpt-4o-mini 82.6%, TF-IDF 90.8%. Verdict: Replace. ECE 0.096.">
+<link rel="canonical" href="https://whichjudge.dev/decision/news-topic.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="News topic: Jev vs gpt-4o-mini vs TF-IDF | WhichJudge">
+<meta property="og:description" content="News topic on AG News test, n=500 frozen gold. Jev 85.6%, gpt-4o-mini 82.6%, TF-IDF 90.8%. Verdict: Replace. ECE 0.096.">
+<meta property="og:url" content="https://whichjudge.dev/decision/news-topic.html">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "News topic - cheap decision model bake-off", "description": "News topic on AG News test, n=500 frozen gold. Jev 85.6%, gpt-4o-mini 82.6%, TF-IDF 90.8%. Verdict: Replace. ECE 0.096.", "url": "https://whichjudge.dev/decision/news-topic.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "AG News test", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/news_topic.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.856}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.826}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.908}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.096}]}</script>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+</head>
+<body>
+<p><a href="../index.html">WhichJudge</a> / decision</p>
+<h1>News topic</h1>
+<p><span class="verdict">Replace</span></p>
+<p>TF-IDF 90.8% beats Jev 85.6% and Mini 82.6% after training on 120k rows. Among the APIs Jev wins by 3.0pt (p=0.0093). If you have labels, skip both models.</p>
+<p><strong>Replaces:</strong> 4-way news classifier<br>
+<strong>Gold:</strong> AG News test, n=500, seed=7<br>
+<strong>Labels:</strong> <code>world / sports / business / sci_tech</code></p>
+<table>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>p50</th><th>$/1M decisions</th></tr></thead>
+  <tbody>
+        <tr><td>Jev jev-1.13.0</td><td>85.6%</td><td>[82.3% - 88.4%]</td><td>802 ms</td><td>$16.94</td></tr>
+        <tr><td>gpt-4o-mini-2024-07-18</td><td>82.6%</td><td>[79.0% - 85.7%]</td><td>1070 ms</td><td>$18.38</td></tr>
+        <tr><td>TF-IDF + LR (train n=120,000)</td><td>90.8%</td><td>[87.9% - 93.0%]</td><td>79 us</td><td>$0</td></tr>
+  </tbody>
+</table>
+<p><strong>McNemar Jev vs Mini:</strong> jev, p=0.00933
+(22 Jev-only correct, 7 Mini-only correct).
+<strong>TF-IDF vs Jev:</strong> tfidf.</p>
+<h2>Quit line</h2>
+<p>Jev first among APIs. At &gt;=0.7: 90.1% on 90.6% of articles.</p>
+<p>At Jev confidence &ge; 0.7: 90.1% accurate on 90.6% of traffic.
+Expected calibration error on this task is <strong>0.096</strong>
+(max bin gap 0.34). High ECE means the confidence number is not
+trustworthy enough to auto-route on.</p>
+<h2>Verify this</h2>
+<p>Frozen samples <code>99022757d602</code>, schema <code>5e5fb6174e85</code>.
+Every call is stored with its request, response and SHA-256 in
+<a href="../receipts/news_topic.json">receipts/news_topic.json</a>.</p>
+<pre><code>git clone https://github.com/RadRebelSam/whichjudge.dev
+python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
+python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
+<p>Independent bench, not affiliated with TypeSafe AI. Public gold labels, n=500,
+not a procurement study. <a href="../index.html">All 8 decisions</a> &middot;
+<a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
+<a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
+</body>
+</html>

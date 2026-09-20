@@ -1,0 +1,250 @@
+[
+  {
+    "task_id": "banking_coarse_route",
+    "n": 500,
+    "train_n": 10003,
+    "train_note": "BANKING77 official train",
+    "acc": 0.932,
+    "wilson": {
+      "k": 466,
+      "n": 500,
+      "p": 0.932,
+      "lo": 0.9064785429161282,
+      "hi": 0.9509337866731715
+    },
+    "fit_ms": 928.4545000409707,
+    "predict_total_ms": 9.491299977526069,
+    "predict_p50_ms": 0.018982599955052137,
+    "mcnemar_vs_jev": {
+      "a_only_correct": 119,
+      "b_only_correct": 12,
+      "discordant": 131,
+      "p_value": 2.020281170286008e-20,
+      "winner": "a"
+    },
+    "mcnemar_vs_mini": {
+      "a_only_correct": 153,
+      "b_only_correct": 9,
+      "discordant": 162,
+      "p_value": 2.740557305957515e-29,
+      "winner": "a"
+    }
+  },
+  {
+    "task_id": "sms_spam",
+    "n": 500,
+    "train_n": 4968,
+    "train_note": "UCI SMS leftover after frozen eval (no official train split)",
+    "acc": 0.964,
+    "wilson": {
+      "k": 482,
+      "n": 500,
+      "p": 0.964,
+      "lo": 0.943815226738503,
+      "hi": 0.9771091272648186
+    },
+    "fit_ms": 213.229900051374,
+    "predict_total_ms": 13.569900009315461,
+    "predict_p50_ms": 0.027139800018630922,
+    "mcnemar_vs_jev": {
+      "a_only_correct": 9,
+      "b_only_correct": 9,
+      "discordant": 18,
+      "p_value": 0.813663715766792,
+      "winner": "ns"
+    },
+    "mcnemar_vs_mini": {
+      "a_only_correct": 11,
+      "b_only_correct": 11,
+      "discordant": 22,
+      "p_value": 0.8311704095417624,
+      "winner": "ns"
+    }
+  },
+  {
+    "task_id": "review_sentiment",
+    "n": 500,
+    "train_n": 67349,
+    "train_note": "SST-2 official train",
+    "acc": 0.826,
+    "wilson": {
+      "k": 413,
+      "n": 500,
+      "p": 0.826,
+      "lo": 0.790317702710052,
+      "hi": 0.856711046007799
+    },
+    "fit_ms": 1762.1441000374034,
+    "predict_total_ms": 15.966499981004745,
+    "predict_p50_ms": 0.03193299996200949,
+    "mcnemar_vs_jev": {
+      "a_only_correct": 8,
+      "b_only_correct": 80,
+      "discordant": 88,
+      "p_value": 3.7719401551199243e-14,
+      "winner": "b"
+    },
+    "mcnemar_vs_mini": {
+      "a_only_correct": 9,
+      "b_only_correct": 78,
+      "discordant": 87,
+      "p_value": 3.091158700311734e-13,
+      "winner": "b"
+    }
+  },
+  {
+    "task_id": "news_topic",
+    "n": 500,
+    "train_n": 120000,
+    "train_note": "AG News official train",
+    "acc": 0.908,
+    "wilson": {
+      "k": 454,
+      "n": 500,
+      "p": 0.908,
+      "lo": 0.8794606777802376,
+      "hi": 0.9303176334985452
+    },
+    "fit_ms": 19460.26989998063,
+    "predict_total_ms": 39.68789998907596,
+    "predict_p50_ms": 0.07937579997815192,
+    "mcnemar_vs_jev": {
+      "a_only_correct": 42,
+      "b_only_correct": 16,
+      "discordant": 58,
+      "p_value": 0.0010283231106303406,
+      "winner": "a"
+    },
+    "mcnemar_vs_mini": {
+      "a_only_correct": 57,
+      "b_only_correct": 16,
+      "discordant": 73,
+      "p_value": 2.8458076157547226e-06,
+      "winner": "a"
+    }
+  },
+  {
+    "task_id": "tweet_sentiment",
+    "n": 500,
+    "train_n": 45615,
+    "train_note": "tweet_eval sentiment official train",
+    "acc": 0.638,
+    "wilson": {
+      "k": 319,
+      "n": 500,
+      "p": 0.638,
+      "lo": 0.5949709219022378,
+      "hi": 0.6789246833832329
+    },
+    "fit_ms": 4530.358400021214,
+    "predict_total_ms": 18.377300002612174,
+    "predict_p50_ms": 0.03675460000522435,
+    "mcnemar_vs_jev": {
+      "a_only_correct": 66,
+      "b_only_correct": 116,
+      "discordant": 182,
+      "p_value": 0.00028110054099173936,
+      "winner": "b"
+    },
+    "mcnemar_vs_mini": {
+      "a_only_correct": 62,
+      "b_only_correct": 106,
+      "discordant": 168,
+      "p_value": 0.0009081975515243086,
+      "winner": "b"
+    }
+  },
+  {
+    "task_id": "content_offensive",
+    "n": 500,
+    "train_n": 11912,
+    "train_note": "tweet_eval offensive official train",
+    "acc": 0.738,
+    "wilson": {
+      "k": 369,
+      "n": 500,
+      "p": 0.738,
+      "lo": 0.6977463146741062,
+      "hi": 0.7746243669051839
+    },
+    "fit_ms": 988.638799986802,
+    "predict_total_ms": 17.26829999824986,
+    "predict_p50_ms": 0.03453659999649972,
+    "mcnemar_vs_jev": {
+      "a_only_correct": 57,
+      "b_only_correct": 71,
+      "discordant": 128,
+      "p_value": 0.25053597441363795,
+      "winner": "ns"
+    },
+    "mcnemar_vs_mini": {
+      "a_only_correct": 87,
+      "b_only_correct": 72,
+      "discordant": 159,
+      "p_value": 0.26688174016377775,
+      "winner": "ns"
+    }
+  },
+  {
+    "task_id": "content_hate",
+    "n": 500,
+    "train_n": 8962,
+    "train_note": "tweet_eval hate official train",
+    "acc": 0.54,
+    "wilson": {
+      "k": 270,
+      "n": 500,
+      "p": 0.54,
+      "lo": 0.4961743505261478,
+      "hi": 0.5832156799913801
+    },
+    "fit_ms": 568.9130999962799,
+    "predict_total_ms": 15.91099996585399,
+    "predict_p50_ms": 0.03182199993170798,
+    "mcnemar_vs_jev": {
+      "a_only_correct": 133,
+      "b_only_correct": 194,
+      "discordant": 327,
+      "p_value": 0.000906620235383679,
+      "winner": "b"
+    },
+    "mcnemar_vs_mini": {
+      "a_only_correct": 60,
+      "b_only_correct": 160,
+      "discordant": 220,
+      "p_value": 2.4794350137860596e-11,
+      "winner": "b"
+    }
+  },
+  {
+    "task_id": "message_emotion",
+    "n": 500,
+    "train_n": 3257,
+    "train_note": "tweet_eval emotion official train",
+    "acc": 0.642,
+    "wilson": {
+      "k": 321,
+      "n": 500,
+      "p": 0.642,
+      "lo": 0.5990414871027679,
+      "hi": 0.6827931212344555
+    },
+    "fit_ms": 171.8564000329934,
+    "predict_total_ms": 12.16529996600002,
+    "predict_p50_ms": 0.02433059993200004,
+    "mcnemar_vs_jev": {
+      "a_only_correct": 45,
+      "b_only_correct": 123,
+      "discordant": 168,
+      "p_value": 2.838439798422751e-09,
+      "winner": "b"
+    },
+    "mcnemar_vs_mini": {
+      "a_only_correct": 54,
+      "b_only_correct": 108,
+      "discordant": 162,
+      "p_value": 3.1261972341985456e-05,
+      "winner": "b"
+    }
+  }
+]

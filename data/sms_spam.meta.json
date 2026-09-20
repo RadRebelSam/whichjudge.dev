@@ -1,0 +1,8 @@
+{
+  "dataset": "UCI SMS Spam",
+  "n": 500,
+  "label_counts": {
+    "ham": 250,
+    "spam": 250
+  }
+}

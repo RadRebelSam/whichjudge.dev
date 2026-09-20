@@ -1,0 +1,10 @@
+{
+  "dataset": "tweet_eval emotion test",
+  "n": 500,
+  "label_counts": {
+    "sadness": 126,
+    "anger": 126,
+    "joy": 125,
+    "optimism": 123
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "task_id": "news_topic",
+  "title": "News topic classification",
+  "question_key": "topic",
+  "questions": {
+    "topic": {
+      "type": "choice",
+      "instructions": "What is the primary topic of this news article?",
+      "criteria": {
+        "world": "World / international news and politics",
+        "sports": "Sports",
+        "business": "Business, markets, companies, economy",
+        "sci_tech": "Science or technology"
+      }
+    }
+  },
+  "openai_prompt": "Classify this news article into exactly one topic. Reply with JSON {\"label\": <one of: world, sports, business, sci_tech>}.",
+  "labels": [
+    "world",
+    "sports",
+    "business",
+    "sci_tech"
+  ],
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "jev_model_requested": "jev-latest",
+  "mini_endpoint": "https://api.openai.com/v1/chat/completions",
+  "mini_model": "gpt-4o-mini",
+  "mini_temperature": 0
+}
