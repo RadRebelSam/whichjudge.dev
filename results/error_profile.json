@@ -92,6 +92,27 @@
         }
       },
       "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "injection": {
+          "n": 150,
+          "recall": 0.72,
+          "missed": 42,
+          "missed_rate": 0.28,
+          "false_positives": 0,
+          "false_positive_rate": 0.0
+        },
+        "legitimate": {
+          "n": 150,
+          "recall": 1.0,
+          "missed": 0,
+          "missed_rate": 0.0,
+          "false_positives": 42,
+          "false_positive_rate": 0.28
+        }
+      },
+      "recall_at_gate": {}
     }
   },
   "civil_toxicity": {
@@ -184,6 +205,27 @@
           "missed_rate": 0.132,
           "false_positives": 82,
           "false_positive_rate": 0.328
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "not_toxic": {
+          "n": 250,
+          "recall": 0.7,
+          "missed": 75,
+          "missed_rate": 0.3,
+          "false_positives": 42,
+          "false_positive_rate": 0.168
+        },
+        "toxic": {
+          "n": 250,
+          "recall": 0.832,
+          "missed": 42,
+          "missed_rate": 0.168,
+          "false_positives": 75,
+          "false_positive_rate": 0.3
         }
       },
       "recall_at_gate": {}
@@ -493,6 +535,75 @@
           "recall": 0.9194,
           "missed": 5,
           "missed_rate": 0.0806,
+          "false_positives": 0,
+          "false_positive_rate": 0.0
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "bank_account": {
+          "n": 63,
+          "recall": 0.7302,
+          "missed": 17,
+          "missed_rate": 0.2698,
+          "false_positives": 25,
+          "false_positive_rate": 0.0572
+        },
+        "cards": {
+          "n": 62,
+          "recall": 0.8226,
+          "missed": 11,
+          "missed_rate": 0.1774,
+          "false_positives": 20,
+          "false_positive_rate": 0.0457
+        },
+        "credit_reporting": {
+          "n": 62,
+          "recall": 0.9839,
+          "missed": 1,
+          "missed_rate": 0.0161,
+          "false_positives": 38,
+          "false_positive_rate": 0.0868
+        },
+        "debt_collection": {
+          "n": 62,
+          "recall": 0.5161,
+          "missed": 30,
+          "missed_rate": 0.4839,
+          "false_positives": 5,
+          "false_positive_rate": 0.0114
+        },
+        "loans": {
+          "n": 64,
+          "recall": 0.5469,
+          "missed": 29,
+          "missed_rate": 0.4531,
+          "false_positives": 7,
+          "false_positive_rate": 0.0161
+        },
+        "money_transfer": {
+          "n": 62,
+          "recall": 0.7742,
+          "missed": 14,
+          "missed_rate": 0.2258,
+          "false_positives": 5,
+          "false_positive_rate": 0.0114
+        },
+        "mortgage": {
+          "n": 63,
+          "recall": 0.9524,
+          "missed": 3,
+          "missed_rate": 0.0476,
+          "false_positives": 3,
+          "false_positive_rate": 0.0069
+        },
+        "student_loan": {
+          "n": 62,
+          "recall": 0.9677,
+          "missed": 2,
+          "missed_rate": 0.0323,
           "false_positives": 0,
           "false_positive_rate": 0.0
         }
@@ -809,6 +920,75 @@
         }
       },
       "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "account": {
+          "n": 63,
+          "recall": 0.873,
+          "missed": 8,
+          "missed_rate": 0.127,
+          "false_positives": 24,
+          "false_positive_rate": 0.0549
+        },
+        "cards": {
+          "n": 62,
+          "recall": 0.7581,
+          "missed": 15,
+          "missed_rate": 0.2419,
+          "false_positives": 35,
+          "false_positive_rate": 0.0799
+        },
+        "cash_atm": {
+          "n": 63,
+          "recall": 0.7619,
+          "missed": 15,
+          "missed_rate": 0.2381,
+          "false_positives": 2,
+          "false_positive_rate": 0.0046
+        },
+        "fx": {
+          "n": 62,
+          "recall": 0.9194,
+          "missed": 5,
+          "missed_rate": 0.0806,
+          "false_positives": 9,
+          "false_positive_rate": 0.0205
+        },
+        "other": {
+          "n": 62,
+          "recall": 0.0,
+          "missed": 62,
+          "missed_rate": 1.0,
+          "false_positives": 10,
+          "false_positive_rate": 0.0228
+        },
+        "payments_fees": {
+          "n": 62,
+          "recall": 0.7419,
+          "missed": 16,
+          "missed_rate": 0.2581,
+          "false_positives": 23,
+          "false_positive_rate": 0.0525
+        },
+        "top_up": {
+          "n": 62,
+          "recall": 0.8548,
+          "missed": 9,
+          "missed_rate": 0.1452,
+          "false_positives": 32,
+          "false_positive_rate": 0.0731
+        },
+        "transfers": {
+          "n": 64,
+          "recall": 0.75,
+          "missed": 16,
+          "missed_rate": 0.25,
+          "false_positives": 11,
+          "false_positive_rate": 0.0252
+        }
+      },
+      "recall_at_gate": {}
     }
   },
   "news_topic": {
@@ -976,6 +1156,43 @@
         }
       },
       "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "business": {
+          "n": 125,
+          "recall": 0.984,
+          "missed": 2,
+          "missed_rate": 0.016,
+          "false_positives": 70,
+          "false_positive_rate": 0.1867
+        },
+        "sci_tech": {
+          "n": 125,
+          "recall": 0.424,
+          "missed": 72,
+          "missed_rate": 0.576,
+          "false_positives": 6,
+          "false_positive_rate": 0.016
+        },
+        "sports": {
+          "n": 125,
+          "recall": 0.984,
+          "missed": 2,
+          "missed_rate": 0.016,
+          "false_positives": 2,
+          "false_positive_rate": 0.0053
+        },
+        "world": {
+          "n": 125,
+          "recall": 0.824,
+          "missed": 22,
+          "missed_rate": 0.176,
+          "false_positives": 20,
+          "false_positive_rate": 0.0533
+        }
+      },
+      "recall_at_gate": {}
     }
   },
   "tweet_sentiment": {
@@ -1107,6 +1324,35 @@
         }
       },
       "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "negative": {
+          "n": 167,
+          "recall": 0.8623,
+          "missed": 23,
+          "missed_rate": 0.1377,
+          "false_positives": 55,
+          "false_positive_rate": 0.1652
+        },
+        "neutral": {
+          "n": 167,
+          "recall": 0.5569,
+          "missed": 74,
+          "missed_rate": 0.4431,
+          "false_positives": 48,
+          "false_positive_rate": 0.1441
+        },
+        "positive": {
+          "n": 166,
+          "recall": 0.8133,
+          "missed": 31,
+          "missed_rate": 0.1867,
+          "false_positives": 25,
+          "false_positive_rate": 0.0749
+        }
+      },
+      "recall_at_gate": {}
     }
   },
   "review_sentiment": {
@@ -1199,6 +1445,27 @@
           "missed_rate": 0.056,
           "false_positives": 4,
           "false_positive_rate": 0.016
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "negative": {
+          "n": 250,
+          "recall": 0.964,
+          "missed": 9,
+          "missed_rate": 0.036,
+          "false_positives": 17,
+          "false_positive_rate": 0.068
+        },
+        "positive": {
+          "n": 250,
+          "recall": 0.932,
+          "missed": 17,
+          "missed_rate": 0.068,
+          "false_positives": 9,
+          "false_positive_rate": 0.036
         }
       },
       "recall_at_gate": {}
@@ -1297,6 +1564,27 @@
         }
       },
       "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "ham": {
+          "n": 250,
+          "recall": 0.92,
+          "missed": 20,
+          "missed_rate": 0.08,
+          "false_positives": 7,
+          "false_positive_rate": 0.028
+        },
+        "spam": {
+          "n": 250,
+          "recall": 0.972,
+          "missed": 7,
+          "missed_rate": 0.028,
+          "false_positives": 20,
+          "false_positive_rate": 0.08
+        }
+      },
+      "recall_at_gate": {}
     }
   },
   "content_offensive": {
@@ -1392,6 +1680,27 @@
         }
       },
       "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "not_offensive": {
+          "n": 256,
+          "recall": 0.8164,
+          "missed": 47,
+          "missed_rate": 0.1836,
+          "false_positives": 82,
+          "false_positive_rate": 0.3361
+        },
+        "offensive": {
+          "n": 244,
+          "recall": 0.6639,
+          "missed": 82,
+          "missed_rate": 0.3361,
+          "false_positives": 47,
+          "false_positive_rate": 0.1836
+        }
+      },
+      "recall_at_gate": {}
     }
   },
   "content_hate": {
@@ -1484,6 +1793,27 @@
           "missed_rate": 0.324,
           "false_positives": 49,
           "false_positive_rate": 0.196
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "hate": {
+          "n": 250,
+          "recall": 0.752,
+          "missed": 62,
+          "missed_rate": 0.248,
+          "false_positives": 83,
+          "false_positive_rate": 0.332
+        },
+        "not_hate": {
+          "n": 250,
+          "recall": 0.668,
+          "missed": 83,
+          "missed_rate": 0.332,
+          "false_positives": 62,
+          "false_positive_rate": 0.248
         }
       },
       "recall_at_gate": {}
@@ -1651,6 +1981,43 @@
           "missed_rate": 0.127,
           "false_positives": 45,
           "false_positive_rate": 0.1203
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "modern": {
+      "per_class": {
+        "anger": {
+          "n": 126,
+          "recall": 0.873,
+          "missed": 16,
+          "missed_rate": 0.127,
+          "false_positives": 40,
+          "false_positive_rate": 0.107
+        },
+        "joy": {
+          "n": 125,
+          "recall": 0.904,
+          "missed": 12,
+          "missed_rate": 0.096,
+          "false_positives": 39,
+          "false_positive_rate": 0.104
+        },
+        "optimism": {
+          "n": 123,
+          "recall": 0.5935,
+          "missed": 50,
+          "missed_rate": 0.4065,
+          "false_positives": 10,
+          "false_positive_rate": 0.0265
+        },
+        "sadness": {
+          "n": 126,
+          "recall": 0.7302,
+          "missed": 34,
+          "missed_rate": 0.2698,
+          "false_positives": 20,
+          "false_positive_rate": 0.0535
         }
       },
       "recall_at_gate": {}

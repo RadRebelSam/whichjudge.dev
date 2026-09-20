@@ -19,7 +19,7 @@
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>Prompt-injection screen</h1>
 <p><span class="verdict">Neither (ns)</span></p>
-<p>Read this row on recall, not accuracy. Jev 80.0% and Mini 81.0% look respectable and are tied (p=0.72), but both are biased hard toward letting text through: Jev misses 40.0% of injections while blocking 0.0% of legitimate input. An accuracy number hides that completely. TF-IDF is 85.7% on only 361 training rows.</p>
+<p>Read this row on recall, not accuracy. Jev 80.0% and 4o-mini 81.0% are tied (p=0.72), and a current small model does beat both at 86.0%. But all three are biased toward letting text through: Jev catches 60.0% of injections, 4o-mini 62.7%, the 2026 model 72.0%. Better is not the same as usable when 28.0% still walk past.</p>
 <p><strong>Replaces:</strong> LLM guard deciding whether untrusted input may reach an agent<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/deepset/prompt-injections" rel="noopener">deepset/prompt-injections</a>
 

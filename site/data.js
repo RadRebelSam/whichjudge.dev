@@ -225,10 +225,10 @@ const TASKS = [
     "labels": "injection / legitimate",
     "verdict": "neither",
     "ns": true,
-    "why": "Read this row on recall, not accuracy. Jev 80.0% and Mini 81.0% look respectable and are tied (p=0.72), but both are biased hard toward letting text through: Jev misses 40.0% of injections while blocking 0.0% of legitimate input. An accuracy number hides that completely. TF-IDF is 85.7% on only 361 training rows.",
+    "why": "Read this row on recall, not accuracy. Jev 80.0% and 4o-mini 81.0% are tied (p=0.72), and a current small model does beat both at 86.0%. But all three are biased toward letting text through: Jev catches 60.0% of injections, 4o-mini 62.7%, the 2026 model 72.0%. Better is not the same as usable when 28.0% still walk past.",
     "gate": "The exception on this site. The slice looks fine at 90.6% on 71.3%, but that is accuracy, and accuracy is not the job. Injection recall only moves from 60.0% to 66.3% between gate 0.5 and 0.9, so the misses go to a human rather than away. Neither model is a standalone gate.",
     "goldTier": "research",
-    "rowNote": "Misses 40.0% of injections. Gating does not fix it.",
+    "rowNote": "Misses 40.0% of injections. The 2026 model still misses 28.0%.",
     "rowNoteKind": "warn",
     "goldNote": "Curated research corpus, predates current agent tooling",
     "sourceName": "deepset/prompt-injections",
@@ -421,7 +421,38 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "injection": {
+            "n": 150,
+            "recall": 0.72,
+            "missed": 42,
+            "missed_rate": 0.28,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          },
+          "legitimate": {
+            "n": 150,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 42,
+            "false_positive_rate": 0.28
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.86,
+      "lo": 0.816,
+      "hi": 0.895,
+      "p50": 931,
+      "tokens": 108.3,
+      "vsJev": "modern",
+      "vsMini": "modern"
     },
     "autoSlice": {
       "gate": 0.9,
@@ -442,7 +473,7 @@ const TASKS = [
     "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, so this is also the first row where Jev is the cheaper API: $33.89 against $53.21 per million decisions.",
     "gate": "At >=0.9: 91.8% on 75.6% of complaints, 9.0pt above ungated. ECE 0.100 means do not repeat the confidence figure to anyone as a probability; it does not stop you thresholding on it.",
     "goldTier": "live",
-    "rowNote": "TF-IDF beats both APIs at 86.8%.",
+    "rowNote": "TF-IDF beats both APIs at 86.8%. Jev beats the 2026 model here.",
     "rowNoteKind": "info",
     "goldNote": "Live system: a regulator routes these daily and the filer picks the label",
     "sourceName": "CFPB Consumer Complaint Database",
@@ -857,7 +888,86 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "bank_account": {
+            "n": 63,
+            "recall": 0.7302,
+            "missed": 17,
+            "missed_rate": 0.2698,
+            "false_positives": 25,
+            "false_positive_rate": 0.0572
+          },
+          "cards": {
+            "n": 62,
+            "recall": 0.8226,
+            "missed": 11,
+            "missed_rate": 0.1774,
+            "false_positives": 20,
+            "false_positive_rate": 0.0457
+          },
+          "credit_reporting": {
+            "n": 62,
+            "recall": 0.9839,
+            "missed": 1,
+            "missed_rate": 0.0161,
+            "false_positives": 38,
+            "false_positive_rate": 0.0868
+          },
+          "debt_collection": {
+            "n": 62,
+            "recall": 0.5161,
+            "missed": 30,
+            "missed_rate": 0.4839,
+            "false_positives": 5,
+            "false_positive_rate": 0.0114
+          },
+          "loans": {
+            "n": 64,
+            "recall": 0.5469,
+            "missed": 29,
+            "missed_rate": 0.4531,
+            "false_positives": 7,
+            "false_positive_rate": 0.0161
+          },
+          "money_transfer": {
+            "n": 62,
+            "recall": 0.7742,
+            "missed": 14,
+            "missed_rate": 0.2258,
+            "false_positives": 5,
+            "false_positive_rate": 0.0114
+          },
+          "mortgage": {
+            "n": 63,
+            "recall": 0.9524,
+            "missed": 3,
+            "missed_rate": 0.0476,
+            "false_positives": 3,
+            "false_positive_rate": 0.0069
+          },
+          "student_loan": {
+            "n": 62,
+            "recall": 0.9677,
+            "missed": 2,
+            "missed_rate": 0.0323,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.786,
+      "lo": 0.748,
+      "hi": 0.82,
+      "p50": 979,
+      "tokens": 334.5,
+      "vsJev": "jev",
+      "vsMini": "ns"
     },
     "autoSlice": {
       "gate": 0.9,
@@ -1071,7 +1181,38 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "not_toxic": {
+            "n": 250,
+            "recall": 0.7,
+            "missed": 75,
+            "missed_rate": 0.3,
+            "false_positives": 42,
+            "false_positive_rate": 0.168
+          },
+          "toxic": {
+            "n": 250,
+            "recall": 0.832,
+            "missed": 42,
+            "missed_rate": 0.168,
+            "false_positives": 75,
+            "false_positive_rate": 0.3
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.766,
+      "lo": 0.727,
+      "hi": 0.801,
+      "p50": 966,
+      "tokens": 141.5,
+      "vsJev": "ns",
+      "vsMini": "ns"
     },
     "autoSlice": {
       "gate": 0.8,
@@ -1285,7 +1426,38 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "ham": {
+            "n": 250,
+            "recall": 0.92,
+            "missed": 20,
+            "missed_rate": 0.08,
+            "false_positives": 7,
+            "false_positive_rate": 0.028
+          },
+          "spam": {
+            "n": 250,
+            "recall": 0.972,
+            "missed": 7,
+            "missed_rate": 0.028,
+            "false_positives": 20,
+            "false_positive_rate": 0.08
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.946,
+      "lo": 0.923,
+      "hi": 0.963,
+      "p50": 996,
+      "tokens": 71.1,
+      "vsJev": "ns",
+      "vsMini": "mini"
     },
     "autoSlice": {
       "gate": 0.9,
@@ -1499,7 +1671,38 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "negative": {
+            "n": 250,
+            "recall": 0.964,
+            "missed": 9,
+            "missed_rate": 0.036,
+            "false_positives": 17,
+            "false_positive_rate": 0.068
+          },
+          "positive": {
+            "n": 250,
+            "recall": 0.932,
+            "missed": 17,
+            "missed_rate": 0.068,
+            "false_positives": 9,
+            "false_positive_rate": 0.036
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.948,
+      "lo": 0.925,
+      "hi": 0.964,
+      "p50": 1000,
+      "tokens": 64.4,
+      "vsJev": "jev",
+      "vsMini": "mini"
     },
     "autoSlice": {
       "gate": 0.9,
@@ -1791,7 +1994,54 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "anger": {
+            "n": 126,
+            "recall": 0.873,
+            "missed": 16,
+            "missed_rate": 0.127,
+            "false_positives": 40,
+            "false_positive_rate": 0.107
+          },
+          "joy": {
+            "n": 125,
+            "recall": 0.904,
+            "missed": 12,
+            "missed_rate": 0.096,
+            "false_positives": 39,
+            "false_positive_rate": 0.104
+          },
+          "optimism": {
+            "n": 123,
+            "recall": 0.5935,
+            "missed": 50,
+            "missed_rate": 0.4065,
+            "false_positives": 10,
+            "false_positive_rate": 0.0265
+          },
+          "sadness": {
+            "n": 126,
+            "recall": 0.7302,
+            "missed": 34,
+            "missed_rate": 0.2698,
+            "false_positives": 20,
+            "false_positive_rate": 0.0535
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.776,
+      "lo": 0.737,
+      "hi": 0.81,
+      "p50": 1004,
+      "tokens": 67.9,
+      "vsJev": "ns",
+      "vsMini": "ns"
     },
     "autoSlice": {
       "gate": 0.9,
@@ -2005,7 +2255,38 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "not_offensive": {
+            "n": 256,
+            "recall": 0.8164,
+            "missed": 47,
+            "missed_rate": 0.1836,
+            "false_positives": 82,
+            "false_positive_rate": 0.3361
+          },
+          "offensive": {
+            "n": 244,
+            "recall": 0.6639,
+            "missed": 82,
+            "missed_rate": 0.3361,
+            "false_positives": 47,
+            "false_positive_rate": 0.1836
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.742,
+      "lo": 0.702,
+      "hi": 0.778,
+      "p50": 998,
+      "tokens": 81.0,
+      "vsJev": "ns",
+      "vsMini": "ns"
     },
     "autoSlice": {
       "gate": 0.9,
@@ -2261,7 +2542,46 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "negative": {
+            "n": 167,
+            "recall": 0.8623,
+            "missed": 23,
+            "missed_rate": 0.1377,
+            "false_positives": 55,
+            "false_positive_rate": 0.1652
+          },
+          "neutral": {
+            "n": 167,
+            "recall": 0.5569,
+            "missed": 74,
+            "missed_rate": 0.4431,
+            "false_positives": 48,
+            "false_positive_rate": 0.1441
+          },
+          "positive": {
+            "n": 166,
+            "recall": 0.8133,
+            "missed": 31,
+            "missed_rate": 0.1867,
+            "false_positives": 25,
+            "false_positive_rate": 0.0749
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.744,
+      "lo": 0.704,
+      "hi": 0.78,
+      "p50": 1025,
+      "tokens": 64.7,
+      "vsJev": "ns",
+      "vsMini": "ns"
     },
     "autoSlice": {
       "gate": 0.9,
@@ -2547,7 +2867,54 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "business": {
+            "n": 125,
+            "recall": 0.984,
+            "missed": 2,
+            "missed_rate": 0.016,
+            "false_positives": 70,
+            "false_positive_rate": 0.1867
+          },
+          "sci_tech": {
+            "n": 125,
+            "recall": 0.424,
+            "missed": 72,
+            "missed_rate": 0.576,
+            "false_positives": 6,
+            "false_positive_rate": 0.016
+          },
+          "sports": {
+            "n": 125,
+            "recall": 0.984,
+            "missed": 2,
+            "missed_rate": 0.016,
+            "false_positives": 2,
+            "false_positive_rate": 0.0053
+          },
+          "world": {
+            "n": 125,
+            "recall": 0.824,
+            "missed": 22,
+            "missed_rate": 0.176,
+            "false_positives": 20,
+            "false_positive_rate": 0.0533
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.804,
+      "lo": 0.767,
+      "hi": 0.836,
+      "p50": 1023,
+      "tokens": 102.7,
+      "vsJev": "jev",
+      "vsMini": "ns"
     },
     "autoSlice": {
       "gate": 0.9,
@@ -2989,7 +3356,86 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "account": {
+            "n": 63,
+            "recall": 0.873,
+            "missed": 8,
+            "missed_rate": 0.127,
+            "false_positives": 24,
+            "false_positive_rate": 0.0549
+          },
+          "cards": {
+            "n": 62,
+            "recall": 0.7581,
+            "missed": 15,
+            "missed_rate": 0.2419,
+            "false_positives": 35,
+            "false_positive_rate": 0.0799
+          },
+          "cash_atm": {
+            "n": 63,
+            "recall": 0.7619,
+            "missed": 15,
+            "missed_rate": 0.2381,
+            "false_positives": 2,
+            "false_positive_rate": 0.0046
+          },
+          "fx": {
+            "n": 62,
+            "recall": 0.9194,
+            "missed": 5,
+            "missed_rate": 0.0806,
+            "false_positives": 9,
+            "false_positive_rate": 0.0205
+          },
+          "other": {
+            "n": 62,
+            "recall": 0.0,
+            "missed": 62,
+            "missed_rate": 1.0,
+            "false_positives": 10,
+            "false_positive_rate": 0.0228
+          },
+          "payments_fees": {
+            "n": 62,
+            "recall": 0.7419,
+            "missed": 16,
+            "missed_rate": 0.2581,
+            "false_positives": 23,
+            "false_positive_rate": 0.0525
+          },
+          "top_up": {
+            "n": 62,
+            "recall": 0.8548,
+            "missed": 9,
+            "missed_rate": 0.1452,
+            "false_positives": 32,
+            "false_positive_rate": 0.0731
+          },
+          "transfers": {
+            "n": 64,
+            "recall": 0.75,
+            "missed": 16,
+            "missed_rate": 0.25,
+            "false_positives": 11,
+            "false_positive_rate": 0.0252
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.708,
+      "lo": 0.667,
+      "hi": 0.746,
+      "p50": 980,
+      "tokens": 77.7,
+      "vsJev": "ns",
+      "vsMini": "modern"
     },
     "autoSlice": {
       "gate": 0.9,
@@ -3203,7 +3649,38 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "modern": {
+        "per_class": {
+          "hate": {
+            "n": 250,
+            "recall": 0.752,
+            "missed": 62,
+            "missed_rate": 0.248,
+            "false_positives": 83,
+            "false_positive_rate": 0.332
+          },
+          "not_hate": {
+            "n": 250,
+            "recall": 0.668,
+            "missed": 83,
+            "missed_rate": 0.332,
+            "false_positives": 62,
+            "false_positive_rate": 0.248
+          }
+        },
+        "recall_at_gate": {}
       }
+    },
+    "modern": {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "acc": 0.71,
+      "lo": 0.669,
+      "hi": 0.748,
+      "p50": 992,
+      "tokens": 78.9,
+      "vsJev": "ns",
+      "vsMini": "ns"
     },
     "autoSlice": {
       "gate": 0.7,

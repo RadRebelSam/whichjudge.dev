@@ -34,6 +34,7 @@ whichjudge/
     prepare_cfpb.py         freeze 500 CFPB complaints, labels joined from the Bureau
     prepare_civil.py        freeze 500 Civil Comments (CC0) for the toxicity row
     prepare_injection.py    freeze 300 prompt-injection rows (n is capped by the source)
+    run_modern_baseline.py  same samples through a current small model (--recompute)
     calibrate.py            ECE + reliability bins from receipts (no API)
     cost_curve.py           cost and latency vs input length; finds the crossover
     redact_text.py          strip third-party text to hashes before publishing
@@ -114,6 +115,41 @@ is noise and neither model should be crowned.
 | News topic | 500 | 85.6% [82.3%-88.4%] | 82.6% | jev p=0.00933 | 0.096 | Replace |
 | Banking queue routing | 500 | 71.8% [67.7%-75.6%] | 64.4% | jev p=3.23e-05 | 0.213 | Replace |
 | Hate-speech screen | 500 | 66.2% [61.9%-70.2%] | 74.0% | mini p=0.00258 | 0.187 | Don't |
+
+## Is Jev only beating a 2024 baseline?
+
+Fair objection, so here is a current small model on the same frozen samples with the
+same prompts (`scripts/run_modern_baseline.py`, model `gpt-5.4-mini-2026-03-17`):
+
+| Decision | Jev | 4o-mini (2024) | gpt-5.4-mini (2026) | vs Jev | vs 4o-mini |
+|---|---|---|---|---|---|
+| Prompt-injection screen | 80.0% | 81.0% | 86.0% | **5.4-mini** | **5.4-mini** |
+| Comment toxicity gate | 78.0% | 77.0% | 76.6% | ns | ns |
+| Consumer complaint routing | 82.8% | 81.0% | 78.6% | Jev | ns |
+| Banking queue routing | 71.8% | 64.4% | 70.8% | ns | **5.4-mini** |
+| News topic | 85.6% | 82.6% | 80.4% | Jev | ns |
+| Social sentiment (3-way) | 73.8% | 72.6% | 74.4% | ns | ns |
+| Review polarity | 97.0% | 96.4% | 94.8% | Jev | 4o-mini |
+| SMS spam gate | 96.4% | 96.4% | 94.6% | ns | 4o-mini |
+| Offensive language screen | 76.6% | 70.8% | 74.2% | ns | ns |
+| Hate-speech screen | 66.2% | 74.0% | 71.0% | ns | ns |
+| Message emotion | 79.8% | 75.0% | 77.6% | ns | ns |
+
+**Jev 3 wins, 7 ties, 1 loss** against a model two years newer. The loss is
+prompt injection, and it matters: the 2026 model catches
+72.0% of injections against Jev's
+60.0%, both at
+0.0% false positives.
+It is genuinely better there and still misses
+28.0%, so the Neither verdict
+on that row stands for all three.
+
+Token cost per call is recorded; price is left unset rather than guessed, because a
+made-up price on a site that argues about cost would be worse than no price.
+
+This column is additive. It does not touch `run_eval.py`, `results/summary.json` or the
+existing receipts, so what `verify_run.py` checks is unchanged. Statistics are separated
+from the calls, so `--recompute` rebuilds them from stored receipts for free.
 
 ### Calibration and gating are different questions
 
@@ -273,6 +309,7 @@ stated per row on the site, and it is still not a procurement study.
 python3 scripts/run_eval.py          # hits both APIs, writes receipts     (~$0.12)
 python3 scripts/calibrate.py         # ECE + per-class error profile        (no API)
 python3 scripts/run_tfidf_baseline.py  # classical baseline                (no API)
+python3 scripts/run_modern_baseline.py # current small model column         (~$0.30)
 python3 scripts/cost_curve.py        # cost vs length                      (~$0.01)
 python3 scripts/redact_text.py       # strip tweet text before committing  (no API)
 python3 scripts/build_site.py        # regenerate every published number   (no API)

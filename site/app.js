@@ -11,7 +11,7 @@ const FILTERS = [
 
 // Header and rows share this exact template. The old markup used <th> cells for the
 // header and a CSS grid for the rows, which is why the columns never lined up.
-const GRID = "minmax(0,1.9fr) 5rem minmax(3.8rem,0.55fr) minmax(3.8rem,0.55fr) minmax(3.8rem,0.55fr) 3.4rem minmax(6rem,0.8fr)";
+const GRID = "minmax(0,1.7fr) 4.6rem minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) 3.2rem minmax(5.6rem,0.75fr)";
 
 const receiptCache = {};
 let modalOpen = false;
@@ -78,6 +78,10 @@ function counts() {
     neither: TASKS.filter((t) => t.verdict === "neither").length,
     liveGold: TASKS.filter((t) => t.goldTier === "live").length,
     realGold: TASKS.filter((t) => t.goldTier !== "research").length,
+    modernBeatsJev: TASKS.filter((t) => t.modern && t.modern.vsJev === "modern").length,
+    jevBeatsModern: TASKS.filter((t) => t.modern && t.modern.vsJev === "jev").length,
+    modernTies: TASKS.filter((t) => t.modern && t.modern.vsJev === "ns").length,
+    modernModel: (TASKS.find((t) => t.modern) || {}).modern,
     tfidfWins: tfidfWins.length,
     tfidfNames: tfidfWins.map((t) => t.shortName || t.id.split("_")[0]).join(" + "),
     best,
@@ -145,6 +149,7 @@ function render() {
         ${statCard(c.best.title + " @ " + c.best.autoSlice.gate, pct(c.best.autoSlice.acc), "on " + pct(c.best.autoSlice.cov) + " of traffic · n=" + c.best.n)}
         ${statCard("Gating beats not gating", `${c.gateHelps}/${TASKS.length}`, "Every row. Lift shown per row, from the measured gates.")}
         ${statCard("Neither model works", String(c.neither), "Prompt injection: both miss ~4 in 10. Kept on the homepage.")}
+        ${c.modernModel ? statCard("vs a 2026 model", `${c.jevBeatsModern}W ${c.modernTies}T ${c.modernBeatsJev}L`, `Jev against ${c.modernModel.model}. It wins injection; Jev wins CFPB, news, reviews.`) : ""}
         ${statCard(`TF-IDF wins ${c.tfidfWins}`, c.tfidfNames || "none", "If you have labels, skip both APIs")}
         ${statCard("Non-academic gold", `${c.realGold}/${TASKS.length}`, `${c.liveGold} live system, ${c.realGold - c.liveGold} real text. Nine are benchmarks.`)}
       </section>
@@ -167,7 +172,8 @@ function render() {
               <span>Decision</span>
               <span>vs Mini</span>
               <span class="text-right">Jev</span>
-              <span class="text-right">4o-mini</span>
+              <span class="text-right">4o-mini<br><span class="normal-case tracking-normal text-zinc-400">2024</span></span>
+              <span class="text-right">5.4-mini<br><span class="normal-case tracking-normal text-zinc-400">2026</span></span>
               <span class="text-right">TF-IDF</span>
               <span class="text-right">ECE</span>
               <span class="text-right">Auto slice</span>
@@ -403,6 +409,7 @@ function rowHtml(t, on) {
         <span><span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${v.chip}">${v.label}</span></span>
         <span class="text-right tabular-nums">${pct(t.jev.acc)}<span class="block text-[10px] font-normal text-zinc-400">${pct(t.jev.lo)}-${pct(t.jev.hi)}</span></span>
         <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${pct(t.mini.acc)}<span class="block text-[10px] text-zinc-400">${dLabel}</span></span>
+        <span class="text-right tabular-nums ${t.modern && t.modern.vsJev === "modern" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${t.modern ? pct(t.modern.acc) : "-"}<span class="block text-[10px] font-normal text-zinc-400">${t.modern ? (t.modern.vsJev === "modern" ? "beats Jev" : t.modern.vsJev === "jev" ? "loses" : "ns") : ""}</span></span>
         <span class="text-right tabular-nums ${t.tfidf.vsJev === "tfidf" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${pct(t.tfidf.acc)}<span class="block text-[10px] font-normal text-zinc-400">$0</span></span>
         <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${t.ece.ece.toFixed(3)}</span>
         <span class="text-right tabular-nums">${pct(t.autoSlice.acc)}<span class="block text-[10px] font-normal text-zinc-400">on ${pct(t.autoSlice.cov)} · ${(t.autoSlice.lift * 100 >= 0 ? "+" : "") + (t.autoSlice.lift * 100).toFixed(1)}pt</span></span>
@@ -480,6 +487,7 @@ function detailHtml(t) {
         ${metric("TF-IDF + LR", pct(t.tfidf.acc) + "  [" + pct(t.tfidf.lo) + "-" + pct(t.tfidf.hi) + "] · train " + t.tfidf.trainN.toLocaleString())}
         ${metric("McNemar vs Mini", t.ns ? "ns  p=" + t.mcnemar.p : t.mcnemar.winner + "  p=" + t.mcnemar.p)}
         ${metric("TF-IDF vs Jev", t.tfidf.vsJev)}
+        ${t.modern ? metric("Current small model", pct(t.modern.acc) + "  [" + pct(t.modern.lo) + "-" + pct(t.modern.hi) + "] · " + t.modern.model + " · vs Jev " + t.modern.vsJev) : ""}
         ${metric("Jev p50 / p95", ms(t.jev.p50) + " / " + ms(t.jev.p95))}
         ${metric("Mini p50", ms(t.mini.p50) + " · " + su + "× · includes RTT, local to one client")}
         ${metric("$ / million", usd(t.jev.perM) + " vs " + usd(t.mini.perM))}

@@ -117,6 +117,11 @@ def main() -> None:
         out[tid] = {"p_chosen": reliability(pairs)}
         errors[tid] = {"jev": error_profile(rec, "jev"),
                        "mini": error_profile(rec, "gpt4o_mini")}
+        # the current-model column, when scripts/run_modern_baseline.py has run
+        modern_path = RECEIPTS / f"{tid}.modern.json"
+        if modern_path.exists():
+            md = json.loads(modern_path.read_text(encoding="utf-8"))
+            errors[tid]["modern"] = error_profile({"calls": md["calls"]}, "calls")
         rel = out[tid]["p_chosen"]
         occupied = sum(1 for b in rel["bins"] if b["n"])
         print(f"{tid:24} ECE {rel['ece']:.3f}  MCE {rel['mce']:.3f}  bins used {occupied}/{BINS}")

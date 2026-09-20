@@ -53,9 +53,10 @@ def pct(x) -> str:
     return f"{x * 100:.1f}%"
 
 
-def build_tasks(copy, summary, calib, tfidf, errors):
+def build_tasks(copy, summary, calib, tfidf, errors, modern):
     by_id = {r["task_id"]: r for r in summary}
     tf_by_id = {r["task_id"]: r for r in tfidf}
+    mod_by_id = {r["task_id"]: r for r in (modern or {}).get("tasks", [])}
     out = []
     for c in copy["tasks"]:
         tid = c["id"]
@@ -96,6 +97,11 @@ def build_tasks(copy, summary, calib, tfidf, errors):
             known.add(round(gate["accuracy"] * 100, 1))
             known.add(round(gate["coverage"] * 100, 1))
         known.add(round(abs(s["jev_acc"] - s["mini_acc"]) * 100, 1))
+        md = mod_by_id.get(tid)
+        if md:
+            known.add(round(md["acc"] * 100, 1))
+            known.add(round(md["wilson"]["lo"] * 100, 1))
+            known.add(round(md["wilson"]["hi"] * 100, 1))
         for gate, v in s["jev_gates"].items():
             known.add(round((v["accuracy"] - s["jev_acc"]) * 100, 1))
         if auto_slice:
@@ -201,6 +207,18 @@ def build_tasks(copy, summary, calib, tfidf, errors):
                 for k, v in s["jev_gates"].items()
             },
             "errors": errors.get(tid),
+            "modern": ({
+                "model": md["model"],
+                "acc": md["acc"],
+                "lo": round(md["wilson"]["lo"], 3),
+                "hi": round(md["wilson"]["hi"], 3),
+                "p50": round(md["p50_ms"]),
+                "tokens": md["tokens_per_call"],
+                "vsJev": ("ns" if md["mcnemar_vs_jev"]["p_value"] >= 0.05
+                          else ("modern" if md["mcnemar_vs_jev"]["winner"] == "a" else "jev")),
+                "vsMini": ("ns" if md["mcnemar_vs_mini"]["p_value"] >= 0.05
+                           else ("modern" if md["mcnemar_vs_mini"]["winner"] == "a" else "mini")),
+            } if md else None),
             "autoSlice": auto_slice,
         })
     return out
@@ -418,11 +436,13 @@ def main() -> None:
     calib = load(RESULTS / "calibration.json")
     tfidf = load(RESULTS / "tfidf_baseline_summary.json")
     errors = load(RESULTS / "error_profile.json")
+    modern_path = RESULTS / "modern_baseline.json"
+    modern = load(modern_path) if modern_path.exists() else None
     manifest = load(RESULTS / "manifest.json")
     curve_path = RESULTS / "cost_curve.json"
     curve = load(curve_path) if curve_path.exists() else None
 
-    tasks = build_tasks(copy, summary, calib, tfidf, errors)
+    tasks = build_tasks(copy, summary, calib, tfidf, errors, modern)
     # Tasks may differ in size. Prompt injection only has 662 rows in existence, so
     # freezing 500 would leave nothing to train the classical baseline on. The site
     # shows each task's own n instead of claiming one number for all of them.
