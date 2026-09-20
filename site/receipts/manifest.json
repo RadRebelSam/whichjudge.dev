@@ -19,10 +19,10 @@
     "data/content_hate.jsonl": "5bc4134ab919ad8ba4baf42153ed78d0094610f780d94276d9f2cf8c6668b666",
     "data/content_offensive.jsonl": "758493aec454eeb35c05a47ccbc08fd4c5604cee2c693764b1fbed0911ab8280",
     "data/message_emotion.jsonl": "2e89ceb054d4188b3fdc41914075bae9daf72390e76e8e03c46c4bc30013771f",
-    "data/news_topic.jsonl": "99022757d6029d96b16c20ac6517fa95dbf1ad3441dde570f3a1560c0ec2b3d3",
+    "data/news_topic.jsonl": "a969be35a5d8800fbba4847d74a50f1512cb05a88288af89bd16ea2e8969a80a",
     "data/prompt_injection.jsonl": "a56df9a7f033f95a3401b16bcd6537bda2acc0d50fbf54f72eb24c91d637a9f6",
-    "data/review_sentiment.jsonl": "231657cc2621b2bd379f7c931c3fa1f11e0df5c1db6cbbfeadb19dc529255eb2",
-    "data/sms_spam.jsonl": "7005ef00450f0a83518938e1e603ad0291dc6025f817dc0bb9a854358e126777",
+    "data/review_sentiment.jsonl": "969fe3083d79065a80b0b6943dc8e31a1b3665697b0355fb078d612318320313",
+    "data/sms_spam.jsonl": "249698d4ecc022eaeef5e791c04edc5a76419e91fb8bcaae74b9a575bb5107b4",
     "data/tweet_sentiment.jsonl": "caecb184d45d3ba003e851d0e29b8255884b64dcaa9e7b5000e8397492d39984",
     "schemas/banking_coarse_route.json": "4aa35879a4f2a01ef4e2be5dca792b87b377db70a0122545bd4b39a50f20e8ec",
     "schemas/cfpb_queue_route.json": "9020180fc20d79e77b55ff7c3170c809270e18eee19b58575fe7d475c1fba3f5",
@@ -732,5 +732,15 @@
       "samples_sha256_original": "577389d55ca5404211c01d640079a463d447da99ab327a0983613e5b2edb69d5"
     }
   ],
-  "caveat": "Receipts include full request/response JSON and SHA-256 of canonical JSON. APIs do not sign responses. Independent proof is: re-run scripts/run_eval.py on data/*.jsonl and diff results/summary.json, or run scripts/verify_run.py to check hashes and recount accuracy."
+  "caveat": "Receipts include full request/response JSON and SHA-256 of canonical JSON. APIs do not sign responses. Independent proof is: re-run scripts/run_eval.py on data/*.jsonl and diff results/summary.json, or run scripts/verify_run.py to check hashes and recount accuracy.",
+  "redacted_tasks": [
+    "message_emotion",
+    "content_offensive",
+    "content_hate",
+    "tweet_sentiment",
+    "sms_spam",
+    "review_sentiment",
+    "news_topic"
+  ],
+  "redaction_note": "Text removed for redistribution reasons; restore with scripts/rehydrate.py and verify against text_sha256."
 }

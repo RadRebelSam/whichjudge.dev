@@ -14,34 +14,52 @@ licence declared at all, which is a finding rather than an oversight: see below.
 | `cfpb_queue_route` | CFPB Consumer Complaint Database | text: [`BEE-spoke-data/consumer-finance-complaints`](https://huggingface.co/datasets/BEE-spoke-data/consumer-finance-complaints) (CC0); labels: [CFPB export](https://www.consumerfinance.gov/data-research/consumer-complaints/) | US federal government work, see note |
 | `prompt_injection` | deepset prompt injections | [`deepset/prompt-injections`](https://huggingface.co/datasets/deepset/prompt-injections) | Apache-2.0, text redistributable |
 | `civil_toxicity` | Civil Comments | [`google/civil_comments`](https://huggingface.co/datasets/google/civil_comments) test split | CC0, text redistributable |
-| `sms_spam` | UCI SMS Spam Collection | [`ucirvine/sms_spam`](https://huggingface.co/datasets/ucirvine/sms_spam) | no licence declared upstream |
-| `review_sentiment` | SST-2 validation (Stanford Sentiment Treebank) | [`stanfordnlp/sst2`](https://huggingface.co/datasets/stanfordnlp/sst2) | no licence declared upstream |
-| `news_topic` | AG News test | [`fancyzhx/ag_news`](https://huggingface.co/datasets/fancyzhx/ag_news) | no licence declared upstream |
+| `sms_spam` | UCI SMS Spam Collection | [`ucirvine/sms_spam`](https://huggingface.co/datasets/ucirvine/sms_spam) | no licence upstream, text not redistributed |
+| `review_sentiment` | SST-2 validation (Stanford Sentiment Treebank) | [`stanfordnlp/sst2`](https://huggingface.co/datasets/stanfordnlp/sst2) | no licence upstream, text not redistributed |
+| `news_topic` | AG News test | [`fancyzhx/ag_news`](https://huggingface.co/datasets/fancyzhx/ag_news) | no licence upstream, text not redistributed |
 | `banking_coarse_route` | BANKING77 (PolyAI) | [`PolyAI-LDN/task-specific-datasets`](https://github.com/PolyAI-LDN/task-specific-datasets) | CC BY 4.0, confirmed from the repo's LICENSE file |
 | `message_emotion` | TweetEval emotion | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 | `content_offensive` | TweetEval offensive | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 | `content_hate` | TweetEval hate | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 | `tweet_sentiment` | TweetEval sentiment | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 
-## Three datasets declare no licence
+## Nothing in this repo is redistributed without a clear right to
 
-`sms_spam`, `review_sentiment` (SST-2) and `news_topic` (AG News) were checked against
-their dataset cards and all three report `license: unknown`. This is not a lookup I
-failed to do; upstream genuinely states nothing. They are long-standing academic
-benchmarks that everyone redistributes, but widespread redistribution is a norm, not a
-grant.
+Seven of the eleven tasks ship the sample id, the gold label and a SHA-256 of the
+text, never the text itself. `scripts/rehydrate.py` downloads the upstream split,
+matches rows by hash and writes the text back locally, refusing to write anything if
+a single hash disagrees.
 
-Two honest ways to end it, and the second is available today:
+```bash
+python3 scripts/rehydrate.py      # all seven, or name one task
+python3 scripts/verify_run.py     # now checks text and request hashes too
+```
 
-1. Keep shipping the 500-row samples and say plainly, here, that upstream declares no
-   licence. That is the current state.
-2. Treat them exactly like TweetEval: publish the sample id, the gold label and a
-   SHA-256 of the text, and let `scripts/rehydrate.py` restore the text from upstream.
-   The machinery already exists; it needs a loader per dataset. That takes the repo from
-   three unresolved licences to zero, at the cost of one extra command for anyone who
-   wants the byte-level check.
+Two different reasons for the same treatment:
 
-Until option 2 is done, this is the most exposed part of the repo.
+- **TweetEval** (`message_emotion`, `content_offensive`, `content_hate`,
+  `tweet_sentiment`): platform terms for X/Twitter content have historically favoured
+  sharing ids over text.
+- **No declared licence** (`sms_spam`, `review_sentiment`, `news_topic`): all three
+  dataset cards report `license: unknown`. They are benchmarks everyone
+  redistributes, but redistribution as a norm is not a grant, so this repo does not
+  rely on one.
+
+The four that do ship their text are the ones with an explicit grant or public-domain
+status: CFPB (US federal government work), Civil Comments (CC0), deepset
+prompt-injections (Apache-2.0) and BANKING77 (CC BY 4.0, confirmed from the LICENSE
+file in PolyAI's repo).
+
+Without rehydrating, `verify_run.py` still recounts every published accuracy from the
+receipts, because that needs only predictions and gold labels. It names the tasks
+running in reduced mode rather than skipping them silently.
+
+`scripts/redact_text.py` produces that state and is idempotent. It clears the text in
+four places: the frozen samples, the Jev request's `state`, the chat arms' user
+message, and the cost-curve inputs, which are built by concatenating real sentences
+and so inherit those datasets' terms.
+
+## CFPB: two sources on purpose
 
 ## CFPB: two sources on purpose
 

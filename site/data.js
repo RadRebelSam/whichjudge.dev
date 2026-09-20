@@ -1239,7 +1239,7 @@ const TASKS = [
     "sourceName": "ucirvine/sms_spam",
     "sourceUrl": "https://huggingface.co/datasets/ucirvine/sms_spam",
     "mirrorUrl": null,
-    "samplesSha": "7005ef00450f",
+    "samplesSha": "249698d4ecc0",
     "schemaSha": "07b1bf25a365",
     "jev": {
       "acc": 0.964,
@@ -1484,7 +1484,7 @@ const TASKS = [
     "sourceName": "stanfordnlp/sst2",
     "sourceUrl": "https://huggingface.co/datasets/stanfordnlp/sst2",
     "mirrorUrl": null,
-    "samplesSha": "231657cc2621",
+    "samplesSha": "969fe3083d79",
     "schemaSha": "2263bdb7d8ae",
     "jev": {
       "acc": 0.97,
@@ -2608,7 +2608,7 @@ const TASKS = [
     "sourceName": "fancyzhx/ag_news",
     "sourceUrl": "https://huggingface.co/datasets/fancyzhx/ag_news",
     "mirrorUrl": null,
-    "samplesSha": "99022757d602",
+    "samplesSha": "a969be35a5d8",
     "schemaSha": "5e5fb6174e85",
     "jev": {
       "acc": 0.856,

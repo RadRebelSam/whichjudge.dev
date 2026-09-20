@@ -282,7 +282,7 @@
       }
     },
     "schema_sha256": "5e5fb6174e853b40f244ba2961df3e18978b1bbaf1216c4136760dd4f8106399",
-    "samples_sha256": "99022757d6029d96b16c20ac6517fa95dbf1ad3441dde570f3a1560c0ec2b3d3",
+    "samples_sha256": "a969be35a5d8800fbba4847d74a50f1512cb05a88288af89bd16ea2e8969a80a",
     "jev_wilson": {
       "k": 428,
       "n": 500,
@@ -305,7 +305,8 @@
       "p_value": 0.009329584719771558,
       "significant_0_05": true,
       "winner": "jev"
-    }
+    },
+    "samples_sha256_original": "99022757d6029d96b16c20ac6517fa95dbf1ad3441dde570f3a1560c0ec2b3d3"
   },
   {
     "task_id": "tweet_sentiment",
@@ -405,7 +406,7 @@
       }
     },
     "schema_sha256": "2263bdb7d8ae0c7f944e8b14b2bd4e645498704b55ff813a7bec3a2c56457ec7",
-    "samples_sha256": "231657cc2621b2bd379f7c931c3fa1f11e0df5c1db6cbbfeadb19dc529255eb2",
+    "samples_sha256": "969fe3083d79065a80b0b6943dc8e31a1b3665697b0355fb078d612318320313",
     "jev_wilson": {
       "k": 485,
       "n": 500,
@@ -428,7 +429,8 @@
       "p_value": 0.5464935954065819,
       "significant_0_05": false,
       "winner": "ns"
-    }
+    },
+    "samples_sha256_original": "231657cc2621b2bd379f7c931c3fa1f11e0df5c1db6cbbfeadb19dc529255eb2"
   },
   {
     "task_id": "sms_spam",
@@ -466,7 +468,7 @@
       }
     },
     "schema_sha256": "07b1bf25a365768581c3564bd7c62f6a6d0137e6617c362e8e4f0b0e74481e0f",
-    "samples_sha256": "7005ef00450f0a83518938e1e603ad0291dc6025f817dc0bb9a854358e126777",
+    "samples_sha256": "249698d4ecc022eaeef5e791c04edc5a76419e91fb8bcaae74b9a575bb5107b4",
     "jev_wilson": {
       "k": 482,
       "n": 500,
@@ -489,7 +491,8 @@
       "p_value": 0.7728299926844475,
       "significant_0_05": false,
       "winner": "ns"
-    }
+    },
+    "samples_sha256_original": "7005ef00450f0a83518938e1e603ad0291dc6025f817dc0bb9a854358e126777"
   },
   {
     "task_id": "content_offensive",

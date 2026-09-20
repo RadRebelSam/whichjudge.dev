@@ -287,7 +287,7 @@ local to its client.
 
 ## Provenance - four layers
 
-1. **Frozen inputs.** `data/*.jsonl` (seed=7, n=500 per task except prompt injection at n=300) and `schemas/*.json`. SHA-256 in `results/manifest.json`. The four TweetEval tasks ship a SHA-256 of each text instead of the text; `scripts/rehydrate.py` restores and re-checks it. See `ATTRIBUTION.md`.
+1. **Frozen inputs.** `data/*.jsonl` (seed=7, n=500 per task except prompt injection at n=300) and `schemas/*.json`. SHA-256 in `results/manifest.json`. Seven of the eleven tasks ship a SHA-256 of each text instead of the text, because their terms either favour sharing ids or declare no licence at all; `scripts/rehydrate.py` restores and re-checks it. See `ATTRIBUTION.md`.
 2. **Per-call receipts.** `results/receipts/<task>.json` (full JSON). `site/receipts/` is a slimmer copy for the UI. Open a row, then open that task's receipts.
 3. **Don't stays on the homepage.** Hate-speech: Mini wins by 7.8 points, and the row is kept in full view.
 4. **Re-run / recount.** No API: `python3 scripts/verify_run.py` (must print ALL CHECKS PASSED).
@@ -318,7 +318,7 @@ python3 scripts/verify_run.py        # must print ALL CHECKS PASSED        (no A
 
 Set `WHICHJUDGE_REGION` before `run_eval.py` so the latency numbers are attributable.
 
-To check the text-dependent hashes on the four redacted tasks, run
+To check the text-dependent hashes on the seven redacted tasks, run
 `python3 scripts/rehydrate.py` first: it re-downloads the upstream split, matches rows
 by hash, and refuses to write anything if the revision has moved.
 

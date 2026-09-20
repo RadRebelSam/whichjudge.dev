@@ -108,11 +108,18 @@ def load_pool() -> list[str]:
         path = DATA / f"{task}.jsonl"
         if not path.exists():
             continue
+        side = DATA / f"{task}.text.jsonl"
+        sidecar = {}
+        if side.exists():
+            for l in side.read_text(encoding="utf-8").splitlines():
+                if l.strip():
+                    r = json.loads(l)
+                    sidecar[r["id"]] = r["text"]
         for line in path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
             row = json.loads(line)
-            text = row.get("text")
+            text = row.get("text") or sidecar.get(row["id"])
             if text:
                 pool.append(text.strip())
     if not pool:

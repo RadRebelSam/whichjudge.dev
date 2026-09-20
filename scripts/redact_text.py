@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Remove third-party text that this repo may not redistribute, keeping it verifiable.
+"""Remove third-party text that this repo may not clearly redistribute, keeping it verifiable.
 
-Four tasks use tweet text from TweetEval. Platform terms for that content have
+Seven tasks are affected. Four use tweet text from TweetEval. Platform terms for that content have
 historically allowed sharing tweet IDs rather than tweet text, so publishing the raw
 text here is a redistribution question this project does not need to take on.
 
@@ -42,12 +42,17 @@ RESULTS = ROOT / "results"
 RECEIPTS = RESULTS / "receipts"
 SITE_RECEIPTS = ROOT / "site" / "receipts"
 
-# Only these carry third-party tweet text.
+# Every dataset whose redistribution terms are unclear or absent. The four TweetEval
+# tasks because platform terms favour sharing ids over tweet text; the other three
+# because their upstream cards declare no licence at all.
 REDACT_TASKS = [
     "message_emotion",
     "content_offensive",
     "content_hate",
     "tweet_sentiment",
+    "sms_spam",
+    "review_sentiment",
+    "news_topic",
 ]
 
 REDACTION_NOTE = (
@@ -108,8 +113,15 @@ def redact_receipts(path: Path) -> int:
             r["text_sha256"] = sha_text(r["text"])
             r["text"] = None
             req = r.get("request")
-            if isinstance(req, dict) and req.get("state") is not None:
-                req["state"] = None
+            if isinstance(req, dict):
+                # Jev puts the input in "state"; chat completions put it in the user
+                # message. Missing the second one left the text published in the
+                # gpt-4o-mini arm of every supposedly redacted task.
+                if req.get("state") is not None:
+                    req["state"] = None
+                for m in req.get("messages") or []:
+                    if m.get("role") == "user" and m.get("content"):
+                        m["content"] = None
             touched += 1
     if touched:
         rec["text_redacted"] = True
@@ -143,6 +155,57 @@ def repin_sample_hash(task: str) -> None:
     dump_json(summary_path, summary)
 
 
+def redact_modern_receipts(task: str) -> int:
+    """The current-model arm stores the text inside its chat messages."""
+    path = RECEIPTS / f"{task}.modern.json"
+    if not path.exists():
+        return 0
+    rec = json.loads(path.read_text(encoding="utf-8"))
+    touched = 0
+    for call in rec.get("calls", []):
+        msgs = (call.get("request") or {}).get("messages") or []
+        for m in msgs:
+            if m.get("role") == "user" and m.get("content"):
+                call["text_sha256"] = sha_text(m["content"])
+                m["content"] = None
+                touched += 1
+    if touched:
+        rec["text_redacted"] = True
+        rec["redaction_note"] = REDACTION_NOTE
+        dump_json(path, rec)
+    return touched
+
+
+def redact_cost_curve() -> int:
+    """The cost curve concatenates real sentences from the frozen samples."""
+    path = RECEIPTS / "cost_curve.json"
+    if not path.exists():
+        return 0
+    rec = json.loads(path.read_text(encoding="utf-8"))
+    touched = 0
+    for call in rec.get("calls", []):
+        for arm in ("jev", "mini"):
+            req = (call.get(arm) or {}).get("request")
+            if not isinstance(req, dict):
+                continue
+            if req.get("state"):
+                req["state"] = None
+                touched += 1
+            for m in req.get("messages") or []:
+                if m.get("role") == "user" and m.get("content"):
+                    m["content"] = None
+                    touched += 1
+    if touched:
+        rec["text_redacted"] = True
+        rec["redaction_note"] = (
+            "Inputs were built by concatenating sentences from the frozen samples, so "
+            "they inherit those datasets' terms. text_sha256 on each call still "
+            "identifies the input; token counts and latency are unaffected."
+        )
+        dump_json(path, rec)
+    return touched
+
+
 def main() -> None:
     print("Redacting third-party text from public files")
     total = 0
@@ -152,6 +215,9 @@ def main() -> None:
         b = redact_receipts(SITE_RECEIPTS / f"{task}.json")
         if a or b:
             print(f"  {task}: {a} results receipts, {b} site receipts redacted")
+        m = redact_modern_receipts(task)
+        if m:
+            print(f"  {task}: {m} modern receipts redacted")
         repin_sample_hash(task)
 
     # data/*.jsonl bytes just changed, so the manifest has to record the new hashes
@@ -170,6 +236,9 @@ def main() -> None:
         m["redacted_tasks"] = REDACT_TASKS
         m["redaction_note"] = REDACTION_NOTE
         dump_json(mp, m)
+    cc = redact_cost_curve()
+    if cc:
+        print(f"  cost_curve: {cc} request bodies redacted")
     print("manifest hashes updated for the redacted samples")
 
     if total:
