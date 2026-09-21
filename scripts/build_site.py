@@ -100,8 +100,8 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows):
         t = tf_by_id[tid]
         mc = s["mcnemar"]
         n = s["n"]
-        # One score for gating and calibration. summary.json's jev_gates thresholded
-        # on 'confidence' while ECE used 'p_chosen'; gates.json uses p_chosen for both.
+        # One score for gating and calibration, p_chosen, from gates.json. The
+        # summary once carried a second table thresholded on 'confidence'; removed.
         gtab = gatefile[tid]["gates"]
         gcv = gatefile[tid]["cross_validated"]
 
@@ -699,10 +699,10 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
         "  `account` and Mini nothing. So this is a comparison of configurations, not of models\n"
         "  alone, and the receipts cannot say how much of any gap the prompt difference caused.\n"
         "  A normalized rerun would generate both formats from one rubric on a fresh sample.\n"
-        "- **Reruns are not checkpointed.** A request that exhausts its retries raises before a\n"
-        "  task's receipts are written, so a failed run is paid for again. Published counts are\n"
-        "  complete (every arm answers every id exactly once, checked by `verify_run.py`), so no\n"
-        "  failed row was dropped from a shown accuracy.\n"
+        "- **Reruns checkpoint per row and log every attempt.** A request that exhausts its\n"
+        "  retries costs one request, not the task; the retry log of each call goes into its\n"
+        "  receipt. Receipts written before this change carry no attempt log. Published counts\n"
+        "  are complete: every arm answers every id exactly once, checked by `verify_run.py`.\n"
         "- **Public gold.** Nine of eleven rows are academic benchmarks. Only CFPB routing uses\n"
         "  a live system's own labels, and those are chosen by the person filing, not an expert."
     )
@@ -820,17 +820,21 @@ def render_decision_page(t, run, site) -> str:
         "table{border-collapse:collapse;width:100%;margin:0}"
         "th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;"
         "font-variant-numeric:tabular-nums}"
-        "th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}"
+        "th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}"
         "code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}"
         "pre{overflow-x:auto}"
+        "pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}"
         ".verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;"
         "padding:.1rem .6rem;font-size:12px}"
-        ".scope{margin-left:.5rem;font-size:12px;color:#71717a}"
-        ".stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}"
+        ".scope{margin-left:.5rem;font-size:12px;color:#52525b}"
+        ".stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}"
         ".caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}"
         "a{color:#18181b}"
+        # Grey text that passes on #fafafa fails on #09090b; the dark scheme gets
+        # its own greys instead of inheriting the light ones.
         "@media (prefers-color-scheme:dark){"
-        "body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}"
+        "body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}"
+        "th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}"
     )
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -862,7 +866,7 @@ def render_decision_page(t, run, site) -> str:
 {' via <a href="' + e(t['mirrorUrl']) + '" rel="noopener">a CC0 mirror</a>' if t.get('mirrorUrl') else ''}
 - {e(t['dataset'])}, n={t['n']}, seed={run['seed']}<br>
 <strong>Labels:</strong> <code>{e(t['labels'])}</code></p>
-<div class="table-wrap"><table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Results table"><table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>Latency (p50 unless stated)</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
 {tbody}
@@ -889,7 +893,7 @@ the id, gold, prediction, confidence, latency and the SHA-256 of the request and
 The full request and response bodies are in the repository at
 <a href="{e(site['repo'])}/blob/main/results/receipts/{e(t['id'])}.json">results/receipts/{e(t['id'])}.json</a>
 {"(text replaced by its hash; scripts/rehydrate.py restores it)" if t.get('redacted') else ""}.</p>
-<pre><code>git clone {e(site['repo'])}
+<pre tabindex="0"><code>git clone {e(site['repo'])}
 python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
 python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
 <p>Independent bench, not affiliated with TypeSafe AI. Public gold labels, n={t['n']},
@@ -932,8 +936,8 @@ h1{{font-size:1.5rem;margin:0 0 .5rem}}
 ul{{padding-left:1.1rem}}
 li{{margin:.15rem 0}}
 a{{color:#18181b}}
-.muted{{color:#71717a;font-size:13px}}
-@media (prefers-color-scheme:dark){{body{{color:#e4e4e7;background:#09090b}}a{{color:#e4e4e7}}}}
+.muted{{color:#52525b;font-size:13px}}
+@media (prefers-color-scheme:dark){{body{{color:#e4e4e7;background:#09090b}}a{{color:#e4e4e7}}.muted{{color:#a1a1aa}}}}
 </style>
 </head>
 <body>

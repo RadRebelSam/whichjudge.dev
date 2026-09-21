@@ -480,10 +480,10 @@ def check_derived(summary: list[dict], fast: bool = False) -> Derived:
                  + mini_out / 1e6 * MINI_OUTPUT_USD_PER_M, row["mini_cost"], 1e-12)
         confs = [r["confidence"] for r in jev if r.get("confidence") is not None]
         d.expect(f"{tid} jev_mean_conf", sum(confs) / len(confs), row["jev_mean_conf"])
-        conf_gates = gate_table(jev, lambda r: r.get("confidence") or 0)
-        for g, v in conf_gates.items():
-            d.expect(f"{tid} jev_gates[{g}].coverage", v["coverage"], row["jev_gates"][g]["coverage"])
-            d.expect(f"{tid} jev_gates[{g}].accuracy", v["accuracy"], row["jev_gates"][g]["accuracy"])
+        if "jev_gates" in row:
+            # One gate table only, on p_chosen, in results/gates.json.
+            print(f"LEGACY GATES {tid}: summary.json still carries confidence-thresholded jev_gates")
+            d.errors += 1
 
         # calibration.json
         rel = reliability(jev)
@@ -639,7 +639,7 @@ def check_derived(summary: list[dict], fast: bool = False) -> Derived:
         "each stored pred, confidence and p_chosen re-read from the raw response (all three arms)",
         "out-of-schema labels in the current-model column counted against the schema",
         "accuracy, Wilson 95% CI, McNemar (b, c, p, winner), latency p50/p95, list-price cost,",
-        "mean confidence and confidence gates (results/summary.json)",
+        "mean confidence (results/summary.json), and no second gate table there",
         "ECE, MCE and reliability bins on p_chosen (results/calibration.json)",
         "p_chosen gate table, in-sample pick and cross-validated slice (results/gates.json;",
         "the split sequence is imported from calibrate.py, everything else is reimplemented here)",

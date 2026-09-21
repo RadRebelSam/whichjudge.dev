@@ -31,10 +31,11 @@ import math
 import os
 import platform
 import sys
+import threading
 import time
 import urllib.error
 import urllib.request
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -77,25 +78,37 @@ def summary_row(task_id: str) -> dict:
     return {r["task_id"]: r for r in load(RESULTS / "summary.json")}[task_id]
 
 
-def post(payload: dict, key: str) -> dict:
+def post(payload: dict, key: str, log: list | None = None) -> dict:
+    """POST with retries; every attempt is appended to `log` for the receipt."""
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(
         OPENAI_URL, data=data, method="POST",
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
     last = None
     for attempt in range(5):
+        t0 = time.perf_counter()
         try:
             with urllib.request.urlopen(req, timeout=180) as resp:
-                return json.loads(resp.read().decode())
+                raw = json.loads(resp.read().decode())
+            if log is not None:
+                log.append({"attempt": attempt + 1, "status": "ok",
+                            "ms": round((time.perf_counter() - t0) * 1000)})
+            return raw
         except urllib.error.HTTPError as e:
             body = e.read().decode(errors="replace")
             last = RuntimeError(f"HTTP {e.code}: {body[:300]}")
+            if log is not None:
+                log.append({"attempt": attempt + 1, "status": f"HTTP {e.code}",
+                            "ms": round((time.perf_counter() - t0) * 1000)})
             if e.code in (429, 500, 502, 503, 504):
                 time.sleep(2.0 * (attempt + 1))
                 continue
             raise last
         except Exception as e:  # noqa: BLE001
             last = e
+            if log is not None:
+                log.append({"attempt": attempt + 1, "status": type(e).__name__,
+                            "ms": round((time.perf_counter() - t0) * 1000)})
             time.sleep(1.5 * (attempt + 1))
     raise last
 
@@ -230,8 +243,9 @@ def run_task(task_id: str, key: str) -> dict:
             "messages": [{"role": "system", "content": prompt},
                          {"role": "user", "content": row["text"]}],
         }
+        attempts: list = []
         t0 = time.perf_counter()
-        raw = post(request, key)
+        raw = post(request, key, log=attempts)
         ms = (time.perf_counter() - t0) * 1000
         content = (raw["choices"][0]["message"]["content"] or "").strip()
         try:
@@ -251,11 +265,34 @@ def run_task(task_id: str, key: str) -> dict:
             "model_returned": raw.get("model"),
             "request": request, "response": raw,
             "request_sha256": sha256_obj(request), "response_sha256": sha256_obj(raw),
+            "attempts": attempts,
         }
 
+    # Checkpoint each receipt as it lands (results/receipts/<task>.modern.partial.jsonl,
+    # gitignored); a rerun skips answered ids and the file goes once all are in.
+    partial = RECEIPTS / f"{task_id}.modern.partial.jsonl"
+    done: dict[int, dict] = {}
+    if partial.exists():
+        for line in partial.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                rec = json.loads(line)
+                done[rec["id"]] = rec
+        print(f"  resuming, {len(done)} of {len(rows)} already answered", flush=True)
+    todo = [r for r in rows if r["id"] not in done]
+    lock = threading.Lock()
     with ThreadPoolExecutor(max_workers=WORKERS) as pool:
-        calls = list(pool.map(one, rows))
+        futs = [pool.submit(one, row) for row in todo]
+        for i, fut in enumerate(as_completed(futs), len(done) + 1):
+            rec = fut.result()
+            with lock:
+                with partial.open("a", encoding="utf-8") as f:
+                    f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+                done[rec["id"]] = rec
+            if i % 50 == 0 or i == len(rows):
+                print(f"  {i}/{len(rows)}", flush=True)
+    calls = [done[r["id"]] for r in rows]
     calls.sort(key=lambda r: r["id"])
+    partial.unlink()
 
     dump(RECEIPTS / f"{task_id}.modern.json", {
         "task_id": task_id, "model": MODEL, "n": len(calls),

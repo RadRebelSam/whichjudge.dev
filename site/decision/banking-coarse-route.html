@@ -12,9 +12,9 @@
 <meta property="og:description" content="Banking queue routing on BANKING77 test, collapsed 77 → 8 queues, n=500 frozen gold. Jev 71.8%, gpt-4o-mini 64.4%, TF-IDF 93.2%. Verdict: Replace. ECE 0.213.">
 <meta property="og:url" content="https://whichjudge.dev/decision/banking-coarse-route.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="2524f08fc4">
+<meta name="whichjudge-build" content="26c2153d2c">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Banking queue routing - cheap decision model bake-off", "description": "Banking queue routing on BANKING77 test, collapsed 77 → 8 queues, n=500 frozen gold. Jev 71.8%, gpt-4o-mini 64.4%, TF-IDF 93.2%. Verdict: Replace. ECE 0.213.", "url": "https://whichjudge.dev/decision/banking-coarse-route.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "BANKING77 test, collapsed 77 → 8 queues", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/banking_coarse_route.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.718}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.644}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.932}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.213}]}</script>
-<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#52525b}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
@@ -28,7 +28,7 @@
 
 - BANKING77 test, collapsed 77 → 8 queues, n=500, seed=7<br>
 <strong>Labels:</strong> <code>cards / top_up / cash_atm / transfers / fx / account / payments_fees / other</code></p>
-<div class="table-wrap"><table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Results table"><table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>Latency (p50 unless stated)</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>71.8%</td><td>[67.7% - 75.6%]</td><td>805 ms</td><td>$20.63</td></tr>
@@ -58,13 +58,13 @@ the id, gold, prediction, confidence, latency and the SHA-256 of the request and
 The full request and response bodies are in the repository at
 <a href="https://github.com/RadRebelSam/whichjudge.dev/blob/main/results/receipts/banking_coarse_route.json">results/receipts/banking_coarse_route.json</a>
 .</p>
-<pre><code>git clone https://github.com/RadRebelSam/whichjudge.dev
+<pre tabindex="0"><code>git clone https://github.com/RadRebelSam/whichjudge.dev
 python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
 python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
 <p>Independent bench, not affiliated with TypeSafe AI. Public gold labels, n=500,
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build 2524f08fc4 &middot; this row from run 1 of 4, 2026-09-20T17:16Z</p>
+<p class="stamp">build 26c2153d2c &middot; this row from run 1 of 4, 2026-09-20T17:16Z</p>
 </body>
 </html>

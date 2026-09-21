@@ -33,3 +33,7 @@ data/*.text.jsonl
 # Leftovers from the original Gumloop export and local backups
 jev_replace_bench/
 summary_backup.json
+
+# Per-row checkpoints written while run_eval.py / run_modern_baseline.py are
+# running. Deleted when a task completes; never a published result.
+results/receipts/*.partial.jsonl

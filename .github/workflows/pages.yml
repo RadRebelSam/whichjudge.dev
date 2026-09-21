@@ -38,6 +38,13 @@ jobs:
       - name: Verifier fails on corrupted results
         run: python scripts/selfcheck_verify.py
 
+      # Headless browser against the built site: no horizontal overflow at 390px,
+      # no serious axe violations (contrast included), and the dialog keeps focus.
+      - name: Install a browser for the smoke test
+        run: pip install playwright && playwright install --with-deps chromium
+      - name: Site smoke test (390px, axe, dialog focus)
+        run: python scripts/smoke_site.py
+
       # Fails if site/data.js or any decision page disagrees with results/.
       # This is what stops the site from drifting away from the receipts.
       - name: Site is generated from results/

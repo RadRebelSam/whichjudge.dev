@@ -33,6 +33,7 @@ whichjudge/
     run_eval.py             Jev vs gpt-4o-mini; writes hashed receipts
     verify_run.py           re-read every raw response, recompute every statistic (no API)
     selfcheck_verify.py     corrupt a copy six ways; verify_run.py must fail each time
+    smoke_site.py           headless browser: overflow at 390px, axe violations, dialog focus
     run_tfidf_baseline.py   TF-IDF + LR on leftover official train
     prepare_cfpb.py         freeze 500 CFPB complaints, labels joined from the Bureau
     prepare_civil.py        freeze 500 Civil Comments (CC0) for the toxicity row
@@ -347,10 +348,10 @@ that could be measured have been. This list, like every table above, is generate
   `account` and Mini nothing. So this is a comparison of configurations, not of models
   alone, and the receipts cannot say how much of any gap the prompt difference caused.
   A normalized rerun would generate both formats from one rubric on a fresh sample.
-- **Reruns are not checkpointed.** A request that exhausts its retries raises before a
-  task's receipts are written, so a failed run is paid for again. Published counts are
-  complete (every arm answers every id exactly once, checked by `verify_run.py`), so no
-  failed row was dropped from a shown accuracy.
+- **Reruns checkpoint per row and log every attempt.** A request that exhausts its
+  retries costs one request, not the task; the retry log of each call goes into its
+  receipt. Receipts written before this change carry no attempt log. Published counts
+  are complete: every arm answers every id exactly once, checked by `verify_run.py`.
 - **Public gold.** Nine of eleven rows are academic benchmarks. Only CFPB routing uses
   a live system's own labels, and those are chosen by the person filing, not an expert.
 <!-- /generated:limits -->
@@ -389,6 +390,7 @@ python3 scripts/redact_text.py       # strip tweet text before committing  (no A
 python3 scripts/build_site.py        # regenerate site and README numbers  (no API)
 python3 scripts/verify_run.py        # recompute everything; ALL CHECKS PASSED (no API)
 python3 scripts/selfcheck_verify.py  # prove the verifier fails on corrupted results (no API)
+python3 scripts/smoke_site.py        # headless browser: 390px overflow, axe, dialog focus
 python3 scripts/audit_site.py        # leaks, stale numbers, uncited columns (no API)
 ```
 

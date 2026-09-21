@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import platform
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -334,23 +335,37 @@ def dump_json(path: Path, obj, indent: int | None = 2) -> None:
     path.write_text(json.dumps(obj, indent=indent, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def post_json(url: str, headers: dict, payload: dict, timeout: int = 60) -> dict:
+def post_json(url: str, headers: dict, payload: dict, timeout: int = 60,
+              log: list | None = None) -> dict:
+    """POST with retries. Every attempt, failed or not, is appended to `log`
+    so the receipt records what it took to get the answer."""
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(url, data=data, headers=headers, method="POST")
     last = None
     for attempt in range(5):
+        t0 = time.perf_counter()
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
-                return json.loads(resp.read().decode())
+                raw = json.loads(resp.read().decode())
+            if log is not None:
+                log.append({"attempt": attempt + 1, "status": "ok",
+                            "ms": round((time.perf_counter() - t0) * 1000)})
+            return raw
         except urllib.error.HTTPError as e:
             body = e.read().decode(errors="replace")
             last = RuntimeError(f"HTTP {e.code}: {body[:400]}")
+            if log is not None:
+                log.append({"attempt": attempt + 1, "status": f"HTTP {e.code}",
+                            "ms": round((time.perf_counter() - t0) * 1000)})
             if e.code in (429, 500, 502, 503, 504):
                 time.sleep(1.5 * (attempt + 1))
                 continue
             raise last
         except Exception as e:
             last = e
+            if log is not None:
+                log.append({"attempt": attempt + 1, "status": type(e).__name__,
+                            "ms": round((time.perf_counter() - t0) * 1000)})
             time.sleep(1.2 * (attempt + 1))
     raise last
 
@@ -478,16 +493,10 @@ def summarize(preds: list[dict], gold_key="gold") -> dict:
     in_tok = sum(p.get("input_tokens") or 0 for p in preds)
     out_tok = sum(p.get("output_tokens") or 0 for p in preds)
     confs = [p.get("confidence") for p in preds if p.get("confidence") is not None]
-    gates = {}
-    for thr in (0.5, 0.6, 0.7, 0.8, 0.9):
-        kept = [p for p in preds if (p.get("confidence") or 0) >= thr]
-        if kept:
-            gates[str(thr)] = {
-                "coverage": len(kept) / n,
-                "accuracy": sum(1 for p in kept if p["pred"] == p[gold_key]) / len(kept),
-            }
-        else:
-            gates[str(thr)] = {"coverage": 0, "accuracy": None}
+    # No gate table here. Gates are computed once, on p_chosen, by
+    # scripts/calibrate.py into results/gates.json; this summary used to carry a
+    # second table thresholded on 'confidence', which nothing read and anyone
+    # opening the file could quote.
     return {
         "n": n,
         "accuracy": acc,
@@ -498,7 +507,6 @@ def summarize(preds: list[dict], gold_key="gold") -> dict:
         "input_tokens": in_tok,
         "output_tokens": out_tok,
         "mean_confidence": (sum(confs) / len(confs)) if confs else None,
-        "gates": gates,
         "wilson": wilson_interval(correct, n),
     }
 
@@ -531,11 +539,13 @@ def call_jev_receipt(row: dict, spec: dict) -> dict:
         "model": JEV_MODEL_REQ,
         "questions": spec["questions"],
     }
+    attempts: list = []
     t0 = time.perf_counter()
     raw = post_json(
         JEV_URL,
         {"Authorization": f"Bearer {TYPESAFE_KEY}", "Content-Type": "application/json"},
         request,
+        log=attempts,
     )
     ms = (time.perf_counter() - t0) * 1000
     pred, conf, p = parse_jev(raw, spec["question_key"])
@@ -557,6 +567,7 @@ def call_jev_receipt(row: dict, spec: dict) -> dict:
         "request_sha256": sha256_obj(request),
         "response_sha256": sha256_obj(raw),
         "utc": datetime.now(timezone.utc).isoformat(),
+        "attempts": attempts,
     }
 
 
@@ -571,11 +582,13 @@ def call_mini_receipt(row: dict, spec: dict) -> dict:
             {"role": "user", "content": row["text"]},
         ],
     }
+    attempts: list = []
     t0 = time.perf_counter()
     raw = post_json(
         OPENAI_URL,
         {"Authorization": f"Bearer {OPENAI_KEY}", "Content-Type": "application/json"},
         request,
+        log=attempts,
     )
     ms = (time.perf_counter() - t0) * 1000
     label, content = parse_mini(raw, spec["labels"])
@@ -596,6 +609,7 @@ def call_mini_receipt(row: dict, spec: dict) -> dict:
         "request_sha256": sha256_obj(request),
         "response_sha256": sha256_obj(raw),
         "utc": datetime.now(timezone.utc).isoformat(),
+        "attempts": attempts,
     }
 
 
@@ -615,6 +629,7 @@ def public_receipt(rec: dict, kind: str) -> dict:
         "utc": rec["utc"],
         "request": rec["request"],
         "response": rec["response"],
+        "attempts": rec.get("attempts", []),
     }
     if kind == "jev":
         out["confidence"] = rec.get("confidence")
@@ -624,30 +639,53 @@ def public_receipt(rec: dict, kind: str) -> dict:
     return out
 
 
+def run_arm(task_id: str, arm: str, rows: list[dict], spec: dict, call, workers: int) -> list[dict]:
+    """Call one model on every row, checkpointing each receipt as it lands.
+
+    A request that exhausts its retries used to raise before anything was
+    written, so the rows already paid for were lost and a rerun paid again.
+    Receipts now go to results/receipts/<task>.partial.jsonl one line at a time;
+    a rerun skips the ids that are there and the file is removed once every row
+    has answered. The file is gitignored: it is a checkpoint, not a result.
+    """
+    partial = RECEIPTS / f"{task_id}.partial.jsonl"
+    done: dict[int, dict] = {}
+    if partial.exists():
+        with partial.open(encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    entry = json.loads(line)
+                    if entry["arm"] == arm:
+                        done[entry["receipt"]["id"]] = entry["receipt"]
+    todo = [r for r in rows if r["id"] not in done]
+    if done:
+        print(f"  {arm}: resuming, {len(done)} of {len(rows)} already answered", flush=True)
+    lock = threading.Lock()
+    partial.parent.mkdir(parents=True, exist_ok=True)
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        futs = [ex.submit(call, row, spec) for row in todo]
+        for i, fut in enumerate(as_completed(futs), len(done) + 1):
+            rec = fut.result()  # raises after 5 failed attempts; the checkpoint survives
+            with lock:
+                with partial.open("a", encoding="utf-8") as f:
+                    f.write(json.dumps({"arm": arm, "receipt": rec}, ensure_ascii=False) + "\n")
+                done[rec["id"]] = rec
+            print(f"  {arm} {i}/{len(rows)} {rec['pred']} gold={rec['gold']}", flush=True)
+    return [done[r["id"]] for r in rows]
+
+
 def run_task(task_id: str, workers: int = 10) -> dict:
     spec = TASKS[task_id]
     rows = load_rows(task_id)
     print(f"\n=== {task_id} n={len(rows)} ===", flush=True)
-    jev_recs = [None] * len(rows)
-    oa_recs = [None] * len(rows)
 
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        futs = [ex.submit(call_jev_receipt, row, spec) for row in rows]
-        for i, fut in enumerate(as_completed(futs), 1):
-            rec = fut.result()
-            jev_recs[rec["id"]] = rec
-            print(f"  jev {i}/{len(rows)} {rec['pred']} gold={rec['gold']}", flush=True)
-
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        futs = [ex.submit(call_mini_receipt, row, spec) for row in rows]
-        for i, fut in enumerate(as_completed(futs), 1):
-            rec = fut.result()
-            oa_recs[rec["id"]] = rec
-            print(f"  4o-mini {i}/{len(rows)} {rec['pred']} gold={rec['gold']}", flush=True)
+    jev_recs = run_arm(task_id, "jev", rows, spec, call_jev_receipt, workers)
+    oa_recs = run_arm(task_id, "mini", rows, spec, call_mini_receipt, workers)
+    partial = RECEIPTS / f"{task_id}.partial.jsonl"
+    if partial.exists():
+        partial.unlink()
 
     # keep order by sample id
-    jev_recs = [r for r in jev_recs if r is not None]
-    oa_recs = [r for r in oa_recs if r is not None]
     jev_recs.sort(key=lambda r: r["id"])
     oa_recs.sort(key=lambda r: r["id"])
 
@@ -791,7 +829,6 @@ def main() -> None:
                 "jev_mean_conf": out["jev"]["mean_confidence"],
                 "jev_cost": out["jev"]["est_cost_usd"],
                 "mini_cost": out["gpt4o_mini"]["est_cost_usd"],
-                "jev_gates": out["jev"]["gates"],
                 "schema_sha256": out["schema_sha256"],
                 "samples_sha256": out["samples_sha256"],
                 "jev_wilson": out["jev"]["wilson"],

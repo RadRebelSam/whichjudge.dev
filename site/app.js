@@ -387,7 +387,7 @@ function costCurveHtml() {
           return `Measured on the rows above, Jev is the cheaper API on ${cheaper.length} of ${TASKS.length}: ${cheaper.map((t) => t.title.toLowerCase()).join(", ")}. Short-text rows go to Mini.`;
         })()}
       </p>
-      <div class="table-wrapper mt-4">
+      <div class="table-wrapper mt-4" tabindex="0" role="region" aria-label="Cost against input length">
         <table class="w-full min-w-[26rem] text-left text-sm">
           <thead class="border-b border-zinc-200 text-[11px] tracking-wide text-zinc-500 uppercase dark:border-zinc-800">
             <tr>
@@ -677,7 +677,7 @@ function renderReceipts(id) {
             <h2 class="text-sm font-semibold">Receipts · ${esc(id)} · ${data.n} × 2 calls</h2>
             <p class="mono text-[11px] text-zinc-500">samples ${shortSha(data.samples_sha256)} · schema ${shortSha(data.schema_sha256)}</p>
           </div>
-          <div class="table-wrapper">
+          <div class="table-wrapper" tabindex="0" role="region" aria-label="Receipts">
             <table class="w-full min-w-[40rem] text-left text-sm">
               <thead class="text-[11px] tracking-wide text-zinc-500 uppercase">
                 <tr>

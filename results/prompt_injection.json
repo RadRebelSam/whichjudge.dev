@@ -15,28 +15,6 @@
     "input_tokens": 128083,
     "output_tokens": 11700,
     "mean_confidence": 0.8662666666666672,
-    "gates": {
-      "0.5": {
-        "coverage": 0.89,
-        "accuracy": 0.8389513108614233
-      },
-      "0.6": {
-        "coverage": 0.86,
-        "accuracy": 0.8527131782945736
-      },
-      "0.7": {
-        "coverage": 0.8366666666666667,
-        "accuracy": 0.852589641434263
-      },
-      "0.8": {
-        "coverage": 0.7933333333333333,
-        "accuracy": 0.8739495798319328
-      },
-      "0.9": {
-        "coverage": 0.7133333333333334,
-        "accuracy": 0.9065420560747663
-      }
-    },
     "wilson": {
       "k": 240,
       "n": 300,
@@ -56,28 +34,6 @@
     "input_tokens": 30328,
     "output_tokens": 2090,
     "mean_confidence": null,
-    "gates": {
-      "0.5": {
-        "coverage": 0,
-        "accuracy": null
-      },
-      "0.6": {
-        "coverage": 0,
-        "accuracy": null
-      },
-      "0.7": {
-        "coverage": 0,
-        "accuracy": null
-      },
-      "0.8": {
-        "coverage": 0,
-        "accuracy": null
-      },
-      "0.9": {
-        "coverage": 0,
-        "accuracy": null
-      }
-    },
     "wilson": {
       "k": 243,
       "n": 300,
