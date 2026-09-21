@@ -12,13 +12,16 @@
 <meta property="og:description" content="Banking queue routing on BANKING77 test, collapsed 77 → 8 queues, n=500 frozen gold. Jev 71.8%, gpt-4o-mini 64.4%, TF-IDF 93.2%. Verdict: Replace. ECE 0.213.">
 <meta property="og:url" content="https://whichjudge.dev/decision/banking-coarse-route.html">
 <meta name="twitter:card" content="summary">
+<meta name="whichjudge-build" content="b01f17b3bb">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Banking queue routing - cheap decision model bake-off", "description": "Banking queue routing on BANKING77 test, collapsed 77 → 8 queues, n=500 frozen gold. Jev 71.8%, gpt-4o-mini 64.4%, TF-IDF 93.2%. Verdict: Replace. ECE 0.213.", "url": "https://whichjudge.dev/decision/banking-coarse-route.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "BANKING77 test, collapsed 77 → 8 queues", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/banking_coarse_route.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.718}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.644}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.932}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.213}]}</script>
-<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>Banking queue routing</h1>
-<p><span class="verdict">Replace</span></p>
+<p><span class="verdict">Replace</span>
+<span class="scope">compares Jev with 4o-mini only</span></p>
+<ul class="caveats"><li>A TF-IDF classifier trained on labelled data beats both APIs here at 93.2%. If you have labels, do not buy either.</li><li>ECE 0.213: do not quote the confidence as a probability.</li></ul>
 <p>TF-IDF 93.2% beats both neural judges (p&lt;1e-19) if you have labels. Jev still beats Mini among APIs by 7.4pt. Do not pay for a model on this task if you can train one.</p>
 <p><strong>Replaces:</strong> Support-queue classifier on banking tickets<br>
 <strong>Gold:</strong> <a href="https://github.com/PolyAI-LDN/task-specific-datasets" rel="noopener">PolyAI BANKING77</a>
@@ -38,10 +41,10 @@
 (56 Jev-only correct, 19 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> tfidf.</p>
 <h2>Quit line</h2>
-<p>Gating works here even though the calibration does not: at &gt;=0.9 it is 80.4% on 77.6% of tickets, 8.6pt above ungated. What ECE 0.213 costs you is the right to quote the confidence as a probability, not the right to threshold on it.</p>
+<p>Gating works here even though the calibration does not: at &gt;=0.9 it is 80.1% on 78.4% of tickets, 8.3pt above ungated. What ECE 0.213 costs you is the right to quote the confidence as a probability, not the right to threshold on it.</p>
 <p><strong>Auto slice:</strong> at Jev confidence &ge; 0.9,
-80.4% accurate on 77.6% of traffic, which is
-+8.6pt against 71.8% ungated. That threshold is the strongest
+80.1% accurate on 78.4% of traffic, which is
++8.3pt against 71.8% ungated. That threshold is the strongest
 one still covering at least half the traffic, picked by rule from the measured gates.</p>
 <p><strong>Calibration:</strong> ECE 0.213 (max bin gap 0.39).
 ECE says whether the confidence can be read as a probability. It does not say whether
@@ -59,5 +62,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
+<p class="stamp">build b01f17b3bb &middot; data from 3 run(s)</p>
 </body>
 </html>

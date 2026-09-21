@@ -28,6 +28,89 @@ RESULTS = ROOT / "results"
 RECEIPTS = RESULTS / "receipts"
 
 BINS = 10  # fixed-width bins of 0.1 across [0, 1]
+GATES = (0.5, 0.6, 0.7, 0.8, 0.9)
+MIN_COVERAGE = 0.5
+SPLITS = 400  # random half splits for the cross-validated auto slice
+SEED = 7
+
+
+def score_of(r: dict) -> float:
+    """The one score used for calibration AND gating.
+
+    Gates used to threshold on Jev's 'confidence' while ECE was computed on
+    'p_chosen'. They differ on hundreds of rows, so the page compared a gate
+    built on one number against calibration of another. p_chosen is the
+    probability of the answer actually returned, which is what both need.
+    """
+    p = r.get("p_chosen")
+    if p is None:
+        p = r.get("confidence")
+    if p is None:
+        raise SystemExit(f"receipt {r.get('id')} has no p_chosen or confidence")
+    return float(p)
+
+
+def gate_table(rows: list[dict]) -> dict:
+    out = {}
+    n = len(rows)
+    for g in GATES:
+        kept = [r for r in rows if score_of(r) >= g]
+        out[f"{g}"] = {
+            "coverage": round(len(kept) / n, 4) if n else 0.0,
+            "accuracy": round(sum(r["pred"] == r["gold"] for r in kept) / len(kept), 4)
+                        if kept else None,
+        }
+    return out
+
+
+def pick_gate(rows: list[dict]):
+    """Strongest gate that still automates at least half the traffic."""
+    best = None
+    for g in GATES:
+        kept = [r for r in rows if score_of(r) >= g]
+        if not kept or len(kept) / len(rows) < MIN_COVERAGE:
+            continue
+        acc = sum(r["pred"] == r["gold"] for r in kept) / len(kept)
+        if best is None or acc > best[1]:
+            best = (g, acc)
+    return best
+
+
+def cross_validated_slice(rows: list[dict]) -> dict:
+    """Choose the gate on one half, score it on the other.
+
+    Picking the gate and reporting its accuracy on the same 500 rows flatters the
+    number: whichever gate happened to score well on this sample wins. Repeated
+    random half splits give an honest estimate and the size of that optimism.
+    """
+    import random
+    rng = random.Random(SEED)
+    outs, gates = [], []
+    for _ in range(SPLITS):
+        idx = list(range(len(rows)))
+        rng.shuffle(idx)
+        half = len(idx) // 2
+        for a, b in ((idx[:half], idx[half:]), (idx[half:], idx[:half])):
+            pick_rows = [rows[i] for i in a]
+            eval_rows = [rows[i] for i in b]
+            chosen = pick_gate(pick_rows)
+            if chosen is None:
+                continue
+            g = chosen[0]
+            kept = [r for r in eval_rows if score_of(r) >= g]
+            if not kept:
+                continue
+            outs.append(sum(r["pred"] == r["gold"] for r in kept) / len(kept))
+            gates.append(g)
+    outs.sort()
+    k = len(outs)
+    return {
+        "method": f"{SPLITS} random half splits, gate chosen on one half and scored on the other",
+        "accuracy_mean": round(sum(outs) / k, 4) if k else None,
+        "accuracy_lo": round(outs[int(0.025 * k)], 4) if k else None,
+        "accuracy_hi": round(outs[int(0.975 * k) - 1], 4) if k else None,
+        "gate_chosen_most": max(set(gates), key=gates.count) if gates else None,
+    }
 
 
 def reliability(pairs: list[tuple[float, bool]]) -> dict:
@@ -88,8 +171,7 @@ def error_profile(rec: dict, key: str) -> dict:
         for g in (0.5, 0.6, 0.7, 0.8, 0.9):
             per_gate = {}
             for cls in classes:
-                covered = [r for r in rows
-                           if r["gold"] == cls and (r.get("p_chosen") or 0) >= g]
+                covered = [r for r in rows if r["gold"] == cls and score_of(r) >= g]
                 caught = [r for r in covered if r["pred"] == cls]
                 per_gate[cls] = {
                     "covered": len(covered),
@@ -103,18 +185,20 @@ def main() -> None:
     summary = json.loads((RESULTS / "summary.json").read_text(encoding="utf-8"))
     out = {}
     errors = {}
+    gates_out = {}
     for row in summary:
         tid = row["task_id"]
         rec = json.loads((RECEIPTS / f"{tid}.json").read_text(encoding="utf-8"))
-        pairs = []
-        for r in rec["jev"]:
-            p = r.get("p_chosen")
-            if p is None:
-                p = r.get("confidence")
-            if p is None:
-                raise SystemExit(f"{tid}: receipt {r['id']} has no p_chosen or confidence")
-            pairs.append((float(p), r["pred"] == r["gold"]))
+        pairs = [(score_of(r), r["pred"] == r["gold"]) for r in rec["jev"]]
         out[tid] = {"p_chosen": reliability(pairs)}
+        chosen = pick_gate(rec["jev"])
+        gates_out[tid] = {
+            "score": "p_chosen",
+            "gates": gate_table(rec["jev"]),
+            "in_sample": ({"gate": chosen[0], "accuracy": round(chosen[1], 4)}
+                          if chosen else None),
+            "cross_validated": cross_validated_slice(rec["jev"]),
+        }
         errors[tid] = {"jev": error_profile(rec, "jev"),
                        "mini": error_profile(rec, "gpt4o_mini")}
         # the current-model column, when scripts/run_modern_baseline.py has run
@@ -128,9 +212,11 @@ def main() -> None:
 
     (RESULTS / "calibration.json").write_text(
         json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    (RESULTS / "gates.json").write_text(
+        json.dumps(gates_out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     (RESULTS / "error_profile.json").write_text(
         json.dumps(errors, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
-    print("\nwrote results/calibration.json and results/error_profile.json")
+    print("\nwrote results/calibration.json, results/error_profile.json and results/gates.json")
     print("High ECE means the confidence number cannot carry a quit line on that task.")
 
 

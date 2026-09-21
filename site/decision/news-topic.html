@@ -4,22 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>News topic: Jev vs 3 other models, measured | WhichJudge</title>
-<meta name="description" content="News topic on AG News test, n=500 frozen gold. Jev 85.6%, gpt-4o-mini 82.6%, TF-IDF 90.8%. Verdict: Replace. ECE 0.096.">
+<meta name="description" content="News topic on AG News test, n=500 frozen gold. Jev 85.6%, gpt-4o-mini 82.6%, TF-IDF 90.8%. Verdict: ns. ECE 0.096.">
 <link rel="canonical" href="https://whichjudge.dev/decision/news-topic.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="News topic: Jev vs 3 other models, measured | WhichJudge">
-<meta property="og:description" content="News topic on AG News test, n=500 frozen gold. Jev 85.6%, gpt-4o-mini 82.6%, TF-IDF 90.8%. Verdict: Replace. ECE 0.096.">
+<meta property="og:description" content="News topic on AG News test, n=500 frozen gold. Jev 85.6%, gpt-4o-mini 82.6%, TF-IDF 90.8%. Verdict: ns. ECE 0.096.">
 <meta property="og:url" content="https://whichjudge.dev/decision/news-topic.html">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "News topic - cheap decision model bake-off", "description": "News topic on AG News test, n=500 frozen gold. Jev 85.6%, gpt-4o-mini 82.6%, TF-IDF 90.8%. Verdict: Replace. ECE 0.096.", "url": "https://whichjudge.dev/decision/news-topic.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "AG News test", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/news_topic.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.856}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.826}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.908}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.096}]}</script>
-<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+<meta name="whichjudge-build" content="b01f17b3bb">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "News topic - cheap decision model bake-off", "description": "News topic on AG News test, n=500 frozen gold. Jev 85.6%, gpt-4o-mini 82.6%, TF-IDF 90.8%. Verdict: ns. ECE 0.096.", "url": "https://whichjudge.dev/decision/news-topic.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "AG News test", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/news_topic.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.856}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.826}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.908}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.096}]}</script>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>News topic</h1>
-<p><span class="verdict">Replace</span></p>
-<p>TF-IDF 90.8% beats Jev 85.6% and Mini 82.6% after training on 120k rows. Among the APIs Jev wins by 3.0pt (p=0.0093). If you have labels, skip both models.</p>
+<p><span class="verdict">ns</span>
+<span class="scope">compares Jev with 4o-mini only</span></p>
+<ul class="caveats"><li>A TF-IDF classifier trained on labelled data beats both APIs here at 90.8%. If you have labels, do not buy either.</li></ul>
+<p>TF-IDF 90.8% beats Jev 85.6% and Mini 82.6% after training on 120k rows. Jev&#x27;s 3.0pt lead over Mini is raw p=0.0093 but only 0.065 after Holm correction, so it is a tie among the APIs. If you have labels, skip both.</p>
 <p><strong>Replaces:</strong> 4-way news classifier<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/fancyzhx/ag_news" rel="noopener">fancyzhx/ag_news</a>
 
@@ -34,13 +37,13 @@
         <tr><td>TF-IDF + LR (train n=120,000)</td><td>90.8%</td><td>[87.9% - 93.0%]</td><td>77 us</td><td>$0</td></tr>
   </tbody>
 </table>
-<p><strong>McNemar Jev vs Mini:</strong> jev, p=0.00933
+<p><strong>McNemar Jev vs Mini:</strong> ns, p=0.00933
 (22 Jev-only correct, 7 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> tfidf.</p>
 <h2>Quit line</h2>
-<p>Jev first among APIs. At &gt;=0.7: 90.1% on 90.6% of articles.</p>
+<p>Jev first among APIs. At &gt;=0.9: 92.9% on 84.4% of articles.</p>
 <p><strong>Auto slice:</strong> at Jev confidence &ge; 0.9,
-92.9% accurate on 84.0% of traffic, which is
+92.9% accurate on 84.4% of traffic, which is
 +7.3pt against 85.6% ungated. That threshold is the strongest
 one still covering at least half the traffic, picked by rule from the measured gates.</p>
 <p><strong>Calibration:</strong> ECE 0.096 (max bin gap 0.34).
@@ -59,5 +62,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
+<p class="stamp">build b01f17b3bb &middot; data from 3 run(s)</p>
 </body>
 </html>

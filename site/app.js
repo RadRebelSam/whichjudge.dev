@@ -134,15 +134,14 @@ function render() {
           <h1 class="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">You don't need a better model. You need a quit line.</h1>
           <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
             Judge here means the cheap in-loop decision (route, gate, score) - not grading an agent transcript.
-            On ${c.best.title.toLowerCase()}, Jev above ${c.best.autoSlice.gate} confidence is
-            <span class="font-medium text-zinc-900 dark:text-zinc-100">${pct(c.best.autoSlice.acc)} accurate on ${pct(c.best.autoSlice.cov)} of traffic</span>.
-            Auto that slice. Mix the rest. Grey ns = accuracy gap is noise.
+            Gating on Jev's confidence beats not gating on ${c.gateHelps} of ${TASKS.length} rows.
             ${(() => {
               const x = TASKS.find((t) => t.verdict === "neither");
               if (!x || !x.errors) return "";
               const worst = Object.entries(x.errors.jev.per_class).sort((a, b) => a[1].recall - b[1].recall)[0];
-              return `<span class="mt-2 block font-medium text-red-700 dark:text-red-400">It does not always work: on ${x.title.toLowerCase()} the quit line barely helps and Jev misses ${pct(worst[1].missed_rate)} of ${worst[0]}.</span>`;
+              return `<span class="font-medium text-red-700 dark:text-red-400">It does not rescue the row that matters most: on ${x.title.toLowerCase()}, Jev misses ${pct(worst[1].missed_rate)} of ${worst[0]} at any threshold.</span>`;
             })()}
+            Grey ns = accuracy gap is noise after Holm correction.
           </p>
         </div>
         <p class="mono text-xs text-zinc-500">whichjudge.dev</p>
@@ -151,20 +150,18 @@ function render() {
 
     <main class="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
       <section class="card-grid mb-8">
-        ${statCard("Auto slice rule", "≥ 50% covered", "Strongest gate that still automates half the traffic. Chosen per row, not by hand.")}
         ${(() => {
           const x = TASKS.find((t) => t.verdict === "neither");
           if (!x || !x.errors) return "";
           const worst = Object.entries(x.errors.jev.per_class).sort((a, b) => a[1].recall - b[1].recall)[0];
           return statCard("Where it fails", pct(worst[1].missed_rate) + " missed",
-            x.title.toLowerCase() + ": " + worst[0] + " Jev never flags. Gating does not fix it.");
+            x.title.toLowerCase() + ": " + worst[0] + " Jev never flags. No threshold fixes it.");
         })()}
-        ${statCard(c.best.title + " @ " + c.best.autoSlice.gate, pct(c.best.autoSlice.acc), "on " + pct(c.best.autoSlice.cov) + " of traffic · n=" + c.best.n)}
-        ${statCard("Gating beats not gating", `${c.gateHelps}/${TASKS.length}`, "Every row. Lift shown per row, from the measured gates.")}
-        ${statCard("Neither model works", String(c.neither), "Prompt injection: both miss ~4 in 10. Kept on the homepage.")}
-        ${c.modernModel ? statCard("vs a 2026 model", `${c.jevBeatsModern}W ${c.modernTies}T ${c.modernBeatsJev}L`, `Jev against ${c.modernModel.model}. It wins injection; Jev wins CFPB, news, reviews.`) : ""}
+        ${statCard("Gating beats not gating", `${c.gateHelps}/${TASKS.length}`, "Lift shown per row, from gates on the same score as ECE.")}
+        ${c.modernModel ? statCard("vs a 2026 model", `${c.jevBeatsModern}W ${c.modernTies}T ${c.modernBeatsJev}L`, `Jev against ${c.modernModel.model}, Holm-corrected. ` + TASKS.filter((t) => t.modern && t.modern.vsJev !== "ns").map((t) => (t.modern.vsJev === "jev" ? "Jev wins " : "loses ") + t.title.toLowerCase()).join("; ") + ".") : ""}
         ${statCard(`TF-IDF wins ${c.tfidfWins}`, c.tfidfNames || "none", "If you have labels, skip both APIs")}
-        ${statCard("Non-academic gold", `${c.realGold}/${TASKS.length}`, `${c.liveGold} live system, ${c.realGold - c.liveGold} real text. Nine are benchmarks.`)}
+        ${statCard("Non-academic gold", `${c.realGold}/${TASKS.length}`, `${c.liveGold} live system, ${c.realGold - c.liveGold} real text. The rest are benchmarks.`)}
+        ${statCard("Best case, not typical", pct(c.best.autoSlice.acc), c.best.title.toLowerCase() + " above " + c.best.autoSlice.gate + ", on " + pct(c.best.autoSlice.cov) + " of traffic. Highest on the board.")}
       </section>
 
       <div class="mb-4 flex flex-wrap items-center gap-2">
@@ -341,8 +338,11 @@ function costCurveHtml() {
       <p class="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
         Jev bills about <span class="font-medium text-zinc-900 dark:text-zinc-100">${c.jev_fixed_overhead_tokens} input tokens before your content</span>,
         then charges 3.6x less per token than 4o-mini and nothing for output. So short inputs favour Mini and long ones favour Jev.
-        ${x ? `The crossover is around <span class="font-medium text-zinc-900 dark:text-zinc-100">${x.content_tokens} tokens</span> of content, roughly ${x.content_tokens * 4} characters.` : ""}
-        Every task in the table above sits below that line, which is why Jev looks expensive here.
+        ${x ? `The crossover is around <span class="font-medium text-zinc-900 dark:text-zinc-100">${x.content_tokens} tokens of actual input</span>, roughly ${x.content_tokens * 4} characters, after removing the ${c.mini_overhead_tokens || "~41"}-token system prompt 4o-mini adds to every call.` : ""}
+        ${(() => {
+          const cheaper = TASKS.filter((t) => t.jev.perM < t.mini.perM);
+          return `Measured on the rows above, Jev is the cheaper API on ${cheaper.length} of ${TASKS.length}: ${cheaper.map((t) => t.title.toLowerCase()).join(", ")}. Short-text rows go to Mini.`;
+        })()}
       </p>
       <div class="table-wrapper mt-4">
         <table class="w-full min-w-[26rem] text-left text-sm">
@@ -660,19 +660,32 @@ function renderReceipts(id) {
 }
 
 function sampleDetail(j, m) {
+  // site/receipts is a slim copy: hashes and outcomes, not the request and response
+  // bodies (those are 12 MB, and for redacted tasks the text is cleared anyway).
+  // This used to render JSON.stringify of fields that are not in the file, which
+  // showed an empty {} for both arms. Show what is here, link to the full receipt.
+  const full = `${SITE.repo}/blob/main/results/receipts/${openId}.json`;
+  const arm = (label, r) => `
+      <div>
+        <p class="text-[11px] tracking-wide text-zinc-500 uppercase">${label} ${esc(r.model_returned || "")}</p>
+        <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[12px]">
+          <dt class="text-zinc-500">predicted</dt><dd class="mono">${esc(r.pred)}</dd>
+          <dt class="text-zinc-500">gold</dt><dd class="mono">${esc(r.gold)}</dd>
+          ${r.p_chosen != null ? `<dt class="text-zinc-500">p_chosen</dt><dd class="mono">${esc(r.p_chosen)}</dd>` : ""}
+          <dt class="text-zinc-500">latency</dt><dd class="mono">${Math.round(r.latency_ms)} ms</dd>
+        </dl>
+        <p class="mono mt-2 break-all text-[11px] text-zinc-500">request sha256 ${esc(r.request_sha256)}<br>response sha256 ${esc(r.response_sha256)}</p>
+      </div>`;
   return `
     <div class="grid gap-3 md:grid-cols-2">
-      <div>
-        <p class="text-[11px] tracking-wide text-zinc-500 uppercase">Jev ${esc(j.model_returned)} · ${esc(j.endpoint)}</p>
-        <p class="mono mt-1 break-all text-[11px] text-zinc-500">req ${esc(j.request_sha256)}<br>resp ${esc(j.response_sha256)}</p>
-        <pre class="mt-2 max-h-64 overflow-auto rounded-lg bg-zinc-100 p-2 text-[11px] leading-relaxed dark:bg-zinc-950">${esc(JSON.stringify({ request: j.request, response: j.response }, null, 2))}</pre>
-      </div>
-      <div>
-        <p class="text-[11px] tracking-wide text-zinc-500 uppercase">Mini ${esc(m.model_returned)} · ${esc(m.endpoint)}</p>
-        <p class="mono mt-1 break-all text-[11px] text-zinc-500">req ${esc(m.request_sha256)}<br>resp ${esc(m.response_sha256)}</p>
-        <pre class="mt-2 max-h-64 overflow-auto rounded-lg bg-zinc-100 p-2 text-[11px] leading-relaxed dark:bg-zinc-950">${esc(JSON.stringify({ request: m.request, response: m.response }, null, 2))}</pre>
-      </div>
+      ${arm("Jev", j)}
+      ${arm("4o-mini", m)}
     </div>
+    <p class="mt-3 text-[12px] text-zinc-600 dark:text-zinc-400">
+      Full request and response bodies, with the hashes above, are in
+      <a class="underline decoration-zinc-300 underline-offset-2" href="${full}" rel="noopener">results/receipts/${openId}.json</a>.
+      Run <span class="mono">scripts/verify_run.py</span> to check them.
+    </p>
   `;
 }
 

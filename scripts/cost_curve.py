@@ -224,7 +224,42 @@ def crossover(points: list[dict]):
     return None
 
 
+def correct_content_tokens(points: list[dict]) -> float:
+    """Measure content in tokens of actual input, not the whole Mini prompt.
+
+    mean_content_tokens used to be Mini's full prompt_tokens, which includes the
+    system message and chat framing: about 41 tokens before any input at all. That
+    put the crossover at '65 content tokens' when roughly 24 of those were content.
+    The target-0 point sends a one-word input, so its Mini prompt is the overhead.
+    """
+    overhead = points[0]["mini_input_tokens"]
+    for p in points:
+        p["mini_prompt_tokens"] = p["mini_input_tokens"]
+        p["mean_content_tokens"] = round(max(0.0, p["mini_input_tokens"] - overhead), 1)
+    return overhead
+
+
+def recompute() -> None:
+    """Re-derive content tokens and the crossover from the stored curve. No API."""
+    path = RESULTS / "cost_curve.json"
+    out = json.loads(path.read_text(encoding="utf-8"))
+    overhead = correct_content_tokens(out["points"])
+    out["mini_overhead_tokens"] = round(overhead, 1)
+    out["content_token_definition"] = (
+        "Mini prompt tokens minus the Mini prompt at a one-word input, so the system "
+        "message and chat framing are not counted as content.")
+    out["crossover"] = crossover(out["points"])
+    path.write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n",
+                    encoding="utf-8", newline="\n")
+    x = out["crossover"]
+    print(f"Mini overhead {overhead:.0f} tokens; crossover at ~{x['content_tokens']} content tokens"
+          if x else "no crossover")
+
+
 def main() -> None:
+    if "--recompute" in sys.argv:
+        recompute()
+        return
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
@@ -287,6 +322,7 @@ def main() -> None:
             f"${point['mini_per_million']:>8} /M | cheaper: {point['cheaper']}"
         )
 
+    mini_overhead = correct_content_tokens(points)
     floor = points[0]["jev_input_tokens"] - points[0]["mini_input_tokens"]
     out = {
         "run_id": started,
@@ -306,6 +342,7 @@ def main() -> None:
         "jev_fixed_overhead_tokens": round(points[0]["jev_input_tokens"]),
         "jev_overhead_vs_mini_tokens": round(floor, 1),
         "crossover": crossover(points),
+        "mini_overhead_tokens": round(mini_overhead, 1),
         "points": points,
     }
     out["jev_model"] = receipts[0]["jev"]["model_returned"] if receipts else None

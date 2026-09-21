@@ -12,13 +12,16 @@
 <meta property="og:description" content="Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=300 frozen gold. Jev 80.0%, gpt-4o-mini 81.0%, TF-IDF 85.7%. Verdict: Neither. ECE 0.134.">
 <meta property="og:url" content="https://whichjudge.dev/decision/prompt-injection.html">
 <meta name="twitter:card" content="summary">
+<meta name="whichjudge-build" content="b01f17b3bb">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Prompt-injection screen - cheap decision model bake-off", "description": "Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=300 frozen gold. Jev 80.0%, gpt-4o-mini 81.0%, TF-IDF 85.7%. Verdict: Neither. ECE 0.134.", "url": "https://whichjudge.dev/decision/prompt-injection.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "deepset/prompt-injections, train + test, multilingual", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/prompt_injection.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.8}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.81}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.8566666666666667}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.134}]}</script>
-<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>Prompt-injection screen</h1>
-<p><span class="verdict">Neither</span></p>
+<p><span class="verdict">Neither</span>
+<span class="scope">compares Jev with 4o-mini only</span></p>
+<ul class="caveats"><li>gpt-5.4-mini-2026-03-17 beats Jev here at 86.0%.</li><li>ECE 0.134: do not quote the confidence as a probability.</li></ul>
 <p>Read this row on recall, not accuracy. Jev 80.0% and 4o-mini 81.0% are tied (p=0.72), and a current small model does beat both at 86.0%. But all three are biased toward letting text through: Jev catches 60.0% of injections, 4o-mini 62.7%, the 2026 model 72.0%. Better is not the same as usable when 28.0% still walk past.</p>
 <p><strong>Replaces:</strong> LLM guard deciding whether untrusted input may reach an agent<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/deepset/prompt-injections" rel="noopener">deepset/prompt-injections</a>
@@ -38,10 +41,10 @@
 (14 Jev-only correct, 17 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> ns.</p>
 <h2>Quit line</h2>
-<p>The exception on this site. The slice looks fine at 90.6% on 71.3%, but that is accuracy, and accuracy is not the job. Injection recall only moves from 60.0% to 66.3% between gate 0.5 and 0.9, so the misses go to a human rather than away. Neither model is a standalone gate.</p>
+<p>The exception on this site. The slice reads 87.4% on 79.3% of inputs, but that is accuracy, and accuracy is not the job. Injection recall only moves from 60.0% to 66.3% between gate 0.5 and 0.9, so the misses go to a human rather than away. Neither model is a standalone gate.</p>
 <p><strong>Auto slice:</strong> at Jev confidence &ge; 0.9,
-90.6% accurate on 71.3% of traffic, which is
-+10.7pt against 80.0% ungated. That threshold is the strongest
+87.4% accurate on 79.3% of traffic, which is
++7.4pt against 80.0% ungated. That threshold is the strongest
 one still covering at least half the traffic, picked by rule from the measured gates.</p>
 <p><strong>Calibration:</strong> ECE 0.134 (max bin gap 0.377).
 ECE says whether the confidence can be read as a probability. It does not say whether
@@ -59,5 +62,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
+<p class="stamp">build b01f17b3bb &middot; data from 3 run(s)</p>
 </body>
 </html>

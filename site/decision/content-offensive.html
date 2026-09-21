@@ -4,22 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Offensive language screen: Jev vs 3 other models, measured | WhichJudge</title>
-<meta name="description" content="Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: Replace. ECE 0.11.">
+<meta name="description" content="Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: ns. ECE 0.11.">
 <link rel="canonical" href="https://whichjudge.dev/decision/content-offensive.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Offensive language screen: Jev vs 3 other models, measured | WhichJudge">
-<meta property="og:description" content="Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: Replace. ECE 0.11.">
+<meta property="og:description" content="Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: ns. ECE 0.11.">
 <meta property="og:url" content="https://whichjudge.dev/decision/content-offensive.html">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Offensive language screen - cheap decision model bake-off", "description": "Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: Replace. ECE 0.11.", "url": "https://whichjudge.dev/decision/content-offensive.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "tweet_eval offensive", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/content_offensive.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.766}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.708}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.738}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.11}]}</script>
-<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+<meta name="whichjudge-build" content="b01f17b3bb">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Offensive language screen - cheap decision model bake-off", "description": "Offensive language screen on tweet_eval offensive, n=500 frozen gold. Jev 76.6%, gpt-4o-mini 70.8%, TF-IDF 73.8%. Verdict: ns. ECE 0.11.", "url": "https://whichjudge.dev/decision/content-offensive.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "tweet_eval offensive", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/content_offensive.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.766}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.708}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.738}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.11}]}</script>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>Offensive language screen</h1>
-<p><span class="verdict">Replace</span></p>
-<p>Jev +5.8pt, McNemar p=0.0079. Mean confidence is only 0.75, so the gate is the product, not the headline accuracy.</p>
+<p><span class="verdict">ns</span>
+<span class="scope">compares Jev with 4o-mini only</span></p>
+
+<p>Jev +5.8pt over Mini looks significant on its own (raw p=0.0079) but does not survive Holm correction across the eleven tests (p=0.063). Treat it as a tie. Mean confidence is only 0.75, so the gate matters more than the headline.</p>
 <p><strong>Replaces:</strong> Offensive-content classifier<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/cardiffnlp/tweet_eval" rel="noopener">cardiffnlp/tweet_eval</a>
 
@@ -34,14 +37,14 @@
         <tr><td>TF-IDF + LR (train n=11,912)</td><td>73.8%</td><td>[69.8% - 77.5%]</td><td>34 us</td><td>$0</td></tr>
   </tbody>
 </table>
-<p><strong>McNemar Jev vs Mini:</strong> jev, p=0.00787
+<p><strong>McNemar Jev vs Mini:</strong> ns, p=0.00787
 (70 Jev-only correct, 41 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> ns.</p>
 <h2>Quit line</h2>
-<p>At &gt;=0.9: 89.0% on 50.8% of posts, 12.4pt above ungated, the second largest gain on the board. Rest to a human.</p>
+<p>At &gt;=0.9: 86.7% on 60.2% of posts, 10.1pt above ungated. Rest to a human.</p>
 <p><strong>Auto slice:</strong> at Jev confidence &ge; 0.9,
-89.0% accurate on 50.8% of traffic, which is
-+12.4pt against 76.6% ungated. That threshold is the strongest
+86.7% accurate on 60.2% of traffic, which is
++10.1pt against 76.6% ungated. That threshold is the strongest
 one still covering at least half the traffic, picked by rule from the measured gates.</p>
 <p><strong>Calibration:</strong> ECE 0.11 (max bin gap 0.163).
 ECE says whether the confidence can be read as a probability. It does not say whether
@@ -59,5 +62,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
+<p class="stamp">build b01f17b3bb &middot; data from 3 run(s)</p>
 </body>
 </html>

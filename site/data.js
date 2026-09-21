@@ -57,7 +57,7 @@ const COST_CURVE = {
   "jev_fixed_overhead_tokens": 278,
   "jev_overhead_vs_mini_tokens": 237.0,
   "crossover": {
-    "content_tokens": 65,
+    "content_tokens": 24,
     "between": [
       25,
       50
@@ -68,7 +68,7 @@ const COST_CURVE = {
     {
       "target_tokens": 0,
       "mean_chars": 2,
-      "mean_content_tokens": 41,
+      "mean_content_tokens": 0.0,
       "jev_input_tokens": 278.0,
       "jev_output_tokens": 21.0,
       "mini_input_tokens": 41.0,
@@ -78,12 +78,13 @@ const COST_CURVE = {
       "jev_p50_ms": 300,
       "mini_p50_ms": 1356,
       "mini_cached_tokens": 0,
-      "cheaper": "mini"
+      "cheaper": "mini",
+      "mini_prompt_tokens": 41.0
     },
     {
       "target_tokens": 25,
       "mean_chars": 100,
-      "mean_content_tokens": 64,
+      "mean_content_tokens": 23.3,
       "jev_input_tokens": 303.0,
       "jev_output_tokens": 21.0,
       "mini_input_tokens": 64.3,
@@ -93,12 +94,13 @@ const COST_CURVE = {
       "jev_p50_ms": 377,
       "mini_p50_ms": 861,
       "mini_cached_tokens": 0,
-      "cheaper": "mini"
+      "cheaper": "mini",
+      "mini_prompt_tokens": 64.3
     },
     {
       "target_tokens": 50,
       "mean_chars": 200,
-      "mean_content_tokens": 87,
+      "mean_content_tokens": 46.3,
       "jev_input_tokens": 326.0,
       "jev_output_tokens": 21.0,
       "mini_input_tokens": 87.3,
@@ -108,12 +110,13 @@ const COST_CURVE = {
       "jev_p50_ms": 327,
       "mini_p50_ms": 864,
       "mini_cached_tokens": 0,
-      "cheaper": "jev"
+      "cheaper": "jev",
+      "mini_prompt_tokens": 87.3
     },
     {
       "target_tokens": 100,
       "mean_chars": 400,
-      "mean_content_tokens": 128,
+      "mean_content_tokens": 87.0,
       "jev_input_tokens": 370.7,
       "jev_output_tokens": 21.0,
       "mini_input_tokens": 128.0,
@@ -123,12 +126,13 @@ const COST_CURVE = {
       "jev_p50_ms": 311,
       "mini_p50_ms": 665,
       "mini_cached_tokens": 0,
-      "cheaper": "jev"
+      "cheaper": "jev",
+      "mini_prompt_tokens": 128.0
     },
     {
       "target_tokens": 200,
       "mean_chars": 800,
-      "mean_content_tokens": 215,
+      "mean_content_tokens": 174.3,
       "jev_input_tokens": 464.7,
       "jev_output_tokens": 21.0,
       "mini_input_tokens": 215.3,
@@ -138,12 +142,13 @@ const COST_CURVE = {
       "jev_p50_ms": 340,
       "mini_p50_ms": 623,
       "mini_cached_tokens": 0,
-      "cheaper": "jev"
+      "cheaper": "jev",
+      "mini_prompt_tokens": 215.3
     },
     {
       "target_tokens": 400,
       "mean_chars": 1600,
-      "mean_content_tokens": 377,
+      "mean_content_tokens": 336.0,
       "jev_input_tokens": 637.3,
       "jev_output_tokens": 21.0,
       "mini_input_tokens": 377.0,
@@ -153,12 +158,13 @@ const COST_CURVE = {
       "jev_p50_ms": 331,
       "mini_p50_ms": 748,
       "mini_cached_tokens": 0,
-      "cheaper": "jev"
+      "cheaper": "jev",
+      "mini_prompt_tokens": 377.0
     },
     {
       "target_tokens": 800,
       "mean_chars": 3200,
-      "mean_content_tokens": 726,
+      "mean_content_tokens": 685.0,
       "jev_input_tokens": 1003.3,
       "jev_output_tokens": 21.0,
       "mini_input_tokens": 726.0,
@@ -168,12 +174,13 @@ const COST_CURVE = {
       "jev_p50_ms": 318,
       "mini_p50_ms": 680,
       "mini_cached_tokens": 0,
-      "cheaper": "jev"
+      "cheaper": "jev",
+      "mini_prompt_tokens": 726.0
     },
     {
       "target_tokens": 1600,
       "mean_chars": 6400,
-      "mean_content_tokens": 1402,
+      "mean_content_tokens": 1361.3,
       "jev_input_tokens": 1725.0,
       "jev_output_tokens": 21.0,
       "mini_input_tokens": 1402.3,
@@ -183,12 +190,13 @@ const COST_CURVE = {
       "jev_p50_ms": 349,
       "mini_p50_ms": 625,
       "mini_cached_tokens": 0,
-      "cheaper": "jev"
+      "cheaper": "jev",
+      "mini_prompt_tokens": 1402.3
     },
     {
       "target_tokens": 3200,
       "mean_chars": 12800,
-      "mean_content_tokens": 2784,
+      "mean_content_tokens": 2742.7,
       "jev_input_tokens": 3189.7,
       "jev_output_tokens": 21.0,
       "mini_input_tokens": 2783.7,
@@ -198,14 +206,23 @@ const COST_CURVE = {
       "jev_p50_ms": 348,
       "mini_p50_ms": 717,
       "mini_cached_tokens": 1408,
-      "cheaper": "jev"
+      "cheaper": "jev",
+      "mini_prompt_tokens": 2783.7
     }
-  ]
+  ],
+  "mini_overhead_tokens": 41.0,
+  "content_token_definition": "Mini prompt tokens minus the Mini prompt at a one-word input, so the system message and chat framing are not counted as content."
 };
 
 const RUN = {
   "date": "2026-09-20",
   "runId": "2026-09-20T20:54:25.282133+00:00",
+  "runIds": [
+    "2026-09-20T18:00:15.961406+00:00",
+    "2026-09-20T20:14:57.094834+00:00",
+    "2026-09-20T20:54:25.282133+00:00"
+  ],
+  "dataVersion": "b01f17b3bb",
   "modelJev": "jev-1.13.0",
   "modelMini": "gpt-4o-mini-2024-07-18",
   "n": 500,
@@ -227,7 +244,7 @@ const TASKS = [
     "verdict": "neither",
     "ns": true,
     "why": "Read this row on recall, not accuracy. Jev 80.0% and 4o-mini 81.0% are tied (p=0.72), and a current small model does beat both at 86.0%. But all three are biased toward letting text through: Jev catches 60.0% of injections, 4o-mini 62.7%, the 2026 model 72.0%. Better is not the same as usable when 28.0% still walk past.",
-    "gate": "The exception on this site. The slice looks fine at 90.6% on 71.3%, but that is accuracy, and accuracy is not the job. Injection recall only moves from 60.0% to 66.3% between gate 0.5 and 0.9, so the misses go to a human rather than away. Neither model is a standalone gate.",
+    "gate": "The exception on this site. The slice reads 87.4% on 79.3% of inputs, but that is accuracy, and accuracy is not the job. Injection recall only moves from 60.0% to 66.3% between gate 0.5 and 0.9, so the misses go to a human rather than away. Neither model is a standalone gate.",
     "goldTier": "research",
     "rowNote": "Misses 40.0% of injections. The 2026 model still misses 28.0%.",
     "rowNoteKind": "warn",
@@ -258,6 +275,7 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 0.719,
+      "pHolm": 1.0,
       "winner": "ns",
       "b": 14,
       "c": 17
@@ -309,24 +327,24 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.89,
-        "acc": 0.839
+        "cov": 1.0,
+        "acc": 0.8
       },
       "0.6": {
+        "cov": 0.96,
+        "acc": 0.812
+      },
+      "0.7": {
+        "cov": 0.9233,
+        "acc": 0.82
+      },
+      "0.8": {
         "cov": 0.86,
         "acc": 0.853
       },
-      "0.7": {
-        "cov": 0.8366666666666667,
-        "acc": 0.853
-      },
-      "0.8": {
-        "cov": 0.7933333333333333,
-        "acc": 0.874
-      },
       "0.9": {
-        "cov": 0.7133333333333334,
-        "acc": 0.907
+        "cov": 0.7933,
+        "acc": 0.874
       }
     },
     "errors": {
@@ -457,9 +475,12 @@ const TASKS = [
     },
     "autoSlice": {
       "gate": 0.9,
-      "acc": 0.9065,
-      "cov": 0.7133,
-      "lift": 0.1065
+      "acc": 0.8739,
+      "cov": 0.7933,
+      "lift": 0.0739,
+      "cvAcc": 0.8731,
+      "cvLo": 0.8306,
+      "cvHi": 0.9153
     }
   },
   {
@@ -471,10 +492,10 @@ const TASKS = [
     "labels": "credit_reporting / debt_collection / cards / bank_account / mortgage / money_transfer / loans / student_loan",
     "verdict": "mix",
     "ns": true,
-    "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, so this is also the first row where Jev is the cheaper API: $33.89 against $53.21 per million decisions.",
-    "gate": "At >=0.9: 91.8% on 75.6% of complaints, 9.0pt above ungated. ECE 0.100 means do not repeat the confidence figure to anyone as a probability; it does not stop you thresholding on it.",
+    "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, well past the crossover, so Jev is the cheaper API here by the widest margin on the board: $33.89 against $53.21 per million decisions.",
+    "gate": "At >=0.9: 91.2% on 77.4% of complaints, 8.4pt above ungated. ECE 0.100 means do not repeat the confidence to anyone as a probability; it does not stop you thresholding on it.",
     "goldTier": "live",
-    "rowNote": "TF-IDF beats both APIs at 86.8%. Jev beats the 2026 model here.",
+    "rowNote": "TF-IDF beats both APIs at 86.8%. Jev and the 2026 model tie after correction.",
     "rowNoteKind": "info",
     "goldNote": "Live system: a regulator routes these daily and the filer picks the label",
     "sourceName": "CFPB Consumer Complaint Database",
@@ -503,6 +524,7 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 0.253,
+      "pHolm": 1.0,
       "winner": "ns",
       "b": 29,
       "c": 20
@@ -513,7 +535,7 @@ const TASKS = [
       "hi": 0.895,
       "p50us": 262,
       "trainN": 63392,
-      "vsJev": "tfidf",
+      "vsJev": "ns",
       "vsMini": "tfidf"
     },
     "ece": {
@@ -560,24 +582,24 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.974,
-        "acc": 0.844
+        "cov": 0.996,
+        "acc": 0.831
       },
       "0.6": {
-        "cov": 0.93,
-        "acc": 0.86
+        "cov": 0.964,
+        "acc": 0.847
       },
       "0.7": {
-        "cov": 0.88,
-        "acc": 0.882
+        "cov": 0.908,
+        "acc": 0.872
       },
       "0.8": {
-        "cov": 0.834,
-        "acc": 0.897
+        "cov": 0.854,
+        "acc": 0.892
       },
       "0.9": {
-        "cov": 0.756,
-        "acc": 0.918
+        "cov": 0.774,
+        "acc": 0.912
       }
     },
     "errors": {
@@ -967,14 +989,17 @@ const TASKS = [
       "hi": 0.82,
       "p50": 979,
       "tokens": 334.5,
-      "vsJev": "jev",
+      "vsJev": "ns",
       "vsMini": "ns"
     },
     "autoSlice": {
       "gate": 0.9,
-      "acc": 0.918,
-      "cov": 0.756,
-      "lift": 0.09
+      "acc": 0.9121,
+      "cov": 0.774,
+      "lift": 0.0841,
+      "cvAcc": 0.912,
+      "cvLo": 0.8844,
+      "cvHi": 0.9391
     }
   },
   {
@@ -987,7 +1012,7 @@ const TASKS = [
     "verdict": "mix",
     "ns": true,
     "why": "The same decision as the hate-speech row, on clean CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF wins again at 82.8%. Read this next to the hate row: the Don't verdict there does not survive a change of gold, so it was a fact about that dataset more than about Jev.",
-    "gate": "Best-behaved gate here: 91.3% on 52.8% of comments at >=0.8, 13.3pt above ungated, and ECE 0.075 is low enough to state the confidence out loud. Publish that half automatically and queue the rest.",
+    "gate": "91.0% on 53.4% of comments at >=0.9, 13.0pt above ungated, and ECE 0.075 is low enough to state the confidence out loud. Publish that half automatically and queue the rest.",
     "goldTier": "real",
     "rowNote": "Misses 28.0% of toxic comments. Mini misses only 13.2% but wrongly blocks 32.8%.",
     "rowNoteKind": "warn",
@@ -1018,6 +1043,7 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 0.688,
+      "pHolm": 1.0,
       "winner": "ns",
       "b": 52,
       "c": 47
@@ -1028,7 +1054,7 @@ const TASKS = [
       "hi": 0.859,
       "p50us": 74,
       "trainN": 60000,
-      "vsJev": "tfidf",
+      "vsJev": "ns",
       "vsMini": "tfidf"
     },
     "ece": {
@@ -1069,24 +1095,24 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.738,
-        "acc": 0.846
+        "cov": 1.0,
+        "acc": 0.78
       },
       "0.6": {
-        "cov": 0.68,
-        "acc": 0.865
+        "cov": 0.898,
+        "acc": 0.811
       },
       "0.7": {
-        "cov": 0.62,
-        "acc": 0.884
+        "cov": 0.798,
+        "acc": 0.83
       },
       "0.8": {
-        "cov": 0.528,
-        "acc": 0.913
+        "cov": 0.686,
+        "acc": 0.866
       },
       "0.9": {
-        "cov": 0.432,
-        "acc": 0.931
+        "cov": 0.534,
+        "acc": 0.91
       }
     },
     "errors": {
@@ -1216,10 +1242,13 @@ const TASKS = [
       "vsMini": "ns"
     },
     "autoSlice": {
-      "gate": 0.8,
-      "acc": 0.9129,
-      "cov": 0.528,
-      "lift": 0.1329
+      "gate": 0.9,
+      "acc": 0.9101,
+      "cov": 0.534,
+      "lift": 0.1301,
+      "cvAcc": 0.9087,
+      "cvLo": 0.8657,
+      "cvHi": 0.947
     }
   },
   {
@@ -1232,7 +1261,7 @@ const TASKS = [
     "verdict": "mix",
     "ns": true,
     "why": "Dead heat: Jev 96.4, Mini 96.4, TF-IDF 96.4. Classical ML is enough here. Nothing separates the three.",
-    "gate": "Already at 96.4% ungated, so the gate has little left to buy: 99.0% on 80.0% at >=0.9, 2.6pt. Low ECE rows gain least because there is no headroom.",
+    "gate": "Already at 96.4% ungated, so the gate has little left to buy: 98.8% on 85.2% at >=0.9, 2.4pt. Low ECE rows gain least because there is no headroom.",
     "goldTier": "research",
     "rowNote": null,
     "rowNoteKind": null,
@@ -1263,6 +1292,7 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 0.773,
+      "pHolm": 1.0,
       "winner": "ns",
       "b": 6,
       "c": 6
@@ -1314,24 +1344,24 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.942,
-        "acc": 0.975
+        "cov": 1.0,
+        "acc": 0.964
       },
       "0.6": {
-        "cov": 0.914,
-        "acc": 0.982
+        "cov": 0.982,
+        "acc": 0.97
       },
       "0.7": {
-        "cov": 0.888,
-        "acc": 0.989
+        "cov": 0.956,
+        "acc": 0.971
       },
       "0.8": {
-        "cov": 0.852,
-        "acc": 0.988
+        "cov": 0.914,
+        "acc": 0.983
       },
       "0.9": {
-        "cov": 0.8,
-        "acc": 0.99
+        "cov": 0.852,
+        "acc": 0.988
       }
     },
     "errors": {
@@ -1462,9 +1492,12 @@ const TASKS = [
     },
     "autoSlice": {
       "gate": 0.9,
-      "acc": 0.99,
-      "cov": 0.8,
-      "lift": 0.026
+      "acc": 0.9883,
+      "cov": 0.852,
+      "lift": 0.0243,
+      "cvAcc": 0.9866,
+      "cvLo": 0.97,
+      "cvHi": 1.0
     }
   },
   {
@@ -1477,7 +1510,7 @@ const TASKS = [
     "verdict": "mix",
     "ns": true,
     "why": "Tied (McNemar p=0.55). 97.0% vs 96.4%. TF-IDF drops to 82.6%, so the models earn their keep against classical, not against each other.",
-    "gate": "Lowest ECE on the board at 0.015, so the confidence can be quoted directly, but the gate only adds 1.8pt (98.8% on 80.6%). Little headroom left.",
+    "gate": "Lowest ECE on the board at 0.015, so the confidence can be quoted directly, but the gate only adds 1.5pt (98.5% on 94.2% at >=0.8). Little headroom left.",
     "goldTier": "research",
     "rowNote": null,
     "rowNoteKind": null,
@@ -1508,6 +1541,7 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 0.546,
+      "pHolm": 1.0,
       "winner": "ns",
       "b": 7,
       "c": 4
@@ -1559,24 +1593,24 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.954,
-        "acc": 0.981
+        "cov": 1.0,
+        "acc": 0.97
       },
       "0.6": {
+        "cov": 0.988,
+        "acc": 0.974
+      },
+      "0.7": {
+        "cov": 0.972,
+        "acc": 0.979
+      },
+      "0.8": {
         "cov": 0.942,
         "acc": 0.985
       },
-      "0.7": {
-        "cov": 0.918,
-        "acc": 0.985
-      },
-      "0.8": {
-        "cov": 0.882,
-        "acc": 0.984
-      },
       "0.9": {
-        "cov": 0.806,
-        "acc": 0.988
+        "cov": 0.884,
+        "acc": 0.984
       }
     },
     "errors": {
@@ -1702,14 +1736,17 @@ const TASKS = [
       "hi": 0.964,
       "p50": 1000,
       "tokens": 64.4,
-      "vsJev": "jev",
+      "vsJev": "ns",
       "vsMini": "mini"
     },
     "autoSlice": {
-      "gate": 0.9,
-      "acc": 0.9876,
-      "cov": 0.806,
-      "lift": 0.0176
+      "gate": 0.8,
+      "acc": 0.9851,
+      "cov": 0.942,
+      "lift": 0.0151,
+      "cvAcc": 0.9834,
+      "cvLo": 0.9668,
+      "cvHi": 0.9958
     }
   },
   {
@@ -1722,7 +1759,7 @@ const TASKS = [
     "verdict": "replace",
     "ns": false,
     "why": "Jev +4.8pt, McNemar p=0.0053. Optimism vs joy is still the messy pair. TF-IDF trails badly at 64.2%.",
-    "gate": "Use Jev in-loop. At >=0.7: 88.5% on 74.8% of traffic.",
+    "gate": "Use Jev in-loop. At >=0.9: 90.3% on 66.2% of traffic, 10.5pt above ungated.",
     "goldTier": "research",
     "rowNote": null,
     "rowNoteKind": null,
@@ -1753,6 +1790,7 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 0.00528,
+      "pHolm": 0.0476,
       "winner": "jev",
       "b": 46,
       "c": 22
@@ -1810,24 +1848,24 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.868,
-        "acc": 0.848
+        "cov": 0.976,
+        "acc": 0.805
       },
       "0.6": {
-        "cov": 0.81,
-        "acc": 0.867
+        "cov": 0.898,
+        "acc": 0.835
       },
       "0.7": {
-        "cov": 0.748,
-        "acc": 0.885
+        "cov": 0.812,
+        "acc": 0.865
       },
       "0.8": {
-        "cov": 0.71,
-        "acc": 0.893
+        "cov": 0.732,
+        "acc": 0.885
       },
       "0.9": {
-        "cov": 0.616,
-        "acc": 0.909
+        "cov": 0.662,
+        "acc": 0.903
       }
     },
     "errors": {
@@ -2046,9 +2084,12 @@ const TASKS = [
     },
     "autoSlice": {
       "gate": 0.9,
-      "acc": 0.9091,
-      "cov": 0.616,
-      "lift": 0.1111
+      "acc": 0.9033,
+      "cov": 0.662,
+      "lift": 0.1053,
+      "cvAcc": 0.9026,
+      "cvLo": 0.8696,
+      "cvHi": 0.9337
     }
   },
   {
@@ -2058,10 +2099,10 @@ const TASKS = [
     "replaces": "Offensive-content classifier",
     "dataset": "tweet_eval offensive",
     "labels": "not_offensive / offensive",
-    "verdict": "replace",
-    "ns": false,
-    "why": "Jev +5.8pt, McNemar p=0.0079. Mean confidence is only 0.75, so the gate is the product, not the headline accuracy.",
-    "gate": "At >=0.9: 89.0% on 50.8% of posts, 12.4pt above ungated, the second largest gain on the board. Rest to a human.",
+    "verdict": "mix",
+    "ns": true,
+    "why": "Jev +5.8pt over Mini looks significant on its own (raw p=0.0079) but does not survive Holm correction across the eleven tests (p=0.063). Treat it as a tie. Mean confidence is only 0.75, so the gate matters more than the headline.",
+    "gate": "At >=0.9: 86.7% on 60.2% of posts, 10.1pt above ungated. Rest to a human.",
     "goldTier": "research",
     "rowNote": "Misses 37.3% of offensive posts.",
     "rowNoteKind": "warn",
@@ -2092,7 +2133,8 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 0.00787,
-      "winner": "jev",
+      "pHolm": 0.063,
+      "winner": "ns",
       "b": 70,
       "c": 41
     },
@@ -2143,24 +2185,24 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.79,
-        "acc": 0.818
+        "cov": 1.0,
+        "acc": 0.766
       },
       "0.6": {
+        "cov": 0.92,
+        "acc": 0.785
+      },
+      "0.7": {
+        "cov": 0.828,
+        "acc": 0.812
+      },
+      "0.8": {
         "cov": 0.742,
         "acc": 0.833
       },
-      "0.7": {
-        "cov": 0.68,
-        "acc": 0.844
-      },
-      "0.8": {
+      "0.9": {
         "cov": 0.602,
         "acc": 0.867
-      },
-      "0.9": {
-        "cov": 0.508,
-        "acc": 0.89
       }
     },
     "errors": {
@@ -2291,9 +2333,12 @@ const TASKS = [
     },
     "autoSlice": {
       "gate": 0.9,
-      "acc": 0.8898,
-      "cov": 0.508,
-      "lift": 0.1238
+      "acc": 0.8671,
+      "cov": 0.602,
+      "lift": 0.1011,
+      "cvAcc": 0.867,
+      "cvLo": 0.8322,
+      "cvHi": 0.9013
     }
   },
   {
@@ -2306,7 +2351,7 @@ const TASKS = [
     "verdict": "mix",
     "ns": true,
     "why": "Coin flip vs Mini (p=0.58). Neutral is still the killer class. ECE 0.141 means the confidence number is shaky too.",
-    "gate": "Jev if confidence >=0.7 (80.6% on 74.2%); Mini or a human on the rest.",
+    "gate": "Jev if confidence >=0.9 (81.6% on 65.2%); Mini or a human on the rest.",
     "goldTier": "research",
     "rowNote": null,
     "rowNoteKind": null,
@@ -2337,6 +2382,7 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 0.576,
+      "pHolm": 1.0,
       "winner": "ns",
       "b": 43,
       "c": 37
@@ -2394,24 +2440,24 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.84,
-        "acc": 0.798
+        "cov": 0.978,
+        "acc": 0.749
       },
       "0.6": {
-        "cov": 0.8,
-        "acc": 0.797
+        "cov": 0.902,
+        "acc": 0.774
       },
       "0.7": {
-        "cov": 0.742,
-        "acc": 0.806
+        "cov": 0.824,
+        "acc": 0.801
       },
       "0.8": {
-        "cov": 0.698,
-        "acc": 0.817
+        "cov": 0.744,
+        "acc": 0.806
       },
       "0.9": {
-        "cov": 0.584,
-        "acc": 0.829
+        "cov": 0.652,
+        "acc": 0.816
       }
     },
     "errors": {
@@ -2586,9 +2632,12 @@ const TASKS = [
     },
     "autoSlice": {
       "gate": 0.9,
-      "acc": 0.8288,
-      "cov": 0.584,
-      "lift": 0.0908
+      "acc": 0.816,
+      "cov": 0.652,
+      "lift": 0.078,
+      "cvAcc": 0.8114,
+      "cvLo": 0.7711,
+      "cvHi": 0.8544
     }
   },
   {
@@ -2598,12 +2647,12 @@ const TASKS = [
     "replaces": "4-way news classifier",
     "dataset": "AG News test",
     "labels": "world / sports / business / sci_tech",
-    "verdict": "replace",
-    "ns": false,
-    "why": "TF-IDF 90.8% beats Jev 85.6% and Mini 82.6% after training on 120k rows. Among the APIs Jev wins by 3.0pt (p=0.0093). If you have labels, skip both models.",
-    "gate": "Jev first among APIs. At >=0.7: 90.1% on 90.6% of articles.",
+    "verdict": "mix",
+    "ns": true,
+    "why": "TF-IDF 90.8% beats Jev 85.6% and Mini 82.6% after training on 120k rows. Jev's 3.0pt lead over Mini is raw p=0.0093 but only 0.065 after Holm correction, so it is a tie among the APIs. If you have labels, skip both.",
+    "gate": "Jev first among APIs. At >=0.9: 92.9% on 84.4% of articles.",
     "goldTier": "research",
-    "rowNote": "Replace is vs Mini only. TF-IDF beats both at 90.8%.",
+    "rowNote": "TF-IDF beats both at 90.8%. Jev vs Mini ties after correction.",
     "rowNoteKind": "info",
     "goldNote": "Academic benchmark",
     "sourceName": "fancyzhx/ag_news",
@@ -2632,7 +2681,8 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 0.00933,
-      "winner": "jev",
+      "pHolm": 0.0653,
+      "winner": "ns",
       "b": 22,
       "c": 7
     },
@@ -2683,23 +2733,23 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.966,
-        "acc": 0.87
+        "cov": 1.0,
+        "acc": 0.856
       },
       "0.6": {
+        "cov": 0.976,
+        "acc": 0.867
+      },
+      "0.7": {
         "cov": 0.938,
         "acc": 0.883
       },
-      "0.7": {
-        "cov": 0.906,
-        "acc": 0.901
-      },
       "0.8": {
-        "cov": 0.864,
-        "acc": 0.921
+        "cov": 0.896,
+        "acc": 0.904
       },
       "0.9": {
-        "cov": 0.84,
+        "cov": 0.844,
         "acc": 0.929
       }
     },
@@ -2919,9 +2969,12 @@ const TASKS = [
     },
     "autoSlice": {
       "gate": 0.9,
-      "acc": 0.9286,
-      "cov": 0.84,
-      "lift": 0.0726
+      "acc": 0.9289,
+      "cov": 0.844,
+      "lift": 0.0729,
+      "cvAcc": 0.9289,
+      "cvLo": 0.905,
+      "cvHi": 0.9526
     }
   },
   {
@@ -2934,7 +2987,7 @@ const TASKS = [
     "verdict": "replace",
     "ns": false,
     "why": "TF-IDF 93.2% beats both neural judges (p<1e-19) if you have labels. Jev still beats Mini among APIs by 7.4pt. Do not pay for a model on this task if you can train one.",
-    "gate": "Gating works here even though the calibration does not: at >=0.9 it is 80.4% on 77.6% of tickets, 8.6pt above ungated. What ECE 0.213 costs you is the right to quote the confidence as a probability, not the right to threshold on it.",
+    "gate": "Gating works here even though the calibration does not: at >=0.9 it is 80.1% on 78.4% of tickets, 8.3pt above ungated. What ECE 0.213 costs you is the right to quote the confidence as a probability, not the right to threshold on it.",
     "goldTier": "research",
     "rowNote": "Replace is vs Mini only. TF-IDF beats both at 93.2%.",
     "rowNoteKind": "info",
@@ -2965,6 +3018,7 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 3.23e-05,
+      "pHolm": 0.000355,
       "winner": "jev",
       "b": 56,
       "c": 19
@@ -3028,24 +3082,24 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.964,
-        "acc": 0.73
+        "cov": 0.988,
+        "acc": 0.725
       },
       "0.6": {
-        "cov": 0.934,
-        "acc": 0.741
+        "cov": 0.948,
+        "acc": 0.734
       },
       "0.7": {
-        "cov": 0.91,
-        "acc": 0.749
+        "cov": 0.924,
+        "acc": 0.747
       },
       "0.8": {
-        "cov": 0.85,
-        "acc": 0.776
+        "cov": 0.87,
+        "acc": 0.77
       },
       "0.9": {
-        "cov": 0.776,
-        "acc": 0.804
+        "cov": 0.784,
+        "acc": 0.801
       }
     },
     "errors": {
@@ -3440,9 +3494,12 @@ const TASKS = [
     },
     "autoSlice": {
       "gate": 0.9,
-      "acc": 0.8041,
-      "cov": 0.776,
-      "lift": 0.0861
+      "acc": 0.801,
+      "cov": 0.784,
+      "lift": 0.083,
+      "cvAcc": 0.801,
+      "cvLo": 0.7612,
+      "cvHi": 0.8421
     }
   },
   {
@@ -3455,7 +3512,7 @@ const TASKS = [
     "verdict": "dont",
     "ns": false,
     "why": "Mini +7.8pt (p=0.0026). Jev mean confidence 0.67 and ECE 0.187, so the confidence cannot carry a threshold either. Kept on the homepage, but compare it with the Civil Comments row: on cleaner gold for the same decision the gap disappears.",
-    "gate": "Gating buys least here of any row: 72.3% on 57.0% at >=0.7, only 6.1pt above ungated, and Mini is better anyway. Keep a specialist.",
+    "gate": "Gating buys least here of any row: 70.7% on 64.2% at >=0.8, only 4.5pt above ungated, and Mini is better anyway. Keep a specialist.",
     "goldTier": "research",
     "rowNote": "Don't is this dataset's verdict: on CC0 gold the gap disappears.",
     "rowNoteKind": "info",
@@ -3486,6 +3543,7 @@ const TASKS = [
     },
     "mcnemar": {
       "p": 0.00258,
+      "pHolm": 0.0258,
       "winner": "mini",
       "b": 60,
       "c": 99
@@ -3537,24 +3595,24 @@ const TASKS = [
     },
     "gates": {
       "0.5": {
-        "cov": 0.698,
-        "acc": 0.699
+        "cov": 1.0,
+        "acc": 0.662
       },
       "0.6": {
-        "cov": 0.64,
-        "acc": 0.706
+        "cov": 0.912,
+        "acc": 0.664
       },
       "0.7": {
-        "cov": 0.57,
-        "acc": 0.723
+        "cov": 0.78,
+        "acc": 0.677
       },
       "0.8": {
-        "cov": 0.462,
-        "acc": 0.758
+        "cov": 0.642,
+        "acc": 0.707
       },
       "0.9": {
-        "cov": 0.326,
-        "acc": 0.816
+        "cov": 0.466,
+        "acc": 0.755
       }
     },
     "errors": {
@@ -3684,10 +3742,13 @@ const TASKS = [
       "vsMini": "ns"
     },
     "autoSlice": {
-      "gate": 0.7,
-      "acc": 0.7228,
-      "cov": 0.57,
-      "lift": 0.0608
+      "gate": 0.8,
+      "acc": 0.7072,
+      "cov": 0.642,
+      "lift": 0.0452,
+      "cvAcc": 0.7111,
+      "cvLo": 0.6585,
+      "cvHi": 0.7778
     }
   }
 ];

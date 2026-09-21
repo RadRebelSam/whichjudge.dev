@@ -16,6 +16,7 @@ which is what stops the table from silently drifting from the receipts.
 """
 from __future__ import annotations
 
+import hashlib
 import html
 import json
 import re
@@ -53,10 +54,31 @@ def pct(x) -> str:
     return f"{x * 100:.1f}%"
 
 
-def build_tasks(copy, summary, calib, tfidf, errors, modern):
+def holm(pvalues: dict) -> dict:
+    """Holm-Bonferroni adjusted p-values for one family of tests.
+
+    Eleven McNemar tests at 0.05 each will crown winners by chance. Holm controls
+    the family-wise error rate without Bonferroni's full conservatism. Applied
+    separately to each comparison family, never across them.
+    """
+    order = sorted(pvalues.items(), key=lambda kv: kv[1])
+    m = len(order)
+    adjusted, running = {}, 0.0
+    for i, (key, pv) in enumerate(order):
+        running = max(running, min(1.0, (m - i) * pv))
+        adjusted[key] = running
+    return adjusted
+
+
+def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile):
     by_id = {r["task_id"]: r for r in summary}
     tf_by_id = {r["task_id"]: r for r in tfidf}
     mod_by_id = {r["task_id"]: r for r in (modern or {}).get("tasks", [])}
+    # One Holm family per comparison: Jev vs Mini, TF-IDF vs Jev, current model vs Jev.
+    holm_mini = holm({r["task_id"]: r["mcnemar"]["p_value"] for r in summary})
+    holm_tfidf = holm({r["task_id"]: r["mcnemar_vs_jev"]["p_value"] for r in tfidf})
+    holm_modern = holm({r["task_id"]: r["mcnemar_vs_jev"]["p_value"]
+                        for r in (modern or {}).get("tasks", [])})
     out = []
     for c in copy["tasks"]:
         tid = c["id"]
@@ -64,13 +86,20 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern):
         t = tf_by_id[tid]
         mc = s["mcnemar"]
         n = s["n"]
+        # One score for gating and calibration. summary.json's jev_gates thresholded
+        # on 'confidence' while ECE used 'p_chosen'; gates.json uses p_chosen for both.
+        gtab = gatefile[tid]["gates"]
+        gcv = gatefile[tid]["cross_validated"]
 
-        # ns is not an opinion: it is "McNemar did not clear 0.05".
-        derived_ns = not mc["significant_0_05"]
+        # ns is not an opinion: it is "McNemar did not clear 0.05 after Holm
+        # correction across all eleven Jev-vs-Mini tests". Uncorrected, two rows
+        # (offensive, news) looked significant that do not survive the family.
+        p_holm = holm_mini[tid]
+        derived_ns = p_holm >= 0.05
         if bool(c["ns"]) != derived_ns:
             raise SystemExit(
-                f"{tid}: copy.json says ns={c['ns']} but McNemar p={mc['p_value']:.3g} "
-                f"means ns={derived_ns}. Fix the copy, not the number."
+                f"{tid}: copy.json says ns={c['ns']} but Holm-adjusted p={p_holm:.3g} "
+                f"(raw {mc['p_value']:.3g}) means ns={derived_ns}. Fix the copy, not the number."
             )
         # The reverse direction matters just as much: a row may not claim a winner
         # over Mini when McNemar declined to give it one. "neither" is about all the
@@ -78,13 +107,14 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern):
         if derived_ns and c["verdict"] in ("replace", "dont"):
             raise SystemExit(
                 f"{tid}: copy.json claims verdict={c['verdict']} but McNemar is ns "
-                f"(p={mc['p_value']:.3g}). Use \"mix\" or \"neither\"; the badge must not "
+                f"after Holm (p={p_holm:.3g}, raw {mc['p_value']:.3g}). Use \"mix\" or \"neither\"; the badge must not "
                 f"crown a winner the test refused to."
             )
 
         auto = None
-        for gate, v in sorted(s["jev_gates"].items()):
-            if v["coverage"] >= 0.5 and (auto is None or v["accuracy"] > auto[1]["accuracy"]):
+        for gate, v in sorted(gtab.items()):
+            if (v["accuracy"] is not None and v["coverage"] >= 0.5
+                    and (auto is None or v["accuracy"] > auto[1]["accuracy"])):
                 auto = (gate, v)
         auto_slice = None
         if auto:
@@ -94,6 +124,9 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern):
                 "acc": round(v["accuracy"], 4),
                 "cov": round(v["coverage"], 4),
                 "lift": round(v["accuracy"] - s["jev_acc"], 4),
+                "cvAcc": gcv["accuracy_mean"],
+                "cvLo": gcv["accuracy_lo"],
+                "cvHi": gcv["accuracy_hi"],
             }
 
         # Editorial sentences quote measurements. After a re-run they go stale
@@ -102,7 +135,9 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern):
         known = set()
         for value in (s["jev_acc"], s["mini_acc"], t["acc"]):
             known.add(round(value * 100, 1))
-        for gate in s["jev_gates"].values():
+        for gate in gtab.values():
+            if gate["accuracy"] is None:
+                continue
             known.add(round(gate["accuracy"] * 100, 1))
             known.add(round(gate["coverage"] * 100, 1))
         known.add(round(abs(s["jev_acc"] - s["mini_acc"]) * 100, 1))
@@ -111,7 +146,9 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern):
             known.add(round(md["acc"] * 100, 1))
             known.add(round(md["wilson"]["lo"] * 100, 1))
             known.add(round(md["wilson"]["hi"] * 100, 1))
-        for gate, v in s["jev_gates"].items():
+        for gate, v in gtab.items():
+            if v["accuracy"] is None:
+                continue
             known.add(round((v["accuracy"] - s["jev_acc"]) * 100, 1))
         if auto_slice:
             for key in ("acc", "cov", "lift"):
@@ -143,7 +180,8 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern):
 
         def versus(key, loser):
             m = t[key]
-            if m["p_value"] >= 0.05:
+            adj = holm_tfidf[tid] if key == "mcnemar_vs_jev" else m["p_value"]
+            if adj >= 0.05:
                 return "ns"
             return "tfidf" if m["winner"] == "a" else loser
 
@@ -193,7 +231,8 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern):
             },
             "mcnemar": {
                 "p": float(f"{mc['p_value']:.3g}"),
-                "winner": mc["winner"] if mc["significant_0_05"] else "ns",
+                "pHolm": float(f"{p_holm:.3g}"),
+                "winner": mc["winner"] if not derived_ns else "ns",
                 "b": mc["jev_only_correct"],
                 "c": mc["mini_only_correct"],
             },
@@ -213,7 +252,7 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern):
             },
             "gates": {
                 k: {"cov": v["coverage"], "acc": round(v["accuracy"], 3)}
-                for k, v in s["jev_gates"].items()
+                for k, v in gtab.items() if v["accuracy"] is not None
             },
             "errors": errors.get(tid),
             "modern": ({
@@ -223,7 +262,7 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern):
                 "hi": round(md["wilson"]["hi"], 3),
                 "p50": round(md["p50_ms"]),
                 "tokens": md["tokens_per_call"],
-                "vsJev": ("ns" if md["mcnemar_vs_jev"]["p_value"] >= 0.05
+                "vsJev": ("ns" if holm_modern.get(tid, 1.0) >= 0.05
                           else ("modern" if md["mcnemar_vs_jev"]["winner"] == "a" else "jev")),
                 "vsMini": ("ns" if md["mcnemar_vs_mini"]["p_value"] >= 0.05
                            else ("modern" if md["mcnemar_vs_mini"]["winner"] == "a" else "mini")),
@@ -248,6 +287,19 @@ def render_data_js(run, tasks, site, calls, curve) -> str:
 def render_decision_page(t, run, site) -> str:
     slug = t["id"].replace("_", "-")
     url = f"{site['domain']}/decision/{slug}.html"
+    # A verdict chip only ever compared Jev with 4o-mini. On the static page, which
+    # is what crawlers and link previews read, say what else the data shows.
+    notes = []
+    if t["tfidf"]["vsJev"] == "tfidf":
+        notes.append(f"A TF-IDF classifier trained on labelled data beats both APIs here "
+                     f"at {pct(t['tfidf']['acc'])}. If you have labels, do not buy either.")
+    if t.get("modern") and t["modern"]["vsJev"] == "modern":
+        notes.append(f"{t['modern']['model']} beats Jev here at {pct(t['modern']['acc'])}.")
+    if t["ece"]["ece"] > 0.12:
+        notes.append(f"ECE {t['ece']['ece']}: do not quote the confidence as a probability.")
+    caveats = ("<ul class=\"caveats\">" + "".join(f"<li>{e(n)}</li>" for n in notes) + "</ul>"
+               if notes else "")
+
     # "Replace (ns)" said two opposite things at once. McNemar refusing to crown a
     # winner outranks the editorial verdict, exactly as the table shows it.
     if t["verdict"] == "neither":
@@ -324,6 +376,9 @@ def render_decision_page(t, run, site) -> str:
         "pre{overflow-x:auto}"
         ".verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;"
         "padding:.1rem .6rem;font-size:12px}"
+        ".scope{margin-left:.5rem;font-size:12px;color:#71717a}"
+        ".stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}"
+        ".caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}"
         "a{color:#18181b}"
         "@media (prefers-color-scheme:dark){"
         "body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}"
@@ -342,13 +397,16 @@ def render_decision_page(t, run, site) -> str:
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:url" content="{e(url)}">
 <meta name="twitter:card" content="summary">
+<meta name="whichjudge-build" content="{e(run['dataVersion'])}">
 <script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>
 <style>{style}</style>
 </head>
 <body>
 <p><a href="../index.html">{e(site['name'])}</a> / decision</p>
 <h1>{e(t['title'])}</h1>
-<p><span class="verdict">{e(verdict)}{ns_tag}</span></p>
+<p><span class="verdict">{e(verdict)}{ns_tag}</span>
+<span class="scope">compares Jev with 4o-mini only</span></p>
+{caveats}
 <p>{e(t['why'])}</p>
 <p><strong>Replaces:</strong> {e(t['replaces'])}<br>
 <strong>Gold:</strong> <a href="{e(t['sourceUrl'])}" rel="noopener">{e(t['sourceName'])}</a>
@@ -386,6 +444,7 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All {run['tasks']} decisions</a> &middot;
 <a href="{e(site['repo'])}">source and data</a> &middot;
 <a href="mailto:{e(site['contact'])}">{e(site['contact'])}</a></p>
+<p class="stamp">build {e(run['dataVersion'])} &middot; data from {len(run['runIds'])} run(s)</p>
 </body>
 </html>
 """
@@ -500,13 +559,14 @@ def main() -> None:
     calib = load(RESULTS / "calibration.json")
     tfidf = load(RESULTS / "tfidf_baseline_summary.json")
     errors = load(RESULTS / "error_profile.json")
+    gatefile = load(RESULTS / "gates.json")
     modern_path = RESULTS / "modern_baseline.json"
     modern = load(modern_path) if modern_path.exists() else None
     manifest = load(RESULTS / "manifest.json")
     curve_path = RESULTS / "cost_curve.json"
     curve = load(curve_path) if curve_path.exists() else None
 
-    tasks = build_tasks(copy, summary, calib, tfidf, errors, modern)
+    tasks = build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile)
     # Tasks may differ in size. Prompt injection only has 662 rows in existence, so
     # freezing 500 would leave nothing to train the classical baseline on. The site
     # shows each task's own n instead of claiming one number for all of them.
@@ -516,9 +576,30 @@ def main() -> None:
         counts[row["n"]] = counts.get(row["n"], 0) + 1
     n = max(counts, key=counts.get)
 
+    # A fingerprint of everything that shapes the rendered site. Stamped on every
+    # page and appended to the script URLs, so a reader can see which generation a
+    # CDN edge handed them, and a new page can never run against a cached old script.
+    # Built from content, not the git SHA, so --check stays stable across commits
+    # that do not touch the site.
+    fingerprint = hashlib.sha256()
+    for part in ("summary.json", "calibration.json", "gates.json", "error_profile.json",
+                 "tfidf_baseline_summary.json", "modern_baseline.json", "cost_curve.json"):
+        f = RESULTS / part
+        if f.exists():
+            fingerprint.update(f.read_bytes())
+    for part in ("copy.json", "app.js", "styles.css"):
+        fingerprint.update((SITE / part).read_bytes())
+    data_version = fingerprint.hexdigest()[:10]
+
+    # Rows can come from different runs (tasks re-run one at a time). Say so rather
+    # than presenting one run id for data that came from several.
+    run_ids = sorted({row.get("run_id") or manifest["run_id"] for row in summary})
+
     run = {
         "date": manifest["finished_utc"][:10],
         "runId": manifest["run_id"],
+        "runIds": run_ids,
+        "dataVersion": data_version,
         "modelJev": "jev-1.13.0",
         "modelMini": "gpt-4o-mini-2024-07-18",
         "n": n,
@@ -551,7 +632,12 @@ def main() -> None:
     if META_START in src and META_END in src:
         head, rest = src.split(META_START, 1)
         _, tail = rest.split(META_END, 1)
-        write(index, head + render_index_meta(site, run, tasks) + tail, check, drift)
+        page = head + render_index_meta(site, run, tasks) + tail
+        # Version the scripts with the fingerprint so the shell and its JS always
+        # come from the same generation, whatever an edge has cached.
+        page = re.sub(r'src="data\.js(?:\?v=[0-9a-f]+)?"', f'src="data.js?v={data_version}"', page)
+        page = re.sub(r'src="app\.js(?:\?v=[0-9a-f]+)?"', f'src="app.js?v={data_version}"', page)
+        write(index, page, check, drift)
     else:
         print("WARN index.html has no meta markers; skipping meta injection")
 

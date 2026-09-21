@@ -223,7 +223,7 @@ point.
 
 **Consumer complaint routing is the only production decision here.** The CFPB runs it
 live, the consumer writes the narrative and picks the product, and the complaint is
-routed to the company on that basis. It is also the only row whose inputs clear the
+routed to the company on that basis. Its narratives are the longest on the board and clear the
 cost crossover: at about 240 tokens per narrative, Jev costs
 $33.89 per million decisions against $53.21
 for 4o-mini. Text comes from a CC0 mirror; the gold label is joined from the Bureau's
@@ -273,12 +273,7 @@ is not which model is cheaper, it is how long your input is
 | 1402 | $72.45 | $213.35 | jev |
 | 2784 | $133.97 | $420.55 | jev |
 
-Crossover: Jev becomes the cheaper option above roughly
-**65 tokens** of content, about
-260 characters. Every task in the table above sits
-below that line, which is why Jev looks expensive on this board and would not on
-document-length work. Measured, not modelled; receipts in
-`results/receipts/cost_curve.json`.
+Crossover: Jev becomes the cheaper option above roughly **24 tokens of actual input**, about 96 characters. That is after removing the ~41-token system prompt 4o-mini adds to every call; an earlier version of this page counted that prompt as content and reported 65. Measured on the rows themselves, Jev is the cheaper API on **4 of 11**: prompt-injection screen, consumer complaint routing, comment toxicity gate, news topic. The short-text rows go to Mini. Receipts in `results/receipts/cost_curve.json`.
 
 **Latency** p50 was 807ms Jev against
 1057ms Mini on SMS in this run, including client
@@ -286,6 +281,29 @@ round-trip. An earlier run from a different network measured 193ms against 518ms
 ratio moves with where you measure from, so `results/manifest.json` records the
 machine and `WHICHJUDGE_REGION`. Treat any latency claim, including this one, as
 local to its client.
+
+## What these numbers do not mean
+
+Read the table with these limits in mind. Each was raised by an outside review; the ones
+that could be measured have been.
+
+- **Balanced samples, not production mix.** Every task is sampled with equal counts per
+  label. That makes accuracy comparable across models but it is not the share of each
+  label in real traffic, so a gate's coverage and accuracy here will not be the ones you
+  see in production. A spam gate at 50% spam behaves differently from one at 3%.
+- **The auto-slice gate is chosen and scored on the same rows.** That flatters it in
+  principle. Measured: choosing the gate on one half and scoring it on the other, over
+  400 random splits, moves the result by at most 0.5pt on any row, because there
+  are only five candidate gates and the pick is stable. `results/gates.json` carries both
+  numbers.
+- **Eleven comparisons at once.** Significance is Holm-corrected within each comparison
+  family. Two rows that looked like wins for Jev over 4o-mini (offensive language, news
+  topic) do not survive the correction and are shown as ties.
+- **Gating and calibration use one score.** An earlier version thresholded on Jev's
+  `confidence` while computing ECE on `p_chosen`; they differ on hundreds of rows.
+  Both now use `p_chosen`.
+- **Public gold.** Nine of eleven rows are academic benchmarks. Only CFPB routing uses
+  a live system's own labels, and those are chosen by the person filing, not an expert.
 
 ## Provenance - four layers
 

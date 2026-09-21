@@ -12,13 +12,16 @@
 <meta property="og:description" content="Review polarity on SST-2 validation, n=500 frozen gold. Jev 97.0%, gpt-4o-mini 96.4%, TF-IDF 82.6%. Verdict: ns. ECE 0.015.">
 <meta property="og:url" content="https://whichjudge.dev/decision/review-sentiment.html">
 <meta name="twitter:card" content="summary">
+<meta name="whichjudge-build" content="b01f17b3bb">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Review polarity - cheap decision model bake-off", "description": "Review polarity on SST-2 validation, n=500 frozen gold. Jev 97.0%, gpt-4o-mini 96.4%, TF-IDF 82.6%. Verdict: ns. ECE 0.015.", "url": "https://whichjudge.dev/decision/review-sentiment.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "SST-2 validation", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/review_sentiment.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.97}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.964}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.826}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.015}]}</script>
-<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
 <h1>Review polarity</h1>
-<p><span class="verdict">ns</span></p>
+<p><span class="verdict">ns</span>
+<span class="scope">compares Jev with 4o-mini only</span></p>
+
 <p>Tied (McNemar p=0.55). 97.0% vs 96.4%. TF-IDF drops to 82.6%, so the models earn their keep against classical, not against each other.</p>
 <p><strong>Replaces:</strong> Binary review sentiment<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/stanfordnlp/sst2" rel="noopener">stanfordnlp/sst2</a>
@@ -38,10 +41,10 @@
 (7 Jev-only correct, 4 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> jev.</p>
 <h2>Quit line</h2>
-<p>Lowest ECE on the board at 0.015, so the confidence can be quoted directly, but the gate only adds 1.8pt (98.8% on 80.6%). Little headroom left.</p>
-<p><strong>Auto slice:</strong> at Jev confidence &ge; 0.9,
-98.8% accurate on 80.6% of traffic, which is
-+1.8pt against 97.0% ungated. That threshold is the strongest
+<p>Lowest ECE on the board at 0.015, so the confidence can be quoted directly, but the gate only adds 1.5pt (98.5% on 94.2% at &gt;=0.8). Little headroom left.</p>
+<p><strong>Auto slice:</strong> at Jev confidence &ge; 0.8,
+98.5% accurate on 94.2% of traffic, which is
++1.5pt against 97.0% ungated. That threshold is the strongest
 one still covering at least half the traffic, picked by rule from the measured gates.</p>
 <p><strong>Calibration:</strong> ECE 0.015 (max bin gap 0.146).
 ECE says whether the confidence can be read as a probability. It does not say whether
@@ -59,5 +62,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
+<p class="stamp">build b01f17b3bb &middot; data from 3 run(s)</p>
 </body>
 </html>

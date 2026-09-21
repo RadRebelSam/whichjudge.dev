@@ -11,6 +11,11 @@
       window.matchMedia("(prefers-color-scheme: dark)").matches
     );
   </script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.0/dist/index.global.js"
+    integrity="sha384-nWTzRTCY/9V4Bo352ehygr1c4cnst4XN6lMR3fipakEQrhVpc0hEM5Dii3Amz0sT"
+    crossorigin="anonymous"
+  ></script>
 </head>
 <body class="min-h-dvh bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
   <main class="mx-auto w-full max-w-2xl px-4 py-10 text-sm leading-relaxed">
@@ -20,7 +25,7 @@
     <ul class="mt-6 list-disc space-y-3 pl-5 text-zinc-700 dark:text-zinc-300">
       <li>This is a static site. We do not run accounts, logins, or a submission form.</li>
       <li>We do not set our own cookies. Your host or CDN may log IPs in the ordinary way; we do not sell that.</li>
-      <li>Eval text is from public datasets (UCI SMS, SST-2, AG News, tweet_eval, BANKING77). Receipts shown on the page are those public samples plus model outputs.</li>
+      <li>Eval text is from public datasets: CFPB Consumer Complaint Database, Civil Comments, deepset prompt-injections, BANKING77, UCI SMS Spam, SST-2, AG News and TweetEval. Seven of the eleven ship only a SHA-256 of each text, not the text; see ATTRIBUTION.md in the source repo. Receipts shown on the page are model outputs and hashes, not personal data.</li>
       <li>If you email us, we keep the message only to reply. Do not send personal data or unlabeled production dumps.</li>
       <li>If this later uses analytics, this page will say so before it ships.</li>
     </ul>
