@@ -266,7 +266,7 @@ const RUN = {
     "2026-09-20T20:14:58.181225+00:00",
     "2026-09-20T20:54:26.296249+00:00"
   ],
-  "dataVersion": "34ba70b202",
+  "dataVersion": "2524f08fc4",
   "modelJev": "jev-1.13.0",
   "modelMini": "gpt-4o-mini-2024-07-18",
   "n": 500,
@@ -343,6 +343,7 @@ const TASKS = [
       "start": "2026-09-20T20:54:26.296249+00:00",
       "end": "2026-09-20T20:55:26.301949+00:00"
     },
+    "redacted": false,
     "ece": {
       "ece": 0.134,
       "mce": 0.377,
@@ -529,7 +530,9 @@ const TASKS = [
       "pJev": 0.000856,
       "pJevHolm": 0.00856,
       "pMini": 0.0148,
-      "pMiniHolm": 0.148
+      "pMiniHolm": 0.148,
+      "invalidLabels": 0,
+      "invalidLabelValues": []
     },
     "autoSlice": {
       "gate": 0.9,
@@ -550,10 +553,10 @@ const TASKS = [
     "labels": "credit_reporting / debt_collection / cards / bank_account / mortgage / money_transfer / loans / student_loan",
     "verdict": "mix",
     "ns": true,
-    "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, well past the crossover, so Jev is the cheaper API here by the widest margin on the board: $33.89 against $53.21 per million decisions.",
+    "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25). TF-IDF scores higher at 86.8%: significant against Mini, not against Jev after Holm correction. Narratives average about 240 tokens, well past the crossover, so Jev is the cheaper API here by the widest margin on the board: $33.89 against $53.21 per million decisions.",
     "gate": "At >=0.9: 91.2% on 77.4% of complaints, 8.4pt above ungated. ECE 0.100 means do not repeat the confidence to anyone as a probability; it does not stop you thresholding on it.",
     "goldTier": "live",
-    "rowNote": "TF-IDF beats both APIs at 86.8%. Jev and the 2026 model tie after correction.",
+    "rowNote": "TF-IDF scores highest at 86.8%; vs Jev that is ns after correction. Jev and the 2026 model tie.",
     "rowNoteKind": "info",
     "goldNote": "Live system: a regulator routes these daily and the filer picks the label",
     "sourceName": "CFPB Consumer Complaint Database",
@@ -606,6 +609,7 @@ const TASKS = [
       "start": "2026-09-20T18:00:17.353020+00:00",
       "end": "2026-09-20T18:02:02.908030+00:00"
     },
+    "redacted": false,
     "ece": {
       "ece": 0.1,
       "mce": 0.435,
@@ -1062,7 +1066,14 @@ const TASKS = [
       "pJev": 0.0117,
       "pJevHolm": 0.106,
       "pMini": 0.176,
-      "pMiniHolm": 0.656
+      "pMiniHolm": 0.656,
+      "invalidLabels": 4,
+      "invalidLabelValues": [
+        "auto",
+        "auto_leasing",
+        "auto_loan",
+        "auto_loans"
+      ]
     },
     "autoSlice": {
       "gate": 0.9,
@@ -1083,7 +1094,7 @@ const TASKS = [
     "labels": "toxic / not_toxic",
     "verdict": "mix",
     "ns": true,
-    "why": "The same decision as the hate-speech row, on clean CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF wins again at 82.8%. Read this next to the hate row: the Don't verdict there does not survive a change of gold, so it was a fact about that dataset more than about Jev.",
+    "why": "A neighbour of the hate-speech row: toxicity in comments rather than hate speech aimed at a group in tweets, on CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF scores higher at 82.8%, ns against either API after Holm correction. Read this next to the hate row: a different task and dataset gives a different ranking, which is the point, not proof that the hate loss was label noise.",
     "gate": "91.0% on 53.4% of comments at >=0.9, 13.0pt above ungated, and ECE 0.075 is low enough to state the confidence out loud. Publish that half automatically and queue the rest.",
     "goldTier": "real",
     "rowNote": "Misses 28.0% of toxic comments. Mini misses only 13.2% but wrongly blocks 32.8%.",
@@ -1139,6 +1150,7 @@ const TASKS = [
       "start": "2026-09-20T20:14:58.181225+00:00",
       "end": "2026-09-20T20:16:32.087016+00:00"
     },
+    "redacted": false,
     "ece": {
       "ece": 0.075,
       "mce": 0.138,
@@ -1325,7 +1337,9 @@ const TASKS = [
       "pJev": 0.534,
       "pJevHolm": 1.0,
       "pMini": 0.901,
-      "pMiniHolm": 0.901
+      "pMiniHolm": 0.901,
+      "invalidLabels": 0,
+      "invalidLabelValues": []
     },
     "autoSlice": {
       "gate": 0.9,
@@ -1402,6 +1416,7 @@ const TASKS = [
       "start": "2026-09-20T17:16:27.245444+00:00",
       "end": "2026-09-20T17:29:13.361937+00:00"
     },
+    "redacted": true,
     "ece": {
       "ece": 0.016,
       "mce": 0.278,
@@ -1588,7 +1603,9 @@ const TASKS = [
       "pJev": 0.0665,
       "pJevHolm": 0.459,
       "pMini": 0.0159,
-      "pMiniHolm": 0.148
+      "pMiniHolm": 0.148,
+      "invalidLabels": 0,
+      "invalidLabelValues": []
     },
     "autoSlice": {
       "gate": 0.9,
@@ -1665,6 +1682,7 @@ const TASKS = [
       "start": "2026-09-20T17:16:27.245444+00:00",
       "end": "2026-09-20T17:29:13.361937+00:00"
     },
+    "redacted": true,
     "ece": {
       "ece": 0.015,
       "mce": 0.146,
@@ -1851,7 +1869,9 @@ const TASKS = [
       "pJev": 0.0218,
       "pJevHolm": 0.174,
       "pMini": 0.0433,
-      "pMiniHolm": 0.346
+      "pMiniHolm": 0.346,
+      "invalidLabels": 0,
+      "invalidLabelValues": []
     },
     "autoSlice": {
       "gate": 0.8,
@@ -1928,6 +1948,7 @@ const TASKS = [
       "start": "2026-09-20T17:16:27.245444+00:00",
       "end": "2026-09-20T17:29:13.361937+00:00"
     },
+    "redacted": true,
     "ece": {
       "ece": 0.083,
       "mce": 0.143,
@@ -2208,7 +2229,12 @@ const TASKS = [
       "pJev": 0.215,
       "pJevHolm": 1.0,
       "pMini": 0.16,
-      "pMiniHolm": 0.656
+      "pMiniHolm": 0.656,
+      "invalidLabels": 3,
+      "invalidLabelValues": [
+        "disgust",
+        "fear"
+      ]
     },
     "autoSlice": {
       "gate": 0.9,
@@ -2285,6 +2311,7 @@ const TASKS = [
       "start": "2026-09-20T17:16:27.245444+00:00",
       "end": "2026-09-20T17:29:13.361937+00:00"
     },
+    "redacted": true,
     "ece": {
       "ece": 0.11,
       "mce": 0.163,
@@ -2471,7 +2498,9 @@ const TASKS = [
       "pJev": 0.23,
       "pJevHolm": 1.0,
       "pMini": 0.0506,
-      "pMiniHolm": 0.354
+      "pMiniHolm": 0.354,
+      "invalidLabels": 0,
+      "invalidLabelValues": []
     },
     "autoSlice": {
       "gate": 0.9,
@@ -2548,6 +2577,7 @@ const TASKS = [
       "start": "2026-09-20T17:16:27.245444+00:00",
       "end": "2026-09-20T17:29:13.361937+00:00"
     },
+    "redacted": true,
     "ece": {
       "ece": 0.141,
       "mce": 0.187,
@@ -2784,7 +2814,9 @@ const TASKS = [
       "pJev": 0.815,
       "pJevHolm": 1.0,
       "pMini": 0.328,
-      "pMiniHolm": 0.657
+      "pMiniHolm": 0.657,
+      "invalidLabels": 0,
+      "invalidLabelValues": []
     },
     "autoSlice": {
       "gate": 0.9,
@@ -2861,6 +2893,7 @@ const TASKS = [
       "start": "2026-09-20T17:16:27.245444+00:00",
       "end": "2026-09-20T17:29:13.361937+00:00"
     },
+    "redacted": true,
     "ece": {
       "ece": 0.096,
       "mce": 0.34,
@@ -3135,7 +3168,9 @@ const TASKS = [
       "pJev": 7.72e-05,
       "pJevHolm": 0.000849,
       "pMini": 0.109,
-      "pMiniHolm": 0.656
+      "pMiniHolm": 0.656,
+      "invalidLabels": 0,
+      "invalidLabelValues": []
     },
     "autoSlice": {
       "gate": 0.9,
@@ -3212,6 +3247,7 @@ const TASKS = [
       "start": "2026-09-20T17:16:27.245444+00:00",
       "end": "2026-09-20T17:29:13.361937+00:00"
     },
+    "redacted": false,
     "ece": {
       "ece": 0.213,
       "mce": 0.39,
@@ -3674,7 +3710,9 @@ const TASKS = [
       "pJev": 0.63,
       "pJevHolm": 1.0,
       "pMini": 0.000719,
-      "pMiniHolm": 0.0079
+      "pMiniHolm": 0.0079,
+      "invalidLabels": 0,
+      "invalidLabelValues": []
     },
     "autoSlice": {
       "gate": 0.9,
@@ -3696,9 +3734,9 @@ const TASKS = [
     "verdict": "dont",
     "ns": false,
     "why": "Mini +7.8pt (p=0.0026). Jev mean confidence 0.67 and ECE 0.187, so the confidence cannot carry a threshold either. Kept on the homepage, but compare it with the Civil Comments row: on cleaner gold for the same decision the gap disappears.",
-    "gate": "Gating buys least here of any row: 70.7% on 64.2% at >=0.8, only 4.5pt above ungated, and Mini is better anyway. Keep a specialist.",
+    "gate": "Gating buys little here: 70.7% on 64.2% at >=0.8, 4.5pt above ungated, and Mini is better anyway. Keep a specialist.",
     "goldTier": "research",
-    "rowNote": "Don't is this dataset's verdict: on CC0 gold the gap disappears.",
+    "rowNote": "Don't is this dataset's verdict. The Civil Comments row is a different task on CC0 gold, not the same one relabelled.",
     "rowNoteKind": "info",
     "goldNote": "Academic benchmark",
     "sourceName": "cardiffnlp/tweet_eval",
@@ -3751,6 +3789,7 @@ const TASKS = [
       "start": "2026-09-20T17:16:27.245444+00:00",
       "end": "2026-09-20T17:29:13.361937+00:00"
     },
+    "redacted": true,
     "ece": {
       "ece": 0.187,
       "mce": 0.272,
@@ -3937,7 +3976,9 @@ const TASKS = [
       "pJev": 0.0656,
       "pJevHolm": 0.459,
       "pMini": 0.12,
-      "pMiniHolm": 0.656
+      "pMiniHolm": 0.656,
+      "invalidLabels": 0,
+      "invalidLabelValues": []
     },
     "autoSlice": {
       "gate": 0.8,

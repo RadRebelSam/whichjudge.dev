@@ -12,9 +12,9 @@
 <meta property="og:description" content="Social sentiment (3-way) on tweet_eval sentiment, n=500 frozen gold. Jev 73.8%, gpt-4o-mini 72.6%, TF-IDF 63.8%. Verdict: ns. ECE 0.141.">
 <meta property="og:url" content="https://whichjudge.dev/decision/tweet-sentiment.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="34ba70b202">
+<meta name="whichjudge-build" content="2524f08fc4">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Social sentiment (3-way) - cheap decision model bake-off", "description": "Social sentiment (3-way) on tweet_eval sentiment, n=500 frozen gold. Jev 73.8%, gpt-4o-mini 72.6%, TF-IDF 63.8%. Verdict: ns. ECE 0.141.", "url": "https://whichjudge.dev/decision/tweet-sentiment.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "tweet_eval sentiment", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/tweet_sentiment.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.738}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.726}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.638}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.141}]}</script>
-<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
@@ -28,7 +28,7 @@
 
 - tweet_eval sentiment, n=500, seed=7<br>
 <strong>Labels:</strong> <code>negative / neutral / positive</code></p>
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>Latency (p50 unless stated)</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>73.8%</td><td>[69.8% - 77.5%]</td><td>844 ms</td><td>$15.47</td></tr>
@@ -36,7 +36,7 @@
         <tr><td>gpt-5.4-mini-2026-03-17</td><td>74.4%</td><td>[70.4% - 78.0%]</td><td>1025 ms</td><td>unpriced (64.7 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=45,615)</td><td>63.8%</td><td>[59.5% - 67.9%]</td><td>27 us mean per row, batched</td><td>$0</td></tr>
   </tbody>
-</table>
+</table></div>
 <p><strong>McNemar Jev vs Mini:</strong> ns, p=0.576
 (43 Jev-only correct, 37 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> jev.</p>
@@ -53,8 +53,11 @@ calibrated task can still gate well. High ECE costs you the right to quote the n
 not the right to threshold on it.</p>
 <h2>Verify this</h2>
 <p>Frozen samples <code>caecb184d45d</code>, schema <code>07949a6e028a</code>.
-Every call is stored with its request, response and SHA-256 in
-<a href="../receipts/tweet_sentiment.json">receipts/tweet_sentiment.json</a>.</p>
+<a href="../receipts/tweet_sentiment.json">receipts/tweet_sentiment.json</a> here is the slim copy: per call,
+the id, gold, prediction, confidence, latency and the SHA-256 of the request and response.
+The full request and response bodies are in the repository at
+<a href="https://github.com/RadRebelSam/whichjudge.dev/blob/main/results/receipts/tweet_sentiment.json">results/receipts/tweet_sentiment.json</a>
+(text replaced by its hash; scripts/rehydrate.py restores it).</p>
 <pre><code>git clone https://github.com/RadRebelSam/whichjudge.dev
 python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
 python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
@@ -62,6 +65,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build 34ba70b202 &middot; this row from run 1 of 4, 2026-09-20T17:16Z</p>
+<p class="stamp">build 2524f08fc4 &middot; this row from run 1 of 4, 2026-09-20T17:16Z</p>
 </body>
 </html>

@@ -41,9 +41,10 @@ except Exception:  # pragma: no cover
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
 
-# Receipts are large and change only with a re-run; the pages and scripts are
-# where a mixed deploy is visible. Include them with --all.
-DEFAULT_GLOBS = ["*.html", "*.js", "*.xml", "*.txt", "*.svg", "decision/*.html"]
+# Every file under site/ is checked, stylesheet included; an earlier list of
+# globs left CSS out, so stale styling would have passed. Receipts are large and
+# change only with a re-run, so they are opt-in with --all.
+SKIP_DIRS = {"receipts"}
 
 
 def sha(b: bytes) -> str:
@@ -69,11 +70,15 @@ def fetch(url: str) -> tuple[str, bytes]:
 
 
 def local_files(include_all: bool) -> list[Path]:
-    globs = DEFAULT_GLOBS + (["receipts/*.json"] if include_all else [])
     files = []
-    for g in globs:
-        files.extend(p for p in SITE.glob(g) if p.is_file())
-    return sorted(set(files))
+    for p in SITE.rglob("*"):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(SITE).parts
+        if not include_all and any(part in SKIP_DIRS for part in rel[:-1]):
+            continue
+        files.append(p)
+    return sorted(files)
 
 
 def main() -> None:

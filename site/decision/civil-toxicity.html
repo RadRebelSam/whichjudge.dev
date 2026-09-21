@@ -12,9 +12,9 @@
 <meta property="og:description" content="Comment toxicity gate on Civil Comments test split (CC0), n=500 frozen gold. Jev 78.0%, gpt-4o-mini 77.0%, TF-IDF 82.8%. Verdict: ns. ECE 0.075.">
 <meta property="og:url" content="https://whichjudge.dev/decision/civil-toxicity.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="34ba70b202">
+<meta name="whichjudge-build" content="2524f08fc4">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Comment toxicity gate - cheap decision model bake-off", "description": "Comment toxicity gate on Civil Comments test split (CC0), n=500 frozen gold. Jev 78.0%, gpt-4o-mini 77.0%, TF-IDF 82.8%. Verdict: ns. ECE 0.075.", "url": "https://whichjudge.dev/decision/civil-toxicity.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "Civil Comments test split (CC0)", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/civil_toxicity.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.78}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.77}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.828}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.075}]}</script>
-<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
@@ -22,13 +22,13 @@
 <p><span class="verdict">ns</span>
 <span class="scope">compares Jev with 4o-mini only</span></p>
 
-<p>The same decision as the hate-speech row, on clean CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF wins again at 82.8%. Read this next to the hate row: the Don&#x27;t verdict there does not survive a change of gold, so it was a fact about that dataset more than about Jev.</p>
+<p>A neighbour of the hate-speech row: toxicity in comments rather than hate speech aimed at a group in tweets, on CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF scores higher at 82.8%, ns against either API after Holm correction. Read this next to the hate row: a different task and dataset gives a different ranking, which is the point, not proof that the hate loss was label noise.</p>
 <p><strong>Replaces:</strong> Toxicity classifier gating user comments before publication<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/google/civil_comments" rel="noopener">google/civil_comments</a>
 
 - Civil Comments test split (CC0), n=500, seed=7<br>
 <strong>Labels:</strong> <code>toxic / not_toxic</code></p>
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>Latency (p50 unless stated)</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>78.0%</td><td>[74.2% - 81.4%]</td><td>804 ms</td><td>$19.14</td></tr>
@@ -36,7 +36,7 @@
         <tr><td>gpt-5.4-mini-2026-03-17</td><td>76.6%</td><td>[72.7% - 80.1%]</td><td>966 ms</td><td>unpriced (141.5 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=60,000)</td><td>82.8%</td><td>[79.2% - 85.9%]</td><td>74 us mean per row, batched</td><td>$0</td></tr>
   </tbody>
-</table>
+</table></div>
 <p><strong>McNemar Jev vs Mini:</strong> ns, p=0.688
 (52 Jev-only correct, 47 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> ns.</p>
@@ -53,8 +53,11 @@ calibrated task can still gate well. High ECE costs you the right to quote the n
 not the right to threshold on it.</p>
 <h2>Verify this</h2>
 <p>Frozen samples <code>e018f1952099</code>, schema <code>e571e26e7968</code>.
-Every call is stored with its request, response and SHA-256 in
-<a href="../receipts/civil_toxicity.json">receipts/civil_toxicity.json</a>.</p>
+<a href="../receipts/civil_toxicity.json">receipts/civil_toxicity.json</a> here is the slim copy: per call,
+the id, gold, prediction, confidence, latency and the SHA-256 of the request and response.
+The full request and response bodies are in the repository at
+<a href="https://github.com/RadRebelSam/whichjudge.dev/blob/main/results/receipts/civil_toxicity.json">results/receipts/civil_toxicity.json</a>
+.</p>
 <pre><code>git clone https://github.com/RadRebelSam/whichjudge.dev
 python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
 python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
@@ -62,6 +65,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build 34ba70b202 &middot; this row from run 3 of 4, 2026-09-20T20:14Z</p>
+<p class="stamp">build 2524f08fc4 &middot; this row from run 3 of 4, 2026-09-20T20:14Z</p>
 </body>
 </html>

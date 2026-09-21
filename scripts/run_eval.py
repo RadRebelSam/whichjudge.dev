@@ -378,10 +378,39 @@ def parse_mini(raw: dict, labels: list[str]) -> tuple[str, str]:
 
 
 def load_rows(task_id: str) -> list[dict]:
+    """Frozen rows with their text.
+
+    Seven tasks ship a SHA-256 of each text instead of the text; scripts/rehydrate.py
+    restores it into data/<task>.text.jsonl. This joins that sidecar by id and checks
+    every text against its hash, so a rerun cannot silently score different input.
+    An earlier version read only the shipped file and failed on row["text"] for
+    those tasks, which made the documented rerun impossible as shipped.
+    """
     rows = []
     with (DATA / f"{task_id}.jsonl").open(encoding="utf-8") as f:
         for line in f:
-            rows.append(json.loads(line))
+            if line.strip():
+                rows.append(json.loads(line))
+    texts = {}
+    sidecar = DATA / f"{task_id}.text.jsonl"
+    if sidecar.exists():
+        with sidecar.open(encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    r = json.loads(line)
+                    texts[r["id"]] = r["text"]
+    for r in rows:
+        if r.get("text") is None:
+            r["text"] = texts.get(r["id"])
+        if r["text"] is None:
+            raise SystemExit(
+                f"{task_id}: row {r['id']} has no text. Run scripts/rehydrate.py first.")
+        want = r.get("text_sha256")
+        if want and hashlib.sha256(r["text"].encode("utf-8")).hexdigest() != want:
+            raise SystemExit(f"{task_id}: row {r['id']} text does not match its text_sha256")
+    ids = [r["id"] for r in rows]
+    if len(set(ids)) != len(ids):
+        raise SystemExit(f"{task_id}: duplicate sample ids in data/{task_id}.jsonl")
     return rows
 
 
@@ -738,6 +767,13 @@ def main() -> None:
     started = datetime.now(timezone.utc).isoformat()
     schema_hashes = freeze_schemas()
     ids = sys.argv[1:] or list(TASKS)
+    # Preflight every requested task before the first paid call, so a missing
+    # sidecar on task nine does not surface after eight tasks have been billed.
+    for tid in ids:
+        if tid not in TASKS:
+            raise SystemExit(f"unknown task {tid}; choose from {', '.join(TASKS)}")
+        load_rows(tid)
+    print(f"preflight ok: {len(ids)} task(s) have text for every row")
     summary = []
     for tid in ids:
         out = run_task(tid)

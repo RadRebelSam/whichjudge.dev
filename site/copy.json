@@ -37,7 +37,7 @@
       "labels": "credit_reporting / debt_collection / cards / bank_account / mortgage / money_transfer / loans / student_loan",
       "verdict": "mix",
       "ns": true,
-      "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25), and TF-IDF beats both at 86.8%. Narratives average about 240 tokens, well past the crossover, so Jev is the cheaper API here by the widest margin on the board: $33.89 against $53.21 per million decisions.",
+      "why": "The only row here that is not academic gold: a regulator runs this routing live and the consumer writes the narrative. Jev 82.8% and Mini 81.0% are tied (p=0.25). TF-IDF scores higher at 86.8%: significant against Mini, not against Jev after Holm correction. Narratives average about 240 tokens, well past the crossover, so Jev is the cheaper API here by the widest margin on the board: $33.89 against $53.21 per million decisions.",
       "gate": "At >=0.9: 91.2% on 77.4% of complaints, 8.4pt above ungated. ECE 0.100 means do not repeat the confidence to anyone as a probability; it does not stop you thresholding on it.",
       "sourceName": "CFPB Consumer Complaint Database",
       "sourceUrl": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
@@ -45,7 +45,7 @@
       "goldTier": "live",
       "goldNote": "Live system: a regulator routes these daily and the filer picks the label",
       "rowNoteKind": "info",
-      "rowNote": "TF-IDF beats both APIs at 86.8%. Jev and the 2026 model tie after correction."
+      "rowNote": "TF-IDF scores highest at 86.8%; vs Jev that is ns after correction. Jev and the 2026 model tie."
     },
     {
       "id": "civil_toxicity",
@@ -55,7 +55,7 @@
       "labels": "toxic / not_toxic",
       "verdict": "mix",
       "ns": true,
-      "why": "The same decision as the hate-speech row, on clean CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF wins again at 82.8%. Read this next to the hate row: the Don't verdict there does not survive a change of gold, so it was a fact about that dataset more than about Jev.",
+      "why": "A neighbour of the hate-speech row: toxicity in comments rather than hate speech aimed at a group in tweets, on CC0 gold. Here the two models tie: Jev 78.0% and Mini 77.0% (p=0.69). TF-IDF scores higher at 82.8%, ns against either API after Holm correction. Read this next to the hate row: a different task and dataset gives a different ranking, which is the point, not proof that the hate loss was label noise.",
       "gate": "91.0% on 53.4% of comments at >=0.9, 13.0pt above ungated, and ECE 0.075 is low enough to state the confidence out loud. Publish that half automatically and queue the rest.",
       "sourceName": "google/civil_comments",
       "sourceUrl": "https://huggingface.co/datasets/google/civil_comments",
@@ -185,14 +185,14 @@
       "labels": "not_hate / hate",
       "verdict": "dont",
       "why": "Mini +7.8pt (p=0.0026). Jev mean confidence 0.67 and ECE 0.187, so the confidence cannot carry a threshold either. Kept on the homepage, but compare it with the Civil Comments row: on cleaner gold for the same decision the gap disappears.",
-      "gate": "Gating buys least here of any row: 70.7% on 64.2% at >=0.8, only 4.5pt above ungated, and Mini is better anyway. Keep a specialist.",
+      "gate": "Gating buys little here: 70.7% on 64.2% at >=0.8, 4.5pt above ungated, and Mini is better anyway. Keep a specialist.",
       "ns": false,
       "sourceName": "cardiffnlp/tweet_eval",
       "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
       "goldTier": "research",
       "goldNote": "Academic benchmark",
       "rowNoteKind": "info",
-      "rowNote": "Don't is this dataset's verdict: on CC0 gold the gap disappears."
+      "rowNote": "Don't is this dataset's verdict. The Civil Comments row is a different task on CC0 gold, not the same one relabelled."
     }
   ],
   "calls": {

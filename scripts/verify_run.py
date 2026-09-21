@@ -200,7 +200,8 @@ def main() -> None:
         )
 
     print()
-    derived = check_derived(summary)
+    fast = "--fast" in sys.argv
+    derived = check_derived(summary, fast=fast)
     errors += derived.errors
     if errors:
         fail(f"{errors} check(s) failed")
@@ -222,6 +223,8 @@ def main() -> None:
     for line in derived.checked:
         print("  " + line)
     print("NOT RECOMPUTED HERE:")
+    if derived.skipped_cv:
+        print("  the cross-validated gate slice (skipped by --fast; CI runs without it)")
     print("  Holm adjustment, verdict mapping and every rendered number: scripts/build_site.py --check")
     print("  TF-IDF training itself (needs the raw corpora): scripts/run_tfidf_baseline.py")
     print("  that either API produced these responses: only a re-run can; see the manifest caveat")
@@ -350,6 +353,35 @@ def recall_at_gate(rows: list[dict]) -> dict:
     return out
 
 
+def reparse_jev(response: dict, key: str) -> tuple[str, float, float]:
+    """The same reading of a Jev reply that run_eval.py makes, done again here."""
+    ans = response["answers"][key]
+    choice = ans.get("choice")
+    conf = float(ans.get("confidence") or 0)
+    probs = ans.get("probabilities") or {}
+    return str(choice), conf, float(probs.get(choice, 0) if choice else 0)
+
+
+def reparse_mini(response: dict, labels: list[str]) -> str:
+    content = response["choices"][0]["message"]["content"]
+    try:
+        label = str(json.loads(content).get("label", "")).strip()
+    except Exception:  # noqa: BLE001 - a malformed reply is a wrong answer
+        label = ""
+    if label not in labels:
+        low = content.lower()
+        label = next((l for l in labels if l.lower() in low), "INVALID")
+    return label
+
+
+def reparse_modern(response: dict) -> tuple[str | None, str]:
+    content = (response["choices"][0]["message"]["content"] or "").strip()
+    try:
+        return json.loads(content).get("label"), content
+    except Exception:  # noqa: BLE001
+        return None, content
+
+
 def close(a, b, tol=1e-9) -> bool:
     if a is None or b is None:
         return a is b
@@ -362,6 +394,7 @@ class Derived:
     def __init__(self):
         self.errors = 0
         self.checked: list[str] = []
+        self.skipped_cv = False
 
     def expect(self, where: str, got, want, tol=1e-9) -> None:
         ok = close(got, want, tol) if isinstance(want, (int, float)) or want is None else got == want
@@ -370,7 +403,7 @@ class Derived:
             self.errors += 1
 
 
-def check_derived(summary: list[dict]) -> Derived:
+def check_derived(summary: list[dict], fast: bool = False) -> Derived:
     d = Derived()
     calib = load(RESULTS / "calibration.json")
     gates = load(RESULTS / "gates.json")
@@ -387,6 +420,37 @@ def check_derived(summary: list[dict]) -> Derived:
         rec = load(RECEIPTS / f"{tid}.json")
         jev, mini = rec["jev"], rec["gpt4o_mini"]
         n = len(jev)
+        schema = load(SCHEMAS / f"{tid}.json")
+        sample_ids = []
+        with (DATA / f"{tid}.jsonl").open(encoding="utf-8") as f:
+            sample_ids = [json.loads(line)["id"] for line in f if line.strip()]
+
+        # Every arm must answer every frozen sample exactly once. A dropped or
+        # doubled row changes n, the pairing and every statistic downstream.
+        def coverage(arm_name: str, rows_: list[dict]) -> None:
+            ids = [r["id"] for r in rows_]
+            if sorted(ids) != sorted(sample_ids) or len(set(ids)) != len(ids):
+                print(f"ID COVERAGE {tid} {arm_name}: {len(ids)} receipts for {len(sample_ids)} samples")
+                d.errors += 1
+
+        coverage("jev", jev)
+        coverage("mini", mini)
+
+        # The stored pred is what every number is counted from. Read the raw
+        # response again and require it to say the same thing, so an edited pred
+        # with an untouched response (and hash) cannot pass. This is the gap an
+        # outside review demonstrated by flipping one wrong answer to gold.
+        for r in jev:
+            pred, conf, p_chosen = reparse_jev(r["response"], schema["question_key"])
+            d.expect(f"{tid} jev[{r['id']}].pred reparsed", pred, r["pred"])
+            d.expect(f"{tid} jev[{r['id']}].confidence reparsed", conf, r.get("confidence"))
+            d.expect(f"{tid} jev[{r['id']}].p_chosen reparsed", p_chosen, r.get("p_chosen"))
+            d.expect(f"{tid} jev[{r['id']}].model_returned", r["response"].get("model"), r.get("model_returned"))
+        for r in mini:
+            d.expect(f"{tid} mini[{r['id']}].model_returned", r["response"].get("model"), r.get("model_returned"))
+            d.expect(f"{tid} mini[{r['id']}].pred reparsed",
+                     reparse_mini(r["response"], schema["labels"]), r["pred"])
+
         jev_ok = [r["pred"] == r["gold"] for r in jev]
         mini_by = {r["id"]: r["pred"] == r["gold"] for r in mini}
         mini_ok = [mini_by[r["id"]] for r in jev]
@@ -445,9 +509,13 @@ def check_derived(summary: list[dict]) -> Derived:
                  (g_pub["in_sample"] or {}).get("gate"))
         d.expect(f"{tid} gates.in_sample.accuracy", round(chosen[1], 4) if chosen else None,
                  (g_pub["in_sample"] or {}).get("accuracy"))
-        cv = cross_validated_slice(jev)
-        for key in ("accuracy_mean", "accuracy_lo", "accuracy_hi", "gate_chosen_most"):
-            d.expect(f"{tid} gates.cross_validated.{key}", cv[key], g_pub["cross_validated"][key])
+        if fast:
+            d.skipped_cv = True
+        else:
+            cv = cross_validated_slice(jev)
+            for key in ("accuracy_mean", "accuracy_lo", "accuracy_hi", "gate_chosen_most",
+                        "coverage_mean", "halves_below_min_coverage", "halves"):
+                d.expect(f"{tid} gates.cross_validated.{key}", cv[key], g_pub["cross_validated"].get(key))
 
         # error_profile.json
         for arm, rows_ in (("jev", jev), ("mini", mini)):
@@ -484,8 +552,18 @@ def check_derived(summary: list[dict]) -> Derived:
         # current-model column
         if tid in modern:
             md = modern[tid]
-            mrec = load(RECEIPTS / f"{tid}.modern.json")
+            mpath = RECEIPTS / f"{tid}.modern.json"
+            mrec = load(mpath) if mpath.exists() else None
+            if not isinstance(mrec, dict) or not isinstance(mrec.get("calls"), list) or not mrec["calls"]:
+                # An empty or missing receipt file used to pass every check while
+                # the column it backs stayed on the site.
+                print(f"MODERN RECEIPTS {tid}: missing or malformed {mpath.name}")
+                d.errors += 1
+                continue
             calls = mrec["calls"]
+            coverage("modern", calls)
+            d.expect(f"{tid} modern.model", md["model"], mrec.get("model"))
+            invalid = 0
             for r in calls:
                 if sha256_bytes(canonical_bytes(r["response"])) != r["response_sha256"]:
                     print("RESPONSE HASH", tid, "modern", r["id"])
@@ -493,6 +571,17 @@ def check_derived(summary: list[dict]) -> Derived:
                 if gold[r["id"]] != r["gold"]:
                     print("GOLD DRIFT", tid, "modern", r["id"])
                     d.errors += 1
+                label, content = reparse_modern(r["response"])
+                # Two writer generations: the first kept an out-of-schema label as
+                # written, later ones prefixed it. Either must match the raw reply.
+                accepted = {label, f"__unparsed__:{content[:40]}"}
+                if r["pred"] not in accepted:
+                    print(f"DERIVED MISMATCH {tid} modern[{r['id']}].pred reparsed: "
+                          f"raw says {label!r}, stored {r['pred']!r}")
+                    d.errors += 1
+                if r["pred"] not in schema["labels"]:
+                    invalid += 1
+            d.expect(f"{tid} modern.invalid_labels", invalid, md.get("invalid_labels"))
             m_ok = [r["pred"] == r["gold"] for r in calls]
             d.expect(f"{tid} modern.n", len(m_ok), md["n"])
             d.expect(f"{tid} modern.acc", sum(m_ok) / len(m_ok), md["acc"])
@@ -546,6 +635,9 @@ def check_derived(summary: list[dict]) -> Derived:
                  pub["jev_fixed_overhead_tokens"])
 
     d.checked = [
+        "every arm answers every frozen sample id exactly once",
+        "each stored pred, confidence and p_chosen re-read from the raw response (all three arms)",
+        "out-of-schema labels in the current-model column counted against the schema",
         "accuracy, Wilson 95% CI, McNemar (b, c, p, winner), latency p50/p95, list-price cost,",
         "mean confidence and confidence gates (results/summary.json)",
         "ECE, MCE and reliability bins on p_chosen (results/calibration.json)",

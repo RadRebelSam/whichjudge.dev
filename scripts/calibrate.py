@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Recompute calibration (ECE, MCE, reliability bins) from the stored receipts.
 
-The quit line only means something if Jev's confidence is honest: when it says 0.9,
-it should be right about 90% of the time. Expected calibration error is the
-traffic-weighted gap between confidence and accuracy, so low ECE means a threshold
-can be trusted and high ECE means it cannot.
+Expected calibration error is the traffic-weighted gap between confidence and
+accuracy: low ECE means the number may be read as a probability. It does not by
+itself say a threshold is safe, and high ECE does not say one is useless; whether
+a cutoff works is answered by the gate tables, the per-class recall at each gate in
+error_profile.json and the held-out split below, not by ECE.
 
 This reads results/receipts/<task>.json and writes results/calibration.json. No API
 calls, no network. Run it after every scripts/run_eval.py, or the published ECE
@@ -85,7 +86,7 @@ def cross_validated_slice(rows: list[dict]) -> dict:
     """
     import random
     rng = random.Random(SEED)
-    outs, gates = [], []
+    outs, gates, covs = [], [], []
     for _ in range(SPLITS):
         idx = list(range(len(rows)))
         rng.shuffle(idx)
@@ -101,15 +102,24 @@ def cross_validated_slice(rows: list[dict]) -> dict:
             if not kept:
                 continue
             outs.append(sum(r["pred"] == r["gold"] for r in kept) / len(kept))
+            covs.append(len(kept) / len(eval_rows))
             gates.append(g)
-    outs.sort()
+    order = sorted(range(len(outs)), key=lambda i: outs[i])
     k = len(outs)
     return {
         "method": f"{SPLITS} random half splits, gate chosen on one half and scored on the other",
         "accuracy_mean": round(sum(outs) / k, 4) if k else None,
-        "accuracy_lo": round(outs[int(0.025 * k)], 4) if k else None,
-        "accuracy_hi": round(outs[int(0.975 * k) - 1], 4) if k else None,
+        "accuracy_lo": round(outs[order[int(0.025 * k)]], 4) if k else None,
+        "accuracy_hi": round(outs[order[int(0.975 * k) - 1]], 4) if k else None,
+        # The 50% coverage rule is applied on the half that picks the gate; the
+        # scoring half can land below it. Reported, not hidden.
+        "coverage_mean": round(sum(covs) / k, 4) if k else None,
+        "halves_below_min_coverage": sum(1 for c in covs if c < MIN_COVERAGE),
+        "halves": k,
         "gate_chosen_most": max(set(gates), key=gates.count) if gates else None,
+        "note": ("accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of "
+                 "scores across overlapping half splits: split variability, not a "
+                 "confidence interval for one fixed policy."),
     }
 
 
@@ -217,7 +227,8 @@ def main() -> None:
     (RESULTS / "error_profile.json").write_text(
         json.dumps(errors, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     print("\nwrote results/calibration.json, results/error_profile.json and results/gates.json")
-    print("High ECE means the confidence number cannot carry a quit line on that task.")
+    print("High ECE means the confidence must not be quoted as a probability on that task;")
+    print("whether a threshold helps is in gates.json and error_profile.json, per class.")
 
 
 if __name__ == "__main__":

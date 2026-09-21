@@ -47,7 +47,12 @@ def coarse_banking(cat: str) -> str:
     return "other"
 
 
-def balanced(df: pd.DataFrame, label_col: str, n: int, seed: int = RNG) -> pd.DataFrame:
+def balanced(df: pd.DataFrame, label_col: str, n: int, seed: int = RNG,
+             text_col: str = "text") -> pd.DataFrame:
+    # Public corpora repeat messages (SMS spam has 18 in 500). One text should
+    # weigh once, so exact duplicates are collapsed before any draw.
+    if text_col in df.columns:
+        df = df.drop_duplicates(subset=[text_col])
     labels = list(df[label_col].unique())
     per = max(1, n // len(labels))
     parts = []
@@ -124,7 +129,7 @@ dump(
 # 4. SST-2
 sst = pd.read_parquet(RAW / "sst2_validation.parquet")
 sst["gold"] = sst["label"].map({0: "negative", 1: "positive"})
-s = balanced(sst, "gold", N)
+s = balanced(sst, "gold", N, text_col="sentence")
 dump(
     "review_sentiment",
     [{"id": i, "text": r.sentence, "gold": r.gold} for i, r in s.iterrows()],
@@ -134,7 +139,7 @@ dump(
 # 5. SMS spam
 sms = pd.read_parquet(RAW / "sms_spam.parquet")
 sms["gold"] = sms["label"].map({0: "ham", 1: "spam"})
-m = balanced(sms, "gold", N)
+m = balanced(sms, "gold", N, text_col="sms")
 dump(
     "sms_spam",
     [{"id": i, "text": r.sms.strip(), "gold": r.gold} for i, r in m.iterrows()],

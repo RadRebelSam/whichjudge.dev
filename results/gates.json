@@ -32,7 +32,11 @@
       "accuracy_mean": 0.8731,
       "accuracy_lo": 0.8306,
       "accuracy_hi": 0.9153,
-      "gate_chosen_most": 0.9
+      "coverage_mean": 0.7947,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   },
   "civil_toxicity": {
@@ -68,7 +72,11 @@
       "accuracy_mean": 0.9087,
       "accuracy_lo": 0.8657,
       "accuracy_hi": 0.947,
-      "gate_chosen_most": 0.9
+      "coverage_mean": 0.5393,
+      "halves_below_min_coverage": 31,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   },
   "cfpb_queue_route": {
@@ -104,7 +112,11 @@
       "accuracy_mean": 0.912,
       "accuracy_lo": 0.8844,
       "accuracy_hi": 0.9391,
-      "gate_chosen_most": 0.9
+      "coverage_mean": 0.7742,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   },
   "banking_coarse_route": {
@@ -140,7 +152,11 @@
       "accuracy_mean": 0.801,
       "accuracy_lo": 0.7612,
       "accuracy_hi": 0.8421,
-      "gate_chosen_most": 0.9
+      "coverage_mean": 0.784,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   },
   "news_topic": {
@@ -176,7 +192,11 @@
       "accuracy_mean": 0.9289,
       "accuracy_lo": 0.905,
       "accuracy_hi": 0.9526,
-      "gate_chosen_most": 0.9
+      "coverage_mean": 0.844,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   },
   "tweet_sentiment": {
@@ -212,7 +232,11 @@
       "accuracy_mean": 0.8114,
       "accuracy_lo": 0.7711,
       "accuracy_hi": 0.8544,
-      "gate_chosen_most": 0.9
+      "coverage_mean": 0.6725,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   },
   "review_sentiment": {
@@ -248,7 +272,11 @@
       "accuracy_mean": 0.9834,
       "accuracy_lo": 0.9668,
       "accuracy_hi": 0.9958,
-      "gate_chosen_most": 0.8
+      "coverage_mean": 0.947,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.8,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   },
   "sms_spam": {
@@ -284,7 +312,11 @@
       "accuracy_mean": 0.9866,
       "accuracy_lo": 0.97,
       "accuracy_hi": 1.0,
-      "gate_chosen_most": 0.9
+      "coverage_mean": 0.8613,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   },
   "content_offensive": {
@@ -320,7 +352,11 @@
       "accuracy_mean": 0.867,
       "accuracy_lo": 0.8322,
       "accuracy_hi": 0.9013,
-      "gate_chosen_most": 0.9
+      "coverage_mean": 0.6022,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   },
   "content_hate": {
@@ -356,7 +392,11 @@
       "accuracy_mean": 0.7111,
       "accuracy_lo": 0.6585,
       "accuracy_hi": 0.7778,
-      "gate_chosen_most": 0.8
+      "coverage_mean": 0.6289,
+      "halves_below_min_coverage": 61,
+      "halves": 800,
+      "gate_chosen_most": 0.8,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   },
   "message_emotion": {
@@ -392,7 +432,11 @@
       "accuracy_mean": 0.9026,
       "accuracy_lo": 0.8696,
       "accuracy_hi": 0.9337,
-      "gate_chosen_most": 0.9
+      "coverage_mean": 0.6636,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
     }
   }
 }

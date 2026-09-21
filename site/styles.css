@@ -35,3 +35,10 @@ img, video, svg { max-width: 100%; height: auto; }
 .dark .verdict-replace { --v: #4ade80; }
 .dark .verdict-mix { --v: #facc15; }
 .dark .verdict-dont { --v: #f87171; }
+
+/* Secondary text. Tailwind's zinc-500 on white is 4.6:1 at body size and fails
+   at the 10-11px this site uses for details; zinc-600 clears 7:1. The dark
+   theme keeps zinc-400, which is what those elements already declare. */
+.text-zinc-500 { color: #52525b; }
+.text-zinc-400 { color: #52525b; }
+.dark .text-zinc-500, .dark .text-zinc-400 { color: #a1a1aa; }

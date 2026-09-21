@@ -179,7 +179,7 @@ function render() {
               const worst = Object.entries(x.errors.jev.per_class).sort((a, b) => a[1].recall - b[1].recall)[0];
               return `<span class="font-medium text-red-700 dark:text-red-400">It does not rescue the row that matters most: on ${x.title.toLowerCase()}, Jev misses ${pct(worst[1].missed_rate)} of ${worst[0]} at any threshold.</span>`;
             })()}
-            Grey ns = accuracy gap is noise after Holm correction.
+            Grey ns = not enough evidence of a difference at this n, after Holm correction. Not proof the two are equal.
           </p>
         </div>
         <p class="mono text-xs text-zinc-500">whichjudge.dev</p>
@@ -241,11 +241,11 @@ function render() {
           <span class="shrink-0 text-zinc-500">Calls / month</span>
           <input id="vol" type="number" min="1000" step="1000" value="${monthlyCalls}" class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 tabular-nums dark:border-zinc-700 dark:bg-zinc-950" />
         </label>
-        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3 text-sm">
+        <dl class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3 text-sm">
           ${metric("Jev / month", usd(open.jev.perM * monthlyCalls / 1e6))}
           ${metric("Mini / month", usd(open.mini.perM * monthlyCalls / 1e6))}
           ${metric("Delta", usd((open.jev.perM - open.mini.perM) * monthlyCalls / 1e6) + (open.jev.perM > open.mini.perM ? " Jev costs more" : " Jev cheaper"))}
-        </div>
+        </dl>
       </section>
 
       <section class="mt-10 grid gap-4 md:grid-cols-2">
@@ -255,7 +255,7 @@ function render() {
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Auto slice</span> - the strongest threshold that still leaves at least half the traffic automated, and what it buys against ungated accuracy. Picked by that rule from the measured gates, not by hand.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ECE</span> - whether you may read the confidence as a probability. It is <em>not</em> whether gating helps. Gating only needs the model to rank its own answers, so a badly calibrated row can still gate well: banking has the worst ECE here and still gains ${(() => { const b = TASKS.find((t) => t.id === "banking_coarse_route"); return b ? (b.autoSlice.lift * 100).toFixed(1) : "0"; })()}pt. What high ECE costs you is the right to quote the number.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Replace / Mix / Don't / ns</span> - these compare Jev against 4o-mini and nothing else. They do not say whether you should automate the decision (see Auto slice), whether the confidence can be quoted (see ECE), or whether a trained classifier would beat both (see TF-IDF). Banking is Replace, has the worst ECE here, and loses to TF-IDF by 21 points. One badge cannot carry three findings.</li>
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ns</span> - accuracy gap is noise. Do not crown a winner on 1-2pt. On the safety rows, ignore accuracy entirely and read the miss rate in red.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ns</span> - insufficient evidence of a difference at this n; it does not say the models are equal. Do not crown a winner on 1-2pt. On the safety rows, ignore accuracy entirely and read the miss rate in red.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Don't</span> - Mini significantly better on that dataset. Hate speech stays up on purpose, and the Civil Comments row shows the same judgement on CC0 gold where the gap disappears.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">TF-IDF</span> - $0, ~0.03ms, leftover train never overlapping the frozen 500. If it wins, skip both APIs.</li>
           </ul>
@@ -434,7 +434,9 @@ function callCard(c) {
 
 function cardHtml(t, on) {
   const v = verdictMeta(t.verdict, t.ns);
-  const g = t.gates["0.7"] || t.gates["0.8"];
+  // Same selected gate as the desktop row. This card used to hardcode 0.7 and
+  // drop the safety note and the 2026 column, so a phone saw a different answer.
+  const a = t.autoSlice;
   return `
     <button type="button" data-task="${t.id}" class="flex w-full gap-3 rounded-lg border px-3 py-3 text-left ${on ? "border-zinc-900 bg-zinc-100 dark:border-zinc-100 dark:bg-zinc-800" : "border-zinc-200 dark:border-zinc-800"}">
       <span class="w-1 shrink-0 rounded-full ${v.cls}" style="background: var(--v)"></span>
@@ -443,12 +445,14 @@ function cardHtml(t, on) {
           <span class="font-medium">${t.title}</span>
           <span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${v.chip}">${v.label}</span>
         </span>
-        <span class="mt-2 grid grid-cols-3 gap-2 text-xs tabular-nums">
+        <span class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1 text-xs tabular-nums">
           <span>Jev ${pct(t.jev.acc)}</span>
-          <span>Mini ${pct(t.mini.acc)}</span>
-          <span>TF-IDF ${pct(t.tfidf.acc)}</span>
+          <span>4o-mini ${pct(t.mini.acc)}</span>
+          ${t.modern ? `<span>2026 ${pct(t.modern.acc)}${t.modern.vsJev === "modern" ? " · beats Jev" : t.modern.vsJev === "jev" ? " · Jev wins" : ""}</span>` : ""}
+          <span>TF-IDF ${pct(t.tfidf.acc)}${t.tfidf.vsJev === "tfidf" ? " · beats Jev" : ""}</span>
         </span>
-        <span class="mt-1 block text-xs text-zinc-500">≥0.7 ${g ? pct(g.acc) + " on " + pct(g.cov) : "-"} · ${ms(t.jev.p50)}</span>
+        <span class="mt-1 block text-xs text-zinc-500">${a ? "auto slice ≥" + a.gate + " " + pct(a.acc) + " on " + pct(a.cov) : "no gate keeps half the traffic"} · ${ms(t.jev.p50)}</span>
+        ${t.rowNote ? `<span class="mt-1 block text-[11px] leading-snug ${t.rowNoteKind === "warn" ? "font-medium text-red-700 dark:text-red-400" : "text-zinc-500"}">${t.rowNote}</span>` : ""}
       </span>
     </button>
   `;

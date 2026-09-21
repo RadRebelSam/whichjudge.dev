@@ -1,6 +1,12 @@
 {
   "run_id": "2026-09-20T21:46:06.743324+00:00",
   "finished_utc": "2026-09-20T21:46:07.081259+00:00",
+  "latency_environment": {
+    "host": "Windows-10-10.0.19045-SP0",
+    "measured_from": "unset",
+    "note": "Wall clock from this client, including network round trip."
+  },
+  "recomputed_utc": "2026-09-21T06:05:42.233596+00:00",
   "model": "gpt-5.4-mini-2026-03-17",
   "why": "A current small model, so the board is not Jev against a 2024 baseline. Same frozen samples and same prompts as the main run.",
   "prices_usd_per_million": {
@@ -8,11 +14,6 @@
     "output": null
   },
   "pricing_note": "Left unset on purpose. Token counts are measured; cost is only computed when a real published price is filled in.",
-  "latency_environment": {
-    "host": "Windows-10-10.0.19045-SP0",
-    "measured_from": "unset",
-    "note": "Wall clock from this client, including network round trip."
-  },
   "tasks": [
     {
       "task_id": "prompt_injection",
@@ -33,6 +34,8 @@
       "tokens_per_call": 108.3,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
       "mcnemar_vs_jev": {
         "a_only_correct": 22,
         "b_only_correct": 4,
@@ -71,6 +74,8 @@
       "tokens_per_call": 141.5,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
       "mcnemar_vs_jev": {
         "a_only_correct": 43,
         "b_only_correct": 50,
@@ -109,6 +114,13 @@
       "tokens_per_call": 334.5,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 4,
+      "invalid_label_values": [
+        "auto",
+        "auto_leasing",
+        "auto_loan",
+        "auto_loans"
+      ],
       "mcnemar_vs_jev": {
         "a_only_correct": 21,
         "b_only_correct": 42,
@@ -147,6 +159,8 @@
       "tokens_per_call": 77.7,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
       "mcnemar_vs_jev": {
         "a_only_correct": 32,
         "b_only_correct": 37,
@@ -185,6 +199,8 @@
       "tokens_per_call": 102.7,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
       "mcnemar_vs_jev": {
         "a_only_correct": 7,
         "b_only_correct": 33,
@@ -223,6 +239,8 @@
       "tokens_per_call": 64.7,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
       "mcnemar_vs_jev": {
         "a_only_correct": 38,
         "b_only_correct": 35,
@@ -261,6 +279,8 @@
       "tokens_per_call": 64.4,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
       "mcnemar_vs_jev": {
         "a_only_correct": 4,
         "b_only_correct": 15,
@@ -299,6 +319,8 @@
       "tokens_per_call": 71.1,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
       "mcnemar_vs_jev": {
         "a_only_correct": 5,
         "b_only_correct": 14,
@@ -337,6 +359,8 @@
       "tokens_per_call": 81.0,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
       "mcnemar_vs_jev": {
         "a_only_correct": 36,
         "b_only_correct": 48,
@@ -375,6 +399,8 @@
       "tokens_per_call": 78.9,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
       "mcnemar_vs_jev": {
         "a_only_correct": 90,
         "b_only_correct": 66,
@@ -413,6 +439,11 @@
       "tokens_per_call": 67.9,
       "cost_usd": null,
       "unparsed_replies": 0,
+      "invalid_labels": 3,
+      "invalid_label_values": [
+        "disgust",
+        "fear"
+      ],
       "mcnemar_vs_jev": {
         "a_only_correct": 27,
         "b_only_correct": 38,

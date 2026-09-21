@@ -30,6 +30,14 @@ jobs:
       - name: Receipts match the published table
         run: python scripts/verify_run.py
 
+      # A verifier that has never failed proves nothing. This corrupts a copy of
+      # results/ six ways (a pred flipped to gold with the summary adjusted, an
+      # empty current-model receipt, a stale ECE, a dropped receipt row, an
+      # invalid label reported as 0, a mispriced cost point) and requires
+      # verify_run.py to fail every time.
+      - name: Verifier fails on corrupted results
+        run: python scripts/selfcheck_verify.py
+
       # Fails if site/data.js or any decision page disagrees with results/.
       # This is what stops the site from drifting away from the receipts.
       - name: Site is generated from results/

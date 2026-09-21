@@ -79,6 +79,8 @@ def holm(pvalues: dict) -> dict:
 
 def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows):
     by_id = {r["task_id"]: r for r in summary}
+    manifest = load(RESULTS / "manifest.json")
+    redacted = set(manifest.get("redacted_tasks") or [])
     tf_by_id = {r["task_id"]: r for r in tfidf}
     mod_by_id = {r["task_id"]: r for r in (modern or {}).get("tasks", [])}
     # One Holm family per comparison: Jev vs Mini, TF-IDF vs Jev, current model vs Jev.
@@ -121,6 +123,14 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows):
                 f"{tid}: copy.json claims verdict={c['verdict']} but McNemar is ns "
                 f"after Holm (p={p_holm:.3g}, raw {mc['p_value']:.3g}). Use \"mix\" or \"neither\"; the badge must not "
                 f"crown a winner the test refused to."
+            )
+        # And the winner it crowns must be the one the test found. "replace" on a
+        # significant Mini win used to pass; only ns was checked.
+        needed = {"replace": "jev", "dont": "mini"}.get(c["verdict"])
+        if needed and mc["winner"] != needed:
+            raise SystemExit(
+                f"{tid}: copy.json verdict={c['verdict']} needs a significant {needed} win, "
+                f"but McNemar's winner is {mc['winner']!r}."
             )
 
         auto = None
@@ -197,6 +207,24 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows):
                 return "ns"
             return "tfidf" if m["winner"] == "a" else loser
 
+        tf_vs_jev = versus("mcnemar_vs_jev", "jev")
+        tf_vs_mini = versus("mcnemar_vs_mini", "mini")
+        # "TF-IDF beats" or "TF-IDF wins" in the copy is a claim about the test,
+        # not about which number is larger. Two rows said it where the corrected
+        # comparison with Jev was ns.
+        for field in ("why", "gate", "rowNote"):
+            text = c.get(field) or ""
+            claim = re.search(r"TF-IDF (?:beats|wins)( both| again)?", text)
+            if not claim:
+                continue
+            needs_both = claim.group(1) is not None and "both" in claim.group(1)
+            if tf_vs_jev != "tfidf" or (needs_both and tf_vs_mini != "tfidf"):
+                raise SystemExit(
+                    f"{tid}: copy.json {field} says {claim.group(0)!r} but after Holm "
+                    f"TF-IDF vs Jev is {tf_vs_jev!r} and vs Mini is {tf_vs_mini!r}. "
+                    f"Say it scores higher, not that it wins."
+                )
+
         bins = [
             {"lo": b["lo"], "n": b["n"], "conf": round(b["conf"], 3), "acc": round(b["acc"], 3)}
             for b in calib[tid]["p_chosen"]["bins"]
@@ -256,14 +284,15 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows):
                 # per row, not a median, so it is not called p50 anywhere.
                 "meanUsBatched": round(t["predict_mean_ms_per_row_batched"] * 1000),
                 "trainN": t["train_n"],
-                "vsJev": versus("mcnemar_vs_jev", "jev"),
-                "vsMini": versus("mcnemar_vs_mini", "mini"),
+                "vsJev": tf_vs_jev,
+                "vsMini": tf_vs_mini,
                 "pJev": float(f"{t['mcnemar_vs_jev']['p_value']:.3g}"),
                 "pJevHolm": float(f"{holm_tfidf[tid]:.3g}"),
                 "pMini": float(f"{t['mcnemar_vs_mini']['p_value']:.3g}"),
                 "pMiniHolm": float(f"{holm_tfidf_mini[tid]:.3g}"),
             },
             "run": windows[tid],
+            "redacted": tid in redacted,
             "ece": {
                 "ece": round(calib[tid]["p_chosen"]["ece"], 3),
                 "mce": round(calib[tid]["p_chosen"]["mce"], 3),
@@ -289,6 +318,8 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows):
                 "pJevHolm": float(f"{holm_modern[tid]:.3g}"),
                 "pMini": float(f"{md['mcnemar_vs_mini']['p_value']:.3g}"),
                 "pMiniHolm": float(f"{holm_modern_mini[tid]:.3g}"),
+                "invalidLabels": md.get("invalid_labels", 0),
+                "invalidLabelValues": md.get("invalid_label_values", []),
             } if md else None),
             "autoSlice": auto_slice,
         })
@@ -394,7 +425,8 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
     blocks["ece-line"] = (
         "**Calibration (ECE on p_chosen, 10 bins, `scripts/calibrate.py`):** "
         + ", ".join(f"{t['title'].lower()} {t['ece']['ece']:.3f}" for t in ece_sorted)
-        + ". A quit line is only honest where ECE is low. Do not auto-route on the high ones."
+        + ". Low ECE means the number may be quoted as a probability. Whether a threshold is safe "
+        "is a separate question, answered per class in the gate tables below, not by ECE."
     )
 
     sizes = {}
@@ -422,8 +454,8 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
     blocks["main-table"] = (
         heading + "\n\n"
         f"Wilson 95% CI. McNemar on paired errors, Holm-corrected across the {n_tasks} Jev-vs-Mini\n"
-        "tests. `ns` = Holm p >= 0.05, meaning the accuracy gap is noise and neither model should\n"
-        "be crowned. "
+        "tests. `ns` = Holm p >= 0.05: insufficient evidence of a difference at this n. It does not\n"
+        "say the two are equal, only that neither may be crowned on this sample. "
         + (f"{len(flipped)} row(s) clear the raw 0.05 and not the corrected one: "
            + ", ".join(t["title"].lower() for t in flipped) + "."
            if flipped else "No row changes verdict under the correction.")
@@ -456,6 +488,11 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
             text += (f" {len(raw_wins)} row(s) that beat it at the raw 0.05 ("
                      + ", ".join(t["title"].lower() for t in raw_wins)
                      + ") do not survive the correction.")
+        bad = [(t, t["modern"]["invalidLabels"]) for t in mt if t["modern"]["invalidLabels"]]
+        if bad:
+            text += ("\n\nOut-of-schema labels, counted as wrong and reported as such: "
+                     + "; ".join(f"{t['title'].lower()} {k} ({', '.join(t['modern']['invalidLabelValues'])})"
+                                 for t, k in bad) + ".")
         if any(t["id"] == "prompt_injection" for t in losses):
             e = errors["prompt_injection"]
             text += (
@@ -471,24 +508,31 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
         blocks["modern-table"] = text
 
     # auto slice
-    rows, lifts, optimism = [], [], []
+    rows, lifts, optimism, short_cov = [], [], [], []
     for t in tasks:
         a = t["autoSlice"]
         if not a:
             continue
+        cv = gatefile[t["id"]]["cross_validated"]
         rows.append([t["title"], TIER_LABEL[t["goldTier"]], f"{t['ece']['ece']:.3f}",
                      f"{pct(a['acc'])} on {pct(a['cov'])} (>={a['gate']})",
-                     f"{a['lift'] * 100:+.1f}pt", pct(a["cvAcc"])])
+                     f"{a['lift'] * 100:+.1f}pt",
+                     f"{pct(a['cvAcc'])} on {pct(cv['coverage_mean'])}",
+                     f"{cv['halves_below_min_coverage']}/{cv['halves']}"])
         lifts.append(a["lift"] > 0)
         optimism.append((a["acc"] - a["cvAcc"]) * 100)
+        short_cov.append(cv["halves_below_min_coverage"])
     blocks["gate-table"] = (
         md_table(["Decision", "Gold", "ECE", "Auto slice (gate)", "Lift vs ungated",
-                  "Cross-validated"], rows)
-        + f"\n\nGating beats not gating on **{sum(lifts)} of {len(lifts)} rows**. "
-        "The last column chooses the gate on one random half and scores it on the other, "
+                  "Held-out acc on coverage", "Halves under 50%"], rows)
+        + f"\n\nGating beats not gating on **{sum(lifts)} of {len(lifts)} rows** on this balanced "
+        "sample; coverage here is benchmark coverage, not a forecast of production traffic. "
+        "The held-out column chooses the gate on one random half and scores it on the other, "
         f"400 splits; the optimism of picking and scoring on the same rows is at most "
-        f"{max(optimism):.1f}pt here. What a high ECE costs you is the right to quote the "
-        "confidence number as a probability, not the right to threshold on it."
+        f"{max(optimism):.1f}pt here. The 50% coverage rule is applied on the picking half, and "
+        f"the last column counts scoring halves that fell under it (most on {max(zip(short_cov, [t['title'].lower() for t in tasks if t['autoSlice']]))[1]}). "
+        "Accepted-slice accuracy is one number; what a gate does to each class is in "
+        "`results/error_profile.json` and, for the security row, in the next section."
     )
 
     # injection classes
@@ -496,6 +540,7 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
     pi = by["prompt_injection"]
     j, m = e["jev"]["per_class"]["injection"], e["mini"]["per_class"]["injection"]
     g9 = e["jev"]["recall_at_gate"]["0.9"]["injection"]
+    gl9 = e["jev"]["recall_at_gate"]["0.9"]["legitimate"]
     blocks["injection-classes"] = (
         f"The prompt-injection row looks fine on accuracy: Jev {pct(pi['jev']['acc'])},\n"
         f"Mini {pct(pi['mini']['acc'])}, tied at raw p={pfmt(pi['mcnemar']['p'])}.\n"
@@ -511,7 +556,12 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
         f"injection recall from {pct(j['recall'])} to only\n"
         f"{pct(g9['recall_on_covered'])} on the {g9['covered']} injections it still covers, while coverage falls, so the misses\n"
         "move to a human rather than disappearing. That is a documented exception to this site's\n"
-        "own headline, and it stays on the page."
+        "own headline, and it stays on the page.\n\n"
+        f"In counts, at p_chosen >= 0.9: {g9['covered'] + gl9['covered']} of {pi['n']} rows are handled automatically; "
+        f"{g9['covered'] - round(g9['recall_on_covered'] * g9['covered'])} of them are injections passed as legitimate, "
+        f"{pct((g9['covered'] - round(g9['recall_on_covered'] * g9['covered'])) / j['n'])} of all {j['n']} attacks in the sample; "
+        f"and {j['n'] - g9['covered']} attacks fall below the threshold to whatever fallback the operator supplies. "
+        "Accepted-slice accuracy does not show any of that."
     )
 
     # hate vs civil
@@ -529,10 +579,13 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
             ["ECE", f"{h['ece']['ece']:.3f}", f"{c['ece']['ece']:.3f}"],
         ])
         + f"\n\nOn TweetEval, Mini wins by {abs(h['mini']['acc'] - h['jev']['acc']) * 100:.1f} points and Jev's\n"
-        "confidence is too badly calibrated to gate on. On CC0 gold for the same judgement the\n"
-        "models tie and the confidence becomes usable. So the Don't was mostly a fact about that\n"
-        "dataset. Both rows stay up: deleting the inconvenient one would be the opposite of the\n"
-        "point."
+        "confidence is too badly calibrated to quote. On Civil Comments the models tie and the\n"
+        "confidence becomes usable. These are not the same decision with different labels: the\n"
+        "hate row asks for hate speech aimed at a protected group in tweets, the toxicity row asks\n"
+        "for rudeness or disrespect in comments, with different inputs, populations and prompts.\n"
+        "What the pair shows is that the ranking depends on the task and the dataset. It does not\n"
+        "show that the hate loss was label noise; isolating that would take the same examples\n"
+        "re-annotated under one rubric. Both rows stay up."
     )
 
     # cfpb cost sentence
@@ -640,6 +693,16 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
         f"- **Rows come from {len(run['runs'])} invocations of `run_eval.py`.** Tasks were added one at a\n"
         "  time, so the table is not one run. Each row's receipts carry their own timestamps and the\n"
         "  site shows which invocation a row came from.\n"
+        "- **The two prompt formats do not carry the same information.** Jev's choice questions\n"
+        "  include a criteria sentence per label; the OpenAI prompt, reused for the 2026 model,\n"
+        "  lists the label names only. On routing rows that tells Jev which odd intents belong to\n"
+        "  `account` and Mini nothing. So this is a comparison of configurations, not of models\n"
+        "  alone, and the receipts cannot say how much of any gap the prompt difference caused.\n"
+        "  A normalized rerun would generate both formats from one rubric on a fresh sample.\n"
+        "- **Reruns are not checkpointed.** A request that exhausts its retries raises before a\n"
+        "  task's receipts are written, so a failed run is paid for again. Published counts are\n"
+        "  complete (every arm answers every id exactly once, checked by `verify_run.py`), so no\n"
+        "  failed row was dropped from a shown accuracy.\n"
         "- **Public gold.** Nine of eleven rows are academic benchmarks. Only CFPB routing uses\n"
         "  a live system's own labels, and those are chosen by the person filing, not an expert."
     )
@@ -753,7 +816,8 @@ def render_decision_page(t, run, site) -> str:
     style = (
         "body{max-width:46rem;margin:0 auto;padding:2rem 1rem;"
         "font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}"
-        "table{border-collapse:collapse;width:100%;margin:1rem 0}"
+        ".table-wrap{overflow-x:auto;margin:1rem 0}"
+        "table{border-collapse:collapse;width:100%;margin:0}"
         "th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;"
         "font-variant-numeric:tabular-nums}"
         "th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}"
@@ -798,12 +862,12 @@ def render_decision_page(t, run, site) -> str:
 {' via <a href="' + e(t['mirrorUrl']) + '" rel="noopener">a CC0 mirror</a>' if t.get('mirrorUrl') else ''}
 - {e(t['dataset'])}, n={t['n']}, seed={run['seed']}<br>
 <strong>Labels:</strong> <code>{e(t['labels'])}</code></p>
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>Latency (p50 unless stated)</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
 {tbody}
   </tbody>
-</table>
+</table></div>
 <p><strong>McNemar Jev vs Mini:</strong> {e(t['mcnemar']['winner'])}, p={e(t['mcnemar']['p'])}
 ({t['mcnemar']['b']} Jev-only correct, {t['mcnemar']['c']} Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> {e(t['tfidf']['vsJev'])}.</p>
@@ -820,8 +884,11 @@ calibrated task can still gate well. High ECE costs you the right to quote the n
 not the right to threshold on it.</p>
 <h2>Verify this</h2>
 <p>Frozen samples <code>{e(t['samplesSha'])}</code>, schema <code>{e(t['schemaSha'])}</code>.
-Every call is stored with its request, response and SHA-256 in
-<a href="../receipts/{e(t['id'])}.json">receipts/{e(t['id'])}.json</a>.</p>
+<a href="../receipts/{e(t['id'])}.json">receipts/{e(t['id'])}.json</a> here is the slim copy: per call,
+the id, gold, prediction, confidence, latency and the SHA-256 of the request and response.
+The full request and response bodies are in the repository at
+<a href="{e(site['repo'])}/blob/main/results/receipts/{e(t['id'])}.json">results/receipts/{e(t['id'])}.json</a>
+{"(text replaced by its hash; scripts/rehydrate.py restores it)" if t.get('redacted') else ""}.</p>
 <pre><code>git clone {e(site['repo'])}
 python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
 python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>

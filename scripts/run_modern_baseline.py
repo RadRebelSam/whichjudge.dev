@@ -173,6 +173,14 @@ def score(task_id: str, calls: list[dict]) -> dict:
     in_tok = sum(r["input_tokens"] or 0 for r in calls)
     out_tok = sum(r["output_tokens"] or 0 for r in calls)
     unparsed = sum(1 for r in calls if str(r["pred"]).startswith("__unparsed__"))
+    # A reply that parses but names a label outside the schema ("auto_loans" for
+    # a queue that is called "loans") is wrong, and it is counted wrong in the
+    # accuracy above. It was not counted as invalid: the first receipts kept the
+    # literal value and only later runs prefixed it, so unparsed_replies read 0
+    # while seven such labels sat in the receipts. Count against the schema.
+    labels = set(load(SCHEMAS / f"{task_id}.json")["labels"])
+    invalid = sorted({str(r["pred"]) for r in calls if r["pred"] not in labels})
+    invalid_n = sum(1 for r in calls if r["pred"] not in labels)
 
     cost = None
     if PRICES["input"] is not None and PRICES["output"] is not None:
@@ -187,6 +195,8 @@ def score(task_id: str, calls: list[dict]) -> dict:
         "tokens_per_call": round((in_tok + out_tok) / len(calls), 1),
         "cost_usd": cost,
         "unparsed_replies": unparsed,
+        "invalid_labels": invalid_n,
+        "invalid_label_values": invalid,
         "mcnemar_vs_jev": mcnemar(ok, jev_ok),
         "mcnemar_vs_mini": mcnemar(ok, mini_ok),
         "jev_acc": summary["jev_acc"], "mini_acc": summary["mini_acc"],
@@ -281,20 +291,30 @@ def main() -> None:
         prev[tid] = recompute(tid) if only_recompute else run_task(tid, key)
 
     order = [r["task_id"] for r in load(RESULTS / "summary.json")]
+    # --recompute changes statistics, not measurements: keep the run's own id,
+    # finish time and client environment, and stamp the recomputation separately.
+    top = load(path) if path.exists() else {}
+    if only_recompute and top:
+        provenance = {k: top[k] for k in ("run_id", "finished_utc", "latency_environment") if k in top}
+        provenance["recomputed_utc"] = datetime.now(timezone.utc).isoformat()
+    else:
+        provenance = {
+            "run_id": started,
+            "finished_utc": datetime.now(timezone.utc).isoformat(),
+            "latency_environment": {
+                "host": platform.platform(),
+                "measured_from": os.environ.get("WHICHJUDGE_REGION", "unset"),
+                "note": "Wall clock from this client, including network round trip.",
+            },
+        }
     dump(path, {
-        "run_id": started,
-        "finished_utc": datetime.now(timezone.utc).isoformat(),
+        **provenance,
         "model": MODEL,
         "why": ("A current small model, so the board is not Jev against a 2024 baseline. "
                 "Same frozen samples and same prompts as the main run."),
         "prices_usd_per_million": PRICES,
         "pricing_note": ("Left unset on purpose. Token counts are measured; cost is only "
                          "computed when a real published price is filled in."),
-        "latency_environment": {
-            "host": platform.platform(),
-            "measured_from": os.environ.get("WHICHJUDGE_REGION", "unset"),
-            "note": "Wall clock from this client, including network round trip.",
-        },
         "tasks": [prev[t] for t in order if t in prev],
     })
     print("\nwrote results/modern_baseline.json")

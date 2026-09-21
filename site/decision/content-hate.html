@@ -12,9 +12,9 @@
 <meta property="og:description" content="Hate-speech screen on tweet_eval hate, n=500 frozen gold. Jev 66.2%, gpt-4o-mini 74.0%, TF-IDF 54.0%. Verdict: Don&#x27;t. ECE 0.187.">
 <meta property="og:url" content="https://whichjudge.dev/decision/content-hate.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="34ba70b202">
+<meta name="whichjudge-build" content="2524f08fc4">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Hate-speech screen - cheap decision model bake-off", "description": "Hate-speech screen on tweet_eval hate, n=500 frozen gold. Jev 66.2%, gpt-4o-mini 74.0%, TF-IDF 54.0%. Verdict: Don't. ECE 0.187.", "url": "https://whichjudge.dev/decision/content-hate.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "tweet_eval hate", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/content_hate.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.662}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.74}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.54}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.187}]}</script>
-<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#71717a}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#71717a}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#a1a1aa}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}}</style>
 </head>
 <body>
 <p><a href="../index.html">WhichJudge</a> / decision</p>
@@ -28,7 +28,7 @@
 
 - tweet_eval hate, n=500, seed=7<br>
 <strong>Labels:</strong> <code>not_hate / hate</code></p>
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>Latency (p50 unless stated)</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
         <tr><td>Jev jev-1.13.0</td><td>66.2%</td><td>[61.9% - 70.2%]</td><td>840 ms</td><td>$14.88</td></tr>
@@ -36,12 +36,12 @@
         <tr><td>gpt-5.4-mini-2026-03-17</td><td>71.0%</td><td>[66.9% - 74.8%]</td><td>992 ms</td><td>unpriced (78.9 tok/call)</td></tr>
         <tr><td>TF-IDF + LR (train n=8,962)</td><td>54.0%</td><td>[49.6% - 58.3%]</td><td>32 us mean per row, batched</td><td>$0</td></tr>
   </tbody>
-</table>
+</table></div>
 <p><strong>McNemar Jev vs Mini:</strong> mini, p=0.00258
 (60 Jev-only correct, 99 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> jev.</p>
 <h2>Quit line</h2>
-<p>Gating buys least here of any row: 70.7% on 64.2% at &gt;=0.8, only 4.5pt above ungated, and Mini is better anyway. Keep a specialist.</p>
+<p>Gating buys little here: 70.7% on 64.2% at &gt;=0.8, 4.5pt above ungated, and Mini is better anyway. Keep a specialist.</p>
 <p><strong>Auto slice:</strong> at Jev confidence &ge; 0.8,
 70.7% accurate on 64.2% of traffic, which is
 +4.5pt against 66.2% ungated. That threshold is the strongest
@@ -53,8 +53,11 @@ calibrated task can still gate well. High ECE costs you the right to quote the n
 not the right to threshold on it.</p>
 <h2>Verify this</h2>
 <p>Frozen samples <code>5bc4134ab919</code>, schema <code>c656daeea6fd</code>.
-Every call is stored with its request, response and SHA-256 in
-<a href="../receipts/content_hate.json">receipts/content_hate.json</a>.</p>
+<a href="../receipts/content_hate.json">receipts/content_hate.json</a> here is the slim copy: per call,
+the id, gold, prediction, confidence, latency and the SHA-256 of the request and response.
+The full request and response bodies are in the repository at
+<a href="https://github.com/RadRebelSam/whichjudge.dev/blob/main/results/receipts/content_hate.json">results/receipts/content_hate.json</a>
+(text replaced by its hash; scripts/rehydrate.py restores it).</p>
 <pre><code>git clone https://github.com/RadRebelSam/whichjudge.dev
 python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
 python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
@@ -62,6 +65,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build 34ba70b202 &middot; this row from run 1 of 4, 2026-09-20T17:16Z</p>
+<p class="stamp">build 2524f08fc4 &middot; this row from run 1 of 4, 2026-09-20T17:16Z</p>
 </body>
 </html>

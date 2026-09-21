@@ -7,7 +7,7 @@ Columns are models: **Jev `jev-1.13.0`**, **`gpt-4o-mini-2024-07-18`**, **`gpt-5
 The next System One-style model is another column, not another site.
 
 <!-- generated:ece-line -->
-**Calibration (ECE on p_chosen, 10 bins, `scripts/calibrate.py`):** review polarity 0.015, sms spam gate 0.016, comment toxicity gate 0.075, message emotion 0.083, news topic 0.096, consumer complaint routing 0.100, offensive language screen 0.110, prompt-injection screen 0.134, social sentiment (3-way) 0.141, hate-speech screen 0.187, banking queue routing 0.213. A quit line is only honest where ECE is low. Do not auto-route on the high ones.
+**Calibration (ECE on p_chosen, 10 bins, `scripts/calibrate.py`):** review polarity 0.015, sms spam gate 0.016, comment toxicity gate 0.075, message emotion 0.083, news topic 0.096, consumer complaint routing 0.100, offensive language screen 0.110, prompt-injection screen 0.134, social sentiment (3-way) 0.141, hate-speech screen 0.187, banking queue routing 0.213. Low ECE means the number may be quoted as a probability. Whether a threshold is safe is a separate question, answered per class in the gate tables below, not by ECE.
 <!-- /generated:ece-line -->
 
 Domain: [whichjudge.dev](https://whichjudge.dev). **Judge = in-loop decision**, not “grade this agent.” Do not rename. Eyebrow: “which model for this decision.” Contact: contact@radrebeldeveloper.com
@@ -31,7 +31,8 @@ whichjudge/
     download_raw.py         optional: re-fetch public datasets
     prepare_samples.py      build the academic data/*.jsonl (seed=7, n=500)
     run_eval.py             Jev vs gpt-4o-mini; writes hashed receipts
-    verify_run.py           recompute every published statistic from receipts (no API)
+    verify_run.py           re-read every raw response, recompute every statistic (no API)
+    selfcheck_verify.py     corrupt a copy six ways; verify_run.py must fail each time
     run_tfidf_baseline.py   TF-IDF + LR on leftover official train
     prepare_cfpb.py         freeze 500 CFPB complaints, labels joined from the Bureau
     prepare_civil.py        freeze 500 Civil Comments (CC0) for the toxicity row
@@ -80,7 +81,8 @@ cp .env.example .env
 set -a && source .env && set +a
 
 # Frozen samples are already in data/. Skip prepare unless you change seed/N.
-python3 scripts/run_eval.py                 # every task
+python3 scripts/rehydrate.py                # seven tasks ship hashes; this restores their text
+python3 scripts/run_eval.py                 # every task (preflights all text before any call)
 python3 scripts/run_eval.py sms_spam        # one task
 ```
 
@@ -105,8 +107,8 @@ BANKING77 is collapsed from 77 fine intents → 8 queues by keyword (see `coarse
 ## Results, seed 7, n=500 per task except prompt-injection screen (n=300)
 
 Wilson 95% CI. McNemar on paired errors, Holm-corrected across the 11 Jev-vs-Mini
-tests. `ns` = Holm p >= 0.05, meaning the accuracy gap is noise and neither model should
-be crowned. 2 row(s) clear the raw 0.05 and not the corrected one: offensive language screen, news topic.
+tests. `ns` = Holm p >= 0.05: insufficient evidence of a difference at this n. It does not
+say the two are equal, only that neither may be crowned on this sample. 2 row(s) clear the raw 0.05 and not the corrected one: offensive language screen, news topic.
 
 | Decision | n | Jev | Mini | McNemar | ECE | Verdict |
 |---|---|---|---|---|---|---|
@@ -145,6 +147,8 @@ Holm-corrected within their own family of 11 tests:
 | Hate-speech screen | 66.2% | 74.0% | 71.0% | ns | ns |
 
 **Jev 1 win, 9 ties, 1 loss** against a model two years newer. 2 row(s) that beat it at the raw 0.05 (consumer complaint routing, review polarity) do not survive the correction.
+
+Out-of-schema labels, counted as wrong and reported as such: consumer complaint routing 4 (auto, auto_leasing, auto_loan, auto_loans); message emotion 3 (disgust, fear).
 The loss is prompt injection, and it matters: the 2026 model catches
 72.0% of injections against Jev's
 60.0%, at 0.0% and 0.0% false positives.
@@ -171,21 +175,21 @@ The auto slice below is the strongest gate that still leaves at least half the t
 automated, selected by that rule from the measured gates rather than chosen by hand.
 
 <!-- generated:gate-table -->
-| Decision | Gold | ECE | Auto slice (gate) | Lift vs ungated | Cross-validated |
-|---|---|---|---|---|---|
-| Prompt-injection screen | academic | 0.134 | 87.4% on 79.3% (>=0.9) | +7.4pt | 87.3% |
-| Consumer complaint routing | live system | 0.100 | 91.2% on 77.4% (>=0.9) | +8.4pt | 91.2% |
-| Comment toxicity gate | real text | 0.075 | 91.0% on 53.4% (>=0.9) | +13.0pt | 90.9% |
-| SMS spam gate | academic | 0.016 | 98.8% on 85.2% (>=0.9) | +2.4pt | 98.7% |
-| Review polarity | academic | 0.015 | 98.5% on 94.2% (>=0.8) | +1.5pt | 98.3% |
-| Message emotion | academic | 0.083 | 90.3% on 66.2% (>=0.9) | +10.5pt | 90.3% |
-| Offensive language screen | academic | 0.110 | 86.7% on 60.2% (>=0.9) | +10.1pt | 86.7% |
-| Social sentiment (3-way) | academic | 0.141 | 81.6% on 65.2% (>=0.9) | +7.8pt | 81.1% |
-| News topic | academic | 0.096 | 92.9% on 84.4% (>=0.9) | +7.3pt | 92.9% |
-| Banking queue routing | academic | 0.213 | 80.1% on 78.4% (>=0.9) | +8.3pt | 80.1% |
-| Hate-speech screen | academic | 0.187 | 70.7% on 64.2% (>=0.8) | +4.5pt | 71.1% |
+| Decision | Gold | ECE | Auto slice (gate) | Lift vs ungated | Held-out acc on coverage | Halves under 50% |
+|---|---|---|---|---|---|---|
+| Prompt-injection screen | academic | 0.134 | 87.4% on 79.3% (>=0.9) | +7.4pt | 87.3% on 79.5% | 0/800 |
+| Consumer complaint routing | live system | 0.100 | 91.2% on 77.4% (>=0.9) | +8.4pt | 91.2% on 77.4% | 0/800 |
+| Comment toxicity gate | real text | 0.075 | 91.0% on 53.4% (>=0.9) | +13.0pt | 90.9% on 53.9% | 31/800 |
+| SMS spam gate | academic | 0.016 | 98.8% on 85.2% (>=0.9) | +2.4pt | 98.7% on 86.1% | 0/800 |
+| Review polarity | academic | 0.015 | 98.5% on 94.2% (>=0.8) | +1.5pt | 98.3% on 94.7% | 0/800 |
+| Message emotion | academic | 0.083 | 90.3% on 66.2% (>=0.9) | +10.5pt | 90.3% on 66.4% | 0/800 |
+| Offensive language screen | academic | 0.110 | 86.7% on 60.2% (>=0.9) | +10.1pt | 86.7% on 60.2% | 0/800 |
+| Social sentiment (3-way) | academic | 0.141 | 81.6% on 65.2% (>=0.9) | +7.8pt | 81.1% on 67.2% | 0/800 |
+| News topic | academic | 0.096 | 92.9% on 84.4% (>=0.9) | +7.3pt | 92.9% on 84.4% | 0/800 |
+| Banking queue routing | academic | 0.213 | 80.1% on 78.4% (>=0.9) | +8.3pt | 80.1% on 78.4% | 0/800 |
+| Hate-speech screen | academic | 0.187 | 70.7% on 64.2% (>=0.8) | +4.5pt | 71.1% on 62.9% | 61/800 |
 
-Gating beats not gating on **11 of 11 rows**. The last column chooses the gate on one random half and scores it on the other, 400 splits; the optimism of picking and scoring on the same rows is at most 0.5pt here. What a high ECE costs you is the right to quote the confidence number as a probability, not the right to threshold on it.
+Gating beats not gating on **11 of 11 rows** on this balanced sample; coverage here is benchmark coverage, not a forecast of production traffic. The held-out column chooses the gate on one random half and scores it on the other, 400 splits; the optimism of picking and scoring on the same rows is at most 0.5pt here. The 50% coverage rule is applied on the picking half, and the last column counts scoring halves that fell under it (most on hate-speech screen). Accepted-slice accuracy is one number; what a gate does to each class is in `results/error_profile.json` and, for the security row, in the next section.
 <!-- /generated:gate-table -->
 
 ### Accuracy is the wrong number for a security gate
@@ -209,14 +213,16 @@ injection recall from 60.0% to only
 66.3% on the 89 injections it still covers, while coverage falls, so the misses
 move to a human rather than disappearing. That is a documented exception to this site's
 own headline, and it stays on the page.
+
+In counts, at p_chosen >= 0.9: 238 of 300 rows are handled automatically; 30 of them are injections passed as legitimate, 20.0% of all 150 attacks in the sample; and 61 attacks fall below the threshold to whatever fallback the operator supplies. Accepted-slice accuracy does not show any of that.
 <!-- /generated:injection-classes -->
 
 `results/error_profile.json` carries per-class recall and recall-at-gate for every row,
 and the build refuses to publish a sentence quoting a rate it cannot find there.
 
-### The Don't verdict does not survive a change of gold
+### Hate speech and toxicity: neighbouring tasks, different rankings
 
-Two rows, one decision, different labels:
+Two rows, related judgements, different task definitions and datasets:
 
 <!-- generated:hate-vs-civil -->
 |  | TweetEval hate | Civil Comments (CC0) |
@@ -227,10 +233,13 @@ Two rows, one decision, different labels:
 | ECE | 0.187 | 0.075 |
 
 On TweetEval, Mini wins by 7.8 points and Jev's
-confidence is too badly calibrated to gate on. On CC0 gold for the same judgement the
-models tie and the confidence becomes usable. So the Don't was mostly a fact about that
-dataset. Both rows stay up: deleting the inconvenient one would be the opposite of the
-point.
+confidence is too badly calibrated to quote. On Civil Comments the models tie and the
+confidence becomes usable. These are not the same decision with different labels: the
+hate row asks for hate speech aimed at a protected group in tweets, the toxicity row asks
+for rudeness or disrespect in comments, with different inputs, populations and prompts.
+What the pair shows is that the ranking depends on the task and the dataset. It does not
+show that the hate loss was label noise; isolating that would take the same examples
+re-annotated under one rubric. Both rows stay up.
 <!-- /generated:hate-vs-civil -->
 
 <!-- generated:cfpb-cost -->
@@ -332,6 +341,16 @@ that could be measured have been. This list, like every table above, is generate
 - **Rows come from 4 invocations of `run_eval.py`.** Tasks were added one at a
   time, so the table is not one run. Each row's receipts carry their own timestamps and the
   site shows which invocation a row came from.
+- **The two prompt formats do not carry the same information.** Jev's choice questions
+  include a criteria sentence per label; the OpenAI prompt, reused for the 2026 model,
+  lists the label names only. On routing rows that tells Jev which odd intents belong to
+  `account` and Mini nothing. So this is a comparison of configurations, not of models
+  alone, and the receipts cannot say how much of any gap the prompt difference caused.
+  A normalized rerun would generate both formats from one rubric on a fresh sample.
+- **Reruns are not checkpointed.** A request that exhausts its retries raises before a
+  task's receipts are written, so a failed run is paid for again. Published counts are
+  complete (every arm answers every id exactly once, checked by `verify_run.py`), so no
+  failed row was dropped from a shown accuracy.
 - **Public gold.** Nine of eleven rows are academic benchmarks. Only CFPB routing uses
   a live system's own labels, and those are chosen by the person filing, not an expert.
 <!-- /generated:limits -->
@@ -369,6 +388,7 @@ python3 scripts/cost_curve.py        # cost vs length                      (~$0.
 python3 scripts/redact_text.py       # strip tweet text before committing  (no API)
 python3 scripts/build_site.py        # regenerate site and README numbers  (no API)
 python3 scripts/verify_run.py        # recompute everything; ALL CHECKS PASSED (no API)
+python3 scripts/selfcheck_verify.py  # prove the verifier fails on corrupted results (no API)
 python3 scripts/audit_site.py        # leaks, stale numbers, uncited columns (no API)
 ```
 
