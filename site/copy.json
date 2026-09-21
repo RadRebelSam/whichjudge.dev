@@ -22,7 +22,7 @@
       "ns": false,
       "sourceName": "deepset/prompt-injections",
       "sourceUrl": "https://huggingface.co/datasets/deepset/prompt-injections",
-      "why": "Jev 80.5% against Mini 74.5% is a significant 6.0pt win (Holm p=0.036), and it does not matter: Jev misses 39.0% of injections, Mini 51.0%, the 2026 model 28.0%, all at 0.0% false positives. TF-IDF at 90.5% beats both APIs. A security gate is judged on what gets through, and every model here lets a third or more through.",
+      "why": "Jev 80.5% against Mini 74.5% is a significant 6.0pt win (Holm p=0.036), and it does not matter: Jev misses 39.0% of injections, Mini 51.0%, the 2026 model 40.0%, all at 0.0% false positives. TF-IDF at 90.5% beats both APIs. A security gate is judged on what gets through, and every model here lets 39% or more through.",
       "gate": "At >=0.9: 86.3% on 84.0% of rows, 5.8pt above ungated. Recall of injections on the covered rows barely moves, so raising the bar hands the misses to a human instead of catching them.",
       "goldTier": "research",
       "goldNote": "Curated research corpus, predates current agent tooling",
@@ -150,7 +150,7 @@
       "dataset": "AG News test",
       "labels": "world / sports / business / sci_tech",
       "verdict": "replace",
-      "why": "Jev 89.8% beats Mini 86.0% by 3.8pt (Holm p=0.025), and the 2026 model at 86.8% ties Jev. TF-IDF at 93.8% after training on 120k rows beats both APIs. If you have labels, skip both.",
+      "why": "Jev 89.8% beats Mini 86.0% by 3.8pt (Holm p=0.025), and the 2026 model at 86.8% ties Jev. Laya, self-hosted, scores 93.4%, ns against Jev after correction; TF-IDF at 93.8% after training on 120k rows beats both APIs. If you have labels, skip both.",
       "gate": "Jev first among APIs. At >=0.9: 94.0% on 87.4% of articles, 4.2pt above ungated, ECE 0.068.",
       "ns": false,
       "sourceName": "fancyzhx/ag_news",
@@ -158,7 +158,7 @@
       "goldTier": "research",
       "goldNote": "Academic benchmark",
       "rowNoteKind": "info",
-      "rowNote": "Replace is vs Mini only. TF-IDF beats both at 93.8%."
+      "rowNote": "Replace is vs Mini only. TF-IDF beats both at 93.8%; Laya scores 93.4%, ns vs Jev."
     },
     {
       "id": "banking_coarse_route",
@@ -184,7 +184,7 @@
       "dataset": "tweet_eval hate",
       "labels": "not_hate / hate",
       "verdict": "dont",
-      "why": "Mini 72.4% beats Jev 65.6% by 6.8pt (Holm p=0.002), the same loss as v1 on equal prompts. Jev catches only 47.6% of hate speech; Mini 64.0%, the 2026 model 75.2% but with 33.2% false positives. TF-IDF is worst at 53.4%. The neighbouring Civil Comments row, a different task on CC0 gold, ranks the models the other way.",
+      "why": "Mini 72.4% beats Jev 65.6% by 6.8pt (Holm p=0.002), the same loss as v1 on equal prompts. Jev catches only 47.6% of hate speech; Mini 64.0%, the 2026 model 38.0%. TF-IDF is worst at 53.4%. The neighbouring Civil Comments row, a different task on CC0 gold, ranks the models the other way.",
       "gate": "Gating buys the most lift on the board and still leaves a bad row: 78.9% on 53.0% at >=0.9, 13.3pt above ungated, and Mini is better anyway. Keep a specialist.",
       "ns": false,
       "sourceName": "cardiffnlp/tweet_eval",

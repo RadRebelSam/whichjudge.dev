@@ -97,8 +97,20 @@ def wrong_cost_curve(root: Path) -> str:
     return "cost curve: longest point priced without the cached-token rate"
 
 
+def laya_pred_edited(root: Path) -> str:
+    """A Laya answer edited in the receipt while the raw response still says otherwise."""
+    p = root / "results/receipts/news_topic.laya.json"
+    if not p.exists():
+        return "skip"
+    rec = load(p)
+    wrong = next(r for r in rec["calls"] if r["pred"] != r["gold"])
+    wrong["pred"] = wrong["gold"]
+    dump(p, rec)
+    return "news_topic: one Laya pred edited to gold, raw response untouched"
+
+
 CASES = [flip_pred_and_summary, empty_modern_receipt, stale_calibration,
-         drop_receipt_row, invalid_label_uncounted, wrong_cost_curve]
+         drop_receipt_row, invalid_label_uncounted, wrong_cost_curve, laya_pred_edited]
 
 
 def copy_tree(dst: Path) -> None:
@@ -126,6 +138,8 @@ def main() -> None:
             root = Path(tmp) / case.__name__
             copy_tree(root)
             what = case(root)
+            if what == "skip":
+                continue
             code, out = run_verifier(root)
             if code == 0:
                 failures += 1

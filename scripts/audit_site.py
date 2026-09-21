@@ -142,7 +142,7 @@ def check_numbers_in_app_js() -> None:
 def check_models_named_have_columns() -> None:
     """Prose must not cite a model the tables do not show."""
     tasks = tasks_from_data_js()
-    shown = {"jev", "gpt-4o-mini", "4o-mini", "tf-idf", "tfidf"}
+    shown = {"jev", "gpt-4o-mini", "4o-mini", "tf-idf", "tfidf", "laya"}
     modern = next((t["modern"]["model"] for t in tasks if t.get("modern")), None)
     if modern:
         shown |= {modern.lower(), modern.split("-2026")[0].lower(), "5.4-mini"}
@@ -153,11 +153,17 @@ def check_models_named_have_columns() -> None:
             fail(f"copy.json cites model '{m}' which has no column in the tables")
     if modern and not re.search(re.escape("5.4-mini"), (SITE / "app.js").read_text(encoding="utf-8")):
         fail("a current-model column exists in results/ but the table does not show it")
+    laya = next((t["laya"] for t in tasks if t.get("laya")), None)
+    if laya and "Laya" not in (SITE / "app.js").read_text(encoding="utf-8"):
+        fail("a Laya column exists in results/ but the table does not show it")
     for t in tasks:
         page = SITE / "decision" / f"{t['id'].replace('_', '-')}.html"
         if t.get("modern") and page.exists():
             if t["modern"]["model"] not in page.read_text(encoding="utf-8"):
                 fail(f"{page.name} omits the {t['modern']['model']} row")
+        if t.get("laya") and page.exists():
+            if "Laya (self-hosted" not in page.read_text(encoding="utf-8"):
+                fail(f"{page.name} omits the Laya row")
 
 
 def check_verdicts() -> None:

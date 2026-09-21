@@ -216,6 +216,12 @@ def main() -> None:
         if modern_path.exists():
             md = json.loads(modern_path.read_text(encoding="utf-8"))
             errors[tid]["modern"] = error_profile({"calls": md["calls"]}, "calls")
+        # Laya returns p_chosen like Jev, so it gets the same calibration measure.
+        laya_path = RECEIPTS / f"{tid}.laya.json"
+        if laya_path.exists():
+            ld = json.loads(laya_path.read_text(encoding="utf-8"))
+            errors[tid]["laya"] = error_profile({"calls": ld["calls"]}, "calls")
+            out[tid]["laya"] = reliability([(score_of(r), r["pred"] == r["gold"]) for r in ld["calls"]])
         rel = out[tid]["p_chosen"]
         occupied = sum(1 for b in rel["bins"] if b["n"])
         print(f"{tid:24} ECE {rel['ece']:.3f}  MCE {rel['mce']:.3f}  bins used {occupied}/{BINS}")

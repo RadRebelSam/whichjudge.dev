@@ -11,7 +11,7 @@ const FILTERS = [
 
 // Header and rows share this exact template. The old markup used <th> cells for the
 // header and a CSS grid for the rows, which is why the columns never lined up.
-const GRID = "minmax(0,1.7fr) 4.6rem minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) 3.2rem minmax(5.6rem,0.75fr)";
+const GRID = "minmax(0,1.6fr) 4.6rem minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) 3.2rem minmax(5.6rem,0.75fr)";
 
 const receiptCache = {};
 let modalOpen = false;
@@ -82,6 +82,10 @@ function counts() {
     jevBeatsModern: TASKS.filter((t) => t.modern && t.modern.vsJev === "jev").length,
     modernTies: TASKS.filter((t) => t.modern && t.modern.vsJev === "ns").length,
     modernModel: (TASKS.find((t) => t.modern) || {}).modern,
+    layaModel: (TASKS.find((t) => t.laya) || {}).laya,
+    layaBeatsJev: TASKS.filter((t) => t.laya && t.laya.vsJev === "laya").length,
+    jevBeatsLaya: TASKS.filter((t) => t.laya && t.laya.vsJev === "jev").length,
+    layaTies: TASKS.filter((t) => t.laya && t.laya.vsJev === "ns").length,
     tfidfWins: tfidfWins.length,
     tfidfNames: tfidfWins.map((t) => t.shortName || t.id.split("_")[0]).join(" + "),
     best,
@@ -197,6 +201,7 @@ function render() {
         })()}
         ${statCard("Gating beats not gating", `${c.gateHelps}/${TASKS.length}`, "Lift shown per row, from gates on the same score as ECE.")}
         ${c.modernModel ? statCard("vs a 2026 model", `${c.jevBeatsModern}W ${c.modernTies}T ${c.modernBeatsJev}L`, `Jev against ${c.modernModel.model}, Holm-corrected. ` + TASKS.filter((t) => t.modern && t.modern.vsJev !== "ns").map((t) => (t.modern.vsJev === "jev" ? "Jev wins " : "loses ") + t.title.toLowerCase()).join("; ") + ".") : ""}
+        ${c.layaModel ? statCard("vs Laya, self-hosted", `${c.jevBeatsLaya}W ${c.layaTies}T ${c.layaBeatsJev}L`, `Jev against an open-weight System One model on the same schema questions, Holm-corrected. ` + (TASKS.filter((t) => t.laya && t.laya.vsJev === "laya").map((t) => "Laya wins " + t.title.toLowerCase()).join("; ") || "Laya wins nowhere") + ".") : ""}
         ${statCard(`TF-IDF wins ${c.tfidfWins}`, c.tfidfNames || "none", "If you have labels, skip both APIs")}
         ${statCard("Non-academic gold", `${c.realGold}/${TASKS.length}`, `${c.liveGold} live system, ${c.realGold - c.liveGold} real text. The rest are benchmarks.`)}
         ${statCard("Best case, not typical", pct(c.best.autoSlice.acc), c.best.title.toLowerCase() + " above " + c.best.autoSlice.gate + ", on " + pct(c.best.autoSlice.cov) + " of traffic. Highest on the board.")}
@@ -222,6 +227,7 @@ function render() {
               <span class="text-right">Jev</span>
               <span class="text-right">4o-mini<br><span class="normal-case tracking-normal text-zinc-400">2024</span></span>
               <span class="text-right">5.4-mini<br><span class="normal-case tracking-normal text-zinc-400">2026</span></span>
+              <span class="text-right">Laya<br><span class="normal-case tracking-normal text-zinc-400">local</span></span>
               <span class="text-right">TF-IDF</span>
               <span class="text-right">ECE</span>
               <span class="text-right">Auto slice</span>
@@ -257,7 +263,8 @@ function render() {
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Replace / Mix / Don't / ns</span> - these compare Jev against 4o-mini and nothing else. They do not say whether you should automate the decision (see Auto slice), whether the confidence can be quoted (see ECE), or whether a trained classifier would beat both (see TF-IDF). ${(() => { const b = TASKS.find((t) => t.id === "banking_coarse_route"); return b ? `Banking is ${verdictMeta(b.verdict, b.ns).label}, has ECE ${b.ece.ece.toFixed(3)}, and ${b.tfidf.vsJev === "tfidf" ? "loses to TF-IDF by " + ((b.tfidf.acc - b.jev.acc) * 100).toFixed(0) + " points" : "ties TF-IDF"}.` : ""; })()} One badge cannot carry three findings.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ns</span> - insufficient evidence of a difference at this n; it does not say the models are equal. Do not crown a winner on 1-2pt. On the safety rows, ignore accuracy entirely and read the miss rate in red.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Don't</span> - Mini significantly better on that dataset. Hate speech stays up on purpose, and the Civil Comments row shows the same judgement on CC0 gold where the gap disappears.</li>
-            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">TF-IDF</span> - $0, ~0.03ms, leftover train never overlapping the frozen 500. If it wins, skip both APIs.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Laya</span> - an open-weight System One-style model (Apache-2.0) run on this machine with the same schema questions as Jev. No API bill; its latency is a local forward pass and is not comparable with the API columns.</li>
+            <li><span class="font-medium text-zinc-900 dark:text-zinc-100">TF-IDF</span> - $0, microseconds per row, leftover train never overlapping the frozen rows. If it wins, skip both APIs.</li>
           </ul>
           <p class="mt-4 text-xs leading-relaxed text-zinc-500">${RUN.note}</p>
         </article>
@@ -449,6 +456,7 @@ function cardHtml(t, on) {
           <span>Jev ${pct(t.jev.acc)}</span>
           <span>4o-mini ${pct(t.mini.acc)}</span>
           ${t.modern ? `<span>2026 ${pct(t.modern.acc)}${t.modern.vsJev === "modern" ? " · beats Jev" : t.modern.vsJev === "jev" ? " · Jev wins" : ""}</span>` : ""}
+          ${t.laya ? `<span>Laya ${pct(t.laya.acc)}${t.laya.vsJev === "laya" ? " · beats Jev" : t.laya.vsJev === "jev" ? " · Jev wins" : ""}</span>` : ""}
           <span>TF-IDF ${pct(t.tfidf.acc)}${t.tfidf.vsJev === "tfidf" ? " · beats Jev" : ""}</span>
         </span>
         <span class="mt-1 block text-xs text-zinc-500">${a ? "auto slice ≥" + a.gate + " " + pct(a.acc) + " on " + pct(a.cov) : "no gate keeps half the traffic"} · ${ms(t.jev.p50)}</span>
@@ -476,10 +484,12 @@ function rowHtml(t, on) {
           <span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${v.chip}">${v.label}</span>
           ${t.tfidf.vsJev === "tfidf" ? `<span class="mt-1 block text-[10px] font-medium text-amber-700 dark:text-amber-500">TF-IDF wins</span>` : ""}
           ${t.modern && t.modern.vsJev === "modern" ? `<span class="mt-0.5 block text-[10px] text-zinc-500">2026 wins</span>` : ""}
+          ${t.laya && t.laya.vsJev === "laya" ? `<span class="mt-0.5 block text-[10px] text-zinc-500">Laya wins</span>` : ""}
         </span>
         <span class="text-right tabular-nums">${pct(t.jev.acc)}<span class="block text-[10px] font-normal text-zinc-400">${pct(t.jev.lo)}-${pct(t.jev.hi)}</span></span>
         <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${pct(t.mini.acc)}<span class="block text-[10px] text-zinc-400">${dLabel}</span></span>
         <span class="text-right tabular-nums ${t.modern && t.modern.vsJev === "modern" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${t.modern ? pct(t.modern.acc) : "-"}<span class="block text-[10px] font-normal text-zinc-400">${t.modern ? (t.modern.vsJev === "modern" ? "beats Jev" : t.modern.vsJev === "jev" ? "loses" : "ns") : ""}</span></span>
+        <span class="text-right tabular-nums ${t.laya && t.laya.vsJev === "laya" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${t.laya ? pct(t.laya.acc) : "-"}<span class="block text-[10px] font-normal text-zinc-400">${t.laya ? "vs Jev " + t.laya.vsJev : ""}</span></span>
         <span class="text-right tabular-nums ${t.tfidf.vsJev === "tfidf" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${pct(t.tfidf.acc)}<span class="block text-[10px] font-normal text-zinc-400">$0</span></span>
         <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${t.ece.ece.toFixed(3)}</span>
         <span class="text-right tabular-nums">${pct(t.autoSlice.acc)}<span class="block text-[10px] font-normal text-zinc-400">on ${pct(t.autoSlice.cov)} · ${(t.autoSlice.lift * 100 >= 0 ? "+" : "") + (t.autoSlice.lift * 100).toFixed(1)}pt</span></span>
@@ -558,6 +568,7 @@ function detailHtml(t) {
         ${metric("McNemar vs Mini", t.ns ? "ns  p=" + t.mcnemar.p : t.mcnemar.winner + "  p=" + t.mcnemar.p)}
         ${metric("TF-IDF vs Jev", t.tfidf.vsJev)}
         ${t.modern ? metric("Current small model", pct(t.modern.acc) + "  [" + pct(t.modern.lo) + "-" + pct(t.modern.hi) + "] · " + t.modern.model + " · vs Jev " + t.modern.vsJev) : ""}
+        ${t.laya ? metric("Laya, self-hosted", pct(t.laya.acc) + "  [" + pct(t.laya.lo) + "-" + pct(t.laya.hi) + "] · vs Jev " + t.laya.vsJev + " · ECE " + (t.laya.ece == null ? "-" : t.laya.ece.toFixed(3)) + " · " + ms(t.laya.p50) + " local " + (t.laya.device || "") + ", no network") : ""}
         ${metric("Jev p50 / p95", ms(t.jev.p50) + " / " + ms(t.jev.p95))}
         ${metric("Mini p50", ms(t.mini.p50) + " · " + su + "× · includes RTT, local to one client")}
         ${metric("$ / million", usd(t.jev.perM) + " vs " + usd(t.mini.perM))}

@@ -3,7 +3,7 @@
 Replacement matrix for cheap **judge / decision** models.
 
 Rows are decisions you already pay an LLM to make (spam gate, ticket route, hate screen).
-Columns are models: **Jev `jev-1.13.0`**, **`gpt-4o-mini-2024-07-18`**, **`gpt-5.4-mini-2026-03-17`** and a TF-IDF + logistic regression baseline.
+Columns are models: **Jev `jev-1.13.0`**, **`gpt-4o-mini-2024-07-18`**, **`gpt-5.4-mini-2026-03-17`**, **Laya** (`convaiinnovations/laya`, an open-weight System One-style model run locally) and a TF-IDF + logistic regression baseline.
 The next System One-style model is another column, not another site.
 
 <!-- generated:ece-line -->
@@ -40,6 +40,7 @@ whichjudge/
     prepare_civil.py        freeze 500 Civil Comments (CC0) for the toxicity row
     prepare_injection.py    freeze 300 prompt-injection rows (n is capped by the source)
     run_modern_baseline.py  same samples through a current small model (--recompute)
+    run_laya_baseline.py    same samples and schema questions through Laya, self-hosted (--recompute)
     calibrate.py            ECE + reliability bins from receipts (no API)
     cost_curve.py           cost and latency vs input length; finds the crossover
     redact_text.py          strip third-party text to hashes before publishing
@@ -174,6 +175,34 @@ This column is additive. It does not touch `run_eval.py`, `results/summary.json`
 existing receipts. `verify_run.py` recounts it from `results/receipts/<task>.modern.json`
 like every other column. Statistics are separated from the calls, so `--recompute`
 rebuilds them from stored receipts for free.
+
+## A second System One model, self-hosted
+
+<!-- generated:laya-table -->
+Laya (`convaiinnovations/laya`, revision `1c5edc17a7ac`, Apache-2.0) is a second
+System One-style model: same typed questions, one forward pass, probabilities back. It runs
+on your own hardware, so it gets the very schema questions Jev gets, byte for byte, and no API
+bill. Measured here on the cpu of the author's workstation
+(`scripts/run_laya_baseline.py`). Both `vs` columns are Holm-corrected within their family of
+11 tests; the ECE columns are on each model's own p_chosen:
+
+| Decision | Jev | 4o-mini | Laya | vs Jev | vs 4o-mini | Jev ECE | Laya ECE |
+|---|---|---|---|---|---|---|---|
+| Prompt-injection screen | 80.5% | 74.5% | 63.5% | Jev | 4o-mini | 0.137 | 0.204 |
+| Consumer complaint routing | 83.8% | 77.4% | 57.0% | Jev | 4o-mini | 0.094 | 0.059 |
+| Comment toxicity gate | 76.8% | 72.4% | 72.2% | ns | ns | 0.101 | 0.094 |
+| SMS spam gate | 95.4% | 94.6% | 92.6% | ns | ns | 0.015 | 0.050 |
+| Review polarity | 96.3% | 95.5% | 91.6% | Jev | 4o-mini | 0.030 | 0.019 |
+| Message emotion | 78.2% | 76.2% | 69.4% | Jev | 4o-mini | 0.100 | 0.067 |
+| Offensive language screen | 72.6% | 72.2% | 60.2% | Jev | 4o-mini | 0.151 | 0.141 |
+| Social sentiment (3-way) | 73.2% | 71.4% | 56.6% | Jev | 4o-mini | 0.157 | 0.175 |
+| News topic | 89.8% | 86.0% | 93.4% | ns | **Laya** | 0.068 | 0.029 |
+| Banking queue routing | 70.2% | 66.4% | 56.8% | Jev | 4o-mini | 0.232 | 0.146 |
+| Hate-speech screen | 65.6% | 72.4% | 62.8% | ns | 4o-mini | 0.196 | 0.140 |
+
+**Jev 7 wins, 4 ties, 0 losses** against Laya. Latency is not comparable across
+the two: Laya's p50 of 160 to 970 ms is one forward pass on this machine's cpu, no network; the API columns include a round trip.
+<!-- /generated:laya-table -->
 
 ### Calibration and gating are different questions
 
@@ -391,6 +420,7 @@ python3 scripts/run_eval.py          # hits both APIs, writes receipts     (~$0.
 python3 scripts/calibrate.py         # ECE + per-class error profile        (no API)
 python3 scripts/run_tfidf_baseline.py  # classical baseline                (no API)
 python3 scripts/run_modern_baseline.py # current small model column         (~$0.30)
+python3 scripts/run_laya_baseline.py   # self-hosted System One column       (no API, ~35 min CPU)
 python3 scripts/cost_curve.py        # cost vs length                      (~$0.01)
 python3 scripts/redact_text.py       # strip tweet text before committing  (no API)
 python3 scripts/build_site.py        # regenerate site and README numbers  (no API)

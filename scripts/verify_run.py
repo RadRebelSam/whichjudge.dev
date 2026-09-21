@@ -412,6 +412,8 @@ def check_derived(summary: list[dict], fast: bool = False) -> Derived:
     tfidf_slim = {r["task_id"]: r for r in load(RESULTS / "tfidf_baseline_summary.json")}
     modern_path = RESULTS / "modern_baseline.json"
     modern = {r["task_id"]: r for r in load(modern_path)["tasks"]} if modern_path.exists() else {}
+    laya_path = RESULTS / "laya_baseline.json"
+    laya = {r["task_id"]: r for r in load(laya_path)["tasks"]} if laya_path.exists() else {}
 
     from calibrate import cross_validated_slice  # same seeded splits as the producer
 
@@ -603,6 +605,64 @@ def check_derived(summary: list[dict], fast: bool = False) -> Derived:
                 d.expect(f"{tid} modern.{key}.a_only_correct", a, md[key]["a_only_correct"])
                 d.expect(f"{tid} modern.{key}.b_only_correct", b_, md[key]["b_only_correct"])
                 d.expect(f"{tid} modern.{key}.p_value", p, md[key]["p_value"], 1e-12)
+            # The per-class profile of this arm was once computed from an older
+            # run's receipts and published; it is now checked like the other arms.
+            if profile[tid].get("modern"):
+                d.expect(f"{tid} error_profile.modern.per_class", per_class(calls), profile[tid]["modern"]["per_class"])
+            else:
+                print(f"DERIVED MISMATCH {tid} error_profile.modern: missing")
+                d.errors += 1
+
+        # self-hosted System One column: same reading as the Jev arm
+        if tid in laya:
+            ld = laya[tid]
+            lpath = RECEIPTS / f"{tid}.laya.json"
+            lrec = load(lpath) if lpath.exists() else None
+            if not isinstance(lrec, dict) or not isinstance(lrec.get("calls"), list) or not lrec["calls"]:
+                print(f"LAYA RECEIPTS {tid}: missing or malformed {lpath.name}")
+                d.errors += 1
+                continue
+            lcalls = lrec["calls"]
+            coverage("laya", lcalls)
+            d.expect(f"{tid} laya.model", ld["model"], lrec.get("model"))
+            l_invalid = 0
+            for r in lcalls:
+                if sha256_bytes(canonical_bytes(r["response"])) != r["response_sha256"]:
+                    print("RESPONSE HASH", tid, "laya", r["id"])
+                    d.errors += 1
+                if gold[r["id"]] != r["gold"]:
+                    print("GOLD DRIFT", tid, "laya", r["id"])
+                    d.errors += 1
+                pred, conf, p_chosen = reparse_jev(r["response"], schema["question_key"])
+                d.expect(f"{tid} laya[{r['id']}].pred reparsed", pred, r["pred"])
+                d.expect(f"{tid} laya[{r['id']}].confidence reparsed", conf, r.get("confidence"))
+                d.expect(f"{tid} laya[{r['id']}].p_chosen reparsed", p_chosen, r.get("p_chosen"))
+                if r["pred"] not in schema["labels"]:
+                    l_invalid += 1
+            d.expect(f"{tid} laya.invalid_labels", l_invalid, ld.get("invalid_labels"))
+            l_ok = [r["pred"] == r["gold"] for r in lcalls]
+            d.expect(f"{tid} laya.n", len(l_ok), ld["n"])
+            d.expect(f"{tid} laya.acc", sum(l_ok) / len(l_ok), ld["acc"])
+            lo, hi = wilson(sum(l_ok), len(l_ok))
+            d.expect(f"{tid} laya.wilson.lo", lo, ld["wilson"]["lo"])
+            d.expect(f"{tid} laya.wilson.hi", hi, ld["wilson"]["hi"])
+            lat = sorted(r["latency_ms"] for r in lcalls)
+            d.expect(f"{tid} laya.p50_ms", lat[len(lat) // 2], ld["p50_ms"])
+            d.expect(f"{tid} laya.p95_ms", lat[int(len(lat) * 0.95)], ld["p95_ms"])
+            jev_by = dict(zip([r["id"] for r in jev], jev_ok))
+            j_al = [jev_by[r["id"]] for r in lcalls]
+            m_al = [mini_by[r["id"]] for r in lcalls]
+            for key, other in (("mcnemar_vs_jev", j_al), ("mcnemar_vs_mini", m_al)):
+                a, b_, p = mcnemar(l_ok, other)
+                d.expect(f"{tid} laya.{key}.a_only_correct", a, ld[key]["a_only_correct"])
+                d.expect(f"{tid} laya.{key}.b_only_correct", b_, ld[key]["b_only_correct"])
+                d.expect(f"{tid} laya.{key}.p_value", p, ld[key]["p_value"], 1e-12)
+            if calib[tid].get("laya"):
+                rel = reliability(lcalls)
+                d.expect(f"{tid} laya.ece", rel["ece"], calib[tid]["laya"]["ece"])
+                d.expect(f"{tid} laya.mce", rel["mce"], calib[tid]["laya"]["mce"])
+            if profile[tid].get("laya"):
+                d.expect(f"{tid} error_profile.laya.per_class", per_class(lcalls), profile[tid]["laya"]["per_class"])
 
         # the same text twice in one sample, reported so nobody has to find it
         seen, dup = set(), 0
@@ -646,6 +706,7 @@ def check_derived(summary: list[dict], fast: bool = False) -> Derived:
         "per-class recall, misses, false positives and recall at gate (results/error_profile.json)",
         "TF-IDF accuracy, Wilson, McNemar vs both arms from its stored per-row predictions",
         "current-model accuracy, Wilson, latency, tokens per call, McNemar vs both arms, response hashes",
+        "Laya accuracy, Wilson, latency, McNemar vs both arms, ECE, error profile, response hashes, reparsed preds",
         "cost-curve points, crossover and overheads re-aggregated from per-call receipts",
     ]
     return d

@@ -96,20 +96,41 @@
     "modern": {
       "per_class": {
         "injection": {
-          "n": 150,
-          "recall": 0.72,
-          "missed": 42,
-          "missed_rate": 0.28,
+          "n": 100,
+          "recall": 0.6,
+          "missed": 40,
+          "missed_rate": 0.4,
           "false_positives": 0,
           "false_positive_rate": 0.0
         },
         "legitimate": {
-          "n": 150,
+          "n": 100,
           "recall": 1.0,
           "missed": 0,
           "missed_rate": 0.0,
-          "false_positives": 42,
-          "false_positive_rate": 0.28
+          "false_positives": 40,
+          "false_positive_rate": 0.4
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "injection": {
+          "n": 100,
+          "recall": 0.27,
+          "missed": 73,
+          "missed_rate": 0.73,
+          "false_positives": 0,
+          "false_positive_rate": 0.0
+        },
+        "legitimate": {
+          "n": 100,
+          "recall": 1.0,
+          "missed": 0,
+          "missed_rate": 0.0,
+          "false_positives": 73,
+          "false_positive_rate": 0.73
         }
       },
       "recall_at_gate": {}
@@ -213,19 +234,40 @@
       "per_class": {
         "not_toxic": {
           "n": 250,
-          "recall": 0.7,
-          "missed": 75,
-          "missed_rate": 0.3,
-          "false_positives": 42,
-          "false_positive_rate": 0.168
+          "recall": 0.864,
+          "missed": 34,
+          "missed_rate": 0.136,
+          "false_positives": 88,
+          "false_positive_rate": 0.352
         },
         "toxic": {
           "n": 250,
-          "recall": 0.832,
-          "missed": 42,
-          "missed_rate": 0.168,
-          "false_positives": 75,
-          "false_positive_rate": 0.3
+          "recall": 0.648,
+          "missed": 88,
+          "missed_rate": 0.352,
+          "false_positives": 34,
+          "false_positive_rate": 0.136
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "not_toxic": {
+          "n": 250,
+          "recall": 0.992,
+          "missed": 2,
+          "missed_rate": 0.008,
+          "false_positives": 137,
+          "false_positive_rate": 0.548
+        },
+        "toxic": {
+          "n": 250,
+          "recall": 0.452,
+          "missed": 137,
+          "missed_rate": 0.548,
+          "false_positives": 2,
+          "false_positive_rate": 0.008
         }
       },
       "recall_at_gate": {}
@@ -545,65 +587,134 @@
       "per_class": {
         "bank_account": {
           "n": 63,
-          "recall": 0.7302,
-          "missed": 17,
-          "missed_rate": 0.2698,
-          "false_positives": 25,
-          "false_positive_rate": 0.0572
+          "recall": 0.873,
+          "missed": 8,
+          "missed_rate": 0.127,
+          "false_positives": 15,
+          "false_positive_rate": 0.0343
         },
         "cards": {
           "n": 62,
-          "recall": 0.8226,
-          "missed": 11,
-          "missed_rate": 0.1774,
-          "false_positives": 20,
-          "false_positive_rate": 0.0457
+          "recall": 0.8548,
+          "missed": 9,
+          "missed_rate": 0.1452,
+          "false_positives": 13,
+          "false_positive_rate": 0.0297
         },
         "credit_reporting": {
           "n": 62,
-          "recall": 0.9839,
-          "missed": 1,
-          "missed_rate": 0.0161,
-          "false_positives": 38,
-          "false_positive_rate": 0.0868
+          "recall": 0.9032,
+          "missed": 6,
+          "missed_rate": 0.0968,
+          "false_positives": 34,
+          "false_positive_rate": 0.0776
         },
         "debt_collection": {
-          "n": 62,
-          "recall": 0.5161,
-          "missed": 30,
-          "missed_rate": 0.4839,
-          "false_positives": 5,
-          "false_positive_rate": 0.0114
+          "n": 63,
+          "recall": 0.6032,
+          "missed": 25,
+          "missed_rate": 0.3968,
+          "false_positives": 7,
+          "false_positive_rate": 0.016
         },
         "loans": {
-          "n": 64,
-          "recall": 0.5469,
-          "missed": 29,
-          "missed_rate": 0.4531,
+          "n": 63,
+          "recall": 0.8571,
+          "missed": 9,
+          "missed_rate": 0.1429,
           "false_positives": 7,
-          "false_positive_rate": 0.0161
+          "false_positive_rate": 0.016
         },
         "money_transfer": {
-          "n": 62,
-          "recall": 0.7742,
-          "missed": 14,
-          "missed_rate": 0.2258,
-          "false_positives": 5,
-          "false_positive_rate": 0.0114
-        },
-        "mortgage": {
           "n": 63,
-          "recall": 0.9524,
-          "missed": 3,
-          "missed_rate": 0.0476,
+          "recall": 0.7143,
+          "missed": 18,
+          "missed_rate": 0.2857,
           "false_positives": 3,
           "false_positive_rate": 0.0069
         },
-        "student_loan": {
+        "mortgage": {
           "n": 62,
           "recall": 0.9677,
           "missed": 2,
           "missed_rate": 0.0323,
+          "false_positives": 2,
+          "false_positive_rate": 0.0046
+        },
+        "student_loan": {
+          "n": 62,
+          "recall": 0.9355,
+          "missed": 4,
+          "missed_rate": 0.0645,
+          "false_positives": 0,
+          "false_positive_rate": 0.0
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "bank_account": {
+          "n": 63,
+          "recall": 0.7143,
+          "missed": 18,
+          "missed_rate": 0.2857,
+          "false_positives": 42,
+          "false_positive_rate": 0.0961
+        },
+        "cards": {
+          "n": 62,
+          "recall": 0.7097,
+          "missed": 18,
+          "missed_rate": 0.2903,
+          "false_positives": 21,
+          "false_positive_rate": 0.0479
+        },
+        "credit_reporting": {
+          "n": 62,
+          "recall": 0.7581,
+          "missed": 15,
+          "missed_rate": 0.2419,
+          "false_positives": 41,
+          "false_positive_rate": 0.0936
+        },
+        "debt_collection": {
+          "n": 63,
+          "recall": 0.6984,
+          "missed": 19,
+          "missed_rate": 0.3016,
+          "false_positives": 96,
+          "false_positive_rate": 0.2197
+        },
+        "loans": {
+          "n": 63,
+          "recall": 0.1905,
+          "missed": 51,
+          "missed_rate": 0.8095,
+          "false_positives": 2,
+          "false_positive_rate": 0.0046
+        },
+        "money_transfer": {
+          "n": 63,
+          "recall": 0.3492,
+          "missed": 41,
+          "missed_rate": 0.6508,
+          "false_positives": 4,
+          "false_positive_rate": 0.0092
+        },
+        "mortgage": {
+          "n": 62,
+          "recall": 0.8226,
+          "missed": 11,
+          "missed_rate": 0.1774,
+          "false_positives": 9,
+          "false_positive_rate": 0.0205
+        },
+        "student_loan": {
+          "n": 62,
+          "recall": 0.3226,
+          "missed": 42,
+          "missed_rate": 0.6774,
           "false_positives": 0,
           "false_positive_rate": 0.0
         }
@@ -925,67 +1036,136 @@
       "per_class": {
         "account": {
           "n": 63,
-          "recall": 0.873,
-          "missed": 8,
-          "missed_rate": 0.127,
-          "false_positives": 24,
-          "false_positive_rate": 0.0549
+          "recall": 0.9365,
+          "missed": 4,
+          "missed_rate": 0.0635,
+          "false_positives": 1,
+          "false_positive_rate": 0.0023
         },
         "cards": {
-          "n": 62,
-          "recall": 0.7581,
-          "missed": 15,
-          "missed_rate": 0.2419,
-          "false_positives": 35,
-          "false_positive_rate": 0.0799
+          "n": 64,
+          "recall": 0.625,
+          "missed": 24,
+          "missed_rate": 0.375,
+          "false_positives": 5,
+          "false_positive_rate": 0.0115
         },
         "cash_atm": {
+          "n": 62,
+          "recall": 0.7097,
+          "missed": 18,
+          "missed_rate": 0.2903,
+          "false_positives": 1,
+          "false_positive_rate": 0.0023
+        },
+        "fx": {
+          "n": 62,
+          "recall": 1.0,
+          "missed": 0,
+          "missed_rate": 0.0,
+          "false_positives": 11,
+          "false_positive_rate": 0.0251
+        },
+        "other": {
           "n": 63,
-          "recall": 0.7619,
-          "missed": 15,
-          "missed_rate": 0.2381,
+          "recall": 0.0,
+          "missed": 63,
+          "missed_rate": 1.0,
+          "false_positives": 8,
+          "false_positive_rate": 0.0183
+        },
+        "payments_fees": {
+          "n": 62,
+          "recall": 0.9839,
+          "missed": 1,
+          "missed_rate": 0.0161,
+          "false_positives": 62,
+          "false_positive_rate": 0.1416
+        },
+        "top_up": {
+          "n": 62,
+          "recall": 0.871,
+          "missed": 8,
+          "missed_rate": 0.129,
+          "false_positives": 39,
+          "false_positive_rate": 0.089
+        },
+        "transfers": {
+          "n": 62,
+          "recall": 0.6774,
+          "missed": 20,
+          "missed_rate": 0.3226,
+          "false_positives": 11,
+          "false_positive_rate": 0.0251
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "account": {
+          "n": 63,
+          "recall": 0.4286,
+          "missed": 36,
+          "missed_rate": 0.5714,
+          "false_positives": 7,
+          "false_positive_rate": 0.016
+        },
+        "cards": {
+          "n": 64,
+          "recall": 0.2188,
+          "missed": 50,
+          "missed_rate": 0.7812,
+          "false_positives": 2,
+          "false_positive_rate": 0.0046
+        },
+        "cash_atm": {
+          "n": 62,
+          "recall": 0.6452,
+          "missed": 22,
+          "missed_rate": 0.3548,
           "false_positives": 2,
           "false_positive_rate": 0.0046
         },
         "fx": {
           "n": 62,
-          "recall": 0.9194,
-          "missed": 5,
-          "missed_rate": 0.0806,
-          "false_positives": 9,
-          "false_positive_rate": 0.0205
+          "recall": 0.8226,
+          "missed": 11,
+          "missed_rate": 0.1774,
+          "false_positives": 12,
+          "false_positive_rate": 0.0274
         },
         "other": {
-          "n": 62,
-          "recall": 0.0,
-          "missed": 62,
-          "missed_rate": 1.0,
-          "false_positives": 10,
-          "false_positive_rate": 0.0228
+          "n": 63,
+          "recall": 0.4444,
+          "missed": 35,
+          "missed_rate": 0.5556,
+          "false_positives": 113,
+          "false_positive_rate": 0.2586
         },
         "payments_fees": {
           "n": 62,
-          "recall": 0.7419,
-          "missed": 16,
-          "missed_rate": 0.2581,
-          "false_positives": 23,
-          "false_positive_rate": 0.0525
+          "recall": 0.6129,
+          "missed": 24,
+          "missed_rate": 0.3871,
+          "false_positives": 50,
+          "false_positive_rate": 0.1142
         },
         "top_up": {
           "n": 62,
-          "recall": 0.8548,
-          "missed": 9,
-          "missed_rate": 0.1452,
-          "false_positives": 32,
-          "false_positive_rate": 0.0731
+          "recall": 0.8387,
+          "missed": 10,
+          "missed_rate": 0.1613,
+          "false_positives": 27,
+          "false_positive_rate": 0.0616
         },
         "transfers": {
-          "n": 64,
-          "recall": 0.75,
-          "missed": 16,
-          "missed_rate": 0.25,
-          "false_positives": 11,
-          "false_positive_rate": 0.0252
+          "n": 62,
+          "recall": 0.5484,
+          "missed": 28,
+          "missed_rate": 0.4516,
+          "false_positives": 3,
+          "false_positive_rate": 0.0068
         }
       },
       "recall_at_gate": {}
@@ -1161,35 +1341,72 @@
       "per_class": {
         "business": {
           "n": 125,
-          "recall": 0.984,
-          "missed": 2,
-          "missed_rate": 0.016,
-          "false_positives": 70,
-          "false_positive_rate": 0.1867
+          "recall": 0.928,
+          "missed": 9,
+          "missed_rate": 0.072,
+          "false_positives": 40,
+          "false_positive_rate": 0.1067
         },
         "sci_tech": {
           "n": 125,
-          "recall": 0.424,
-          "missed": 72,
-          "missed_rate": 0.576,
+          "recall": 0.592,
+          "missed": 51,
+          "missed_rate": 0.408,
           "false_positives": 6,
           "false_positive_rate": 0.016
         },
         "sports": {
           "n": 125,
-          "recall": 0.984,
-          "missed": 2,
-          "missed_rate": 0.016,
+          "recall": 1.0,
+          "missed": 0,
+          "missed_rate": 0.0,
+          "false_positives": 3,
+          "false_positive_rate": 0.008
+        },
+        "world": {
+          "n": 125,
+          "recall": 0.952,
+          "missed": 6,
+          "missed_rate": 0.048,
+          "false_positives": 17,
+          "false_positive_rate": 0.0453
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "business": {
+          "n": 125,
+          "recall": 0.88,
+          "missed": 15,
+          "missed_rate": 0.12,
+          "false_positives": 9,
+          "false_positive_rate": 0.024
+        },
+        "sci_tech": {
+          "n": 125,
+          "recall": 0.92,
+          "missed": 10,
+          "missed_rate": 0.08,
+          "false_positives": 15,
+          "false_positive_rate": 0.04
+        },
+        "sports": {
+          "n": 125,
+          "recall": 0.976,
+          "missed": 3,
+          "missed_rate": 0.024,
           "false_positives": 2,
           "false_positive_rate": 0.0053
         },
         "world": {
           "n": 125,
-          "recall": 0.824,
-          "missed": 22,
-          "missed_rate": 0.176,
-          "false_positives": 20,
-          "false_positive_rate": 0.0533
+          "recall": 0.96,
+          "missed": 5,
+          "missed_rate": 0.04,
+          "false_positives": 7,
+          "false_positive_rate": 0.0187
         }
       },
       "recall_at_gate": {}
@@ -1329,27 +1546,56 @@
       "per_class": {
         "negative": {
           "n": 167,
-          "recall": 0.8623,
-          "missed": 23,
-          "missed_rate": 0.1377,
-          "false_positives": 55,
-          "false_positive_rate": 0.1652
+          "recall": 0.8024,
+          "missed": 33,
+          "missed_rate": 0.1976,
+          "false_positives": 42,
+          "false_positive_rate": 0.1261
         },
         "neutral": {
           "n": 167,
-          "recall": 0.5569,
-          "missed": 74,
-          "missed_rate": 0.4431,
-          "false_positives": 48,
-          "false_positive_rate": 0.1441
+          "recall": 0.6826,
+          "missed": 53,
+          "missed_rate": 0.3174,
+          "false_positives": 85,
+          "false_positive_rate": 0.2553
         },
         "positive": {
           "n": 166,
-          "recall": 0.8133,
-          "missed": 31,
-          "missed_rate": 0.1867,
-          "false_positives": 25,
-          "false_positive_rate": 0.0749
+          "recall": 0.6446,
+          "missed": 59,
+          "missed_rate": 0.3554,
+          "false_positives": 18,
+          "false_positive_rate": 0.0539
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "negative": {
+          "n": 167,
+          "recall": 0.6527,
+          "missed": 58,
+          "missed_rate": 0.3473,
+          "false_positives": 54,
+          "false_positive_rate": 0.1622
+        },
+        "neutral": {
+          "n": 167,
+          "recall": 0.7126,
+          "missed": 48,
+          "missed_rate": 0.2874,
+          "false_positives": 155,
+          "false_positive_rate": 0.4655
+        },
+        "positive": {
+          "n": 166,
+          "recall": 0.3313,
+          "missed": 111,
+          "missed_rate": 0.6687,
+          "false_positives": 8,
+          "false_positive_rate": 0.024
         }
       },
       "recall_at_gate": {}
@@ -1452,20 +1698,41 @@
     "modern": {
       "per_class": {
         "negative": {
-          "n": 250,
-          "recall": 0.964,
-          "missed": 9,
-          "missed_rate": 0.036,
-          "false_positives": 17,
-          "false_positive_rate": 0.068
+          "n": 178,
+          "recall": 0.9888,
+          "missed": 2,
+          "missed_rate": 0.0112,
+          "false_positives": 8,
+          "false_positive_rate": 0.0449
         },
         "positive": {
-          "n": 250,
-          "recall": 0.932,
-          "missed": 17,
-          "missed_rate": 0.068,
-          "false_positives": 9,
-          "false_positive_rate": 0.036
+          "n": 178,
+          "recall": 0.9551,
+          "missed": 8,
+          "missed_rate": 0.0449,
+          "false_positives": 2,
+          "false_positive_rate": 0.0112
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "negative": {
+          "n": 178,
+          "recall": 0.9438,
+          "missed": 10,
+          "missed_rate": 0.0562,
+          "false_positives": 20,
+          "false_positive_rate": 0.1124
+        },
+        "positive": {
+          "n": 178,
+          "recall": 0.8876,
+          "missed": 20,
+          "missed_rate": 0.1124,
+          "false_positives": 10,
+          "false_positive_rate": 0.0562
         }
       },
       "recall_at_gate": {}
@@ -1569,19 +1836,40 @@
       "per_class": {
         "ham": {
           "n": 250,
-          "recall": 0.92,
-          "missed": 20,
-          "missed_rate": 0.08,
-          "false_positives": 7,
-          "false_positive_rate": 0.028
+          "recall": 0.892,
+          "missed": 27,
+          "missed_rate": 0.108,
+          "false_positives": 8,
+          "false_positive_rate": 0.032
         },
         "spam": {
           "n": 250,
-          "recall": 0.972,
-          "missed": 7,
-          "missed_rate": 0.028,
-          "false_positives": 20,
-          "false_positive_rate": 0.08
+          "recall": 0.968,
+          "missed": 8,
+          "missed_rate": 0.032,
+          "false_positives": 27,
+          "false_positive_rate": 0.108
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "ham": {
+          "n": 250,
+          "recall": 0.896,
+          "missed": 26,
+          "missed_rate": 0.104,
+          "false_positives": 11,
+          "false_positive_rate": 0.044
+        },
+        "spam": {
+          "n": 250,
+          "recall": 0.956,
+          "missed": 11,
+          "missed_rate": 0.044,
+          "false_positives": 26,
+          "false_positive_rate": 0.104
         }
       },
       "recall_at_gate": {}
@@ -1684,20 +1972,41 @@
     "modern": {
       "per_class": {
         "not_offensive": {
-          "n": 256,
-          "recall": 0.8164,
-          "missed": 47,
-          "missed_rate": 0.1836,
-          "false_positives": 82,
-          "false_positive_rate": 0.3361
+          "n": 250,
+          "recall": 0.78,
+          "missed": 55,
+          "missed_rate": 0.22,
+          "false_positives": 77,
+          "false_positive_rate": 0.308
         },
         "offensive": {
-          "n": 244,
-          "recall": 0.6639,
-          "missed": 82,
-          "missed_rate": 0.3361,
-          "false_positives": 47,
-          "false_positive_rate": 0.1836
+          "n": 250,
+          "recall": 0.692,
+          "missed": 77,
+          "missed_rate": 0.308,
+          "false_positives": 55,
+          "false_positive_rate": 0.22
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "not_offensive": {
+          "n": 250,
+          "recall": 0.976,
+          "missed": 6,
+          "missed_rate": 0.024,
+          "false_positives": 193,
+          "false_positive_rate": 0.772
+        },
+        "offensive": {
+          "n": 250,
+          "recall": 0.228,
+          "missed": 193,
+          "missed_rate": 0.772,
+          "false_positives": 6,
+          "false_positive_rate": 0.024
         }
       },
       "recall_at_gate": {}
@@ -1801,19 +2110,40 @@
       "per_class": {
         "hate": {
           "n": 250,
-          "recall": 0.752,
-          "missed": 62,
-          "missed_rate": 0.248,
-          "false_positives": 83,
-          "false_positive_rate": 0.332
+          "recall": 0.38,
+          "missed": 155,
+          "missed_rate": 0.62,
+          "false_positives": 24,
+          "false_positive_rate": 0.096
         },
         "not_hate": {
           "n": 250,
-          "recall": 0.668,
-          "missed": 83,
-          "missed_rate": 0.332,
-          "false_positives": 62,
-          "false_positive_rate": 0.248
+          "recall": 0.904,
+          "missed": 24,
+          "missed_rate": 0.096,
+          "false_positives": 155,
+          "false_positive_rate": 0.62
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "hate": {
+          "n": 250,
+          "recall": 0.412,
+          "missed": 147,
+          "missed_rate": 0.588,
+          "false_positives": 39,
+          "false_positive_rate": 0.156
+        },
+        "not_hate": {
+          "n": 250,
+          "recall": 0.844,
+          "missed": 39,
+          "missed_rate": 0.156,
+          "false_positives": 147,
+          "false_positive_rate": 0.588
         }
       },
       "recall_at_gate": {}
@@ -1988,36 +2318,73 @@
     "modern": {
       "per_class": {
         "anger": {
-          "n": 126,
-          "recall": 0.873,
-          "missed": 16,
-          "missed_rate": 0.127,
-          "false_positives": 40,
-          "false_positive_rate": 0.107
-        },
-        "joy": {
           "n": 125,
-          "recall": 0.904,
-          "missed": 12,
-          "missed_rate": 0.096,
+          "recall": 0.872,
+          "missed": 16,
+          "missed_rate": 0.128,
           "false_positives": 39,
           "false_positive_rate": 0.104
         },
+        "joy": {
+          "n": 125,
+          "recall": 0.808,
+          "missed": 24,
+          "missed_rate": 0.192,
+          "false_positives": 36,
+          "false_positive_rate": 0.096
+        },
         "optimism": {
-          "n": 123,
-          "recall": 0.5935,
-          "missed": 50,
-          "missed_rate": 0.4065,
-          "false_positives": 10,
-          "false_positive_rate": 0.0265
+          "n": 125,
+          "recall": 0.632,
+          "missed": 46,
+          "missed_rate": 0.368,
+          "false_positives": 18,
+          "false_positive_rate": 0.048
         },
         "sadness": {
-          "n": 126,
-          "recall": 0.7302,
-          "missed": 34,
-          "missed_rate": 0.2698,
-          "false_positives": 20,
-          "false_positive_rate": 0.0535
+          "n": 125,
+          "recall": 0.736,
+          "missed": 33,
+          "missed_rate": 0.264,
+          "false_positives": 24,
+          "false_positive_rate": 0.064
+        }
+      },
+      "recall_at_gate": {}
+    },
+    "laya": {
+      "per_class": {
+        "anger": {
+          "n": 125,
+          "recall": 0.704,
+          "missed": 37,
+          "missed_rate": 0.296,
+          "false_positives": 44,
+          "false_positive_rate": 0.1173
+        },
+        "joy": {
+          "n": 125,
+          "recall": 0.744,
+          "missed": 32,
+          "missed_rate": 0.256,
+          "false_positives": 46,
+          "false_positive_rate": 0.1227
+        },
+        "optimism": {
+          "n": 125,
+          "recall": 0.552,
+          "missed": 56,
+          "missed_rate": 0.448,
+          "false_positives": 22,
+          "false_positive_rate": 0.0587
+        },
+        "sadness": {
+          "n": 125,
+          "recall": 0.776,
+          "missed": 28,
+          "missed_rate": 0.224,
+          "false_positives": 41,
+          "false_positive_rate": 0.1093
         }
       },
       "recall_at_gate": {}

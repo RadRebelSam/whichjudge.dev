@@ -242,7 +242,7 @@ const RUN = {
   "runIds": [
     "2026-09-21T06:23:44.713812+00:00"
   ],
-  "dataVersion": "09e70f3006",
+  "dataVersion": "a7924c438d",
   "modelJev": "jev-1.13.0",
   "modelMini": "gpt-4o-mini-2024-07-18",
   "n": 500,
@@ -263,7 +263,7 @@ const TASKS = [
     "labels": "injection / legitimate",
     "verdict": "neither",
     "ns": false,
-    "why": "Jev 80.5% against Mini 74.5% is a significant 6.0pt win (Holm p=0.036), and it does not matter: Jev misses 39.0% of injections, Mini 51.0%, the 2026 model 28.0%, all at 0.0% false positives. TF-IDF at 90.5% beats both APIs. A security gate is judged on what gets through, and every model here lets a third or more through.",
+    "why": "Jev 80.5% against Mini 74.5% is a significant 6.0pt win (Holm p=0.036), and it does not matter: Jev misses 39.0% of injections, Mini 51.0%, the 2026 model 40.0%, all at 0.0% false positives. TF-IDF at 90.5% beats both APIs. A security gate is judged on what gets through, and every model here lets 39% or more through.",
     "gate": "At >=0.9: 86.3% on 84.0% of rows, 5.8pt above ungated. Recall of injections on the covered rows barely moves, so raising the bar hands the misses to a human instead of catching them.",
     "goldTier": "research",
     "rowNote": "Misses 39.0% of injections at any threshold. TF-IDF beats both APIs at 90.5%.",
@@ -475,20 +475,41 @@ const TASKS = [
       "modern": {
         "per_class": {
           "injection": {
-            "n": 150,
-            "recall": 0.72,
-            "missed": 42,
-            "missed_rate": 0.28,
+            "n": 100,
+            "recall": 0.6,
+            "missed": 40,
+            "missed_rate": 0.4,
             "false_positives": 0,
             "false_positive_rate": 0.0
           },
           "legitimate": {
-            "n": 150,
+            "n": 100,
             "recall": 1.0,
             "missed": 0,
             "missed_rate": 0.0,
-            "false_positives": 42,
-            "false_positive_rate": 0.28
+            "false_positives": 40,
+            "false_positive_rate": 0.4
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "injection": {
+            "n": 100,
+            "recall": 0.27,
+            "missed": 73,
+            "missed_rate": 0.73,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          },
+          "legitimate": {
+            "n": 100,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 73,
+            "false_positive_rate": 0.73
           }
         },
         "recall_at_gate": {}
@@ -518,6 +539,26 @@ const TASKS = [
       "cvAcc": 0.8598,
       "cvLo": 0.8072,
       "cvHi": 0.9136
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.635,
+      "lo": 0.566,
+      "hi": 0.699,
+      "p50": 356,
+      "p95": 629,
+      "device": "cpu",
+      "tokens": 143.0,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 3.54e-07,
+      "pJevHolm": 2.83e-06,
+      "pMini": 0.000205,
+      "pMiniHolm": 0.00103,
+      "ece": 0.204,
+      "invalidLabels": 0
     }
   },
   {
@@ -970,65 +1011,134 @@ const TASKS = [
         "per_class": {
           "bank_account": {
             "n": 63,
-            "recall": 0.7302,
-            "missed": 17,
-            "missed_rate": 0.2698,
-            "false_positives": 25,
-            "false_positive_rate": 0.0572
+            "recall": 0.873,
+            "missed": 8,
+            "missed_rate": 0.127,
+            "false_positives": 15,
+            "false_positive_rate": 0.0343
           },
           "cards": {
             "n": 62,
-            "recall": 0.8226,
-            "missed": 11,
-            "missed_rate": 0.1774,
-            "false_positives": 20,
-            "false_positive_rate": 0.0457
+            "recall": 0.8548,
+            "missed": 9,
+            "missed_rate": 0.1452,
+            "false_positives": 13,
+            "false_positive_rate": 0.0297
           },
           "credit_reporting": {
             "n": 62,
-            "recall": 0.9839,
-            "missed": 1,
-            "missed_rate": 0.0161,
-            "false_positives": 38,
-            "false_positive_rate": 0.0868
+            "recall": 0.9032,
+            "missed": 6,
+            "missed_rate": 0.0968,
+            "false_positives": 34,
+            "false_positive_rate": 0.0776
           },
           "debt_collection": {
-            "n": 62,
-            "recall": 0.5161,
-            "missed": 30,
-            "missed_rate": 0.4839,
-            "false_positives": 5,
-            "false_positive_rate": 0.0114
+            "n": 63,
+            "recall": 0.6032,
+            "missed": 25,
+            "missed_rate": 0.3968,
+            "false_positives": 7,
+            "false_positive_rate": 0.016
           },
           "loans": {
-            "n": 64,
-            "recall": 0.5469,
-            "missed": 29,
-            "missed_rate": 0.4531,
+            "n": 63,
+            "recall": 0.8571,
+            "missed": 9,
+            "missed_rate": 0.1429,
             "false_positives": 7,
-            "false_positive_rate": 0.0161
+            "false_positive_rate": 0.016
           },
           "money_transfer": {
-            "n": 62,
-            "recall": 0.7742,
-            "missed": 14,
-            "missed_rate": 0.2258,
-            "false_positives": 5,
-            "false_positive_rate": 0.0114
-          },
-          "mortgage": {
             "n": 63,
-            "recall": 0.9524,
-            "missed": 3,
-            "missed_rate": 0.0476,
+            "recall": 0.7143,
+            "missed": 18,
+            "missed_rate": 0.2857,
             "false_positives": 3,
             "false_positive_rate": 0.0069
           },
-          "student_loan": {
+          "mortgage": {
             "n": 62,
             "recall": 0.9677,
             "missed": 2,
             "missed_rate": 0.0323,
+            "false_positives": 2,
+            "false_positive_rate": 0.0046
+          },
+          "student_loan": {
+            "n": 62,
+            "recall": 0.9355,
+            "missed": 4,
+            "missed_rate": 0.0645,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "bank_account": {
+            "n": 63,
+            "recall": 0.7143,
+            "missed": 18,
+            "missed_rate": 0.2857,
+            "false_positives": 42,
+            "false_positive_rate": 0.0961
+          },
+          "cards": {
+            "n": 62,
+            "recall": 0.7097,
+            "missed": 18,
+            "missed_rate": 0.2903,
+            "false_positives": 21,
+            "false_positive_rate": 0.0479
+          },
+          "credit_reporting": {
+            "n": 62,
+            "recall": 0.7581,
+            "missed": 15,
+            "missed_rate": 0.2419,
+            "false_positives": 41,
+            "false_positive_rate": 0.0936
+          },
+          "debt_collection": {
+            "n": 63,
+            "recall": 0.6984,
+            "missed": 19,
+            "missed_rate": 0.3016,
+            "false_positives": 96,
+            "false_positive_rate": 0.2197
+          },
+          "loans": {
+            "n": 63,
+            "recall": 0.1905,
+            "missed": 51,
+            "missed_rate": 0.8095,
+            "false_positives": 2,
+            "false_positive_rate": 0.0046
+          },
+          "money_transfer": {
+            "n": 63,
+            "recall": 0.3492,
+            "missed": 41,
+            "missed_rate": 0.6508,
+            "false_positives": 4,
+            "false_positive_rate": 0.0092
+          },
+          "mortgage": {
+            "n": 62,
+            "recall": 0.8226,
+            "missed": 11,
+            "missed_rate": 0.1774,
+            "false_positives": 9,
+            "false_positive_rate": 0.0205
+          },
+          "student_loan": {
+            "n": 62,
+            "recall": 0.3226,
+            "missed": 42,
+            "missed_rate": 0.6774,
             "false_positives": 0,
             "false_positive_rate": 0.0
           }
@@ -1060,6 +1170,26 @@ const TASKS = [
       "cvAcc": 0.9211,
       "cvLo": 0.8939,
       "cvHi": 0.949
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.57,
+      "lo": 0.526,
+      "hi": 0.613,
+      "p50": 970,
+      "p95": 1441,
+      "device": "cpu",
+      "tokens": 406.6,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 3.65e-23,
+      "pJevHolm": 4.01e-22,
+      "pMini": 3.72e-14,
+      "pMiniHolm": 4.1e-13,
+      "ece": 0.059,
+      "invalidLabels": 0
     }
   },
   {
@@ -1284,19 +1414,40 @@ const TASKS = [
         "per_class": {
           "not_toxic": {
             "n": 250,
-            "recall": 0.7,
-            "missed": 75,
-            "missed_rate": 0.3,
-            "false_positives": 42,
-            "false_positive_rate": 0.168
+            "recall": 0.864,
+            "missed": 34,
+            "missed_rate": 0.136,
+            "false_positives": 88,
+            "false_positive_rate": 0.352
           },
           "toxic": {
             "n": 250,
-            "recall": 0.832,
-            "missed": 42,
-            "missed_rate": 0.168,
-            "false_positives": 75,
-            "false_positive_rate": 0.3
+            "recall": 0.648,
+            "missed": 88,
+            "missed_rate": 0.352,
+            "false_positives": 34,
+            "false_positive_rate": 0.136
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "not_toxic": {
+            "n": 250,
+            "recall": 0.992,
+            "missed": 2,
+            "missed_rate": 0.008,
+            "false_positives": 137,
+            "false_positive_rate": 0.548
+          },
+          "toxic": {
+            "n": 250,
+            "recall": 0.452,
+            "missed": 137,
+            "missed_rate": 0.548,
+            "false_positives": 2,
+            "false_positive_rate": 0.008
           }
         },
         "recall_at_gate": {}
@@ -1326,6 +1477,26 @@ const TASKS = [
       "cvAcc": 0.8671,
       "cvLo": 0.8288,
       "cvHi": 0.9067
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.722,
+      "lo": 0.681,
+      "hi": 0.759,
+      "p50": 391,
+      "p95": 678,
+      "device": "cpu",
+      "tokens": 170.0,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.0473,
+      "pJevHolm": 0.135,
+      "pMini": 1.0,
+      "pMiniHolm": 1.0,
+      "ece": 0.094,
+      "invalidLabels": 0
     }
   },
   {
@@ -1550,19 +1721,40 @@ const TASKS = [
         "per_class": {
           "ham": {
             "n": 250,
-            "recall": 0.92,
-            "missed": 20,
-            "missed_rate": 0.08,
-            "false_positives": 7,
-            "false_positive_rate": 0.028
+            "recall": 0.892,
+            "missed": 27,
+            "missed_rate": 0.108,
+            "false_positives": 8,
+            "false_positive_rate": 0.032
           },
           "spam": {
             "n": 250,
-            "recall": 0.972,
-            "missed": 7,
-            "missed_rate": 0.028,
-            "false_positives": 20,
-            "false_positive_rate": 0.08
+            "recall": 0.968,
+            "missed": 8,
+            "missed_rate": 0.032,
+            "false_positives": 27,
+            "false_positive_rate": 0.108
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "ham": {
+            "n": 250,
+            "recall": 0.896,
+            "missed": 26,
+            "missed_rate": 0.104,
+            "false_positives": 11,
+            "false_positive_rate": 0.044
+          },
+          "spam": {
+            "n": 250,
+            "recall": 0.956,
+            "missed": 11,
+            "missed_rate": 0.044,
+            "false_positives": 26,
+            "false_positive_rate": 0.104
           }
         },
         "recall_at_gate": {}
@@ -1592,6 +1784,26 @@ const TASKS = [
       "cvAcc": 0.9844,
       "cvLo": 0.969,
       "cvHi": 0.9954
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.926,
+      "lo": 0.9,
+      "hi": 0.946,
+      "p50": 192,
+      "p95": 254,
+      "device": "cpu",
+      "tokens": 73.2,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.0449,
+      "pJevHolm": 0.135,
+      "pMini": 0.155,
+      "pMiniHolm": 0.309,
+      "ece": 0.05,
+      "invalidLabels": 0
     }
   },
   {
@@ -1815,20 +2027,41 @@ const TASKS = [
       "modern": {
         "per_class": {
           "negative": {
-            "n": 250,
-            "recall": 0.964,
-            "missed": 9,
-            "missed_rate": 0.036,
-            "false_positives": 17,
-            "false_positive_rate": 0.068
+            "n": 178,
+            "recall": 0.9888,
+            "missed": 2,
+            "missed_rate": 0.0112,
+            "false_positives": 8,
+            "false_positive_rate": 0.0449
           },
           "positive": {
-            "n": 250,
-            "recall": 0.932,
-            "missed": 17,
-            "missed_rate": 0.068,
-            "false_positives": 9,
-            "false_positive_rate": 0.036
+            "n": 178,
+            "recall": 0.9551,
+            "missed": 8,
+            "missed_rate": 0.0449,
+            "false_positives": 2,
+            "false_positive_rate": 0.0112
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "negative": {
+            "n": 178,
+            "recall": 0.9438,
+            "missed": 10,
+            "missed_rate": 0.0562,
+            "false_positives": 20,
+            "false_positive_rate": 0.1124
+          },
+          "positive": {
+            "n": 178,
+            "recall": 0.8876,
+            "missed": 20,
+            "missed_rate": 0.1124,
+            "false_positives": 10,
+            "false_positive_rate": 0.0562
           }
         },
         "recall_at_gate": {}
@@ -1858,6 +2091,26 @@ const TASKS = [
       "cvAcc": 0.9759,
       "cvLo": 0.9551,
       "cvHi": 0.994
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.9157303370786517,
+      "lo": 0.882,
+      "hi": 0.94,
+      "p50": 160,
+      "p95": 192,
+      "device": "cpu",
+      "tokens": 50.6,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 0.000849,
+      "pJevHolm": 0.00425,
+      "pMini": 0.00365,
+      "pMiniHolm": 0.0112,
+      "ece": 0.019,
+      "invalidLabels": 0
     }
   },
   {
@@ -2165,36 +2418,73 @@ const TASKS = [
       "modern": {
         "per_class": {
           "anger": {
-            "n": 126,
-            "recall": 0.873,
-            "missed": 16,
-            "missed_rate": 0.127,
-            "false_positives": 40,
-            "false_positive_rate": 0.107
-          },
-          "joy": {
             "n": 125,
-            "recall": 0.904,
-            "missed": 12,
-            "missed_rate": 0.096,
+            "recall": 0.872,
+            "missed": 16,
+            "missed_rate": 0.128,
             "false_positives": 39,
             "false_positive_rate": 0.104
           },
+          "joy": {
+            "n": 125,
+            "recall": 0.808,
+            "missed": 24,
+            "missed_rate": 0.192,
+            "false_positives": 36,
+            "false_positive_rate": 0.096
+          },
           "optimism": {
-            "n": 123,
-            "recall": 0.5935,
-            "missed": 50,
-            "missed_rate": 0.4065,
-            "false_positives": 10,
-            "false_positive_rate": 0.0265
+            "n": 125,
+            "recall": 0.632,
+            "missed": 46,
+            "missed_rate": 0.368,
+            "false_positives": 18,
+            "false_positive_rate": 0.048
           },
           "sadness": {
-            "n": 126,
-            "recall": 0.7302,
-            "missed": 34,
-            "missed_rate": 0.2698,
-            "false_positives": 20,
-            "false_positive_rate": 0.0535
+            "n": 125,
+            "recall": 0.736,
+            "missed": 33,
+            "missed_rate": 0.264,
+            "false_positives": 24,
+            "false_positive_rate": 0.064
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "anger": {
+            "n": 125,
+            "recall": 0.704,
+            "missed": 37,
+            "missed_rate": 0.296,
+            "false_positives": 44,
+            "false_positive_rate": 0.1173
+          },
+          "joy": {
+            "n": 125,
+            "recall": 0.744,
+            "missed": 32,
+            "missed_rate": 0.256,
+            "false_positives": 46,
+            "false_positive_rate": 0.1227
+          },
+          "optimism": {
+            "n": 125,
+            "recall": 0.552,
+            "missed": 56,
+            "missed_rate": 0.448,
+            "false_positives": 22,
+            "false_positive_rate": 0.0587
+          },
+          "sadness": {
+            "n": 125,
+            "recall": 0.776,
+            "missed": 28,
+            "missed_rate": 0.224,
+            "false_positives": 41,
+            "false_positive_rate": 0.1093
           }
         },
         "recall_at_gate": {}
@@ -2227,6 +2517,26 @@ const TASKS = [
       "cvAcc": 0.8878,
       "cvLo": 0.8521,
       "cvHi": 0.9241
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.694,
+      "lo": 0.652,
+      "hi": 0.733,
+      "p50": 190,
+      "p95": 235,
+      "device": "cpu",
+      "tokens": 62.6,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 0.000128,
+      "pJevHolm": 0.000767,
+      "pMini": 0.00281,
+      "pMiniHolm": 0.0112,
+      "ece": 0.067,
+      "invalidLabels": 0
     }
   },
   {
@@ -2450,20 +2760,41 @@ const TASKS = [
       "modern": {
         "per_class": {
           "not_offensive": {
-            "n": 256,
-            "recall": 0.8164,
-            "missed": 47,
-            "missed_rate": 0.1836,
-            "false_positives": 82,
-            "false_positive_rate": 0.3361
+            "n": 250,
+            "recall": 0.78,
+            "missed": 55,
+            "missed_rate": 0.22,
+            "false_positives": 77,
+            "false_positive_rate": 0.308
           },
           "offensive": {
-            "n": 244,
-            "recall": 0.6639,
-            "missed": 82,
-            "missed_rate": 0.3361,
-            "false_positives": 47,
-            "false_positive_rate": 0.1836
+            "n": 250,
+            "recall": 0.692,
+            "missed": 77,
+            "missed_rate": 0.308,
+            "false_positives": 55,
+            "false_positive_rate": 0.22
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "not_offensive": {
+            "n": 250,
+            "recall": 0.976,
+            "missed": 6,
+            "missed_rate": 0.024,
+            "false_positives": 193,
+            "false_positive_rate": 0.772
+          },
+          "offensive": {
+            "n": 250,
+            "recall": 0.228,
+            "missed": 193,
+            "missed_rate": 0.772,
+            "false_positives": 6,
+            "false_positive_rate": 0.024
           }
         },
         "recall_at_gate": {}
@@ -2493,6 +2824,26 @@ const TASKS = [
       "cvAcc": 0.8112,
       "cvLo": 0.7688,
       "cvHi": 0.8521
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.602,
+      "lo": 0.558,
+      "hi": 0.644,
+      "p50": 189,
+      "p95": 292,
+      "device": "cpu",
+      "tokens": 71.3,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 8.85e-07,
+      "pJevHolm": 6.2e-06,
+      "pMini": 1.71e-06,
+      "pMiniHolm": 1.53e-05,
+      "ece": 0.141,
+      "invalidLabels": 0
     }
   },
   {
@@ -2765,27 +3116,56 @@ const TASKS = [
         "per_class": {
           "negative": {
             "n": 167,
-            "recall": 0.8623,
-            "missed": 23,
-            "missed_rate": 0.1377,
-            "false_positives": 55,
-            "false_positive_rate": 0.1652
+            "recall": 0.8024,
+            "missed": 33,
+            "missed_rate": 0.1976,
+            "false_positives": 42,
+            "false_positive_rate": 0.1261
           },
           "neutral": {
             "n": 167,
-            "recall": 0.5569,
-            "missed": 74,
-            "missed_rate": 0.4431,
-            "false_positives": 48,
-            "false_positive_rate": 0.1441
+            "recall": 0.6826,
+            "missed": 53,
+            "missed_rate": 0.3174,
+            "false_positives": 85,
+            "false_positive_rate": 0.2553
           },
           "positive": {
             "n": 166,
-            "recall": 0.8133,
-            "missed": 31,
-            "missed_rate": 0.1867,
-            "false_positives": 25,
-            "false_positive_rate": 0.0749
+            "recall": 0.6446,
+            "missed": 59,
+            "missed_rate": 0.3554,
+            "false_positives": 18,
+            "false_positive_rate": 0.0539
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "negative": {
+            "n": 167,
+            "recall": 0.6527,
+            "missed": 58,
+            "missed_rate": 0.3473,
+            "false_positives": 54,
+            "false_positive_rate": 0.1622
+          },
+          "neutral": {
+            "n": 167,
+            "recall": 0.7126,
+            "missed": 48,
+            "missed_rate": 0.2874,
+            "false_positives": 155,
+            "false_positive_rate": 0.4655
+          },
+          "positive": {
+            "n": 166,
+            "recall": 0.3313,
+            "missed": 111,
+            "missed_rate": 0.6687,
+            "false_positives": 8,
+            "false_positive_rate": 0.024
           }
         },
         "recall_at_gate": {}
@@ -2815,6 +3195,26 @@ const TASKS = [
       "cvAcc": 0.7932,
       "cvLo": 0.7515,
       "cvHi": 0.8323
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.566,
+      "lo": 0.522,
+      "hi": 0.609,
+      "p50": 193,
+      "p95": 222,
+      "device": "cpu",
+      "tokens": 75.2,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 5.7e-10,
+      "pJevHolm": 5.7e-09,
+      "pMini": 4.46e-08,
+      "pMiniHolm": 4.46e-07,
+      "ece": 0.175,
+      "invalidLabels": 0
     }
   },
   {
@@ -2826,10 +3226,10 @@ const TASKS = [
     "labels": "world / sports / business / sci_tech",
     "verdict": "replace",
     "ns": false,
-    "why": "Jev 89.8% beats Mini 86.0% by 3.8pt (Holm p=0.025), and the 2026 model at 86.8% ties Jev. TF-IDF at 93.8% after training on 120k rows beats both APIs. If you have labels, skip both.",
+    "why": "Jev 89.8% beats Mini 86.0% by 3.8pt (Holm p=0.025), and the 2026 model at 86.8% ties Jev. Laya, self-hosted, scores 93.4%, ns against Jev after correction; TF-IDF at 93.8% after training on 120k rows beats both APIs. If you have labels, skip both.",
     "gate": "Jev first among APIs. At >=0.9: 94.0% on 87.4% of articles, 4.2pt above ungated, ECE 0.068.",
     "goldTier": "research",
-    "rowNote": "Replace is vs Mini only. TF-IDF beats both at 93.8%.",
+    "rowNote": "Replace is vs Mini only. TF-IDF beats both at 93.8%; Laya scores 93.4%, ns vs Jev.",
     "rowNoteKind": "info",
     "goldNote": "Academic benchmark",
     "sourceName": "fancyzhx/ag_news",
@@ -3111,35 +3511,72 @@ const TASKS = [
         "per_class": {
           "business": {
             "n": 125,
-            "recall": 0.984,
-            "missed": 2,
-            "missed_rate": 0.016,
-            "false_positives": 70,
-            "false_positive_rate": 0.1867
+            "recall": 0.928,
+            "missed": 9,
+            "missed_rate": 0.072,
+            "false_positives": 40,
+            "false_positive_rate": 0.1067
           },
           "sci_tech": {
             "n": 125,
-            "recall": 0.424,
-            "missed": 72,
-            "missed_rate": 0.576,
+            "recall": 0.592,
+            "missed": 51,
+            "missed_rate": 0.408,
             "false_positives": 6,
             "false_positive_rate": 0.016
           },
           "sports": {
             "n": 125,
-            "recall": 0.984,
-            "missed": 2,
-            "missed_rate": 0.016,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 3,
+            "false_positive_rate": 0.008
+          },
+          "world": {
+            "n": 125,
+            "recall": 0.952,
+            "missed": 6,
+            "missed_rate": 0.048,
+            "false_positives": 17,
+            "false_positive_rate": 0.0453
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "business": {
+            "n": 125,
+            "recall": 0.88,
+            "missed": 15,
+            "missed_rate": 0.12,
+            "false_positives": 9,
+            "false_positive_rate": 0.024
+          },
+          "sci_tech": {
+            "n": 125,
+            "recall": 0.92,
+            "missed": 10,
+            "missed_rate": 0.08,
+            "false_positives": 15,
+            "false_positive_rate": 0.04
+          },
+          "sports": {
+            "n": 125,
+            "recall": 0.976,
+            "missed": 3,
+            "missed_rate": 0.024,
             "false_positives": 2,
             "false_positive_rate": 0.0053
           },
           "world": {
             "n": 125,
-            "recall": 0.824,
-            "missed": 22,
-            "missed_rate": 0.176,
-            "false_positives": 20,
-            "false_positive_rate": 0.0533
+            "recall": 0.96,
+            "missed": 5,
+            "missed_rate": 0.04,
+            "false_positives": 7,
+            "false_positive_rate": 0.0187
           }
         },
         "recall_at_gate": {}
@@ -3169,6 +3606,26 @@ const TASKS = [
       "cvAcc": 0.9403,
       "cvLo": 0.9167,
       "cvHi": 0.9638
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.934,
+      "lo": 0.909,
+      "hi": 0.953,
+      "p50": 254,
+      "p95": 305,
+      "device": "cpu",
+      "tokens": 101.9,
+      "vsJev": "ns",
+      "vsMini": "laya",
+      "pJev": 0.0184,
+      "pJevHolm": 0.0736,
+      "pMini": 1.09e-05,
+      "pMiniHolm": 8.74e-05,
+      "ece": 0.029,
+      "invalidLabels": 0
     }
   },
   {
@@ -3621,67 +4078,136 @@ const TASKS = [
         "per_class": {
           "account": {
             "n": 63,
-            "recall": 0.873,
-            "missed": 8,
-            "missed_rate": 0.127,
-            "false_positives": 24,
-            "false_positive_rate": 0.0549
+            "recall": 0.9365,
+            "missed": 4,
+            "missed_rate": 0.0635,
+            "false_positives": 1,
+            "false_positive_rate": 0.0023
           },
           "cards": {
-            "n": 62,
-            "recall": 0.7581,
-            "missed": 15,
-            "missed_rate": 0.2419,
-            "false_positives": 35,
-            "false_positive_rate": 0.0799
+            "n": 64,
+            "recall": 0.625,
+            "missed": 24,
+            "missed_rate": 0.375,
+            "false_positives": 5,
+            "false_positive_rate": 0.0115
           },
           "cash_atm": {
+            "n": 62,
+            "recall": 0.7097,
+            "missed": 18,
+            "missed_rate": 0.2903,
+            "false_positives": 1,
+            "false_positive_rate": 0.0023
+          },
+          "fx": {
+            "n": 62,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 11,
+            "false_positive_rate": 0.0251
+          },
+          "other": {
             "n": 63,
-            "recall": 0.7619,
-            "missed": 15,
-            "missed_rate": 0.2381,
+            "recall": 0.0,
+            "missed": 63,
+            "missed_rate": 1.0,
+            "false_positives": 8,
+            "false_positive_rate": 0.0183
+          },
+          "payments_fees": {
+            "n": 62,
+            "recall": 0.9839,
+            "missed": 1,
+            "missed_rate": 0.0161,
+            "false_positives": 62,
+            "false_positive_rate": 0.1416
+          },
+          "top_up": {
+            "n": 62,
+            "recall": 0.871,
+            "missed": 8,
+            "missed_rate": 0.129,
+            "false_positives": 39,
+            "false_positive_rate": 0.089
+          },
+          "transfers": {
+            "n": 62,
+            "recall": 0.6774,
+            "missed": 20,
+            "missed_rate": 0.3226,
+            "false_positives": 11,
+            "false_positive_rate": 0.0251
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "account": {
+            "n": 63,
+            "recall": 0.4286,
+            "missed": 36,
+            "missed_rate": 0.5714,
+            "false_positives": 7,
+            "false_positive_rate": 0.016
+          },
+          "cards": {
+            "n": 64,
+            "recall": 0.2188,
+            "missed": 50,
+            "missed_rate": 0.7812,
+            "false_positives": 2,
+            "false_positive_rate": 0.0046
+          },
+          "cash_atm": {
+            "n": 62,
+            "recall": 0.6452,
+            "missed": 22,
+            "missed_rate": 0.3548,
             "false_positives": 2,
             "false_positive_rate": 0.0046
           },
           "fx": {
             "n": 62,
-            "recall": 0.9194,
-            "missed": 5,
-            "missed_rate": 0.0806,
-            "false_positives": 9,
-            "false_positive_rate": 0.0205
+            "recall": 0.8226,
+            "missed": 11,
+            "missed_rate": 0.1774,
+            "false_positives": 12,
+            "false_positive_rate": 0.0274
           },
           "other": {
-            "n": 62,
-            "recall": 0.0,
-            "missed": 62,
-            "missed_rate": 1.0,
-            "false_positives": 10,
-            "false_positive_rate": 0.0228
+            "n": 63,
+            "recall": 0.4444,
+            "missed": 35,
+            "missed_rate": 0.5556,
+            "false_positives": 113,
+            "false_positive_rate": 0.2586
           },
           "payments_fees": {
             "n": 62,
-            "recall": 0.7419,
-            "missed": 16,
-            "missed_rate": 0.2581,
-            "false_positives": 23,
-            "false_positive_rate": 0.0525
+            "recall": 0.6129,
+            "missed": 24,
+            "missed_rate": 0.3871,
+            "false_positives": 50,
+            "false_positive_rate": 0.1142
           },
           "top_up": {
             "n": 62,
-            "recall": 0.8548,
-            "missed": 9,
-            "missed_rate": 0.1452,
-            "false_positives": 32,
-            "false_positive_rate": 0.0731
+            "recall": 0.8387,
+            "missed": 10,
+            "missed_rate": 0.1613,
+            "false_positives": 27,
+            "false_positive_rate": 0.0616
           },
           "transfers": {
-            "n": 64,
-            "recall": 0.75,
-            "missed": 16,
-            "missed_rate": 0.25,
-            "false_positives": 11,
-            "false_positive_rate": 0.0252
+            "n": 62,
+            "recall": 0.5484,
+            "missed": 28,
+            "missed_rate": 0.4516,
+            "false_positives": 3,
+            "false_positive_rate": 0.0068
           }
         },
         "recall_at_gate": {}
@@ -3711,6 +4237,26 @@ const TASKS = [
       "cvAcc": 0.7905,
       "cvLo": 0.7525,
       "cvHi": 0.8291
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.568,
+      "lo": 0.524,
+      "hi": 0.611,
+      "p50": 370,
+      "p95": 428,
+      "device": "cpu",
+      "tokens": 166.8,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 2.17e-08,
+      "pJevHolm": 1.95e-07,
+      "pMini": 6.31e-05,
+      "pMiniHolm": 0.000442,
+      "ece": 0.146,
+      "invalidLabels": 0
     }
   },
   {
@@ -3722,7 +4268,7 @@ const TASKS = [
     "labels": "not_hate / hate",
     "verdict": "dont",
     "ns": false,
-    "why": "Mini 72.4% beats Jev 65.6% by 6.8pt (Holm p=0.002), the same loss as v1 on equal prompts. Jev catches only 47.6% of hate speech; Mini 64.0%, the 2026 model 75.2% but with 33.2% false positives. TF-IDF is worst at 53.4%. The neighbouring Civil Comments row, a different task on CC0 gold, ranks the models the other way.",
+    "why": "Mini 72.4% beats Jev 65.6% by 6.8pt (Holm p=0.002), the same loss as v1 on equal prompts. Jev catches only 47.6% of hate speech; Mini 64.0%, the 2026 model 38.0%. TF-IDF is worst at 53.4%. The neighbouring Civil Comments row, a different task on CC0 gold, ranks the models the other way.",
     "gate": "Gating buys the most lift on the board and still leaves a bad row: 78.9% on 53.0% at >=0.9, 13.3pt above ungated, and Mini is better anyway. Keep a specialist.",
     "goldTier": "research",
     "rowNote": "Misses 52.4% of hate speech. Don't is this dataset's verdict.",
@@ -3935,19 +4481,40 @@ const TASKS = [
         "per_class": {
           "hate": {
             "n": 250,
-            "recall": 0.752,
-            "missed": 62,
-            "missed_rate": 0.248,
-            "false_positives": 83,
-            "false_positive_rate": 0.332
+            "recall": 0.38,
+            "missed": 155,
+            "missed_rate": 0.62,
+            "false_positives": 24,
+            "false_positive_rate": 0.096
           },
           "not_hate": {
             "n": 250,
-            "recall": 0.668,
-            "missed": 83,
-            "missed_rate": 0.332,
-            "false_positives": 62,
-            "false_positive_rate": 0.248
+            "recall": 0.904,
+            "missed": 24,
+            "missed_rate": 0.096,
+            "false_positives": 155,
+            "false_positive_rate": 0.62
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "laya": {
+        "per_class": {
+          "hate": {
+            "n": 250,
+            "recall": 0.412,
+            "missed": 147,
+            "missed_rate": 0.588,
+            "false_positives": 39,
+            "false_positive_rate": 0.156
+          },
+          "not_hate": {
+            "n": 250,
+            "recall": 0.844,
+            "missed": 39,
+            "missed_rate": 0.156,
+            "false_positives": 147,
+            "false_positive_rate": 0.588
           }
         },
         "recall_at_gate": {}
@@ -3977,6 +4544,26 @@ const TASKS = [
       "cvAcc": 0.786,
       "cvLo": 0.7293,
       "cvHi": 0.8382
+    },
+    "laya": {
+      "model": "laya (root)",
+      "repo": "convaiinnovations/laya",
+      "revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+      "acc": 0.628,
+      "lo": 0.585,
+      "hi": 0.669,
+      "p50": 194,
+      "p95": 292,
+      "device": "cpu",
+      "tokens": 69.1,
+      "vsJev": "ns",
+      "vsMini": "mini",
+      "pJev": 0.258,
+      "pJevHolm": 0.258,
+      "pMini": 7.12e-05,
+      "pMiniHolm": 0.000442,
+      "ece": 0.14,
+      "invalidLabels": 0
     }
   }
 ];

@@ -176,6 +176,28 @@ def redact_modern_receipts(task: str) -> int:
     return touched
 
 
+def redact_laya_receipts(task: str) -> int:
+    """The self-hosted System One arm stores the text as the request state."""
+    path = RECEIPTS / f"{task}.laya.json"
+    if not path.exists():
+        return 0
+    rec = json.loads(path.read_text(encoding="utf-8"))
+    touched = 0
+    for call in rec.get("calls", []):
+        if call.get("text"):
+            call["text_sha256"] = sha_text(call["text"])
+            call["text"] = None
+            touched += 1
+        req = call.get("request") or {}
+        if req.get("state"):
+            req["state"] = None
+    if touched:
+        rec["text_redacted"] = True
+        rec["redaction_note"] = REDACTION_NOTE
+        dump_json(path, rec)
+    return touched
+
+
 def redact_cost_curve() -> int:
     """The cost curve concatenates real sentences from the frozen samples."""
     path = RECEIPTS / "cost_curve.json"
@@ -216,6 +238,9 @@ def main() -> None:
         if a or b:
             print(f"  {task}: {a} results receipts, {b} site receipts redacted")
         m = redact_modern_receipts(task)
+        la = redact_laya_receipts(task)
+        if la:
+            print(f"  {task}: {la} laya receipts redacted")
         if m:
             print(f"  {task}: {m} modern receipts redacted")
         repin_sample_hash(task)

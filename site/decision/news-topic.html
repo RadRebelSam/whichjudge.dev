@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>News topic: Jev vs 3 other models, measured | WhichJudge</title>
+<title>News topic: Jev vs 4 other models, measured | WhichJudge</title>
 <meta name="description" content="News topic on AG News test, n=500 frozen gold. Jev 89.8%, gpt-4o-mini 86.0%, TF-IDF 93.8%. Verdict: Replace. ECE 0.068.">
 <link rel="canonical" href="https://whichjudge.dev/decision/news-topic.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="News topic: Jev vs 3 other models, measured | WhichJudge">
+<meta property="og:title" content="News topic: Jev vs 4 other models, measured | WhichJudge">
 <meta property="og:description" content="News topic on AG News test, n=500 frozen gold. Jev 89.8%, gpt-4o-mini 86.0%, TF-IDF 93.8%. Verdict: Replace. ECE 0.068.">
 <meta property="og:url" content="https://whichjudge.dev/decision/news-topic.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="09e70f3006">
+<meta name="whichjudge-build" content="a7924c438d">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "News topic - cheap decision model bake-off", "description": "News topic on AG News test, n=500 frozen gold. Jev 89.8%, gpt-4o-mini 86.0%, TF-IDF 93.8%. Verdict: Replace. ECE 0.068.", "url": "https://whichjudge.dev/decision/news-topic.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "AG News test", "dateModified": "2026-09-21", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/news_topic.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.898}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.86}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.938}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.068}]}</script>
 <style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#52525b}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}</style>
 </head>
@@ -22,7 +22,7 @@
 <p><span class="verdict">Replace</span>
 <span class="scope">compares Jev with 4o-mini only</span></p>
 <ul class="caveats"><li>A TF-IDF classifier trained on labelled data beats both APIs here at 93.8%. If you have labels, do not buy either.</li></ul>
-<p>Jev 89.8% beats Mini 86.0% by 3.8pt (Holm p=0.025), and the 2026 model at 86.8% ties Jev. TF-IDF at 93.8% after training on 120k rows beats both APIs. If you have labels, skip both.</p>
+<p>Jev 89.8% beats Mini 86.0% by 3.8pt (Holm p=0.025), and the 2026 model at 86.8% ties Jev. Laya, self-hosted, scores 93.4%, ns against Jev after correction; TF-IDF at 93.8% after training on 120k rows beats both APIs. If you have labels, skip both.</p>
 <p><strong>Replaces:</strong> 4-way news classifier<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/fancyzhx/ag_news" rel="noopener">fancyzhx/ag_news</a>
 
@@ -34,6 +34,7 @@
         <tr><td>Jev jev-1.13.0</td><td>89.8%</td><td>[86.8% - 92.2%]</td><td>719 ms</td><td>$16.96</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>86.0%</td><td>[82.7% - 88.8%]</td><td>987 ms</td><td>$24.21</td></tr>
         <tr><td>gpt-5.4-mini-2026-03-17</td><td>86.8%</td><td>[83.6% - 89.5%]</td><td>827 ms</td><td>unpriced (143.6 tok/call)</td></tr>
+        <tr><td>Laya (self-hosted, convaiinnovations/laya)</td><td>93.4%</td><td>[90.9% - 95.3%]</td><td>254 ms local cpu, no network</td><td>$0 API, compute not priced</td></tr>
         <tr><td>TF-IDF + LR (train n=120,000)</td><td>93.8%</td><td>[91.3% - 95.6%]</td><td>60 us mean per row, batched</td><td>$0</td></tr>
   </tbody>
 </table></div>
@@ -65,6 +66,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build 09e70f3006 &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
+<p class="stamp">build a7924c438d &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
 </body>
 </html>

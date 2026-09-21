@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Banking queue routing: Jev vs 3 other models, measured | WhichJudge</title>
+<title>Banking queue routing: Jev vs 4 other models, measured | WhichJudge</title>
 <meta name="description" content="Banking queue routing on BANKING77 train split, collapsed 77 to 8 queues, n=500 frozen gold. Jev 70.2%, gpt-4o-mini 66.4%, TF-IDF 94.2%. Verdict: Replace. ECE 0.232.">
 <link rel="canonical" href="https://whichjudge.dev/decision/banking-coarse-route.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Banking queue routing: Jev vs 3 other models, measured | WhichJudge">
+<meta property="og:title" content="Banking queue routing: Jev vs 4 other models, measured | WhichJudge">
 <meta property="og:description" content="Banking queue routing on BANKING77 train split, collapsed 77 to 8 queues, n=500 frozen gold. Jev 70.2%, gpt-4o-mini 66.4%, TF-IDF 94.2%. Verdict: Replace. ECE 0.232.">
 <meta property="og:url" content="https://whichjudge.dev/decision/banking-coarse-route.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="09e70f3006">
+<meta name="whichjudge-build" content="a7924c438d">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Banking queue routing - cheap decision model bake-off", "description": "Banking queue routing on BANKING77 train split, collapsed 77 to 8 queues, n=500 frozen gold. Jev 70.2%, gpt-4o-mini 66.4%, TF-IDF 94.2%. Verdict: Replace. ECE 0.232.", "url": "https://whichjudge.dev/decision/banking-coarse-route.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "BANKING77 train split, collapsed 77 to 8 queues", "dateModified": "2026-09-21", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/banking_coarse_route.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.702}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.664}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.942}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.232}]}</script>
 <style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#52525b}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}</style>
 </head>
@@ -34,6 +34,7 @@
         <tr><td>Jev jev-1.13.0</td><td>70.2%</td><td>[66.0% - 74.0%]</td><td>694 ms</td><td>$20.65</td></tr>
         <tr><td>gpt-4o-mini-2024-07-18</td><td>66.4%</td><td>[62.1% - 70.4%]</td><td>1054 ms</td><td>$34.81</td></tr>
         <tr><td>gpt-5.4-mini-2026-03-17</td><td>72.4%</td><td>[68.3% - 76.1%]</td><td>847 ms</td><td>unpriced (216.8 tok/call)</td></tr>
+        <tr><td>Laya (self-hosted, convaiinnovations/laya)</td><td>56.8%</td><td>[52.4% - 61.1%]</td><td>370 ms local cpu, no network</td><td>$0 API, compute not priced</td></tr>
         <tr><td>TF-IDF + LR (train n=9,503)</td><td>94.2%</td><td>[91.8% - 95.9%]</td><td>18 us mean per row, batched</td><td>$0</td></tr>
   </tbody>
 </table></div>
@@ -65,6 +66,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build 09e70f3006 &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
+<p class="stamp">build a7924c438d &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
 </body>
 </html>

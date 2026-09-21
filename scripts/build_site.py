@@ -77,8 +77,11 @@ def holm(pvalues: dict) -> dict:
     return adjusted
 
 
-def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows):
+def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows, laya=None):
     by_id = {r["task_id"]: r for r in summary}
+    laya_by_id = {r["task_id"]: r for r in (laya or {}).get("tasks", [])}
+    holm_laya = holm({r["task_id"]: r["mcnemar_vs_jev"]["p_value"] for r in (laya or {}).get("tasks", [])})
+    holm_laya_mini = holm({r["task_id"]: r["mcnemar_vs_mini"]["p_value"] for r in (laya or {}).get("tasks", [])})
     manifest = load(RESULTS / "manifest.json")
     redacted = set(manifest.get("redacted_tasks") or [])
     tf_by_id = {r["task_id"]: r for r in tfidf}
@@ -168,6 +171,12 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows):
             known.add(round(md["acc"] * 100, 1))
             known.add(round(md["wilson"]["lo"] * 100, 1))
             known.add(round(md["wilson"]["hi"] * 100, 1))
+        ld = laya_by_id.get(tid)
+        if ld:
+            known.add(round(ld["acc"] * 100, 1))
+            known.add(round(ld["wilson"]["lo"] * 100, 1))
+            known.add(round(ld["wilson"]["hi"] * 100, 1))
+            known.add(round(abs(ld["acc"] - s["jev_acc"]) * 100, 1))
         for gate, v in gtab.items():
             if v["accuracy"] is None:
                 continue
@@ -214,6 +223,9 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows):
         # comparison with Jev was ns.
         for field in ("why", "gate", "rowNote"):
             text = c.get(field) or ""
+            if re.search(r"Laya[^.]{0,40}beats Jev", text) and (not ld or holm_laya.get(tid, 1.0) >= 0.05
+                                                                or ld["mcnemar_vs_jev"]["winner"] != "a"):
+                raise SystemExit(f"{tid}: copy.json {field} says Laya beats Jev but the corrected test does not.")
             claim = re.search(r"TF-IDF (?:beats|wins)( both| again)?", text)
             if not claim:
                 continue
@@ -322,6 +334,28 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows):
                 "invalidLabelValues": md.get("invalid_label_values", []),
             } if md else None),
             "autoSlice": auto_slice,
+            "laya": ({
+                "model": ld["model"],
+                "repo": laya.get("repo"),
+                "revision": laya.get("revision"),
+                "acc": ld["acc"],
+                "lo": round(ld["wilson"]["lo"], 3),
+                "hi": round(ld["wilson"]["hi"], 3),
+                "p50": round(ld["p50_ms"]),
+                "p95": round(ld["p95_ms"]),
+                "device": (laya.get("environment") or {}).get("device"),
+                "tokens": ld["tokens_per_call"],
+                "vsJev": ("ns" if holm_laya.get(tid, 1.0) >= 0.05
+                          else ("laya" if ld["mcnemar_vs_jev"]["winner"] == "a" else "jev")),
+                "vsMini": ("ns" if holm_laya_mini.get(tid, 1.0) >= 0.05
+                           else ("laya" if ld["mcnemar_vs_mini"]["winner"] == "a" else "mini")),
+                "pJev": float(f"{ld['mcnemar_vs_jev']['p_value']:.3g}"),
+                "pJevHolm": float(f"{holm_laya[tid]:.3g}"),
+                "pMini": float(f"{ld['mcnemar_vs_mini']['p_value']:.3g}"),
+                "pMiniHolm": float(f"{holm_laya_mini[tid]:.3g}"),
+                "ece": (round(calib[tid]["laya"]["ece"], 3) if calib[tid].get("laya") else None),
+                "invalidLabels": ld.get("invalid_labels", 0),
+            } if ld else None),
         })
     return out
 
@@ -506,6 +540,33 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
                 "on that row stands for all three."
             )
         blocks["modern-table"] = text
+
+    # the self-hosted System One column
+    lt = [t for t in tasks if t.get("laya")]
+    if lt:
+        l0 = lt[0]["laya"]
+        def lcell(v, other):
+            return {"ns": "ns", "laya": "**Laya**"}.get(v, other)
+        rows = [[t["title"], pct(t["jev"]["acc"]), pct(t["mini"]["acc"]), pct(t["laya"]["acc"]),
+                 lcell(t["laya"]["vsJev"], "Jev"), lcell(t["laya"]["vsMini"], "4o-mini"),
+                 f"{t['ece']['ece']:.3f}", f"{t['laya']['ece']:.3f}" if t["laya"]["ece"] is not None else "-"]
+                for t in lt]
+        jw = [t for t in lt if t["laya"]["vsJev"] == "jev"]
+        lw = [t for t in lt if t["laya"]["vsJev"] == "laya"]
+        lt_ties = [t for t in lt if t["laya"]["vsJev"] == "ns"]
+        blocks["laya-table"] = (
+            f"Laya (`{l0['repo']}`, revision `{(l0['revision'] or '')[:12]}`, Apache-2.0) is a second\n"
+            "System One-style model: same typed questions, one forward pass, probabilities back. It runs\n"
+            "on your own hardware, so it gets the very schema questions Jev gets, byte for byte, and no API\n"
+            f"bill. Measured here on the {l0['device'] or 'local'} of the author's workstation\n"
+            "(`scripts/run_laya_baseline.py`). Both `vs` columns are Holm-corrected within their family of\n"
+            f"{len(lt)} tests; the ECE columns are on each model's own p_chosen:\n\n"
+            + md_table(["Decision", "Jev", "4o-mini", "Laya", "vs Jev", "vs 4o-mini", "Jev ECE", "Laya ECE"], rows)
+            + f"\n\n**Jev {len(jw)} win{'s' if len(jw) != 1 else ''}, {len(lt_ties)} ties, "
+            f"{len(lw)} loss{'es' if len(lw) != 1 else ''}** against Laya. Latency is not comparable across\n"
+            f"the two: Laya's p50 of {min(t['laya']['p50'] for t in lt)} to {max(t['laya']['p50'] for t in lt)} ms is one forward pass on this machine's "
+            f"{l0['device'] or 'CPU'}, no network; the API columns include a round trip."
+        )
 
     # auto slice
     rows, lifts, optimism, short_cov = [], [], [], []
@@ -752,6 +813,8 @@ def render_decision_page(t, run, site) -> str:
                      f"at {pct(t['tfidf']['acc'])}. If you have labels, do not buy either.")
     if t.get("modern") and t["modern"]["vsJev"] == "modern":
         notes.append(f"{t['modern']['model']} beats Jev here at {pct(t['modern']['acc'])}.")
+    if t.get("laya") and t["laya"]["vsJev"] == "laya":
+        notes.append(f"Laya, self-hosted, beats Jev here at {pct(t['laya']['acc'])}.")
     if t["ece"]["ece"] > 0.12:
         notes.append(f"ECE {t['ece']['ece']}: do not quote the confidence as a probability.")
     caveats = ("<ul class=\"caveats\">" + "".join(f"<li>{e(n)}</li>" for n in notes) + "</ul>"
@@ -767,7 +830,7 @@ def render_decision_page(t, run, site) -> str:
         verdict = VERDICT_TEXT[t["verdict"]]
     ns_tag = ""
     # rows in the comparison table: Jev, 4o-mini, TF-IDF, plus the current model
-    others = 2 + (1 if t.get("modern") else 0)
+    others = 2 + (1 if t.get("modern") else 0) + (1 if t.get("laya") else 0)
     title = f"{t['title']}: Jev vs {others} other models, measured | {site['name']}"
     desc = (
         f"{t['title']} on {t['dataset']}, n={t['n']} frozen gold. "
@@ -819,6 +882,12 @@ def render_decision_page(t, run, site) -> str:
                         f"[{pct(m['lo'])} - {pct(m['hi'])}]",
                         f"{m['p50']} ms",
                         f"unpriced ({m['tokens']} tok/call)"))
+    if t.get("laya"):
+        la = t["laya"]
+        rows.insert(len(rows) - 1, (f"Laya (self-hosted, {la['repo']})", pct(la["acc"]),
+                                    f"[{pct(la['lo'])} - {pct(la['hi'])}]",
+                                    f"{la['p50']} ms local {la['device'] or ''}, no network",
+                                    "$0 API, compute not priced"))
     tbody = "\n".join(
         "        <tr>" + "".join(f"<td>{e(c)}</td>" for c in r) + "</tr>" for r in rows
     )
@@ -1030,12 +1099,14 @@ def main() -> None:
     gatefile = load(RESULTS / "gates.json")
     modern_path = RESULTS / "modern_baseline.json"
     modern = load(modern_path) if modern_path.exists() else None
+    laya_path = RESULTS / "laya_baseline.json"
+    laya = load(laya_path) if laya_path.exists() else None
     manifest = load(RESULTS / "manifest.json")
     curve_path = RESULTS / "cost_curve.json"
     curve = load(curve_path) if curve_path.exists() else None
 
     runs, windows = run_windows(summary)
-    tasks = build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows)
+    tasks = build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows, laya)
     # Tasks may differ in size. Prompt injection only has 662 rows in existence, so
     # freezing 500 would leave nothing to train the classical baseline on. The site
     # shows each task's own n instead of claiming one number for all of them.
@@ -1052,7 +1123,8 @@ def main() -> None:
     # that do not touch the site.
     fingerprint = hashlib.sha256()
     for part in ("summary.json", "calibration.json", "gates.json", "error_profile.json",
-                 "tfidf_baseline_summary.json", "modern_baseline.json", "cost_curve.json"):
+                 "tfidf_baseline_summary.json", "modern_baseline.json", "laya_baseline.json",
+                 "cost_curve.json"):
         f = RESULTS / part
         if f.exists():
             fingerprint.update(f.read_bytes())

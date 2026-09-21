@@ -37,3 +37,6 @@ summary_backup.json
 # Per-row checkpoints written while run_eval.py / run_modern_baseline.py are
 # running. Deleted when a task completes; never a published result.
 results/receipts/*.partial.jsonl
+
+# Laya checkpoints, same rule as the API runs
+results/receipts/*.laya.partial.jsonl
