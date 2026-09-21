@@ -97,7 +97,11 @@ function closeModal() {
   modalOpen = false;
   receiptOpenId = null;
   render();
-  const back = modalTrigger ? document.querySelector(`[data-task="${modalTrigger}"]`) : null;
+  // Each task has a row button and a list button; only one is laid out at a
+  // given width, and a hidden element cannot take focus.
+  const back = modalTrigger
+    ? Array.from(document.querySelectorAll(`[data-task="${modalTrigger}"]`)).find((el) => el.offsetParent !== null)
+    : null;
   if (back) back.focus();
   modalTrigger = null;
 }
@@ -119,10 +123,14 @@ document.addEventListener("keydown", (ev) => {
     if (!items.length) return;
     const first = items[0];
     const last = items[items.length - 1];
-    if (ev.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+    const active = document.activeElement;
+    // Focus starts on the dialog container itself; from there Shift+Tab would
+    // leave the dialog, so it is treated the same as focus being outside.
+    const outside = !dialog.contains(active) || active === dialog;
+    if (ev.shiftKey && (active === first || outside)) {
       ev.preventDefault();
       last.focus();
-    } else if (!ev.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) {
+    } else if (!ev.shiftKey && (active === last || outside)) {
       ev.preventDefault();
       first.focus();
     }
