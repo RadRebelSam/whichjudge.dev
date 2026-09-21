@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
-"""Check frozen samples, schemas, receipts, and recounted accuracy.
+"""Check frozen samples, schemas, receipts, and every published statistic.
 
-Does not call APIs. Exit 0 if the published table matches the receipts.
+Does not call APIs. Exit 0 if everything in results/ follows from the receipts:
+accuracy is recounted, and the intervals, paired tests, costs, latencies, gates,
+calibration, error profile, TF-IDF column, current-model column and cost curve are
+recomputed and compared. The last lines say exactly what was and was not covered.
 """
 from __future__ import annotations
 
 import hashlib
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -195,6 +199,9 @@ def main() -> None:
             f"receipts {n}×2"
         )
 
+    print()
+    derived = check_derived(summary)
+    errors += derived.errors
     if errors:
         fail(f"{errors} check(s) failed")
     print("\nALL CHECKS PASSED")
@@ -211,8 +218,345 @@ def main() -> None:
         )
         print("Accuracy above was still recounted from the receipts. To also check the "
               "text and request hashes, run scripts/rehydrate.py first.")
-    print("This proves the table matches frozen samples + stored receipts.")
-    print("It does not prove a third party ran the APIs. Re-run scripts/run_eval.py for that.")
+    print("\nRECOMPUTED FROM RECEIPTS AND COMPARED WITH results/:")
+    for line in derived.checked:
+        print("  " + line)
+    print("NOT RECOMPUTED HERE:")
+    print("  Holm adjustment, verdict mapping and every rendered number: scripts/build_site.py --check")
+    print("  TF-IDF training itself (needs the raw corpora): scripts/run_tfidf_baseline.py")
+    print("  that either API produced these responses: only a re-run can; see the manifest caveat")
+
+
+# ---------------------------------------------------------------------------
+# Everything below recomputes derived numbers. The checks above prove the
+# receipts are what the run wrote and that accuracy recounts; these prove that
+# every other published statistic follows from those receipts. A wrong Wilson
+# bound, McNemar p, cost, gate, ECE, TF-IDF or current-model result used to
+# pass CI untouched. Now it fails here.
+# ---------------------------------------------------------------------------
+
+sys.path.insert(0, str(ROOT / "scripts"))
+
+JEV_INPUT_USD_PER_M = 0.042
+MINI_INPUT_USD_PER_M = 0.15
+MINI_OUTPUT_USD_PER_M = 0.60
+GATES = (0.5, 0.6, 0.7, 0.8, 0.9)
+BINS = 10
+
+
+def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
+    p = k / n
+    z2 = z * z
+    den = 1.0 + z2 / n
+    centre = (p + z2 / (2.0 * n)) / den
+    margin = z * math.sqrt((p * (1.0 - p) / n) + z2 / (4.0 * n * n)) / den
+    return max(0.0, centre - margin), min(1.0, centre + margin)
+
+
+def mcnemar(a_ok: list[bool], b_ok: list[bool]) -> tuple[int, int, float]:
+    """(a-only-correct, b-only-correct, p) with continuity correction, chi2(1)."""
+    a_only = sum(1 for x, y in zip(a_ok, b_ok) if x and not y)
+    b_only = sum(1 for x, y in zip(a_ok, b_ok) if y and not x)
+    disc = a_only + b_only
+    if disc == 0:
+        return 0, 0, 1.0
+    chi2 = (abs(a_only - b_only) - 1) ** 2 / disc
+    return a_only, b_only, math.erfc(math.sqrt(chi2 / 2.0))
+
+
+def percentile(values: list[float], q: float) -> float:
+    s = sorted(values)
+    return s[min(len(s) - 1, int(q * (len(s) - 1)))]
+
+
+def score_of(r: dict) -> float:
+    p = r.get("p_chosen")
+    return float(p if p is not None else r["confidence"])
+
+
+def gate_table(rows: list[dict], score) -> dict:
+    out = {}
+    for g in GATES:
+        kept = [r for r in rows if score(r) >= g]
+        out[str(g)] = {
+            "coverage": len(kept) / len(rows),
+            "accuracy": (sum(r["pred"] == r["gold"] for r in kept) / len(kept)) if kept else None,
+        }
+    return out
+
+
+def pick_gate(rows: list[dict]):
+    best = None
+    for g in GATES:
+        kept = [r for r in rows if score_of(r) >= g]
+        if not kept or len(kept) / len(rows) < 0.5:
+            continue
+        acc = sum(r["pred"] == r["gold"] for r in kept) / len(kept)
+        if best is None or acc > best[1]:
+            best = (g, acc)
+    return best
+
+
+def reliability(rows: list[dict]) -> dict:
+    pairs = [(score_of(r), r["pred"] == r["gold"]) for r in rows]
+    n = len(pairs)
+    ece = mce = 0.0
+    bins = []
+    for i in range(BINS):
+        lo, hi = i / BINS, (i + 1) / BINS
+        hits = [p for p in pairs if (lo <= p[0] < hi) or (i == BINS - 1 and p[0] == 1.0)]
+        if hits:
+            conf = sum(p[0] for p in hits) / len(hits)
+            acc = sum(1 for p in hits if p[1]) / len(hits)
+            gap = abs(conf - acc)
+            ece += (len(hits) / n) * gap
+            mce = max(mce, gap)
+            bins.append((len(hits), conf, acc))
+        else:
+            bins.append((0, None, None))
+    return {"ece": ece, "mce": mce, "bins": bins}
+
+
+def per_class(rows: list[dict]) -> dict:
+    classes = sorted({r["gold"] for r in rows})
+    out = {}
+    for cls in classes:
+        actual = [r for r in rows if r["gold"] == cls]
+        caught = [r for r in actual if r["pred"] == cls]
+        others = [r for r in rows if r["gold"] != cls]
+        fp = [r for r in others if r["pred"] == cls]
+        out[cls] = {
+            "n": len(actual),
+            "recall": round(len(caught) / len(actual), 4) if actual else None,
+            "missed": len(actual) - len(caught),
+            "missed_rate": round(1 - len(caught) / len(actual), 4) if actual else None,
+            "false_positives": len(fp),
+            "false_positive_rate": round(len(fp) / len(others), 4) if others else None,
+        }
+    return out
+
+
+def recall_at_gate(rows: list[dict]) -> dict:
+    classes = sorted({r["gold"] for r in rows})
+    out = {}
+    for g in GATES:
+        per = {}
+        for cls in classes:
+            covered = [r for r in rows if r["gold"] == cls and score_of(r) >= g]
+            caught = [r for r in covered if r["pred"] == cls]
+            per[cls] = {"covered": len(covered),
+                        "recall_on_covered": round(len(caught) / len(covered), 4) if covered else None}
+        out[str(g)] = per
+    return out
+
+
+def close(a, b, tol=1e-9) -> bool:
+    if a is None or b is None:
+        return a is b
+    return abs(float(a) - float(b)) <= tol
+
+
+class Derived:
+    """Collects mismatches so one run reports everything, not the first failure."""
+
+    def __init__(self):
+        self.errors = 0
+        self.checked: list[str] = []
+
+    def expect(self, where: str, got, want, tol=1e-9) -> None:
+        ok = close(got, want, tol) if isinstance(want, (int, float)) or want is None else got == want
+        if not ok:
+            print(f"DERIVED MISMATCH {where}: recomputed {got!r}, published {want!r}")
+            self.errors += 1
+
+
+def check_derived(summary: list[dict]) -> Derived:
+    d = Derived()
+    calib = load(RESULTS / "calibration.json")
+    gates = load(RESULTS / "gates.json")
+    profile = load(RESULTS / "error_profile.json")
+    tfidf_full = {r["task_id"]: r for r in load(RESULTS / "tfidf_baseline.json")}
+    tfidf_slim = {r["task_id"]: r for r in load(RESULTS / "tfidf_baseline_summary.json")}
+    modern_path = RESULTS / "modern_baseline.json"
+    modern = {r["task_id"]: r for r in load(modern_path)["tasks"]} if modern_path.exists() else {}
+
+    from calibrate import cross_validated_slice  # same seeded splits as the producer
+
+    for row in summary:
+        tid = row["task_id"]
+        rec = load(RECEIPTS / f"{tid}.json")
+        jev, mini = rec["jev"], rec["gpt4o_mini"]
+        n = len(jev)
+        jev_ok = [r["pred"] == r["gold"] for r in jev]
+        mini_by = {r["id"]: r["pred"] == r["gold"] for r in mini}
+        mini_ok = [mini_by[r["id"]] for r in jev]
+
+        # summary.json: intervals, paired test, latency, cost, confidence, gates
+        lo, hi = wilson(sum(jev_ok), n)
+        d.expect(f"{tid} jev_wilson.lo", lo, row["jev_wilson"]["lo"])
+        d.expect(f"{tid} jev_wilson.hi", hi, row["jev_wilson"]["hi"])
+        lo, hi = wilson(sum(mini_ok), n)
+        d.expect(f"{tid} mini_wilson.lo", lo, row["mini_wilson"]["lo"])
+        d.expect(f"{tid} mini_wilson.hi", hi, row["mini_wilson"]["hi"])
+        b, c, p = mcnemar(jev_ok, mini_ok)
+        d.expect(f"{tid} mcnemar.jev_only_correct", b, row["mcnemar"]["jev_only_correct"])
+        d.expect(f"{tid} mcnemar.mini_only_correct", c, row["mcnemar"]["mini_only_correct"])
+        d.expect(f"{tid} mcnemar.p_value", p, row["mcnemar"]["p_value"], 1e-12)
+        winner = "jev" if b > c and p < 0.05 else ("mini" if c > b and p < 0.05 else "ns")
+        d.expect(f"{tid} mcnemar.winner", winner, row["mcnemar"]["winner"])
+        for arm, key, rows_ in (("jev", "jev", jev), ("mini", "mini", mini)):
+            lat = [r["latency_ms"] for r in rows_]
+            d.expect(f"{tid} {arm}_p50_ms", percentile(lat, 0.5), row[f"{key}_p50_ms"])
+            d.expect(f"{tid} {arm}_p95_ms", percentile(lat, 0.95), row[f"{key}_p95_ms"])
+        jev_in = sum(r["input_tokens"] or 0 for r in jev)
+        mini_in = sum(r["input_tokens"] or 0 for r in mini)
+        mini_out = sum(r["output_tokens"] or 0 for r in mini)
+        d.expect(f"{tid} jev_cost", jev_in / 1e6 * JEV_INPUT_USD_PER_M, row["jev_cost"], 1e-12)
+        d.expect(f"{tid} mini_cost", mini_in / 1e6 * MINI_INPUT_USD_PER_M
+                 + mini_out / 1e6 * MINI_OUTPUT_USD_PER_M, row["mini_cost"], 1e-12)
+        confs = [r["confidence"] for r in jev if r.get("confidence") is not None]
+        d.expect(f"{tid} jev_mean_conf", sum(confs) / len(confs), row["jev_mean_conf"])
+        conf_gates = gate_table(jev, lambda r: r.get("confidence") or 0)
+        for g, v in conf_gates.items():
+            d.expect(f"{tid} jev_gates[{g}].coverage", v["coverage"], row["jev_gates"][g]["coverage"])
+            d.expect(f"{tid} jev_gates[{g}].accuracy", v["accuracy"], row["jev_gates"][g]["accuracy"])
+
+        # calibration.json
+        rel = reliability(jev)
+        pub = calib[tid]["p_chosen"]
+        d.expect(f"{tid} ece", rel["ece"], pub["ece"])
+        d.expect(f"{tid} mce", rel["mce"], pub["mce"])
+        d.expect(f"{tid} calibration.n", n, pub["n"])
+        for i, (cnt, conf, acc) in enumerate(rel["bins"]):
+            d.expect(f"{tid} bin[{i}].n", cnt, pub["bins"][i]["n"])
+            d.expect(f"{tid} bin[{i}].conf", conf, pub["bins"][i]["conf"])
+            d.expect(f"{tid} bin[{i}].acc", acc, pub["bins"][i]["acc"])
+
+        # gates.json (p_chosen)
+        g_pub = gates[tid]
+        d.expect(f"{tid} gates.score", "p_chosen", g_pub["score"])
+        for g, v in gate_table(jev, score_of).items():
+            d.expect(f"{tid} gates[{g}].coverage", round(v["coverage"], 4), g_pub["gates"][g]["coverage"])
+            d.expect(f"{tid} gates[{g}].accuracy",
+                     round(v["accuracy"], 4) if v["accuracy"] is not None else None,
+                     g_pub["gates"][g]["accuracy"])
+        chosen = pick_gate(jev)
+        d.expect(f"{tid} gates.in_sample.gate", chosen[0] if chosen else None,
+                 (g_pub["in_sample"] or {}).get("gate"))
+        d.expect(f"{tid} gates.in_sample.accuracy", round(chosen[1], 4) if chosen else None,
+                 (g_pub["in_sample"] or {}).get("accuracy"))
+        cv = cross_validated_slice(jev)
+        for key in ("accuracy_mean", "accuracy_lo", "accuracy_hi", "gate_chosen_most"):
+            d.expect(f"{tid} gates.cross_validated.{key}", cv[key], g_pub["cross_validated"][key])
+
+        # error_profile.json
+        for arm, rows_ in (("jev", jev), ("mini", mini)):
+            d.expect(f"{tid} error_profile.{arm}.per_class", per_class(rows_), profile[tid][arm]["per_class"])
+        d.expect(f"{tid} error_profile.jev.recall_at_gate", recall_at_gate(jev),
+                 profile[tid]["jev"]["recall_at_gate"])
+
+        # TF-IDF column: predictions stored per row, recount and re-test them
+        tf = tfidf_full[tid]
+        gold = {r["id"]: r["gold"] for r in jev}
+        tf_ok = []
+        for pr in tf["preds"]:
+            if gold[pr["id"]] != pr["gold"]:
+                print("GOLD DRIFT", tid, "tfidf", pr["id"])
+                d.errors += 1
+            tf_ok.append(pr["pred"] == pr["gold"])
+        d.expect(f"{tid} tfidf.n", len(tf_ok), tf["n"])
+        d.expect(f"{tid} tfidf.acc", sum(tf_ok) / len(tf_ok), tf["acc"])
+        lo, hi = wilson(sum(tf_ok), len(tf_ok))
+        d.expect(f"{tid} tfidf.wilson.lo", lo, tf["wilson"]["lo"])
+        d.expect(f"{tid} tfidf.wilson.hi", hi, tf["wilson"]["hi"])
+        j_al = [dict(zip([r["id"] for r in jev], jev_ok))[pr["id"]] for pr in tf["preds"]]
+        m_al = [mini_by[pr["id"]] for pr in tf["preds"]]
+        for key, other in (("mcnemar_vs_jev", j_al), ("mcnemar_vs_mini", m_al)):
+            a, b_, p = mcnemar(tf_ok, other)
+            d.expect(f"{tid} tfidf.{key}.a_only_correct", a, tf[key]["a_only_correct"])
+            d.expect(f"{tid} tfidf.{key}.b_only_correct", b_, tf[key]["b_only_correct"])
+            d.expect(f"{tid} tfidf.{key}.p_value", p, tf[key]["p_value"], 1e-12)
+        slim = tfidf_slim[tid]
+        for key in ("acc", "wilson", "mcnemar_vs_jev", "mcnemar_vs_mini", "train_n",
+                    "predict_mean_ms_per_row_batched"):
+            d.expect(f"{tid} tfidf_summary.{key}", tf[key], slim[key])
+
+        # current-model column
+        if tid in modern:
+            md = modern[tid]
+            mrec = load(RECEIPTS / f"{tid}.modern.json")
+            calls = mrec["calls"]
+            for r in calls:
+                if sha256_bytes(canonical_bytes(r["response"])) != r["response_sha256"]:
+                    print("RESPONSE HASH", tid, "modern", r["id"])
+                    d.errors += 1
+                if gold[r["id"]] != r["gold"]:
+                    print("GOLD DRIFT", tid, "modern", r["id"])
+                    d.errors += 1
+            m_ok = [r["pred"] == r["gold"] for r in calls]
+            d.expect(f"{tid} modern.n", len(m_ok), md["n"])
+            d.expect(f"{tid} modern.acc", sum(m_ok) / len(m_ok), md["acc"])
+            lo, hi = wilson(sum(m_ok), len(m_ok))
+            d.expect(f"{tid} modern.wilson.lo", lo, md["wilson"]["lo"])
+            d.expect(f"{tid} modern.wilson.hi", hi, md["wilson"]["hi"])
+            lat = sorted(r["latency_ms"] for r in calls)
+            d.expect(f"{tid} modern.p50_ms", lat[len(lat) // 2], md["p50_ms"])
+            d.expect(f"{tid} modern.p95_ms", lat[int(len(lat) * 0.95)], md["p95_ms"])
+            in_tok = sum(r["input_tokens"] or 0 for r in calls)
+            out_tok = sum(r["output_tokens"] or 0 for r in calls)
+            d.expect(f"{tid} modern.tokens_per_call", round((in_tok + out_tok) / len(calls), 1),
+                     md["tokens_per_call"])
+            jev_by = dict(zip([r["id"] for r in jev], jev_ok))
+            j_al = [jev_by[r["id"]] for r in calls]
+            m_al = [mini_by[r["id"]] for r in calls]
+            for key, other in (("mcnemar_vs_jev", j_al), ("mcnemar_vs_mini", m_al)):
+                a, b_, p = mcnemar(m_ok, other)
+                d.expect(f"{tid} modern.{key}.a_only_correct", a, md[key]["a_only_correct"])
+                d.expect(f"{tid} modern.{key}.b_only_correct", b_, md[key]["b_only_correct"])
+                d.expect(f"{tid} modern.{key}.p_value", p, md[key]["p_value"], 1e-12)
+
+        # the same text twice in one sample, reported so nobody has to find it
+        seen, dup = set(), 0
+        for r in jev:
+            key = r.get("text_sha256") or r.get("text")
+            dup += key in seen
+            seen.add(key)
+        if dup:
+            print(f"note {tid}: {dup} row(s) repeat a text already in the sample")
+
+    # cost curve: re-aggregate every point from the per-call receipts
+    curve_path = RESULTS / "cost_curve.json"
+    if curve_path.exists():
+        from cost_curve import points_from_calls, crossover
+        pub = load(curve_path)
+        calls = load(RECEIPTS / "cost_curve.json")["calls"]
+        for r in calls:
+            for arm in ("jev", "mini"):
+                if sha256_bytes(canonical_bytes(r[arm]["response"])) != r[arm]["response_sha256"]:
+                    print("RESPONSE HASH cost_curve", arm, r["target_tokens"])
+                    d.errors += 1
+        points = points_from_calls(calls)
+        d.expect("cost_curve.points", len(points), len(pub["points"]))
+        for got, want in zip(points, pub["points"]):
+            for key in got:
+                d.expect(f"cost_curve[{got['target_tokens']}].{key}", got[key], want.get(key))
+        d.expect("cost_curve.crossover", crossover(points), pub["crossover"])
+        d.expect("cost_curve.mini_overhead_tokens", points[0]["mini_input_tokens"], pub["mini_overhead_tokens"])
+        d.expect("cost_curve.jev_fixed_overhead_tokens", round(points[0]["jev_input_tokens"]),
+                 pub["jev_fixed_overhead_tokens"])
+
+    d.checked = [
+        "accuracy, Wilson 95% CI, McNemar (b, c, p, winner), latency p50/p95, list-price cost,",
+        "mean confidence and confidence gates (results/summary.json)",
+        "ECE, MCE and reliability bins on p_chosen (results/calibration.json)",
+        "p_chosen gate table, in-sample pick and cross-validated slice (results/gates.json;",
+        "the split sequence is imported from calibrate.py, everything else is reimplemented here)",
+        "per-class recall, misses, false positives and recall at gate (results/error_profile.json)",
+        "TF-IDF accuracy, Wilson, McNemar vs both arms from its stored per-row predictions",
+        "current-model accuracy, Wilson, latency, tokens per call, McNemar vs both arms, response hashes",
+        "cost-curve points, crossover and overheads re-aggregated from per-call receipts",
+    ]
+    return d
 
 
 if __name__ == "__main__":

@@ -39,9 +39,11 @@ const COST_CURVE = {
     },
     "mini": {
       "input": 0.15,
+      "cached_input": 0.075,
       "output": 0.6
     }
   },
+  "pricing_note": "Mini prompt tokens reported as cached are charged at the cached rate. Only the longest point had any; shorter prompts are below the cache minimum.",
   "jev_model": "jev-1.13.0",
   "samples_per_point": 3,
   "question": {
@@ -64,6 +66,8 @@ const COST_CURVE = {
     ],
     "note": "Linear interpolation between the two measured points either side."
   },
+  "mini_overhead_tokens": 41.0,
+  "content_token_definition": "Mini prompt tokens minus the Mini prompt at a one-word input, so the system message and chat framing are not counted as content.",
   "points": [
     {
       "target_tokens": 0,
@@ -71,15 +75,15 @@ const COST_CURVE = {
       "mean_content_tokens": 0.0,
       "jev_input_tokens": 278.0,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 41.0,
       "mini_input_tokens": 41.0,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 11.68,
       "mini_per_million": 9.15,
       "jev_p50_ms": 300,
       "mini_p50_ms": 1356,
-      "mini_cached_tokens": 0,
-      "cheaper": "mini",
-      "mini_prompt_tokens": 41.0
+      "cheaper": "mini"
     },
     {
       "target_tokens": 25,
@@ -87,15 +91,15 @@ const COST_CURVE = {
       "mean_content_tokens": 23.3,
       "jev_input_tokens": 303.0,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 64.3,
       "mini_input_tokens": 64.3,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 12.73,
       "mini_per_million": 12.65,
       "jev_p50_ms": 377,
       "mini_p50_ms": 861,
-      "mini_cached_tokens": 0,
-      "cheaper": "mini",
-      "mini_prompt_tokens": 64.3
+      "cheaper": "mini"
     },
     {
       "target_tokens": 50,
@@ -103,15 +107,15 @@ const COST_CURVE = {
       "mean_content_tokens": 46.3,
       "jev_input_tokens": 326.0,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 87.3,
       "mini_input_tokens": 87.3,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 13.69,
       "mini_per_million": 16.1,
       "jev_p50_ms": 327,
       "mini_p50_ms": 864,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 87.3
+      "cheaper": "jev"
     },
     {
       "target_tokens": 100,
@@ -119,15 +123,15 @@ const COST_CURVE = {
       "mean_content_tokens": 87.0,
       "jev_input_tokens": 370.7,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 128.0,
       "mini_input_tokens": 128.0,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 15.57,
       "mini_per_million": 22.2,
       "jev_p50_ms": 311,
       "mini_p50_ms": 665,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 128.0
+      "cheaper": "jev"
     },
     {
       "target_tokens": 200,
@@ -135,15 +139,15 @@ const COST_CURVE = {
       "mean_content_tokens": 174.3,
       "jev_input_tokens": 464.7,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 215.3,
       "mini_input_tokens": 215.3,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 19.52,
       "mini_per_million": 35.3,
       "jev_p50_ms": 340,
       "mini_p50_ms": 623,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 215.3
+      "cheaper": "jev"
     },
     {
       "target_tokens": 400,
@@ -151,15 +155,15 @@ const COST_CURVE = {
       "mean_content_tokens": 336.0,
       "jev_input_tokens": 637.3,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 377.0,
       "mini_input_tokens": 377.0,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 26.77,
       "mini_per_million": 59.55,
       "jev_p50_ms": 331,
       "mini_p50_ms": 748,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 377.0
+      "cheaper": "jev"
     },
     {
       "target_tokens": 800,
@@ -167,15 +171,15 @@ const COST_CURVE = {
       "mean_content_tokens": 685.0,
       "jev_input_tokens": 1003.3,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 726.0,
       "mini_input_tokens": 726.0,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 42.14,
       "mini_per_million": 111.9,
       "jev_p50_ms": 318,
       "mini_p50_ms": 680,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 726.0
+      "cheaper": "jev"
     },
     {
       "target_tokens": 1600,
@@ -183,15 +187,15 @@ const COST_CURVE = {
       "mean_content_tokens": 1361.3,
       "jev_input_tokens": 1725.0,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 1402.3,
       "mini_input_tokens": 1402.3,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 72.45,
       "mini_per_million": 213.35,
       "jev_p50_ms": 349,
       "mini_p50_ms": 625,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 1402.3
+      "cheaper": "jev"
     },
     {
       "target_tokens": 3200,
@@ -199,30 +203,70 @@ const COST_CURVE = {
       "mean_content_tokens": 2742.7,
       "jev_input_tokens": 3189.7,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 2783.7,
       "mini_input_tokens": 2783.7,
+      "mini_cached_tokens": 1322.7,
       "mini_output_tokens": 5.0,
       "jev_per_million": 133.97,
-      "mini_per_million": 420.55,
+      "mini_per_million": 321.35,
       "jev_p50_ms": 348,
       "mini_p50_ms": 717,
-      "mini_cached_tokens": 1408,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 2783.7
+      "cheaper": "jev"
     }
-  ],
-  "mini_overhead_tokens": 41.0,
-  "content_token_definition": "Mini prompt tokens minus the Mini prompt at a one-word input, so the system message and chat framing are not counted as content."
+  ]
 };
 
 const RUN = {
   "date": "2026-09-20",
   "runId": "2026-09-20T20:54:25.282133+00:00",
-  "runIds": [
-    "2026-09-20T18:00:15.961406+00:00",
-    "2026-09-20T20:14:57.094834+00:00",
-    "2026-09-20T20:54:25.282133+00:00"
+  "runs": [
+    {
+      "start": "2026-09-20T17:16:27.245444+00:00",
+      "end": "2026-09-20T17:29:13.361937+00:00",
+      "tasks": [
+        "banking_coarse_route",
+        "news_topic",
+        "tweet_sentiment",
+        "review_sentiment",
+        "sms_spam",
+        "content_offensive",
+        "content_hate",
+        "message_emotion"
+      ],
+      "index": 1
+    },
+    {
+      "start": "2026-09-20T18:00:17.353020+00:00",
+      "end": "2026-09-20T18:02:02.908030+00:00",
+      "tasks": [
+        "cfpb_queue_route"
+      ],
+      "index": 2
+    },
+    {
+      "start": "2026-09-20T20:14:58.181225+00:00",
+      "end": "2026-09-20T20:16:32.087016+00:00",
+      "tasks": [
+        "civil_toxicity"
+      ],
+      "index": 3
+    },
+    {
+      "start": "2026-09-20T20:54:26.296249+00:00",
+      "end": "2026-09-20T20:55:26.301949+00:00",
+      "tasks": [
+        "prompt_injection"
+      ],
+      "index": 4
+    }
   ],
-  "dataVersion": "b01f17b3bb",
+  "runIds": [
+    "2026-09-20T17:16:27.245444+00:00",
+    "2026-09-20T18:00:17.353020+00:00",
+    "2026-09-20T20:14:58.181225+00:00",
+    "2026-09-20T20:54:26.296249+00:00"
+  ],
+  "dataVersion": "41dbf2969b",
   "modelJev": "jev-1.13.0",
   "modelMini": "gpt-4o-mini-2024-07-18",
   "n": 500,
@@ -284,10 +328,20 @@ const TASKS = [
       "acc": 0.8566666666666667,
       "lo": 0.812,
       "hi": 0.892,
-      "p50us": 30,
+      "meanUsBatched": 30,
       "trainN": 361,
       "vsJev": "ns",
-      "vsMini": "ns"
+      "vsMini": "ns",
+      "pJev": 0.0576,
+      "pJevHolm": 0.173,
+      "pMini": 0.136,
+      "pMiniHolm": 0.408
+    },
+    "run": {
+      "index": 4,
+      "of": 4,
+      "start": "2026-09-20T20:54:26.296249+00:00",
+      "end": "2026-09-20T20:55:26.301949+00:00"
     },
     "ece": {
       "ece": 0.134,
@@ -471,7 +525,11 @@ const TASKS = [
       "p50": 931,
       "tokens": 108.3,
       "vsJev": "modern",
-      "vsMini": "modern"
+      "vsMini": "ns",
+      "pJev": 0.000856,
+      "pJevHolm": 0.00856,
+      "pMini": 0.0148,
+      "pMiniHolm": 0.148
     },
     "autoSlice": {
       "gate": 0.9,
@@ -533,10 +591,20 @@ const TASKS = [
       "acc": 0.868,
       "lo": 0.836,
       "hi": 0.895,
-      "p50us": 262,
+      "meanUsBatched": 262,
       "trainN": 63392,
       "vsJev": "ns",
-      "vsMini": "tfidf"
+      "vsMini": "tfidf",
+      "pJev": 0.0272,
+      "pJevHolm": 0.136,
+      "pMini": 0.00186,
+      "pMiniHolm": 0.00932
+    },
+    "run": {
+      "index": 2,
+      "of": 4,
+      "start": "2026-09-20T18:00:17.353020+00:00",
+      "end": "2026-09-20T18:02:02.908030+00:00"
     },
     "ece": {
       "ece": 0.1,
@@ -990,7 +1058,11 @@ const TASKS = [
       "p50": 979,
       "tokens": 334.5,
       "vsJev": "ns",
-      "vsMini": "ns"
+      "vsMini": "ns",
+      "pJev": 0.0117,
+      "pJevHolm": 0.106,
+      "pMini": 0.176,
+      "pMiniHolm": 0.656
     },
     "autoSlice": {
       "gate": 0.9,
@@ -1052,10 +1124,20 @@ const TASKS = [
       "acc": 0.828,
       "lo": 0.792,
       "hi": 0.859,
-      "p50us": 74,
+      "meanUsBatched": 74,
       "trainN": 60000,
       "vsJev": "ns",
-      "vsMini": "tfidf"
+      "vsMini": "ns",
+      "pJev": 0.0405,
+      "pJevHolm": 0.162,
+      "pMini": 0.0167,
+      "pMiniHolm": 0.067
+    },
+    "run": {
+      "index": 3,
+      "of": 4,
+      "start": "2026-09-20T20:14:58.181225+00:00",
+      "end": "2026-09-20T20:16:32.087016+00:00"
     },
     "ece": {
       "ece": 0.075,
@@ -1239,7 +1321,11 @@ const TASKS = [
       "p50": 966,
       "tokens": 141.5,
       "vsJev": "ns",
-      "vsMini": "ns"
+      "vsMini": "ns",
+      "pJev": 0.534,
+      "pJevHolm": 1.0,
+      "pMini": 0.901,
+      "pMiniHolm": 0.901
     },
     "autoSlice": {
       "gate": 0.9,
@@ -1301,10 +1387,20 @@ const TASKS = [
       "acc": 0.964,
       "lo": 0.944,
       "hi": 0.977,
-      "p50us": 40,
+      "meanUsBatched": 40,
       "trainN": 4968,
       "vsJev": "ns",
-      "vsMini": "ns"
+      "vsMini": "ns",
+      "pJev": 0.814,
+      "pJevHolm": 0.814,
+      "pMini": 0.831,
+      "pMiniHolm": 0.831
+    },
+    "run": {
+      "index": 1,
+      "of": 4,
+      "start": "2026-09-20T17:16:27.245444+00:00",
+      "end": "2026-09-20T17:29:13.361937+00:00"
     },
     "ece": {
       "ece": 0.016,
@@ -1488,7 +1584,11 @@ const TASKS = [
       "p50": 996,
       "tokens": 71.1,
       "vsJev": "ns",
-      "vsMini": "mini"
+      "vsMini": "ns",
+      "pJev": 0.0665,
+      "pJevHolm": 0.459,
+      "pMini": 0.0159,
+      "pMiniHolm": 0.148
     },
     "autoSlice": {
       "gate": 0.9,
@@ -1550,10 +1650,20 @@ const TASKS = [
       "acc": 0.826,
       "lo": 0.79,
       "hi": 0.857,
-      "p50us": 34,
+      "meanUsBatched": 34,
       "trainN": 67349,
       "vsJev": "jev",
-      "vsMini": "mini"
+      "vsMini": "mini",
+      "pJev": 3.77e-14,
+      "pJevHolm": 3.77e-13,
+      "pMini": 3.09e-13,
+      "pMiniHolm": 3.09e-12
+    },
+    "run": {
+      "index": 1,
+      "of": 4,
+      "start": "2026-09-20T17:16:27.245444+00:00",
+      "end": "2026-09-20T17:29:13.361937+00:00"
     },
     "ece": {
       "ece": 0.015,
@@ -1737,7 +1847,11 @@ const TASKS = [
       "p50": 1000,
       "tokens": 64.4,
       "vsJev": "ns",
-      "vsMini": "mini"
+      "vsMini": "ns",
+      "pJev": 0.0218,
+      "pJevHolm": 0.174,
+      "pMini": 0.0433,
+      "pMiniHolm": 0.346
     },
     "autoSlice": {
       "gate": 0.8,
@@ -1761,8 +1875,8 @@ const TASKS = [
     "why": "Jev +4.8pt, McNemar p=0.0053. Optimism vs joy is still the messy pair. TF-IDF trails badly at 64.2%.",
     "gate": "Use Jev in-loop. At >=0.9: 90.3% on 66.2% of traffic, 10.5pt above ungated.",
     "goldTier": "research",
-    "rowNote": null,
-    "rowNoteKind": null,
+    "rowNote": "1 of the 500 rows repeats an earlier text through a sampling bug (fixed in prepare_samples.py; sample kept as run).",
+    "rowNoteKind": "info",
     "goldNote": "Academic benchmark",
     "sourceName": "cardiffnlp/tweet_eval",
     "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
@@ -1799,10 +1913,20 @@ const TASKS = [
       "acc": 0.642,
       "lo": 0.599,
       "hi": 0.683,
-      "p50us": 40,
+      "meanUsBatched": 40,
       "trainN": 3257,
       "vsJev": "jev",
-      "vsMini": "mini"
+      "vsMini": "mini",
+      "pJev": 2.84e-09,
+      "pJevHolm": 2.55e-08,
+      "pMini": 3.13e-05,
+      "pMiniHolm": 0.000219
+    },
+    "run": {
+      "index": 1,
+      "of": 4,
+      "start": "2026-09-20T17:16:27.245444+00:00",
+      "end": "2026-09-20T17:29:13.361937+00:00"
     },
     "ece": {
       "ece": 0.083,
@@ -2080,7 +2204,11 @@ const TASKS = [
       "p50": 1004,
       "tokens": 67.9,
       "vsJev": "ns",
-      "vsMini": "ns"
+      "vsMini": "ns",
+      "pJev": 0.215,
+      "pJevHolm": 1.0,
+      "pMini": 0.16,
+      "pMiniHolm": 0.656
     },
     "autoSlice": {
       "gate": 0.9,
@@ -2104,7 +2232,7 @@ const TASKS = [
     "why": "Jev +5.8pt over Mini looks significant on its own (raw p=0.0079) but does not survive Holm correction across the eleven tests (p=0.063). Treat it as a tie. Mean confidence is only 0.75, so the gate matters more than the headline.",
     "gate": "At >=0.9: 86.7% on 60.2% of posts, 10.1pt above ungated. Rest to a human.",
     "goldTier": "research",
-    "rowNote": "Misses 37.3% of offensive posts.",
+    "rowNote": "Misses 37.3% of offensive posts. 7 of the 500 rows repeat an earlier text through a sampling bug (fixed in prepare_samples.py; sample kept as run).",
     "rowNoteKind": "warn",
     "goldNote": "Academic benchmark",
     "sourceName": "cardiffnlp/tweet_eval",
@@ -2142,10 +2270,20 @@ const TASKS = [
       "acc": 0.738,
       "lo": 0.698,
       "hi": 0.775,
-      "p50us": 34,
+      "meanUsBatched": 34,
       "trainN": 11912,
       "vsJev": "ns",
-      "vsMini": "ns"
+      "vsMini": "ns",
+      "pJev": 0.251,
+      "pJevHolm": 0.501,
+      "pMini": 0.267,
+      "pMiniHolm": 0.534
+    },
+    "run": {
+      "index": 1,
+      "of": 4,
+      "start": "2026-09-20T17:16:27.245444+00:00",
+      "end": "2026-09-20T17:29:13.361937+00:00"
     },
     "ece": {
       "ece": 0.11,
@@ -2329,7 +2467,11 @@ const TASKS = [
       "p50": 998,
       "tokens": 81.0,
       "vsJev": "ns",
-      "vsMini": "ns"
+      "vsMini": "ns",
+      "pJev": 0.23,
+      "pJevHolm": 1.0,
+      "pMini": 0.0506,
+      "pMiniHolm": 0.354
     },
     "autoSlice": {
       "gate": 0.9,
@@ -2391,10 +2533,20 @@ const TASKS = [
       "acc": 0.638,
       "lo": 0.595,
       "hi": 0.679,
-      "p50us": 27,
+      "meanUsBatched": 27,
       "trainN": 45615,
       "vsJev": "jev",
-      "vsMini": "mini"
+      "vsMini": "mini",
+      "pJev": 0.000281,
+      "pJevHolm": 0.00225,
+      "pMini": 0.000908,
+      "pMiniHolm": 0.00545
+    },
+    "run": {
+      "index": 1,
+      "of": 4,
+      "start": "2026-09-20T17:16:27.245444+00:00",
+      "end": "2026-09-20T17:29:13.361937+00:00"
     },
     "ece": {
       "ece": 0.141,
@@ -2628,7 +2780,11 @@ const TASKS = [
       "p50": 1025,
       "tokens": 64.7,
       "vsJev": "ns",
-      "vsMini": "ns"
+      "vsMini": "ns",
+      "pJev": 0.815,
+      "pJevHolm": 1.0,
+      "pMini": 0.328,
+      "pMiniHolm": 0.657
     },
     "autoSlice": {
       "gate": 0.9,
@@ -2690,10 +2846,20 @@ const TASKS = [
       "acc": 0.908,
       "lo": 0.879,
       "hi": 0.93,
-      "p50us": 77,
+      "meanUsBatched": 77,
       "trainN": 120000,
       "vsJev": "tfidf",
-      "vsMini": "tfidf"
+      "vsMini": "tfidf",
+      "pJev": 0.00103,
+      "pJevHolm": 0.00635,
+      "pMini": 2.85e-06,
+      "pMiniHolm": 2.28e-05
+    },
+    "run": {
+      "index": 1,
+      "of": 4,
+      "start": "2026-09-20T17:16:27.245444+00:00",
+      "end": "2026-09-20T17:29:13.361937+00:00"
     },
     "ece": {
       "ece": 0.096,
@@ -2965,7 +3131,11 @@ const TASKS = [
       "p50": 1023,
       "tokens": 102.7,
       "vsJev": "jev",
-      "vsMini": "ns"
+      "vsMini": "ns",
+      "pJev": 7.72e-05,
+      "pJevHolm": 0.000849,
+      "pMini": 0.109,
+      "pMiniHolm": 0.656
     },
     "autoSlice": {
       "gate": 0.9,
@@ -3027,10 +3197,20 @@ const TASKS = [
       "acc": 0.932,
       "lo": 0.906,
       "hi": 0.951,
-      "p50us": 19,
+      "meanUsBatched": 19,
       "trainN": 10003,
       "vsJev": "tfidf",
-      "vsMini": "tfidf"
+      "vsMini": "tfidf",
+      "pJev": 2.02e-20,
+      "pJevHolm": 2.22e-19,
+      "pMini": 2.74e-29,
+      "pMiniHolm": 3.01e-28
+    },
+    "run": {
+      "index": 1,
+      "of": 4,
+      "start": "2026-09-20T17:16:27.245444+00:00",
+      "end": "2026-09-20T17:29:13.361937+00:00"
     },
     "ece": {
       "ece": 0.213,
@@ -3490,7 +3670,11 @@ const TASKS = [
       "p50": 980,
       "tokens": 77.7,
       "vsJev": "ns",
-      "vsMini": "modern"
+      "vsMini": "modern",
+      "pJev": 0.63,
+      "pJevHolm": 1.0,
+      "pMini": 0.000719,
+      "pMiniHolm": 0.0079
     },
     "autoSlice": {
       "gate": 0.9,
@@ -3552,10 +3736,20 @@ const TASKS = [
       "acc": 0.54,
       "lo": 0.496,
       "hi": 0.583,
-      "p50us": 32,
+      "meanUsBatched": 32,
       "trainN": 8962,
       "vsJev": "jev",
-      "vsMini": "mini"
+      "vsMini": "mini",
+      "pJev": 0.000907,
+      "pJevHolm": 0.00635,
+      "pMini": 2.48e-11,
+      "pMiniHolm": 2.23e-10
+    },
+    "run": {
+      "index": 1,
+      "of": 4,
+      "start": "2026-09-20T17:16:27.245444+00:00",
+      "end": "2026-09-20T17:29:13.361937+00:00"
     },
     "ece": {
       "ece": 0.187,
@@ -3739,7 +3933,11 @@ const TASKS = [
       "p50": 992,
       "tokens": 78.9,
       "vsJev": "ns",
-      "vsMini": "ns"
+      "vsMini": "ns",
+      "pJev": 0.0656,
+      "pJevHolm": 0.459,
+      "pMini": 0.12,
+      "pMiniHolm": 0.656
     },
     "autoSlice": {
       "gate": 0.8,

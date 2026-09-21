@@ -54,14 +54,20 @@ def balanced(df: pd.DataFrame, label_col: str, n: int, seed: int = RNG) -> pd.Da
     for lab in labels:
         g = df[df[label_col] == lab]
         parts.append(g.sample(n=min(per, len(g)), random_state=seed))
-    out = pd.concat(parts, ignore_index=True)
+    # Keep the source index here. The top-up below removes the rows already chosen
+    # by their original index; an earlier version reset the index first, so it
+    # dropped rows 0..len(out) of the source instead and could draw a row twice.
+    # The frozen offensive and emotion samples were built with that version and
+    # carry 7 and 1 duplicated texts; see README, "What these numbers do not mean".
+    out = pd.concat(parts)
     if len(out) > n:
         out = out.sample(n=n, random_state=seed)
     elif len(out) < n:
-        extra = df.drop(out.index, errors="ignore")
+        extra = df.drop(out.index)
         need = n - len(out)
         if len(extra) >= need:
-            out = pd.concat([out, extra.sample(n=need, random_state=seed)], ignore_index=True)
+            out = pd.concat([out, extra.sample(n=need, random_state=seed)])
+    assert out.index.is_unique, "top-up drew a row that was already in the sample"
     return out.reset_index(drop=True)
 
 

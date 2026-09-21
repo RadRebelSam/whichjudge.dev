@@ -8,6 +8,20 @@
       "current_sha256": "3ef5f3adc83fb620fa6ff173e32b44c169c8f2d458b5b33aef7109b887da0bcd",
       "patched_utc": "2026-09-20",
       "reason": "Excluded data/*.text.jsonl from the manifest. Those files are rehydrated locally and never committed, so pinning them made a fresh clone fail. No measurement changed."
+    },
+    {
+      "path": "scripts/prepare_samples.py",
+      "run_sha256": "bf5f04dc1d0adc9b03789a59df8b3db335fdb2e926f5d0e3fac8b1806265667f",
+      "current_sha256": "d5c3baa82b8fea04a0bf11d36786d07bc10f6f6a7882e1a69a9d2038346b1d89",
+      "patched_utc": "2026-09-20",
+      "reason": "balanced() reset the index before the top-up, so df.drop(out.index) removed the wrong source rows and the refill could draw a row already chosen. Fixed to drop by original index and assert uniqueness. The frozen samples were built with the old code: 7 offensive rows and 1 emotion row repeat an earlier text. No frozen file or receipt changed."
+    },
+    {
+      "path": "scripts/verify_run.py",
+      "run_sha256": "fa244b0a246ceb32a96abd388b41d979cdfac4ee061741039e7901d9c8c4e7ec",
+      "current_sha256": "1abd36a61b844ee05794db830d83ded56fc16584883a28ab424f986b88526bfe",
+      "patched_utc": "2026-09-20",
+      "reason": "Extended to recompute Wilson intervals, McNemar, latency percentiles, costs, confidence gates, ECE and reliability bins, p_chosen gates and their cross-validation, the per-class error profile, the TF-IDF and current-model columns and the cost curve from the receipts. Previously it only recounted accuracy. No measurement changed."
     }
   ]
 }

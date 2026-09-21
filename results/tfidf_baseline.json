@@ -14,7 +14,7 @@
     },
     "fit_ms": 22.224600019399077,
     "predict_total_ms": 9.032499976456165,
-    "predict_p50_ms": 0.030108333254853886,
+    "predict_mean_ms_per_row_batched": 0.030108333254853886,
     "mcnemar_vs_jev": {
       "a_only_correct": 44,
       "b_only_correct": 27,
@@ -1547,7 +1547,7 @@
     },
     "fit_ms": 9913.219599984586,
     "predict_total_ms": 36.923700012266636,
-    "predict_p50_ms": 0.07384740002453327,
+    "predict_mean_ms_per_row_batched": 0.07384740002453327,
     "mcnemar_vs_jev": {
       "a_only_correct": 75,
       "b_only_correct": 51,
@@ -4080,7 +4080,7 @@
     },
     "fit_ms": 55848.37890003109,
     "predict_total_ms": 131.11429999116808,
-    "predict_p50_ms": 0.26222859998233616,
+    "predict_mean_ms_per_row_batched": 0.26222859998233616,
     "mcnemar_vs_jev": {
       "a_only_correct": 47,
       "b_only_correct": 27,
@@ -6613,7 +6613,7 @@
     },
     "fit_ms": 853.8804999552667,
     "predict_total_ms": 9.705700038466603,
-    "predict_p50_ms": 0.019411400076933205,
+    "predict_mean_ms_per_row_batched": 0.019411400076933205,
     "mcnemar_vs_jev": {
       "a_only_correct": 119,
       "b_only_correct": 12,
@@ -9146,7 +9146,7 @@
     },
     "fit_ms": 240.42570003075525,
     "predict_total_ms": 19.866099988576025,
-    "predict_p50_ms": 0.03973219997715205,
+    "predict_mean_ms_per_row_batched": 0.03973219997715205,
     "mcnemar_vs_jev": {
       "a_only_correct": 9,
       "b_only_correct": 9,
@@ -11679,7 +11679,7 @@
     },
     "fit_ms": 1980.544199992437,
     "predict_total_ms": 17.070400004740804,
-    "predict_p50_ms": 0.03414080000948161,
+    "predict_mean_ms_per_row_batched": 0.03414080000948161,
     "mcnemar_vs_jev": {
       "a_only_correct": 8,
       "b_only_correct": 80,
@@ -14212,7 +14212,7 @@
     },
     "fit_ms": 20170.39569996996,
     "predict_total_ms": 38.48280000966042,
-    "predict_p50_ms": 0.07696560001932085,
+    "predict_mean_ms_per_row_batched": 0.07696560001932085,
     "mcnemar_vs_jev": {
       "a_only_correct": 42,
       "b_only_correct": 16,
@@ -16745,7 +16745,7 @@
     },
     "fit_ms": 4413.5216000140645,
     "predict_total_ms": 13.358799973502755,
-    "predict_p50_ms": 0.02671759994700551,
+    "predict_mean_ms_per_row_batched": 0.02671759994700551,
     "mcnemar_vs_jev": {
       "a_only_correct": 66,
       "b_only_correct": 116,
@@ -19278,7 +19278,7 @@
     },
     "fit_ms": 791.5975999785587,
     "predict_total_ms": 16.93749998230487,
-    "predict_p50_ms": 0.03387499996460974,
+    "predict_mean_ms_per_row_batched": 0.03387499996460974,
     "mcnemar_vs_jev": {
       "a_only_correct": 57,
       "b_only_correct": 71,
@@ -21811,7 +21811,7 @@
     },
     "fit_ms": 631.3231000094675,
     "predict_total_ms": 16.160300001502037,
-    "predict_p50_ms": 0.032320600003004074,
+    "predict_mean_ms_per_row_batched": 0.032320600003004074,
     "mcnemar_vs_jev": {
       "a_only_correct": 133,
       "b_only_correct": 194,
@@ -24344,7 +24344,7 @@
     },
     "fit_ms": 183.55100002372637,
     "predict_total_ms": 20.043500000610948,
-    "predict_p50_ms": 0.040087000001221895,
+    "predict_mean_ms_per_row_batched": 0.040087000001221895,
     "mcnemar_vs_jev": {
       "a_only_correct": 45,
       "b_only_correct": 123,

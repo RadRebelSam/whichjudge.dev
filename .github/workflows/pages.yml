@@ -61,11 +61,11 @@ jobs:
         uses: actions/deploy-pages@v4
 
   # Every check above runs against the repo. This one asks the server. It fetches
-  # each published file from origin with a cache-busting query and requires it to be
-  # byte-identical to this commit. It proves origin serves this build; it cannot
-  # prove every Fastly edge has expired its copy, which GitHub Pages holds for up
-  # to 600s. Pages carry a build stamp so a reader can tell which generation an
-  # edge served.
+  # each published file from the public URL with a cache-busting query and requires
+  # it to be byte-identical to this commit. It proves the site answers such a
+  # request with this build; it cannot prove every Fastly edge has expired its plain
+  # copy, which GitHub Pages holds for up to 600s. Pages carry a build stamp so a
+  # reader can tell which generation an edge served.
   verify-live:
     needs: deploy
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
@@ -75,6 +75,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Origin serves exactly this build
+      - name: Public URL serves exactly this build
         run: python scripts/verify_live.py --wait 900
 

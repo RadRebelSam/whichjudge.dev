@@ -107,7 +107,9 @@
       "sourceName": "cardiffnlp/tweet_eval",
       "sourceUrl": "https://huggingface.co/datasets/cardiffnlp/tweet_eval",
       "goldTier": "research",
-      "goldNote": "Academic benchmark"
+      "goldNote": "Academic benchmark",
+      "rowNoteKind": "info",
+      "rowNote": "1 of the 500 rows repeats an earlier text through a sampling bug (fixed in prepare_samples.py; sample kept as run)."
     },
     {
       "id": "content_offensive",
@@ -124,7 +126,7 @@
       "goldTier": "research",
       "goldNote": "Academic benchmark",
       "rowNoteKind": "warn",
-      "rowNote": "Misses 37.3% of offensive posts."
+      "rowNote": "Misses 37.3% of offensive posts. 7 of the 500 rows repeat an earlier text through a sampling bug (fixed in prepare_samples.py; sample kept as run)."
     },
     {
       "id": "tweet_sentiment",

@@ -156,11 +156,14 @@ def fit_predict(train_texts, train_y, test_texts):
     t1 = time.perf_counter()
     preds = pipe.predict(test_texts)
     pred_ms = (time.perf_counter() - t1) * 1000
-    p50 = pred_ms / max(1, len(test_texts))
-    return list(preds), fit_ms, pred_ms, p50, len(train_texts)
+    # One batched predict() over the whole test set, divided by its size. That is a
+    # mean per row for batched inference, not a median of per-row timings, and it
+    # was once published under the name p50. The key says what it is now.
+    mean_ms = pred_ms / max(1, len(test_texts))
+    return list(preds), fit_ms, pred_ms, mean_ms, len(train_texts)
 
 
-def pack(task_id, eval_rows, preds, train_n, fit_ms, pred_ms, p50, train_note, jev, mini):
+def pack(task_id, eval_rows, preds, train_n, fit_ms, pred_ms, mean_ms, train_note, jev, mini):
     gold = [r["gold"] for r in eval_rows]
     n = len(gold)
     ok = [p == g for p, g in zip(preds, gold)]
@@ -186,7 +189,7 @@ def pack(task_id, eval_rows, preds, train_n, fit_ms, pred_ms, p50, train_note, j
         "wilson": wilson(sum(tf_ok), n),
         "fit_ms": fit_ms,
         "predict_total_ms": pred_ms,
-        "predict_p50_ms": p50,
+        "predict_mean_ms_per_row_batched": mean_ms,
         "mcnemar_vs_jev": mcnemar(tf_ok, j_ok),
         "mcnemar_vs_mini": mcnemar(tf_ok, m_ok),
         "preds": [{"id": r["id"], "gold": r["gold"], "pred": str(p)} for r, p in zip(eval_rows, preds)],
@@ -197,13 +200,13 @@ def run_one(task_id, train_df, text_col, note):
     ev = load_eval(task_id)
     eval_texts = {r["text"] for r in ev}
     train_df = leftover(train_df, text_col, eval_texts)
-    preds, fit_ms, pred_ms, p50, tn = fit_predict(
+    preds, fit_ms, pred_ms, mean_ms, tn = fit_predict(
         train_df[text_col].astype(str).tolist(),
         train_df["gold"].tolist(),
         [r["text"] for r in ev],
     )
     d = json.loads((RESULTS / f"{task_id}.json").read_text(encoding="utf-8"))
-    return pack(task_id, ev, preds, tn, fit_ms, pred_ms, p50, note, d["jev_preds"], d["gpt4o_mini_preds"])
+    return pack(task_id, ev, preds, tn, fit_ms, pred_ms, mean_ms, note, d["jev_preds"], d["gpt4o_mini_preds"])
 
 
 def cfpb_train() -> pd.DataFrame:
@@ -311,7 +314,7 @@ def main():
         slim.append({k: r[k] for k in r if k != "preds"})
         print(
             f"{r['task_id']:24} tfidf {r['acc']:.3f} [{r['wilson']['lo']:.3f},{r['wilson']['hi']:.3f}] "
-            f"train_n={r['train_n']} p50={r['predict_p50_ms']*1000:.2f}us  "
+            f"train_n={r['train_n']} mean/row={r['predict_mean_ms_per_row_batched']*1000:.2f}us batched  "
             f"vs_jev={r['mcnemar_vs_jev']['winner']} p={r['mcnemar_vs_jev']['p_value']:.3g}  "
             f"vs_mini={r['mcnemar_vs_mini']['winner']} p={r['mcnemar_vs_mini']['p_value']:.3g}"
         )

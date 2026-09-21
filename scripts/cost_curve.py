@@ -13,6 +13,7 @@ the only thing changing.
 
     python3 scripts/cost_curve.py            # full curve
     python3 scripts/cost_curve.py --dry-run  # build inputs, print sizes, call nothing
+    python3 scripts/cost_curve.py --recompute  # rebuild the curve from receipts, no API
 
 Writes results/cost_curve.json and results/receipts/cost_curve.json.
 """
@@ -80,7 +81,11 @@ MINI_MODEL = "gpt-4o-mini"
 # List prices, USD per million tokens. Change here if the vendors change them.
 PRICES = {
     "jev": {"input": 0.042, "output": 0.0},
-    "mini": {"input": 0.15, "output": 0.60},
+    # OpenAI bills prompt tokens served from its prefix cache at half the input
+    # price. The API reports them in prompt_tokens_details.cached_tokens; they
+    # are still part of prompt_tokens, so the full price must not be charged on
+    # top of the cached price.
+    "mini": {"input": 0.15, "cached_input": 0.075, "output": 0.60},
 }
 
 # Target input sizes in tokens. Roughly 4 characters per token when building.
@@ -198,9 +203,13 @@ def call_mini(text: str, key: str) -> dict:
     }
 
 
-def cost_per_million(vendor: str, in_tok: int, out_tok: int) -> float:
+def cost_per_million(vendor: str, in_tok: float, out_tok: float, cached_tok: float = 0.0) -> float:
+    """USD per million calls at list price; cached prompt tokens at the cached rate."""
     p = PRICES[vendor]
-    return (in_tok * p["input"] + out_tok * p["output"])
+    cached = min(cached_tok or 0.0, in_tok)
+    return ((in_tok - cached) * p["input"]
+            + cached * p.get("cached_input", p["input"])
+            + out_tok * p["output"])
 
 
 def mean(xs):
@@ -224,36 +233,98 @@ def crossover(points: list[dict]):
     return None
 
 
-def correct_content_tokens(points: list[dict]) -> float:
-    """Measure content in tokens of actual input, not the whole Mini prompt.
+def points_from_calls(calls: list[dict]) -> list[dict]:
+    """Aggregate the per-call receipts into one point per target length.
 
-    mean_content_tokens used to be Mini's full prompt_tokens, which includes the
-    system message and chat framing: about 41 tokens before any input at all. That
-    put the crossover at '65 content tokens' when roughly 24 of those were content.
-    The target-0 point sends a one-word input, so its Mini prompt is the overhead.
+    Everything the curve publishes is derived here, from the receipts, so
+    --recompute can rebuild it without touching either API. Content tokens are
+    Mini's prompt tokens minus the Mini prompt at a one-word input: the system
+    message and chat framing are overhead, not content. An earlier version counted
+    the whole prompt and put the crossover at 65 tokens when about 24 were content.
     """
-    overhead = points[0]["mini_input_tokens"]
-    for p in points:
-        p["mini_prompt_tokens"] = p["mini_input_tokens"]
-        p["mean_content_tokens"] = round(max(0.0, p["mini_input_tokens"] - overhead), 1)
-    return overhead
+    by_target: dict[int, list[dict]] = {}
+    for c in calls:
+        by_target.setdefault(c["target_tokens"], []).append(c)
+    targets = sorted(by_target)
+    overhead = mean([c["mini"]["input_tokens"] for c in by_target[targets[0]]])
+    points = []
+    for t in targets:
+        group = by_target[t]
+        jev_calls = [c["jev"] for c in group]
+        mini_calls = [c["mini"] for c in group]
+        j_in = mean([c["input_tokens"] for c in jev_calls])
+        j_out = mean([c["output_tokens"] for c in jev_calls])
+        m_in = mean([c["input_tokens"] for c in mini_calls])
+        m_out = mean([c["output_tokens"] for c in mini_calls])
+        m_cached = mean([c.get("cached_tokens") or 0 for c in mini_calls])
+        point = {
+            "target_tokens": t,
+            "mean_chars": round(mean([c["chars"] for c in group])),
+            "mean_content_tokens": round(max(0.0, m_in - overhead), 1),
+            "jev_input_tokens": round(j_in, 1),
+            "jev_output_tokens": round(j_out, 1),
+            "mini_prompt_tokens": round(m_in, 1),
+            "mini_input_tokens": round(m_in, 1),
+            "mini_cached_tokens": round(m_cached, 1),
+            "mini_output_tokens": round(m_out, 1),
+            "jev_per_million": round(cost_per_million("jev", j_in, j_out), 2),
+            "mini_per_million": round(cost_per_million("mini", m_in, m_out, m_cached), 2),
+            "jev_p50_ms": round(sorted(c["latency_ms"] for c in jev_calls)[len(jev_calls) // 2]),
+            "mini_p50_ms": round(sorted(c["latency_ms"] for c in mini_calls)[len(mini_calls) // 2]),
+        }
+        point["cheaper"] = "jev" if point["jev_per_million"] < point["mini_per_million"] else "mini"
+        points.append(point)
+    return points
+
+
+def assemble(points: list[dict], calls: list[dict], run_id: str, finished: str) -> dict:
+    mini_overhead = points[0]["mini_input_tokens"]
+    floor = points[0]["jev_input_tokens"] - points[0]["mini_input_tokens"]
+    return {
+        "run_id": run_id,
+        "finished_utc": finished,
+        "what_this_measures": (
+            "Billed tokens, list-price cost and latency against input length, for one "
+            "fixed question. Not an accuracy measurement."
+        ),
+        "prices_usd_per_million": PRICES,
+        "pricing_note": (
+            "Mini prompt tokens reported as cached are charged at the cached rate. Only "
+            "the longest point had any; shorter prompts are below the cache minimum."
+        ),
+        "jev_model": calls[0]["jev"]["model_returned"] if calls else None,
+        "samples_per_point": SAMPLES_PER_TARGET,
+        "question": {"jev": JEV_QUESTIONS, "mini_system": MINI_SYSTEM},
+        "input_construction": (
+            "Real sentences from the frozen samples, concatenated to hit each target "
+            "length. Synthetic in length, real in vocabulary."
+        ),
+        "jev_fixed_overhead_tokens": round(points[0]["jev_input_tokens"]),
+        "jev_overhead_vs_mini_tokens": round(floor, 1),
+        "crossover": crossover(points),
+        "mini_overhead_tokens": round(mini_overhead, 1),
+        "content_token_definition": (
+            "Mini prompt tokens minus the Mini prompt at a one-word input, so the system "
+            "message and chat framing are not counted as content."),
+        "points": points,
+    }
 
 
 def recompute() -> None:
-    """Re-derive content tokens and the crossover from the stored curve. No API."""
-    path = RESULTS / "cost_curve.json"
-    out = json.loads(path.read_text(encoding="utf-8"))
-    overhead = correct_content_tokens(out["points"])
-    out["mini_overhead_tokens"] = round(overhead, 1)
-    out["content_token_definition"] = (
-        "Mini prompt tokens minus the Mini prompt at a one-word input, so the system "
-        "message and chat framing are not counted as content.")
-    out["crossover"] = crossover(out["points"])
-    path.write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n",
-                    encoding="utf-8", newline="\n")
+    """Rebuild results/cost_curve.json from the stored receipts. No API."""
+    rec = json.loads((RECEIPTS / "cost_curve.json").read_text(encoding="utf-8"))
+    old = json.loads((RESULTS / "cost_curve.json").read_text(encoding="utf-8"))
+    points = points_from_calls(rec["calls"])
+    out = assemble(points, rec["calls"], rec["run_id"], old.get("finished_utc") or rec["run_id"])
+    (RESULTS / "cost_curve.json").write_text(
+        json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     x = out["crossover"]
-    print(f"Mini overhead {overhead:.0f} tokens; crossover at ~{x['content_tokens']} content tokens"
-          if x else "no crossover")
+    print(f"Mini overhead {out['mini_overhead_tokens']:.0f} tokens; "
+          + (f"crossover at ~{x['content_tokens']} content tokens" if x else "no crossover"))
+    for p in points:
+        print(f"{p['target_tokens']:>5} target | content {p['mean_content_tokens']:>7} | "
+              f"jev ${p['jev_per_million']:>7} /M | mini ${p['mini_per_million']:>7} /M "
+              f"(cached {p['mini_cached_tokens']}) | cheaper: {p['cheaper']}")
 
 
 def main() -> None:
@@ -279,15 +350,12 @@ def main() -> None:
         raise SystemExit("Set TYPESAFE_API_KEY and OPENAI_API_KEY (see .env.example)")
 
     started = datetime.now(timezone.utc).isoformat()
-    points, receipts = [], []
+    receipts = []
 
     for t in TARGETS:
-        jev_calls, mini_calls = [], []
         for text in inputs[t]:
             j = call_jev(text, jev_key)
             m = call_mini(text, mini_key)
-            jev_calls.append(j)
-            mini_calls.append(m)
             receipts.append({
                 "target_tokens": t,
                 "chars": len(text),
@@ -295,57 +363,16 @@ def main() -> None:
                 "jev": j,
                 "mini": m,
             })
+        print(f"{t:>5} target: {SAMPLES_PER_TARGET} calls to each model done")
 
-        j_in = mean([c["input_tokens"] for c in jev_calls])
-        j_out = mean([c["output_tokens"] for c in jev_calls])
-        m_in = mean([c["input_tokens"] for c in mini_calls])
-        m_out = mean([c["output_tokens"] for c in mini_calls])
-        point = {
-            "target_tokens": t,
-            "mean_chars": round(mean([len(s) for s in inputs[t]])),
-            "mean_content_tokens": round(m_in),
-            "jev_input_tokens": round(j_in, 1),
-            "jev_output_tokens": round(j_out, 1),
-            "mini_input_tokens": round(m_in, 1),
-            "mini_output_tokens": round(m_out, 1),
-            "jev_per_million": round(cost_per_million("jev", j_in, j_out), 2),
-            "mini_per_million": round(cost_per_million("mini", m_in, m_out), 2),
-            "jev_p50_ms": round(sorted(c["latency_ms"] for c in jev_calls)[len(jev_calls) // 2]),
-            "mini_p50_ms": round(sorted(c["latency_ms"] for c in mini_calls)[len(mini_calls) // 2]),
-            "mini_cached_tokens": mini_calls[0].get("cached_tokens"),
-        }
-        point["cheaper"] = "jev" if point["jev_per_million"] < point["mini_per_million"] else "mini"
-        points.append(point)
+    points = points_from_calls(receipts)
+    for point in points:
         print(
-            f"{t:>5} target | jev {point['jev_input_tokens']:>7} tok "
+            f"{point['target_tokens']:>5} target | jev {point['jev_input_tokens']:>7} tok "
             f"${point['jev_per_million']:>8} /M | mini {point['mini_input_tokens']:>7} tok "
             f"${point['mini_per_million']:>8} /M | cheaper: {point['cheaper']}"
         )
-
-    mini_overhead = correct_content_tokens(points)
-    floor = points[0]["jev_input_tokens"] - points[0]["mini_input_tokens"]
-    out = {
-        "run_id": started,
-        "finished_utc": datetime.now(timezone.utc).isoformat(),
-        "what_this_measures": (
-            "Billed tokens, list-price cost and latency against input length, for one "
-            "fixed question. Not an accuracy measurement."
-        ),
-        "prices_usd_per_million": PRICES,
-        "jev_model": points and None,
-        "samples_per_point": SAMPLES_PER_TARGET,
-        "question": {"jev": JEV_QUESTIONS, "mini_system": MINI_SYSTEM},
-        "input_construction": (
-            "Real sentences from the frozen samples, concatenated to hit each target "
-            "length. Synthetic in length, real in vocabulary."
-        ),
-        "jev_fixed_overhead_tokens": round(points[0]["jev_input_tokens"]),
-        "jev_overhead_vs_mini_tokens": round(floor, 1),
-        "crossover": crossover(points),
-        "mini_overhead_tokens": round(mini_overhead, 1),
-        "points": points,
-    }
-    out["jev_model"] = receipts[0]["jev"]["model_returned"] if receipts else None
+    out = assemble(points, receipts, started, datetime.now(timezone.utc).isoformat())
 
     RESULTS.mkdir(exist_ok=True)
     RECEIPTS.mkdir(exist_ok=True)

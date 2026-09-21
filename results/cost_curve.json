@@ -9,9 +9,11 @@
     },
     "mini": {
       "input": 0.15,
+      "cached_input": 0.075,
       "output": 0.6
     }
   },
+  "pricing_note": "Mini prompt tokens reported as cached are charged at the cached rate. Only the longest point had any; shorter prompts are below the cache minimum.",
   "jev_model": "jev-1.13.0",
   "samples_per_point": 3,
   "question": {
@@ -34,6 +36,8 @@
     ],
     "note": "Linear interpolation between the two measured points either side."
   },
+  "mini_overhead_tokens": 41.0,
+  "content_token_definition": "Mini prompt tokens minus the Mini prompt at a one-word input, so the system message and chat framing are not counted as content.",
   "points": [
     {
       "target_tokens": 0,
@@ -41,15 +45,15 @@
       "mean_content_tokens": 0.0,
       "jev_input_tokens": 278.0,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 41.0,
       "mini_input_tokens": 41.0,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 11.68,
       "mini_per_million": 9.15,
       "jev_p50_ms": 300,
       "mini_p50_ms": 1356,
-      "mini_cached_tokens": 0,
-      "cheaper": "mini",
-      "mini_prompt_tokens": 41.0
+      "cheaper": "mini"
     },
     {
       "target_tokens": 25,
@@ -57,15 +61,15 @@
       "mean_content_tokens": 23.3,
       "jev_input_tokens": 303.0,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 64.3,
       "mini_input_tokens": 64.3,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 12.73,
       "mini_per_million": 12.65,
       "jev_p50_ms": 377,
       "mini_p50_ms": 861,
-      "mini_cached_tokens": 0,
-      "cheaper": "mini",
-      "mini_prompt_tokens": 64.3
+      "cheaper": "mini"
     },
     {
       "target_tokens": 50,
@@ -73,15 +77,15 @@
       "mean_content_tokens": 46.3,
       "jev_input_tokens": 326.0,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 87.3,
       "mini_input_tokens": 87.3,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 13.69,
       "mini_per_million": 16.1,
       "jev_p50_ms": 327,
       "mini_p50_ms": 864,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 87.3
+      "cheaper": "jev"
     },
     {
       "target_tokens": 100,
@@ -89,15 +93,15 @@
       "mean_content_tokens": 87.0,
       "jev_input_tokens": 370.7,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 128.0,
       "mini_input_tokens": 128.0,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 15.57,
       "mini_per_million": 22.2,
       "jev_p50_ms": 311,
       "mini_p50_ms": 665,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 128.0
+      "cheaper": "jev"
     },
     {
       "target_tokens": 200,
@@ -105,15 +109,15 @@
       "mean_content_tokens": 174.3,
       "jev_input_tokens": 464.7,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 215.3,
       "mini_input_tokens": 215.3,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 19.52,
       "mini_per_million": 35.3,
       "jev_p50_ms": 340,
       "mini_p50_ms": 623,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 215.3
+      "cheaper": "jev"
     },
     {
       "target_tokens": 400,
@@ -121,15 +125,15 @@
       "mean_content_tokens": 336.0,
       "jev_input_tokens": 637.3,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 377.0,
       "mini_input_tokens": 377.0,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 26.77,
       "mini_per_million": 59.55,
       "jev_p50_ms": 331,
       "mini_p50_ms": 748,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 377.0
+      "cheaper": "jev"
     },
     {
       "target_tokens": 800,
@@ -137,15 +141,15 @@
       "mean_content_tokens": 685.0,
       "jev_input_tokens": 1003.3,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 726.0,
       "mini_input_tokens": 726.0,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 42.14,
       "mini_per_million": 111.9,
       "jev_p50_ms": 318,
       "mini_p50_ms": 680,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 726.0
+      "cheaper": "jev"
     },
     {
       "target_tokens": 1600,
@@ -153,15 +157,15 @@
       "mean_content_tokens": 1361.3,
       "jev_input_tokens": 1725.0,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 1402.3,
       "mini_input_tokens": 1402.3,
+      "mini_cached_tokens": 0.0,
       "mini_output_tokens": 5.0,
       "jev_per_million": 72.45,
       "mini_per_million": 213.35,
       "jev_p50_ms": 349,
       "mini_p50_ms": 625,
-      "mini_cached_tokens": 0,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 1402.3
+      "cheaper": "jev"
     },
     {
       "target_tokens": 3200,
@@ -169,17 +173,15 @@
       "mean_content_tokens": 2742.7,
       "jev_input_tokens": 3189.7,
       "jev_output_tokens": 21.0,
+      "mini_prompt_tokens": 2783.7,
       "mini_input_tokens": 2783.7,
+      "mini_cached_tokens": 1322.7,
       "mini_output_tokens": 5.0,
       "jev_per_million": 133.97,
-      "mini_per_million": 420.55,
+      "mini_per_million": 321.35,
       "jev_p50_ms": 348,
       "mini_p50_ms": 717,
-      "mini_cached_tokens": 1408,
-      "cheaper": "jev",
-      "mini_prompt_tokens": 2783.7
+      "cheaper": "jev"
     }
-  ],
-  "mini_overhead_tokens": 41.0,
-  "content_token_definition": "Mini prompt tokens minus the Mini prompt at a one-word input, so the system message and chat framing are not counted as content."
+  ]
 }

@@ -89,14 +89,44 @@ function counts() {
   };
 }
 
+// The row button that opened the modal. Focus goes back to it on close, so a
+// keyboard user lands where they left the table instead of at the top of the page.
+let modalTrigger = null;
+
 function closeModal() {
   modalOpen = false;
   receiptOpenId = null;
   render();
+  const back = modalTrigger ? document.querySelector(`[data-task="${modalTrigger}"]`) : null;
+  if (back) back.focus();
+  modalTrigger = null;
 }
 
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 document.addEventListener("keydown", (ev) => {
-  if (ev.key === "Escape" && modalOpen) closeModal();
+  if (!modalOpen) return;
+  if (ev.key === "Escape") {
+    closeModal();
+    return;
+  }
+  // Keep Tab inside the dialog. The page behind it is inert to the eye already;
+  // this makes it inert to the keyboard as well.
+  if (ev.key === "Tab") {
+    const dialog = document.querySelector('[role="dialog"]');
+    if (!dialog) return;
+    const items = Array.from(dialog.querySelectorAll(FOCUSABLE)).filter((el) => el.offsetParent !== null);
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (ev.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+      ev.preventDefault();
+      last.focus();
+    } else if (!ev.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) {
+      ev.preventDefault();
+      first.focus();
+    }
+  }
 });
 
 let filter = "all";
@@ -237,7 +267,7 @@ function render() {
             })()}</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">4. Re-run.</span> <span class="mono text-xs">python3 scripts/verify_run.py</span> recounts accuracy. <span class="mono text-xs">python3 scripts/run_eval.py</span> hits the APIs again.</li>
           </ol>
-          <p class="mt-3 mono text-[11px] break-all text-zinc-500">run ${RUN.runId}</p>
+          <p class="mt-3 mono text-[11px] break-all text-zinc-500">${RUN.runs.length} invocation(s) of run_eval.py, ${RUN.runs[0].start.slice(0, 16)}Z to ${RUN.runs[RUN.runs.length - 1].start.slice(0, 16)}Z. Each row says which one it came from.</p>
         </article>
       </section>
 
@@ -281,10 +311,14 @@ function render() {
   app.querySelectorAll("[data-task]").forEach((btn) => {
     btn.addEventListener("click", () => {
       openId = btn.getAttribute("data-task");
+      modalTrigger = openId;
       sampleOpen = null;
       receiptOpenId = null;
       modalOpen = true;
       render();
+      // render() rebuilt the DOM, so focus is on <body>. Put it in the dialog.
+      const dialog = app.querySelector('[role="dialog"]');
+      if (dialog) dialog.focus();
     });
   });
   const backdrop = app.querySelector("[data-modal-backdrop]");
@@ -481,7 +515,7 @@ function errorProfileHtml(t) {
 function modalHtml(t) {
   return `
     <div data-modal-backdrop class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-zinc-900/50 p-4 backdrop-blur-sm sm:p-8">
-      <div role="dialog" aria-modal="true" aria-label="${t.title}" class="relative w-full max-w-2xl">
+      <div role="dialog" aria-modal="true" aria-label="${t.title}" tabindex="-1" class="relative w-full max-w-2xl outline-none">
         <button type="button" data-modal-close aria-label="Close"
           class="absolute right-3 top-3 z-10 rounded-lg border border-zinc-300 bg-white px-2 py-1 text-sm text-zinc-600 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800">Esc</button>
         ${detailHtml(t)}
@@ -548,7 +582,7 @@ function detailHtml(t) {
         </div>
         <p class="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400"><span class="font-medium text-zinc-900 dark:text-zinc-100">Ship rule. </span>${t.gate}</p>
       </div>
-      <p class="mt-4 mono break-all text-[11px] text-zinc-500">samples ${shortSha(t.samplesSha)} · schema ${shortSha(t.schemaSha)}</p>
+      <p class="mt-4 mono break-all text-[11px] text-zinc-500">samples ${shortSha(t.samplesSha)} · schema ${shortSha(t.schemaSha)} · run ${t.run.index} of ${t.run.of}, ${t.run.start.slice(0, 16)}Z</p>
       <p class="mt-1 text-xs text-zinc-500">Labels: ${t.labels}</p>
       <button type="button" data-load-receipts class="mt-4 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700">Open ${t.n * 2} receipts</button>
     </article>
