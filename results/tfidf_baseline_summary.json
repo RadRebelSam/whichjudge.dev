@@ -1,33 +1,33 @@
 [
   {
     "task_id": "prompt_injection",
-    "n": 300,
-    "train_n": 361,
-    "train_note": "deepset rows outside the frozen 300",
-    "acc": 0.8566666666666667,
+    "n": 200,
+    "train_n": 461,
+    "train_note": "deepset rows outside the frozen v2 sample",
+    "acc": 0.905,
     "wilson": {
-      "k": 257,
-      "n": 300,
-      "p": 0.8566666666666667,
-      "lo": 0.8124985303950185,
-      "hi": 0.8918158228732633
+      "k": 181,
+      "n": 200,
+      "p": 0.905,
+      "lo": 0.8563973488560237,
+      "hi": 0.9383373863501365
     },
-    "fit_ms": 22.224600019399077,
-    "predict_total_ms": 9.032499976456165,
-    "predict_mean_ms_per_row_batched": 0.030108333254853886,
+    "fit_ms": 29.450499976519495,
+    "predict_total_ms": 7.877799973357469,
+    "predict_mean_ms_per_row_batched": 0.039388999866787344,
     "mcnemar_vs_jev": {
-      "a_only_correct": 44,
-      "b_only_correct": 27,
-      "discordant": 71,
-      "p_value": 0.057584115072875815,
-      "winner": "ns"
+      "a_only_correct": 34,
+      "b_only_correct": 14,
+      "discordant": 48,
+      "p_value": 0.006098945931214367,
+      "winner": "a"
     },
     "mcnemar_vs_mini": {
-      "a_only_correct": 45,
-      "b_only_correct": 31,
-      "discordant": 76,
-      "p_value": 0.1359083978473705,
-      "winner": "ns"
+      "a_only_correct": 44,
+      "b_only_correct": 12,
+      "discordant": 56,
+      "p_value": 3.434665804698462e-05,
+      "winner": "a"
     }
   },
   {
@@ -35,153 +35,153 @@
     "n": 500,
     "train_n": 60000,
     "train_note": "Civil Comments official train, balanced",
-    "acc": 0.828,
+    "acc": 0.852,
     "wilson": {
-      "k": 414,
+      "k": 426,
       "n": 500,
-      "p": 0.828,
-      "lo": 0.7924518552217157,
-      "hi": 0.8585463950220116
+      "p": 0.852,
+      "lo": 0.818193200072725,
+      "hi": 0.8804390684815191
     },
-    "fit_ms": 9913.219599984586,
-    "predict_total_ms": 36.923700012266636,
-    "predict_mean_ms_per_row_batched": 0.07384740002453327,
+    "fit_ms": 10753.999900014605,
+    "predict_total_ms": 38.72569999657571,
+    "predict_mean_ms_per_row_batched": 0.07745139999315143,
     "mcnemar_vs_jev": {
-      "a_only_correct": 75,
-      "b_only_correct": 51,
-      "discordant": 126,
-      "p_value": 0.04046183578416871,
+      "a_only_correct": 83,
+      "b_only_correct": 41,
+      "discordant": 124,
+      "p_value": 0.00023149432556019854,
       "winner": "a"
     },
     "mcnemar_vs_mini": {
-      "a_only_correct": 83,
-      "b_only_correct": 54,
-      "discordant": 137,
-      "p_value": 0.016747647603186942,
+      "a_only_correct": 98,
+      "b_only_correct": 34,
+      "discordant": 132,
+      "p_value": 4.171192579718804e-08,
       "winner": "a"
     }
   },
   {
     "task_id": "cfpb_queue_route",
     "n": 500,
-    "train_n": 63392,
+    "train_n": 63789,
     "train_note": "CFPB complaints outside the frozen 500, capped at 8000 per queue",
-    "acc": 0.868,
+    "acc": 0.856,
     "wilson": {
-      "k": 434,
+      "k": 428,
       "n": 500,
-      "p": 0.868,
-      "lo": 0.8355045607103054,
-      "hi": 0.8948837200509497
+      "p": 0.856,
+      "lo": 0.822508879125479,
+      "hi": 0.8840623924805179
     },
-    "fit_ms": 55848.37890003109,
-    "predict_total_ms": 131.11429999116808,
-    "predict_mean_ms_per_row_batched": 0.26222859998233616,
+    "fit_ms": 59347.426899999846,
+    "predict_total_ms": 143.80530000198632,
+    "predict_mean_ms_per_row_batched": 0.28761060000397265,
     "mcnemar_vs_jev": {
-      "a_only_correct": 47,
-      "b_only_correct": 27,
-      "discordant": 74,
-      "p_value": 0.02719515695690698,
-      "winner": "a"
+      "a_only_correct": 33,
+      "b_only_correct": 24,
+      "discordant": 57,
+      "p_value": 0.2893148323819878,
+      "winner": "ns"
     },
     "mcnemar_vs_mini": {
-      "a_only_correct": 55,
-      "b_only_correct": 26,
-      "discordant": 81,
-      "p_value": 0.0018638479350299479,
+      "a_only_correct": 63,
+      "b_only_correct": 22,
+      "discordant": 85,
+      "p_value": 1.433872628917167e-05,
       "winner": "a"
     }
   },
   {
     "task_id": "banking_coarse_route",
     "n": 500,
-    "train_n": 10003,
+    "train_n": 9503,
     "train_note": "BANKING77 official train",
-    "acc": 0.932,
+    "acc": 0.942,
     "wilson": {
-      "k": 466,
+      "k": 471,
       "n": 500,
-      "p": 0.932,
-      "lo": 0.9064785429161282,
-      "hi": 0.9509337866731715
+      "p": 0.942,
+      "lo": 0.9179433020026042,
+      "hi": 0.9593165352160771
     },
-    "fit_ms": 853.8804999552667,
-    "predict_total_ms": 9.705700038466603,
-    "predict_mean_ms_per_row_batched": 0.019411400076933205,
+    "fit_ms": 427.94590000994503,
+    "predict_total_ms": 9.24680003663525,
+    "predict_mean_ms_per_row_batched": 0.0184936000732705,
     "mcnemar_vs_jev": {
-      "a_only_correct": 119,
-      "b_only_correct": 12,
-      "discordant": 131,
-      "p_value": 2.020281170286008e-20,
+      "a_only_correct": 130,
+      "b_only_correct": 10,
+      "discordant": 140,
+      "p_value": 8.527493676472185e-24,
       "winner": "a"
     },
     "mcnemar_vs_mini": {
-      "a_only_correct": 153,
-      "b_only_correct": 9,
-      "discordant": 162,
-      "p_value": 2.740557305957515e-29,
+      "a_only_correct": 150,
+      "b_only_correct": 11,
+      "discordant": 161,
+      "p_value": 1.5012754586491587e-27,
       "winner": "a"
     }
   },
   {
     "task_id": "sms_spam",
     "n": 500,
-    "train_n": 4968,
+    "train_n": 5032,
     "train_note": "UCI SMS leftover after frozen eval (no official train split)",
-    "acc": 0.964,
+    "acc": 0.96,
     "wilson": {
-      "k": 482,
+      "k": 480,
       "n": 500,
-      "p": 0.964,
-      "lo": 0.943815226738503,
-      "hi": 0.9771091272648186
+      "p": 0.96,
+      "lo": 0.9390259449029252,
+      "hi": 0.9739594060486436
     },
-    "fit_ms": 240.42570003075525,
-    "predict_total_ms": 19.866099988576025,
-    "predict_mean_ms_per_row_batched": 0.03973219997715205,
+    "fit_ms": 310.18450000556186,
+    "predict_total_ms": 21.14530000835657,
+    "predict_mean_ms_per_row_batched": 0.04229060001671314,
     "mcnemar_vs_jev": {
-      "a_only_correct": 9,
-      "b_only_correct": 9,
-      "discordant": 18,
-      "p_value": 0.813663715766792,
+      "a_only_correct": 18,
+      "b_only_correct": 15,
+      "discordant": 33,
+      "p_value": 0.7277235466695502,
       "winner": "ns"
     },
     "mcnemar_vs_mini": {
-      "a_only_correct": 11,
-      "b_only_correct": 11,
-      "discordant": 22,
-      "p_value": 0.8311704095417624,
+      "a_only_correct": 23,
+      "b_only_correct": 16,
+      "discordant": 39,
+      "p_value": 0.3366683676100389,
       "winner": "ns"
     }
   },
   {
     "task_id": "review_sentiment",
-    "n": 500,
+    "n": 356,
     "train_n": 67349,
     "train_note": "SST-2 official train",
-    "acc": 0.826,
+    "acc": 0.848314606741573,
     "wilson": {
-      "k": 413,
-      "n": 500,
-      "p": 0.826,
-      "lo": 0.790317702710052,
-      "hi": 0.856711046007799
+      "k": 302,
+      "n": 356,
+      "p": 0.848314606741573,
+      "lo": 0.8073461291404251,
+      "hi": 0.8818460042871719
     },
-    "fit_ms": 1980.544199992437,
-    "predict_total_ms": 17.070400004740804,
-    "predict_mean_ms_per_row_batched": 0.03414080000948161,
+    "fit_ms": 2281.3950999989174,
+    "predict_total_ms": 13.190000026952475,
+    "predict_mean_ms_per_row_batched": 0.03705056187346201,
     "mcnemar_vs_jev": {
-      "a_only_correct": 8,
-      "b_only_correct": 80,
-      "discordant": 88,
-      "p_value": 3.7719401551199243e-14,
+      "a_only_correct": 6,
+      "b_only_correct": 47,
+      "discordant": 53,
+      "p_value": 3.919908900829517e-08,
       "winner": "b"
     },
     "mcnemar_vs_mini": {
       "a_only_correct": 9,
-      "b_only_correct": 78,
-      "discordant": 87,
-      "p_value": 3.091158700311734e-13,
+      "b_only_correct": 47,
+      "discordant": 56,
+      "p_value": 7.640501529011896e-07,
       "winner": "b"
     }
   },
@@ -190,29 +190,29 @@
     "n": 500,
     "train_n": 120000,
     "train_note": "AG News official train",
-    "acc": 0.908,
+    "acc": 0.938,
     "wilson": {
-      "k": 454,
+      "k": 469,
       "n": 500,
-      "p": 0.908,
-      "lo": 0.8794606777802376,
-      "hi": 0.9303176334985452
+      "p": 0.938,
+      "lo": 0.9133397667805389,
+      "hi": 0.9559810673863897
     },
-    "fit_ms": 20170.39569996996,
-    "predict_total_ms": 38.48280000966042,
-    "predict_mean_ms_per_row_batched": 0.07696560001932085,
+    "fit_ms": 21928.217399981804,
+    "predict_total_ms": 30.1210000179708,
+    "predict_mean_ms_per_row_batched": 0.0602420000359416,
     "mcnemar_vs_jev": {
-      "a_only_correct": 42,
-      "b_only_correct": 16,
-      "discordant": 58,
-      "p_value": 0.0010283231106303406,
+      "a_only_correct": 34,
+      "b_only_correct": 14,
+      "discordant": 48,
+      "p_value": 0.006098945931214367,
       "winner": "a"
     },
     "mcnemar_vs_mini": {
-      "a_only_correct": 57,
-      "b_only_correct": 16,
-      "discordant": 73,
-      "p_value": 2.8458076157547226e-06,
+      "a_only_correct": 51,
+      "b_only_correct": 12,
+      "discordant": 63,
+      "p_value": 1.6882969092175972e-06,
       "winner": "a"
     }
   },
@@ -221,122 +221,122 @@
     "n": 500,
     "train_n": 45615,
     "train_note": "tweet_eval sentiment official train",
-    "acc": 0.638,
+    "acc": 0.602,
     "wilson": {
-      "k": 319,
+      "k": 301,
       "n": 500,
-      "p": 0.638,
-      "lo": 0.5949709219022378,
-      "hi": 0.6789246833832329
+      "p": 0.602,
+      "lo": 0.5584738043043082,
+      "hi": 0.6439707735153876
     },
-    "fit_ms": 4413.5216000140645,
-    "predict_total_ms": 13.358799973502755,
-    "predict_mean_ms_per_row_batched": 0.02671759994700551,
+    "fit_ms": 5023.11790001113,
+    "predict_total_ms": 13.314600044395775,
+    "predict_mean_ms_per_row_batched": 0.02662920008879155,
     "mcnemar_vs_jev": {
-      "a_only_correct": 66,
+      "a_only_correct": 51,
       "b_only_correct": 116,
-      "discordant": 182,
-      "p_value": 0.00028110054099173936,
+      "discordant": 167,
+      "p_value": 7.327785026211213e-07,
       "winner": "b"
     },
     "mcnemar_vs_mini": {
-      "a_only_correct": 62,
-      "b_only_correct": 106,
-      "discordant": 168,
-      "p_value": 0.0009081975515243086,
+      "a_only_correct": 61,
+      "b_only_correct": 117,
+      "discordant": 178,
+      "p_value": 3.749058492261268e-05,
       "winner": "b"
     }
   },
   {
     "task_id": "content_offensive",
     "n": 500,
-    "train_n": 11912,
+    "train_n": 11414,
     "train_note": "tweet_eval offensive official train",
-    "acc": 0.738,
+    "acc": 0.694,
     "wilson": {
-      "k": 369,
+      "k": 347,
       "n": 500,
-      "p": 0.738,
-      "lo": 0.6977463146741062,
-      "hi": 0.7746243669051839
+      "p": 0.694,
+      "lo": 0.6522544304326852,
+      "hi": 0.7327872175773242
     },
-    "fit_ms": 791.5975999785587,
-    "predict_total_ms": 16.93749998230487,
-    "predict_mean_ms_per_row_batched": 0.03387499996460974,
+    "fit_ms": 886.6144000203349,
+    "predict_total_ms": 22.556399984750897,
+    "predict_mean_ms_per_row_batched": 0.04511279996950179,
     "mcnemar_vs_jev": {
-      "a_only_correct": 57,
-      "b_only_correct": 71,
-      "discordant": 128,
-      "p_value": 0.25053597441363795,
+      "a_only_correct": 81,
+      "b_only_correct": 97,
+      "discordant": 178,
+      "p_value": 0.26088682439586075,
       "winner": "ns"
     },
     "mcnemar_vs_mini": {
-      "a_only_correct": 87,
-      "b_only_correct": 72,
-      "discordant": 159,
-      "p_value": 0.26688174016377775,
+      "a_only_correct": 79,
+      "b_only_correct": 93,
+      "discordant": 172,
+      "p_value": 0.3215680577486025,
       "winner": "ns"
     }
   },
   {
     "task_id": "content_hate",
     "n": 500,
-    "train_n": 8962,
+    "train_n": 8960,
     "train_note": "tweet_eval hate official train",
-    "acc": 0.54,
+    "acc": 0.534,
     "wilson": {
-      "k": 270,
+      "k": 267,
       "n": 500,
-      "p": 0.54,
-      "lo": 0.4961743505261478,
-      "hi": 0.5832156799913801
+      "p": 0.534,
+      "lo": 0.4901815185143591,
+      "hi": 0.5773000074255396
     },
-    "fit_ms": 631.3231000094675,
-    "predict_total_ms": 16.160300001502037,
-    "predict_mean_ms_per_row_batched": 0.032320600003004074,
+    "fit_ms": 880.5974999559112,
+    "predict_total_ms": 18.597799993585795,
+    "predict_mean_ms_per_row_batched": 0.03719559998717159,
     "mcnemar_vs_jev": {
-      "a_only_correct": 133,
-      "b_only_correct": 194,
-      "discordant": 327,
-      "p_value": 0.000906620235383679,
+      "a_only_correct": 134,
+      "b_only_correct": 195,
+      "discordant": 329,
+      "p_value": 0.0009399599205239344,
       "winner": "b"
     },
     "mcnemar_vs_mini": {
-      "a_only_correct": 60,
-      "b_only_correct": 160,
-      "discordant": 220,
-      "p_value": 2.4794350137860596e-11,
+      "a_only_correct": 94,
+      "b_only_correct": 189,
+      "discordant": 283,
+      "p_value": 2.3007019524612832e-08,
       "winner": "b"
     }
   },
   {
     "task_id": "message_emotion",
     "n": 500,
-    "train_n": 3257,
+    "train_n": 2757,
     "train_note": "tweet_eval emotion official train",
-    "acc": 0.642,
+    "acc": 0.6,
     "wilson": {
-      "k": 321,
+      "k": 300,
       "n": 500,
-      "p": 0.642,
-      "lo": 0.5990414871027679,
-      "hi": 0.6827931212344555
+      "p": 0.6,
+      "lo": 0.5564533144716549,
+      "hi": 0.6420217618221643
     },
-    "fit_ms": 183.55100002372637,
-    "predict_total_ms": 20.043500000610948,
-    "predict_mean_ms_per_row_batched": 0.040087000001221895,
+    "fit_ms": 144.79859999846667,
+    "predict_total_ms": 12.135399971157312,
+    "predict_mean_ms_per_row_batched": 0.024270799942314625,
     "mcnemar_vs_jev": {
-      "a_only_correct": 45,
-      "b_only_correct": 123,
-      "discordant": 168,
-      "p_value": 2.838439798422751e-09,
+      "a_only_correct": 33,
+      "b_only_correct": 124,
+      "discordant": 157,
+      "p_value": 6.830699309565665e-13,
       "winner": "b"
     },
     "mcnemar_vs_mini": {
-      "a_only_correct": 54,
-      "b_only_correct": 108,
-      "discordant": 162,
-      "p_value": 3.1261972341985456e-05,
+      "a_only_correct": 36,
+      "b_only_correct": 117,
+      "discordant": 153,
+      "p_value": 9.956066848098514e-11,
       "winner": "b"
     }
   }

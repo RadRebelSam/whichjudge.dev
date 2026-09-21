@@ -1,7 +1,8 @@
 {
   "task_id": "civil_toxicity",
   "n": 500,
-  "seed": 7,
+  "seed": 11,
+  "excludes_v1_rows": true,
   "source": "google/civil_comments test split (CC0)",
   "why": "Clean-licence gold for the same content-gating decision as the TweetEval hate row, kept alongside it so the Don't verdict can be attributed to the model or to the gold.",
   "label_rule": "toxic when toxicity >= 0.5, else not_toxic",
@@ -9,18 +10,18 @@
   "balance": "50/50 by construction; real comment streams are far less toxic",
   "text_chars": {
     "min": 40,
-    "median": 212,
+    "median": 224,
     "max": 1000
   },
   "toxicity_score": {
     "min": 0.0,
-    "median": 0.4788,
+    "median": 0.4792,
     "max": 1.0
   },
-  "borderline_rows": 99,
+  "borderline_rows": 100,
   "distribution": {
-    "not_toxic": 250,
-    "toxic": 250
+    "toxic": 250,
+    "not_toxic": 250
   },
-  "sha256": "e018f1952099ae5fe45ea86e504bde156c2b537b4d24f3eb3a0f6342016ee5f8"
+  "sha256": "52e19e1682d7b0898bc7a5edaaa0980560d9903eb08b9a49d5cf1e82c9a1a5c6"
 }

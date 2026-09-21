@@ -597,6 +597,8 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
             chars += len(json.loads(line)["text"])
             rows_n += 1
     mean_chars = round(chars / rows_n)
+    cf_meta = load(DATA / "cfpb_queue_route.meta.json")
+    lc = cf_meta.get("label_check", {})
     blocks["cfpb-cost"] = (
         "**Consumer complaint routing is the only production decision here.** The CFPB runs it\n"
         "live, the consumer writes the narrative and picks the product, and the complaint is\n"
@@ -604,8 +606,9 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
         f"cost crossover: at about {mean_chars:,} characters per narrative, roughly {round(mean_chars / 4):,} tokens, Jev costs\n"
         f"${cf['jev']['perM']:.2f} per million decisions against ${cf['mini']['perM']:.2f}\n"
         "for 4o-mini. Text comes from a CC0 mirror; the gold label is joined from the Bureau's\n"
-        "own export on Complaint ID, and 31,990 of 32,000 candidate rows agreed with zero\n"
-        "disagreements. Product is chosen by the person filing, not an expert annotator."
+        f"own export on Complaint ID: {lc.get('agree', 0):,} candidate rows agreed, "
+        f"{lc.get('disagree', 0)} disagreed, {lc.get('not_found', 0)} were not found. "
+        "Product is chosen by the person filing, not an expert annotator."
     )
 
     # tfidf
@@ -650,7 +653,10 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
         "had any. Measured on the rows themselves, Jev is the cheaper API on "
         f"**{len(cheaper)} of {n_tasks}**: "
         + ", ".join(t["title"].lower() for t in cheaper)
-        + ". The short-text rows go to Mini. Receipts in `results/receipts/cost_curve.json`."
+        + (". Every row clears the crossover now: the normalized prompt gives Mini the label criteria "
+           "Jev already carried, which lengthens Mini's input on every task."
+           if len(cheaper) == n_tasks else ". The short-text rows go to Mini.")
+        + " Receipts in `results/receipts/cost_curve.json`."
     )
 
     sms = by["sms_spam"]
@@ -669,15 +675,18 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
         "  label. That makes accuracy comparable across models but it is not the share of each\n"
         "  label in real traffic, so a gate's coverage and accuracy here will not be the ones you\n"
         "  see in production. A spam gate at 50% spam behaves differently from one at 3%.\n"
-        "- **Some frozen rows repeat a text.** Rows whose text already appears earlier in the same\n"
-        f"  sample: {dup_line}. SMS spam and CFPB duplicates are in the source data. "
-        f"{bugged['content_offensive']} of the offensive rows and {bugged['message_emotion']} of the emotion rows\n"
-        "  were drawn twice by a top-up bug in `prepare_samples.py` (it dropped the wrong index\n"
-        "  before refilling an unbalanced label; fixed, see `results/code_patches.json`). The\n"
-        "  frozen samples and receipts are kept as run; a re-run on a corrected sample would move\n"
-        f"  those two rows by at most {bugged['content_offensive'] / by['content_offensive']['n'] * 100:.1f}pt and "
-        f"{bugged['message_emotion'] / by['message_emotion']['n'] * 100:.1f}pt.\n"
-        "- **The auto-slice gate is chosen and scored on the same rows.** That flatters it in\n"
+        + (
+            "- **Some frozen rows repeat a text.** Rows whose text already appears earlier in the same\n"
+            f"  sample: {dup_line}."
+            + (f" {bugged['content_offensive']} offensive and {bugged['message_emotion']} emotion rows were\n"
+               "  drawn twice by a top-up bug in `prepare_samples.py` (fixed, see `results/code_patches.json`).\n"
+               if any(bugged.values()) else "\n")
+            if dup_line else
+            "- **No frozen row repeats a text.** Exact duplicates are collapsed before the draw and every\n"
+            "  v1 row is excluded, so each sample here is unique texts only. The v1 samples at tag\n"
+            "  `v1-config-comparison` carried source duplicates and 8 rows from a top-up bug since fixed.\n"
+        )
+        +         "- **The auto-slice gate is chosen and scored on the same rows.** That flatters it in\n"
         "  principle. Measured: choosing the gate on one half and scoring it on the other, over\n"
         f"  400 random splits, moves the result by at most {max(optimism):.1f}pt on any row, because there\n"
         "  are only five candidate gates and the pick is stable. `results/gates.json` carries both\n"

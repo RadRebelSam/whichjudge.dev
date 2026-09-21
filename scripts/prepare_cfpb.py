@@ -43,7 +43,8 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "raw"
 DATA = ROOT / "data"
 
-SEED = 7
+from sampling_common import SEED, exclude_previous  # noqa: E402
+
 N = 500
 MIN_CHARS = 200          # a real narrative, not a one-liner
 MAX_CHARS = 4000         # keep one outlier from dominating cost
@@ -122,6 +123,8 @@ def main() -> None:
     df = df[df["text"].str.len().between(MIN_CHARS, MAX_CHARS)]
     df["queue"] = df["Product"].map(PRODUCT_TO_QUEUE)
     df = df[df["queue"].notna()]
+    df = df.drop_duplicates(subset=["text"])
+    df = exclude_previous(df, "text", "cfpb_queue_route")
     print(f"mirror rows usable: {len(df)}")
 
     # Take a generous candidate pool per queue, then keep only rows the Bureau's
@@ -181,6 +184,7 @@ def main() -> None:
         "task_id": "cfpb_queue_route",
         "n": len(picked),
         "seed": SEED,
+        "excludes_v1_rows": True,
         "source_text": ("BEE-spoke-data/consumer-finance-complaints has-text config (CC0), "
                         "a mirror of the CFPB Consumer Complaint Database"),
         "source_labels": ("files.consumerfinance.gov/ccdb/complaints.csv.zip, the Bureau's "

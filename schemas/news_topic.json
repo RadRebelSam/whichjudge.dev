@@ -14,7 +14,7 @@
       }
     }
   },
-  "openai_prompt": "Classify this news article into exactly one topic. Reply with JSON {\"label\": <one of: world, sports, business, sci_tech>}.",
+  "openai_prompt": "What is the primary topic of this news article?\nChoose exactly one label:\n- world: World / international news and politics\n- sports: Sports\n- business: Business, markets, companies, economy\n- sci_tech: Science or technology\nReply with JSON {\"label\": <one of: world, sports, business, sci_tech>}.",
   "labels": [
     "world",
     "sports",

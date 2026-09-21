@@ -19,11 +19,11 @@ licence declared at all, which is a finding rather than an oversight: see below.
 | `prompt_injection` | deepset prompt injections | [`deepset/prompt-injections`](https://huggingface.co/datasets/deepset/prompt-injections) | Apache-2.0, text redistributable |
 | `civil_toxicity` | Civil Comments | [`google/civil_comments`](https://huggingface.co/datasets/google/civil_comments) test split | CC0, text redistributable |
 | `sms_spam` | UCI SMS Spam Collection | [`ucirvine/sms_spam`](https://huggingface.co/datasets/ucirvine/sms_spam) | no licence upstream, text not redistributed |
-| `review_sentiment` | SST-2 validation (Stanford Sentiment Treebank) | [`stanfordnlp/sst2`](https://huggingface.co/datasets/stanfordnlp/sst2) | no licence upstream, text not redistributed |
+| `review_sentiment` | SST-2 validation, the 356 rows left after v1 (Stanford Sentiment Treebank) | [`stanfordnlp/sst2`](https://huggingface.co/datasets/stanfordnlp/sst2) | no licence upstream, text not redistributed |
 | `news_topic` | AG News test | [`fancyzhx/ag_news`](https://huggingface.co/datasets/fancyzhx/ag_news) | no licence upstream, text not redistributed |
-| `banking_coarse_route` | BANKING77 (PolyAI) | [`PolyAI-LDN/task-specific-datasets`](https://github.com/PolyAI-LDN/task-specific-datasets) | CC BY 4.0, confirmed from the repo's LICENSE file |
-| `message_emotion` | TweetEval emotion | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
-| `content_offensive` | TweetEval offensive | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
+| `banking_coarse_route` | BANKING77 train split (PolyAI); v1 used the test split | [`PolyAI-LDN/task-specific-datasets`](https://github.com/PolyAI-LDN/task-specific-datasets) | CC BY 4.0, confirmed from the repo's LICENSE file |
+| `message_emotion` | TweetEval emotion train split; v1 exhausted one class of the test split | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
+| `content_offensive` | TweetEval offensive train split; v1 exhausted one class of the test split | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 | `content_hate` | TweetEval hate | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 | `tweet_sentiment` | TweetEval sentiment | [`cardiffnlp/tweet_eval`](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | text not redistributed |
 
@@ -84,14 +84,14 @@ history; the mapping is in `scripts/prepare_cfpb.py` and the meta file records i
 ## Civil Comments is the clean-licence route
 
 `civil_toxicity` is CC0, so its text ships in this repo with no redaction and no
-rehydration step. It covers the same judgement as the TweetEval hate row, which is why
-both are published: one shows what the verdict looks like on thin gold with an awkward
-licence, the other on clean gold that can simply be handed to a reader.
+rehydration step. It is a neighbour of the TweetEval hate row, toxicity in comments
+rather than hate speech aimed at a group in tweets, and both are published so a reader
+can see the ranking move with the task and the dataset.
 
 The label is the fraction of crowd annotators who called a comment toxic, thresholded
-at 0.5. That is a crowd majority, not an expert ruling, and 99 of the 500 rows sit
-between 0.4 and 0.6, so a fifth of the set is genuinely contested. The meta file
-records that count rather than hiding it.
+at 0.5. That is a crowd majority, not an expert ruling, and `data/civil_toxicity.meta.json`
+records how many of the 500 rows sit between 0.4 and 0.6 (100 in the v2 sample), so a
+fifth of the set is genuinely contested.
 
 ## How the TweetEval question is handled
 

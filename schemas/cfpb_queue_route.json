@@ -18,7 +18,7 @@
       }
     }
   },
-  "openai_prompt": "Route this consumer financial complaint to exactly one product queue. Decide from the financial product the complaint is about, not from who it is against. Reply with JSON {\"label\": <one of: credit_reporting, debt_collection, cards, bank_account, mortgage, money_transfer, loans, student_loan>}.",
+  "openai_prompt": "Which product queue should handle this consumer complaint? Decide from the financial product the complaint is actually about, not from who the complaint is against.\nChoose exactly one label:\n- credit_reporting: Credit reports, credit bureaus, credit repair, inaccurate or disputed items on a consumer report, identity theft on a report\n- debt_collection: A collector pursuing an alleged debt: contact methods, validation, threats, or a debt the consumer says is not theirs\n- cards: Credit cards and prepaid cards: charges, rewards, limits, interest, disputes on the card itself\n- bank_account: Checking, savings or other deposit accounts: fees, holds, overdrafts, closures, unauthorised transactions\n- mortgage: Home loans: origination, servicing, escrow, modification, foreclosure\n- money_transfer: Money transfers, remittances, virtual currency, and money services\n- loans: Vehicle loans or leases, payday, title, personal and other instalment loans\n- student_loan: Federal or private student loans, servicing, repayment plans, forgiveness\nReply with JSON {\"label\": <one of: credit_reporting, debt_collection, cards, bank_account, mortgage, money_transfer, loans, student_loan>}.",
   "labels": [
     "credit_reporting",
     "debt_collection",

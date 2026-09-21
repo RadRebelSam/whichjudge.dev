@@ -1,27 +1,13 @@
 {
-  "note": "Changes made to scripts AFTER the frozen run. data/, schemas/ and results/receipts/ are untouched apart from the documented redaction.",
-  "run_id": "2026-09-20T18:00:15.961406+00:00",
+  "note": "Changes made to scripts AFTER the frozen run. data/, schemas/ and results/receipts/ are untouched apart from the documented redaction. The v1 run's patches are recorded at git tag v1-config-comparison.",
+  "run_id": "2026-09-21T06:37:20.119494+00:00",
   "patches": [
     {
       "path": "scripts/run_eval.py",
-      "run_sha256": "72b7b34cfa8c63d1d6419b1d294eabeb12e7a8ab3edd365bc3baf2fd3ac0a195",
-      "current_sha256": "7c5d24a5aa08826b95f716fe1d13b4f25166779667c9ffe5b64c684cba1d41ee",
-      "patched_utc": "2026-09-20",
-      "reason": "run_sha256 is the hash the last run_eval.py invocation recorded in results/manifest.json (that version already carried the manifest fix: data/*.text.jsonl excluded from pinning). Since then the loader joins the rehydration sidecar by id, checks every text against its hash, and preflights every requested task before the first paid call; the shipped rerun could not run the seven redacted tasks. No measurement changed. Later still: receipts are checkpointed per row and every attempt is logged; the confidence-thresholded gate table is no longer written."
-    },
-    {
-      "path": "scripts/prepare_samples.py",
-      "run_sha256": "bf5f04dc1d0adc9b03789a59df8b3db335fdb2e926f5d0e3fac8b1806265667f",
-      "current_sha256": "d44af35880b69b6c616a19a18078edf2c61941011bea483253c525775b2f6b42",
-      "patched_utc": "2026-09-20",
-      "reason": "balanced() reset the index before the top-up, so df.drop(out.index) removed the wrong source rows and the refill could draw a row already chosen. Fixed to drop by original index and assert uniqueness. The frozen samples were built with the old code: 7 offensive rows and 1 emotion row repeat an earlier text. No frozen file or receipt changed. Exact duplicate texts are now collapsed before any draw."
-    },
-    {
-      "path": "scripts/verify_run.py",
-      "run_sha256": "fa244b0a246ceb32a96abd388b41d979cdfac4ee061741039e7901d9c8c4e7ec",
-      "current_sha256": "0e3324004a3e5b4166de196476ffe2ad028d92bcf82a2ebaaa25bde7c7f6b2ac",
-      "patched_utc": "2026-09-20",
-      "reason": "Extended to recompute Wilson intervals, McNemar, latency percentiles, costs, confidence gates, ECE and reliability bins, p_chosen gates and their cross-validation, the per-class error profile, the TF-IDF and current-model columns and the cost curve from the receipts. Previously it only recounted accuracy. No measurement changed. Now also re-reads every raw response and requires the stored prediction, confidence and model to match it, checks that each arm answers every sample id exactly once, and counts out-of-schema labels. Now also fails if summary.json carries the legacy confidence gates."
+      "run_sha256": "12da7038d30c9055a9b4ef5f2c819723cf67d056cf8e75f2826ed2f1938b03ce",
+      "current_sha256": "7cf9e1158848d85b6611392eb5db68227461d043d7be6ef6a6faf4e4001aa6b7",
+      "patched_utc": "2026-09-21",
+      "reason": "The manifest wrote a hardcoded seed of 7 while the v2 samples were drawn with seed 11 (scripts/sampling_common.py). The manifest now takes the seed from that module and the stored manifest's seed field was corrected to 11 by hand. No measurement changed."
     }
   ]
 }

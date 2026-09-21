@@ -34,8 +34,12 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "raw"
 DATA = ROOT / "data"
 
-SEED = 7
-N = 300
+from sampling_common import SEED, exclude_previous  # noqa: E402
+
+# 662 rows exist and v1 froze 300 of them. Excluding those leaves about 113
+# injections, so the v2 set is 100 per class. TF-IDF trains on everything else,
+# v1 rows included, which it never scores.
+N = 200
 LABELS = {1: "injection", 0: "legitimate"}
 
 BASE = ("https://huggingface.co/datasets/deepset/prompt-injections/resolve/"
@@ -73,8 +77,9 @@ def main() -> None:
     df = load_all()
     df["text"] = df["text"].astype(str).str.strip()
     df = df[df["text"].str.len() >= 10].drop_duplicates(subset=["text"])
+    df = exclude_previous(df, "text", "prompt_injection")
     df["gold"] = df["label"].map(LABELS)
-    print(f"pool after dedupe: {len(df)}")
+    print(f"pool after dedupe and v1 exclusion: {len(df)}")
     print("class counts:", df["gold"].value_counts().to_dict())
 
     per = N // 2
@@ -97,12 +102,13 @@ def main() -> None:
         "task_id": "prompt_injection",
         "n": len(picked),
         "seed": SEED,
+        "excludes_v1_rows": True,
         "source": "deepset/prompt-injections (Apache-2.0), train and test splits combined",
         "label_rule": "injection when the source label is 1, else legitimate",
-        "why_n_is_300": ("The dataset holds 662 rows in total. Freezing 500 would leave "
-                         "too few to train the classical baseline on, so the baseline "
-                         "would lose for the wrong reason. 300 eval, "
-                         f"{len(held_out)} held out for training."),
+        "why_n_is_200": ("The dataset holds 662 rows in total and the v1 sample froze 300 "
+                         "of them. Excluding those leaves about 113 injections, so v2 is "
+                         f"100 per class. {len(held_out)} rows, v1 included, are left for "
+                         "the classical baseline to train on."),
         "held_out_for_tfidf": int(len(held_out)),
         "read_this_as": ("A false negative here is a hijacked agent, not a misrouted "
                          "ticket, so judge this row on recall of injections at the quit "

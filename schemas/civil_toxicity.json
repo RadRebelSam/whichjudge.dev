@@ -12,7 +12,7 @@
       }
     }
   },
-  "openai_prompt": "Would a majority of ordinary readers rate this comment as toxic, meaning rude, disrespectful, or likely to make someone leave the discussion? Judge the comment itself, not the opinion it holds. Reply with JSON {\"label\": <one of: toxic, not_toxic>}.",
+  "openai_prompt": "Would a majority of ordinary readers rate this comment as toxic, meaning rude, disrespectful, or likely to make someone leave the discussion? Judge the comment itself, not the opinion it holds: a strongly worded but civil disagreement is not toxic.\nChoose exactly one label:\n- toxic: Insulting, demeaning, hateful, obscene, or threatening toward a person or group\n- not_toxic: Civil, even if blunt, critical, sarcastic, or strongly opinionated\nReply with JSON {\"label\": <one of: toxic, not_toxic>}.",
   "labels": [
     "toxic",
     "not_toxic"

@@ -14,7 +14,7 @@
       }
     }
   },
-  "openai_prompt": "Classify emotion. Reply with JSON {\"label\": <one of: anger, joy, optimism, sadness>}.",
+  "openai_prompt": "Which emotion is primary in this tweet?\nChoose exactly one label:\n- anger: Anger\n- joy: Joy or happiness\n- optimism: Optimism or hope\n- sadness: Sadness\nReply with JSON {\"label\": <one of: anger, joy, optimism, sadness>}.",
   "labels": [
     "anger",
     "joy",

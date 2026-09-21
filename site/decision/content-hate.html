@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hate-speech screen: Jev vs 3 other models, measured | WhichJudge</title>
-<meta name="description" content="Hate-speech screen on tweet_eval hate, n=500 frozen gold. Jev 66.2%, gpt-4o-mini 74.0%, TF-IDF 54.0%. Verdict: Don&#x27;t. ECE 0.187.">
+<meta name="description" content="Hate-speech screen on tweet_eval hate, n=500 frozen gold. Jev 65.6%, gpt-4o-mini 72.4%, TF-IDF 53.4%. Verdict: Don&#x27;t. ECE 0.196.">
 <link rel="canonical" href="https://whichjudge.dev/decision/content-hate.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hate-speech screen: Jev vs 3 other models, measured | WhichJudge">
-<meta property="og:description" content="Hate-speech screen on tweet_eval hate, n=500 frozen gold. Jev 66.2%, gpt-4o-mini 74.0%, TF-IDF 54.0%. Verdict: Don&#x27;t. ECE 0.187.">
+<meta property="og:description" content="Hate-speech screen on tweet_eval hate, n=500 frozen gold. Jev 65.6%, gpt-4o-mini 72.4%, TF-IDF 53.4%. Verdict: Don&#x27;t. ECE 0.196.">
 <meta property="og:url" content="https://whichjudge.dev/decision/content-hate.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="26c2153d2c">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Hate-speech screen - cheap decision model bake-off", "description": "Hate-speech screen on tweet_eval hate, n=500 frozen gold. Jev 66.2%, gpt-4o-mini 74.0%, TF-IDF 54.0%. Verdict: Don't. ECE 0.187.", "url": "https://whichjudge.dev/decision/content-hate.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "tweet_eval hate", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/content_hate.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.662}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.74}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.54}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.187}]}</script>
+<meta name="whichjudge-build" content="09e70f3006">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Hate-speech screen - cheap decision model bake-off", "description": "Hate-speech screen on tweet_eval hate, n=500 frozen gold. Jev 65.6%, gpt-4o-mini 72.4%, TF-IDF 53.4%. Verdict: Don't. ECE 0.196.", "url": "https://whichjudge.dev/decision/content-hate.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "tweet_eval hate", "dateModified": "2026-09-21", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/content_hate.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.656}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.724}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.534}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.196}]}</script>
 <style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#52525b}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}</style>
 </head>
 <body>
@@ -21,38 +21,38 @@
 <h1>Hate-speech screen</h1>
 <p><span class="verdict">Don&#x27;t</span>
 <span class="scope">compares Jev with 4o-mini only</span></p>
-<ul class="caveats"><li>ECE 0.187: do not quote the confidence as a probability.</li></ul>
-<p>Mini +7.8pt (p=0.0026). Jev mean confidence 0.67 and ECE 0.187, so the confidence cannot carry a threshold either. Kept on the homepage, but compare it with the Civil Comments row: on cleaner gold for the same decision the gap disappears.</p>
+<ul class="caveats"><li>ECE 0.196: do not quote the confidence as a probability.</li></ul>
+<p>Mini 72.4% beats Jev 65.6% by 6.8pt (Holm p=0.002), the same loss as v1 on equal prompts. Jev catches only 47.6% of hate speech; Mini 64.0%, the 2026 model 75.2% but with 33.2% false positives. TF-IDF is worst at 53.4%. The neighbouring Civil Comments row, a different task on CC0 gold, ranks the models the other way.</p>
 <p><strong>Replaces:</strong> Hate vs not-hate classifier<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/cardiffnlp/tweet_eval" rel="noopener">cardiffnlp/tweet_eval</a>
 
-- tweet_eval hate, n=500, seed=7<br>
+- tweet_eval hate, n=500, seed=11<br>
 <strong>Labels:</strong> <code>not_hate / hate</code></p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Results table"><table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>Latency (p50 unless stated)</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
-        <tr><td>Jev jev-1.13.0</td><td>66.2%</td><td>[61.9% - 70.2%]</td><td>840 ms</td><td>$14.88</td></tr>
-        <tr><td>gpt-4o-mini-2024-07-18</td><td>74.0%</td><td>[70.0% - 77.7%]</td><td>1072 ms</td><td>$14.36</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>71.0%</td><td>[66.9% - 74.8%]</td><td>992 ms</td><td>unpriced (78.9 tok/call)</td></tr>
-        <tr><td>TF-IDF + LR (train n=8,962)</td><td>54.0%</td><td>[49.6% - 58.3%]</td><td>32 us mean per row, batched</td><td>$0</td></tr>
+        <tr><td>Jev jev-1.13.0</td><td>65.6%</td><td>[61.3% - 69.6%]</td><td>724 ms</td><td>$14.86</td></tr>
+        <tr><td>gpt-4o-mini-2024-07-18</td><td>72.4%</td><td>[68.3% - 76.1%]</td><td>963 ms</td><td>$18.2</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>64.2%</td><td>[59.9% - 68.3%]</td><td>849 ms</td><td>unpriced (104.7 tok/call)</td></tr>
+        <tr><td>TF-IDF + LR (train n=8,960)</td><td>53.4%</td><td>[49.0% - 57.7%]</td><td>37 us mean per row, batched</td><td>$0</td></tr>
   </tbody>
 </table></div>
-<p><strong>McNemar Jev vs Mini:</strong> mini, p=0.00258
-(60 Jev-only correct, 99 Mini-only correct).
+<p><strong>McNemar Jev vs Mini:</strong> mini, p=0.000187
+(22 Jev-only correct, 56 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> jev.</p>
 <h2>Quit line</h2>
-<p>Gating buys little here: 70.7% on 64.2% at &gt;=0.8, 4.5pt above ungated, and Mini is better anyway. Keep a specialist.</p>
-<p><strong>Auto slice:</strong> at Jev confidence &ge; 0.8,
-70.7% accurate on 64.2% of traffic, which is
-+4.5pt against 66.2% ungated. That threshold is the strongest
+<p>Gating buys the most lift on the board and still leaves a bad row: 78.9% on 53.0% at &gt;=0.9, 13.3pt above ungated, and Mini is better anyway. Keep a specialist.</p>
+<p><strong>Auto slice:</strong> at Jev confidence &ge; 0.9,
+78.9% accurate on 53.0% of traffic, which is
++13.3pt against 65.6% ungated. That threshold is the strongest
 one still covering at least half the traffic, picked by rule from the measured gates.</p>
-<p><strong>Calibration:</strong> ECE 0.187 (max bin gap 0.272).
+<p><strong>Calibration:</strong> ECE 0.196 (max bin gap 0.303).
 ECE says whether the confidence can be read as a probability. It does not say whether
 gating helps: thresholding only needs the model to rank its own answers, so a badly
 calibrated task can still gate well. High ECE costs you the right to quote the number,
 not the right to threshold on it.</p>
 <h2>Verify this</h2>
-<p>Frozen samples <code>5bc4134ab919</code>, schema <code>c656daeea6fd</code>.
+<p>Frozen samples <code>5494a7c66287</code>, schema <code>8721de4565ba</code>.
 <a href="../receipts/content_hate.json">receipts/content_hate.json</a> here is the slim copy: per call,
 the id, gold, prediction, confidence, latency and the SHA-256 of the request and response.
 The full request and response bodies are in the repository at
@@ -65,6 +65,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build 26c2153d2c &middot; this row from run 1 of 4, 2026-09-20T17:16Z</p>
+<p class="stamp">build 09e70f3006 &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
 </body>
 </html>

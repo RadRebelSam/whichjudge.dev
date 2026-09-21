@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Social sentiment (3-way): Jev vs 3 other models, measured | WhichJudge</title>
-<meta name="description" content="Social sentiment (3-way) on tweet_eval sentiment, n=500 frozen gold. Jev 73.8%, gpt-4o-mini 72.6%, TF-IDF 63.8%. Verdict: ns. ECE 0.141.">
+<meta name="description" content="Social sentiment (3-way) on tweet_eval sentiment, n=500 frozen gold. Jev 73.2%, gpt-4o-mini 71.4%, TF-IDF 60.2%. Verdict: ns. ECE 0.157.">
 <link rel="canonical" href="https://whichjudge.dev/decision/tweet-sentiment.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Social sentiment (3-way): Jev vs 3 other models, measured | WhichJudge">
-<meta property="og:description" content="Social sentiment (3-way) on tweet_eval sentiment, n=500 frozen gold. Jev 73.8%, gpt-4o-mini 72.6%, TF-IDF 63.8%. Verdict: ns. ECE 0.141.">
+<meta property="og:description" content="Social sentiment (3-way) on tweet_eval sentiment, n=500 frozen gold. Jev 73.2%, gpt-4o-mini 71.4%, TF-IDF 60.2%. Verdict: ns. ECE 0.157.">
 <meta property="og:url" content="https://whichjudge.dev/decision/tweet-sentiment.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="26c2153d2c">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Social sentiment (3-way) - cheap decision model bake-off", "description": "Social sentiment (3-way) on tweet_eval sentiment, n=500 frozen gold. Jev 73.8%, gpt-4o-mini 72.6%, TF-IDF 63.8%. Verdict: ns. ECE 0.141.", "url": "https://whichjudge.dev/decision/tweet-sentiment.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "tweet_eval sentiment", "dateModified": "2026-09-20", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/tweet_sentiment.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.738}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.726}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.638}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.141}]}</script>
+<meta name="whichjudge-build" content="09e70f3006">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Social sentiment (3-way) - cheap decision model bake-off", "description": "Social sentiment (3-way) on tweet_eval sentiment, n=500 frozen gold. Jev 73.2%, gpt-4o-mini 71.4%, TF-IDF 60.2%. Verdict: ns. ECE 0.157.", "url": "https://whichjudge.dev/decision/tweet-sentiment.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "tweet_eval sentiment", "dateModified": "2026-09-21", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/tweet_sentiment.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.732}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.714}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.602}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.157}]}</script>
 <style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#52525b}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}</style>
 </head>
 <body>
@@ -21,38 +21,38 @@
 <h1>Social sentiment (3-way)</h1>
 <p><span class="verdict">ns</span>
 <span class="scope">compares Jev with 4o-mini only</span></p>
-<ul class="caveats"><li>ECE 0.141: do not quote the confidence as a probability.</li></ul>
-<p>Coin flip vs Mini (p=0.58). Neutral is still the killer class. ECE 0.141 means the confidence number is shaky too.</p>
+<ul class="caveats"><li>ECE 0.157: do not quote the confidence as a probability.</li></ul>
+<p>Tied: Jev 73.2%, Mini 71.4%, the 2026 model 71.0% (Holm p=1). Neutral is the hard class for all three; Jev catches 53.9% of it. TF-IDF trails at 60.2%.</p>
 <p><strong>Replaces:</strong> Negative / neutral / positive on tweets<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/cardiffnlp/tweet_eval" rel="noopener">cardiffnlp/tweet_eval</a>
 
-- tweet_eval sentiment, n=500, seed=7<br>
+- tweet_eval sentiment, n=500, seed=11<br>
 <strong>Labels:</strong> <code>negative / neutral / positive</code></p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Results table"><table>
   <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>Latency (p50 unless stated)</th><th>Cost per 1M decisions</th></tr></thead>
   <tbody>
-        <tr><td>Jev jev-1.13.0</td><td>73.8%</td><td>[69.8% - 77.5%]</td><td>844 ms</td><td>$15.47</td></tr>
-        <tr><td>gpt-4o-mini-2024-07-18</td><td>72.6%</td><td>[68.5% - 76.3%]</td><td>1059 ms</td><td>$12.36</td></tr>
-        <tr><td>gpt-5.4-mini-2026-03-17</td><td>74.4%</td><td>[70.4% - 78.0%]</td><td>1025 ms</td><td>unpriced (64.7 tok/call)</td></tr>
-        <tr><td>TF-IDF + LR (train n=45,615)</td><td>63.8%</td><td>[59.5% - 67.9%]</td><td>27 us mean per row, batched</td><td>$0</td></tr>
+        <tr><td>Jev jev-1.13.0</td><td>73.2%</td><td>[69.2% - 76.9%]</td><td>728 ms</td><td>$15.47</td></tr>
+        <tr><td>gpt-4o-mini-2024-07-18</td><td>71.4%</td><td>[67.3% - 75.2%]</td><td>969 ms</td><td>$19.37</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>71.0%</td><td>[66.9% - 74.8%]</td><td>856 ms</td><td>unpriced (113.2 tok/call)</td></tr>
+        <tr><td>TF-IDF + LR (train n=45,615)</td><td>60.2%</td><td>[55.8% - 64.4%]</td><td>27 us mean per row, batched</td><td>$0</td></tr>
   </tbody>
 </table></div>
-<p><strong>McNemar Jev vs Mini:</strong> ns, p=0.576
-(43 Jev-only correct, 37 Mini-only correct).
+<p><strong>McNemar Jev vs Mini:</strong> ns, p=0.349
+(41 Jev-only correct, 32 Mini-only correct).
 <strong>TF-IDF vs Jev:</strong> jev.</p>
 <h2>Quit line</h2>
-<p>Jev if confidence &gt;=0.9 (81.6% on 65.2%); Mini or a human on the rest.</p>
+<p>At &gt;=0.9: 79.8% on 61.4% of messages, 6.6pt above ungated. ECE 0.157 is too high to quote the number; thresholding still works.</p>
 <p><strong>Auto slice:</strong> at Jev confidence &ge; 0.9,
-81.6% accurate on 65.2% of traffic, which is
-+7.8pt against 73.8% ungated. That threshold is the strongest
+79.8% accurate on 61.4% of traffic, which is
++6.6pt against 73.2% ungated. That threshold is the strongest
 one still covering at least half the traffic, picked by rule from the measured gates.</p>
-<p><strong>Calibration:</strong> ECE 0.141 (max bin gap 0.187).
+<p><strong>Calibration:</strong> ECE 0.157 (max bin gap 0.181).
 ECE says whether the confidence can be read as a probability. It does not say whether
 gating helps: thresholding only needs the model to rank its own answers, so a badly
 calibrated task can still gate well. High ECE costs you the right to quote the number,
 not the right to threshold on it.</p>
 <h2>Verify this</h2>
-<p>Frozen samples <code>caecb184d45d</code>, schema <code>07949a6e028a</code>.
+<p>Frozen samples <code>96a5cf86addc</code>, schema <code>43230c9f5f38</code>.
 <a href="../receipts/tweet_sentiment.json">receipts/tweet_sentiment.json</a> here is the slim copy: per call,
 the id, gold, prediction, confidence, latency and the SHA-256 of the request and response.
 The full request and response bodies are in the repository at
@@ -65,6 +65,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build 26c2153d2c &middot; this row from run 1 of 4, 2026-09-20T17:16Z</p>
+<p class="stamp">build 09e70f3006 &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
 </body>
 </html>

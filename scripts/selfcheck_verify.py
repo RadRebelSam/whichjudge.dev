@@ -82,10 +82,11 @@ def drop_receipt_row(root: Path) -> str:
 def invalid_label_uncounted(root: Path) -> str:
     p = root / "results/modern_baseline.json"
     m = load(p)
-    row = next(r for r in m["tasks"] if r["task_id"] == "cfpb_queue_route")
-    row["invalid_labels"] = 0
+    # Whichever task it is, report one fewer or one more than the receipts hold.
+    row = m["tasks"][0]
+    row["invalid_labels"] = (row.get("invalid_labels") or 0) + 1
     dump(p, m)
-    return "cfpb_queue_route: current-model invalid labels reported as 0"
+    return f"{row['task_id']}: current-model invalid labels misreported by one"
 
 
 def wrong_cost_curve(root: Path) -> str:

@@ -1,8 +1,10 @@
 {
-  "dataset": "tweet_eval offensive test",
+  "dataset": "tweet_eval offensive train (test split exhausted by v1)",
   "n": 500,
   "label_counts": {
-    "not_offensive": 256,
-    "offensive": 244
-  }
+    "not_offensive": 250,
+    "offensive": 250
+  },
+  "seed": 11,
+  "excludes_v1_rows": true
 }

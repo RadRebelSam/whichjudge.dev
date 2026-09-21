@@ -1,14 +1,15 @@
 {
   "task_id": "cfpb_queue_route",
   "n": 500,
-  "seed": 7,
+  "seed": 11,
+  "excludes_v1_rows": true,
   "source_text": "BEE-spoke-data/consumer-finance-complaints has-text config (CC0), a mirror of the CFPB Consumer Complaint Database",
   "source_labels": "files.consumerfinance.gov/ccdb/complaints.csv.zip, the Bureau's own export, joined on Complaint ID",
   "why_two_sources": "The Bureau's export omits narratives and its search API blocks scripted clients, so text comes from the mirror. Labels never do.",
   "label_check": {
-    "agree": 31990,
+    "agree": 31982,
     "disagree": 0,
-    "not_found": 10
+    "not_found": 18
   },
   "queues": {
     "credit_reporting": [
@@ -49,20 +50,20 @@
   },
   "narrative_chars": {
     "min": 203,
-    "median": 961,
-    "max": 3845
+    "median": 960,
+    "max": 3922
   },
   "label_caveat": "Product is selected by the consumer filing the complaint, not by an expert annotator, and the Bureau has renamed products over time. Treat it as a real routing signal, not a gold standard.",
   "pii": "The Bureau redacts personal details as XXXX before publication.",
   "distribution": {
-    "mortgage": 63,
-    "loans": 64,
-    "student_loan": 62,
-    "debt_collection": 62,
+    "mortgage": 62,
+    "credit_reporting": 62,
     "cards": 62,
-    "money_transfer": 62,
+    "student_loan": 62,
+    "debt_collection": 63,
+    "loans": 63,
     "bank_account": 63,
-    "credit_reporting": 62
+    "money_transfer": 63
   },
-  "sha256": "708d19757cb0c88bd6ed28c1522a5c603562de97847474229833ef6529ed48c8"
+  "sha256": "d6d9ae005e10a15d2cdb79c1017970f453312f7b5297004bcc29b09139e66b23"
 }

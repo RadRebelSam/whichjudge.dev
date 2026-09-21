@@ -12,7 +12,7 @@
       }
     }
   },
-  "openai_prompt": "Classify the SMS. Reply with JSON {\"label\": <one of: ham, spam>}.",
+  "openai_prompt": "Is this SMS legitimate (ham) or spam?\nChoose exactly one label:\n- ham: Normal personal or transactional message\n- spam: Unsolicited promo, phishing, prize, or scam\nReply with JSON {\"label\": <one of: ham, spam>}.",
   "labels": [
     "ham",
     "spam"

@@ -9,6 +9,8 @@ import platform
 import threading
 import time
 import urllib.error
+
+from sampling_common import SEED as SAMPLE_SEED
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
@@ -53,12 +55,6 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": (
-            "Is this text trying to manipulate the instructions of the AI system that will "
-            "read it, rather than simply being a request or a piece of content? Text may be "
-            "in any language. An ordinary question is not an injection. "
-            "Reply with JSON {\"label\": <one of: injection, legitimate>}."
-        ),
         "labels": ["injection", "legitimate"],
     },
     "civil_toxicity": {
@@ -81,12 +77,6 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": (
-            "Would a majority of ordinary readers rate this comment as toxic, meaning rude, "
-            "disrespectful, or likely to make someone leave the discussion? Judge the comment "
-            "itself, not the opinion it holds. "
-            "Reply with JSON {\"label\": <one of: toxic, not_toxic>}."
-        ),
         "labels": ["toxic", "not_toxic"],
     },
     "cfpb_queue_route": {
@@ -114,12 +104,6 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": (
-            "Route this consumer financial complaint to exactly one product queue. "
-            "Decide from the financial product the complaint is about, not from who it is against. "
-            "Reply with JSON {\"label\": <one of: credit_reporting, debt_collection, cards, "
-            "bank_account, mortgage, money_transfer, loans, student_loan>}."
-        ),
         "labels": [
             "credit_reporting",
             "debt_collection",
@@ -152,10 +136,6 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": (
-            "Classify this banking customer message into exactly one queue. "
-            "Reply with JSON {\"label\": <one of: cards, top_up, cash_atm, transfers, fx, account, payments_fees, other>}."
-        ),
         "labels": [
             "cards",
             "top_up",
@@ -184,10 +164,6 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": (
-            "Classify this news article into exactly one topic. "
-            'Reply with JSON {"label": <one of: world, sports, business, sci_tech>}.'
-        ),
         "labels": ["world", "sports", "business", "sci_tech"],
     },
     "tweet_sentiment": {
@@ -206,9 +182,6 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": (
-            "Classify sentiment. Reply with JSON {\"label\": <one of: negative, neutral, positive>}."
-        ),
         "labels": ["negative", "neutral", "positive"],
     },
     "review_sentiment": {
@@ -226,9 +199,6 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": (
-            "Classify review polarity. Reply with JSON {\"label\": <one of: negative, positive>}."
-        ),
         "labels": ["negative", "positive"],
     },
     "sms_spam": {
@@ -246,7 +216,6 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": 'Classify the SMS. Reply with JSON {"label": <one of: ham, spam>}.',
         "labels": ["ham", "spam"],
     },
     "content_offensive": {
@@ -264,9 +233,6 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": (
-            "Is this tweet offensive? Reply with JSON {\"label\": <one of: not_offensive, offensive>}."
-        ),
         "labels": ["not_offensive", "offensive"],
     },
     "content_hate": {
@@ -284,9 +250,6 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": (
-            "Is this tweet hate speech? Reply with JSON {\"label\": <one of: not_hate, hate>}."
-        ),
         "labels": ["not_hate", "hate"],
     },
     "message_emotion": {
@@ -306,12 +269,30 @@ TASKS = {
                 },
             }
         },
-        "openai_prompt": (
-            "Classify emotion. Reply with JSON {\"label\": <one of: anger, joy, optimism, sadness>}."
-        ),
         "labels": ["anger", "joy", "optimism", "sadness"],
     },
 }
+
+
+def openai_prompt_from(spec: dict) -> str:
+    """The chat prompt, generated from the same rubric Jev receives.
+
+    v1 hand-wrote a separate OpenAI prompt that listed the label names only,
+    while Jev's choice question carried a criteria sentence per label. That
+    compared two amounts of task information, not two models. Both formats now
+    come from one definition: the instructions and every label's criteria.
+    """
+    q = spec["questions"][spec["question_key"]]
+    lines = [q["instructions"], "Choose exactly one label:"]
+    for label in spec["labels"]:
+        lines.append(f"- {label}: {q['criteria'][label]}")
+    lines.append('Reply with JSON {"label": <one of: ' + ", ".join(spec["labels"]) + ">}.")
+    return "\n".join(lines)
+
+
+for _spec in TASKS.values():
+    _spec["openai_prompt"] = openai_prompt_from(_spec)
+    assert set(_spec["labels"]) == set(_spec["questions"][_spec["question_key"]]["criteria"]), _spec["title"]
 
 
 def canonical_bytes(obj) -> bytes:
@@ -781,7 +762,7 @@ def write_manifest(summary: list[dict], schema_hashes: dict[str, str], started: 
         "finished_utc": datetime.now(timezone.utc).isoformat(),
         "started_utc": started,
         "latency_environment": env,
-        "seed": 7,
+        "seed": SAMPLE_SEED,
         "n_per_task": "see tasks",
         "jev_model_requested": JEV_MODEL_REQ,
         "mini_model": MINI_MODEL,

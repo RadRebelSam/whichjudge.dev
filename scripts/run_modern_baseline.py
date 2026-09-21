@@ -192,7 +192,18 @@ def score(task_id: str, calls: list[dict]) -> dict:
     # literal value and only later runs prefixed it, so unparsed_replies read 0
     # while seven such labels sat in the receipts. Count against the schema.
     labels = set(load(SCHEMAS / f"{task_id}.json")["labels"])
-    invalid = sorted({str(r["pred"]) for r in calls if r["pred"] not in labels})
+    def invalid_value(pred) -> str:
+        # Later writers prefix an out-of-schema reply; report the label it named.
+        text = str(pred)
+        if text.startswith("__unparsed__:"):
+            text = text[len("__unparsed__:"):]
+            try:
+                return str(json.loads(text).get("label"))
+            except Exception:  # noqa: BLE001 - malformed JSON stays as written
+                return text
+        return text
+
+    invalid = sorted({invalid_value(r["pred"]) for r in calls if r["pred"] not in labels})
     invalid_n = sum(1 for r in calls if r["pred"] not in labels)
 
     cost = None

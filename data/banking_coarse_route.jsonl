@@ -1,500 +1,500 @@
-{"id": 0, "text": "I am traveling to Germany, Will I be able to use my card there?", "gold": "cards", "fine": "card_acceptance"}
-{"id": 1, "text": "Where can I use my card?", "gold": "cards", "fine": "card_acceptance"}
-{"id": 2, "text": "Is there a trick to get the disposable virtual card to work?", "gold": "cards", "fine": "virtual_card_not_working"}
-{"id": 3, "text": "Ordered awhile back, what is the ETA in the US?", "gold": "cards", "fine": "card_delivery_estimate"}
-{"id": 4, "text": "I need to create several disposable cards per day.", "gold": "cards", "fine": "disposable_card_limits"}
-{"id": 5, "text": "Can I make multiple online transactions with my virtual card?", "gold": "cards", "fine": "virtual_card_not_working"}
-{"id": 6, "text": "When can I expect to receive my new card?", "gold": "cards", "fine": "card_delivery_estimate"}
-{"id": 7, "text": "I was getting cash and can't get my card back.", "gold": "cards", "fine": "card_swallowed"}
-{"id": 8, "text": "Why are my payments showing pending?", "gold": "cards", "fine": "pending_card_payment"}
-{"id": 9, "text": "How do I re-add a card to the app?", "gold": "cards", "fine": "card_linking"}
-{"id": 10, "text": "WHAT CAN I DO AFTER THE CARD MISSING", "gold": "cards", "fine": "activate_my_card"}
-{"id": 11, "text": "When can I expect my card to be delivered to the US?", "gold": "cards", "fine": "card_delivery_estimate"}
-{"id": 12, "text": "Does the card you sent have a way to track to it?", "gold": "cards", "fine": "card_arrival"}
-{"id": 13, "text": "Are contactless payments enabled on my new card?", "gold": "cards", "fine": "contactless_not_working"}
-{"id": 14, "text": "Is it possible to receive a Visa and a MasterCard?", "gold": "cards", "fine": "visa_or_mastercard"}
-{"id": 15, "text": "Why is my payment pending?", "gold": "cards", "fine": "pending_card_payment"}
-{"id": 16, "text": "Is there a way my new card can be renewed?", "gold": "cards", "fine": "activate_my_card"}
-{"id": 17, "text": "Which cards and currencies do you support?", "gold": "cards", "fine": "supported_cards_and_currencies"}
-{"id": 18, "text": "I think someone else is using my card.  There are transactions I didn't make.", "gold": "cards", "fine": "compromised_card"}
-{"id": 19, "text": "I wasn't applied the correct exchange rate for an item I bought", "gold": "cards", "fine": "card_payment_wrong_exchange_rate"}
-{"id": 20, "text": "Are there any hindrances to using a disposable virtual card?", "gold": "cards", "fine": "disposable_card_limits"}
-{"id": 21, "text": "I would like to change my card PIN.", "gold": "cards", "fine": "change_pin"}
-{"id": 22, "text": "Can I use my card anywere?", "gold": "cards", "fine": "card_acceptance"}
-{"id": 23, "text": "What do I do when my card expires?", "gold": "cards", "fine": "card_about_to_expire"}
-{"id": 24, "text": "Please help in finding my card PIN, thank you!", "gold": "cards", "fine": "get_physical_card"}
-{"id": 25, "text": "Can I link an existing card?", "gold": "cards", "fine": "card_linking"}
-{"id": 26, "text": "How do I order a new card before It expires?", "gold": "cards", "fine": "card_about_to_expire"}
-{"id": 27, "text": "How can I activate my card so I can start using it?", "gold": "cards", "fine": "activate_my_card"}
-{"id": 28, "text": "My card payment was reverted.  Why?", "gold": "cards", "fine": "reverted_card_payment?"}
-{"id": 29, "text": "My card stopped working when I use it", "gold": "cards", "fine": "card_not_working"}
-{"id": 30, "text": "How can I find out where my contactless works?", "gold": "cards", "fine": "contactless_not_working"}
-{"id": 31, "text": "How fast can you deliver?", "gold": "cards", "fine": "card_delivery_estimate"}
-{"id": 32, "text": "I was looking to buy another card today.", "gold": "cards", "fine": "getting_spare_card"}
-{"id": 33, "text": "Is there a charge for physical cards", "gold": "cards", "fine": "order_physical_card"}
-{"id": 34, "text": "How do I link this new card?", "gold": "cards", "fine": "card_linking"}
-{"id": 35, "text": "My card is about to expire. What do I need to do?", "gold": "cards", "fine": "card_about_to_expire"}
-{"id": 36, "text": "What does a pending transaction mean?", "gold": "cards", "fine": "pending_card_payment"}
-{"id": 37, "text": "The atm won't give my card back!", "gold": "cards", "fine": "card_swallowed"}
-{"id": 38, "text": "Why am I being charged more ?", "gold": "cards", "fine": "card_payment_wrong_exchange_rate"}
-{"id": 39, "text": "I cannot use my card.", "gold": "cards", "fine": "card_not_working"}
-{"id": 40, "text": "Is there a way to transfer funds directly from my card?", "gold": "cards", "fine": "topping_up_by_card"}
-{"id": 41, "text": "I think my card was stolen.", "gold": "cards", "fine": "lost_or_stolen_card"}
-{"id": 42, "text": "Where can you deliver cards?", "gold": "cards", "fine": "order_physical_card"}
-{"id": 43, "text": "Where is the virtual card?", "gold": "cards", "fine": "getting_virtual_card"}
-{"id": 44, "text": "How do I obtain a disposable virtual card?", "gold": "cards", "fine": "get_disposable_virtual_card"}
-{"id": 45, "text": "Once my card expires, what should I do?", "gold": "cards", "fine": "card_about_to_expire"}
-{"id": 46, "text": "When would my card be charged an extra fee for a transaction?", "gold": "cards", "fine": "card_payment_fee_charged"}
-{"id": 47, "text": "I just got my new card but am not sure how to check its PIN.", "gold": "cards", "fine": "get_physical_card"}
-{"id": 48, "text": "someone is using my account", "gold": "cards", "fine": "compromised_card"}
-{"id": 49, "text": "Why would I be charged a fee for card payment?", "gold": "cards", "fine": "card_payment_fee_charged"}
-{"id": 50, "text": "Where is the card PIN?", "gold": "cards", "fine": "get_physical_card"}
-{"id": 51, "text": "If I have more than one disposable card, can I make five payments on each of them?", "gold": "cards", "fine": "disposable_card_limits"}
-{"id": 52, "text": "The incorrect rate was used in my foreign purchase", "gold": "cards", "fine": "card_payment_wrong_exchange_rate"}
-{"id": 53, "text": "I would like to add money to my account through my American Express.", "gold": "cards", "fine": "supported_cards_and_currencies"}
-{"id": 54, "text": "Can you freeze my card it was stolen", "gold": "cards", "fine": "lost_or_stolen_card"}
-{"id": 55, "text": "The ATM machine stole my card.", "gold": "cards", "fine": "card_swallowed"}
-{"id": 56, "text": "If I only have 1 other US card, can you take it?", "gold": "cards", "fine": "supported_cards_and_currencies"}
-{"id": 57, "text": "Does topping up my card have a fee?", "gold": "cards", "fine": "top_up_by_card_charge"}
-{"id": 58, "text": "Are there charges for topping up US cards?", "gold": "cards", "fine": "top_up_by_card_charge"}
-{"id": 59, "text": "What are the fees for a physical card?", "gold": "cards", "fine": "order_physical_card"}
-{"id": 60, "text": "The exchange rate was wrong when I bought something outside the country.", "gold": "cards", "fine": "card_payment_wrong_exchange_rate"}
-{"id": 61, "text": "Is it normal to have to wait over a week for my new card?", "gold": "cards", "fine": "card_arrival"}
-{"id": 62, "text": "How do I go through the process of currency exchange?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 63, "text": "How do I make an exchange from one currency to another?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 64, "text": "If I request that my funds be held, what currencies do you use?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 65, "text": "Can I change from one currency to another?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 66, "text": "I need AUD not GBP, how do I change it?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 67, "text": "What countries can I travel to and have access to their currencies?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 68, "text": "What kind of fiat currency can I used for holding and exchange?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 69, "text": "My work sends me all over the world, can I get a discount for all the money I have to exchange?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 70, "text": "Which fiat currencies do you support?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 71, "text": "I think I want AUD and not GBP, can you help?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 72, "text": "What foreign exchange rate will you use?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 73, "text": "I would like to exchange currencies, but is there an extra charge to do so?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 74, "text": "Is it a good time to exchange?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 75, "text": "How much will I pay to exchange foreign currency?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 76, "text": "How much does it cost to exchange currencies?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 77, "text": "Do you support the exchange of EUR from my currency.", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 78, "text": "Do you support any currency?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 79, "text": "What are the most current exchange rates?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 80, "text": "does it cost to exchange currencies?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 81, "text": "How do your exchange rates work?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 82, "text": "What kind of currency can I hold money in?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 83, "text": "What is the cost for an exchange fee?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 84, "text": "Is it permissible to hold money in multiple currencies?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 85, "text": "I'm trying to figure out the current exchange rate.", "gold": "fx", "fine": "exchange_rate"}
-{"id": 86, "text": "I would like to exchange some currency.", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 87, "text": "Is there any discount for someone that exchanges currencies frequently?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 88, "text": "Will this app exchange currencies?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 89, "text": "May I exchange currencies with this?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 90, "text": "What is my foreign exchange rate?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 91, "text": "What currencies are used in your exchange?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 92, "text": "Can I change to another currency?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 93, "text": "What options do I have for holding currencies?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 94, "text": "There is an incoming payment into my account, but it is deactivated. Will they still be processed?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 95, "text": "What fiat currencies are used for holding transactions?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 96, "text": "Is there an exchange fee?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 97, "text": "Is there a fee for exchanging foreign currencies?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 98, "text": "Are there extra charges for exchanging currency?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 99, "text": "Can I change my currency from USD to EUR?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 100, "text": "how much you charge for exhcange", "gold": "fx", "fine": "exchange_charge"}
-{"id": 101, "text": "The exchange rates are?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 102, "text": "Does it cost to exchange currencies with this card?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 103, "text": "The exchange rate would be?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 104, "text": "How do I exchange my GBP to AUD?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 105, "text": "Can I exchange to EUR?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 106, "text": "I want to know how many different currencies my money can be in", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 107, "text": "What kind of foreign exchange rate will I get when I exchange my money?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 108, "text": "What are your international exchange rates?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 109, "text": "What all currencies can be exchanged?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 110, "text": "Does it cost money for currency exchange services?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 111, "text": "Will I get a curreng foreign exchange rate?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 112, "text": "Is there currency exchange on this app?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 113, "text": "If I need GBP instead of AUD what do I do?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 114, "text": "What are your currency exchange fees?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 115, "text": "Is there a fee to exchange foreign money?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 116, "text": "I was wondering if there were any discounts offered for frequent currency exchanges?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 117, "text": "How do I convert currencies with the app?", "gold": "fx", "fine": "exchange_via_app"}
-{"id": 118, "text": "Does it cost extra to exchange currencies?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 119, "text": "When I travel, what will it cost to switch for my currency?", "gold": "fx", "fine": "exchange_charge"}
-{"id": 120, "text": "How are exchange rates calculated?", "gold": "fx", "fine": "exchange_rate"}
-{"id": 121, "text": "Can you tell me what currency I can have?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 122, "text": "How man currencies can I hold?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 123, "text": "Do you accept exchanges to EUR?", "gold": "fx", "fine": "fiat_currency_support"}
-{"id": 124, "text": "I requested a refund from a store but it hasn't arrived.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 125, "text": "Help! I keep checking my account, but my refund is not showing. I requested that a seller refund my money a while back, but there is no money showing in my account. What can you do for me?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 126, "text": "Hello- It is urgent I get a refund on this product. The merchant has not been helpful, what can I do now to get this resolved ASAP?", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 127, "text": "I requested a refund, and never received it. What can I do?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 128, "text": "i was supposed to get a refund but my balance hasn't changed, why not?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 129, "text": "I need to cancel a purchase I made.", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 130, "text": "How can I process a refund for something I purchased?", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 131, "text": "Why was I chaged twice for the same thing?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 132, "text": "Hello I changed my mind and really need a refund on one of things I bought recently. Can you please cancel the transaction and get my money back. Please it's urgent.", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 133, "text": "I keep checking my bank statements but I don't see a refund that I've requested from a seller. Can you ensure that I receive the refund from the seller?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 134, "text": "Something went wrong, I was charged an extra pound?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 135, "text": "There is more than one of the same transaction on my account.", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 136, "text": "Where did this fee come from?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 137, "text": "Can you explain why there is a payment showing twice?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 138, "text": "Why would I be charged more than once for the same transaction?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 139, "text": "I want to get an item refunded", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 140, "text": "I need a refund on an item I have not received.  Am I able to simply cancel the payment?  I don't know how to do this.", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 141, "text": "Can you tell me why I noticed a $1 charge on my statement?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 142, "text": "What are my remedies if I think I was charged twice for the same expense?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 143, "text": "What is this €1 fee in my statement?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 144, "text": "Hello! I recently made a purchase and I'm needing to cancel my order and process a refund as soon as possible.", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 145, "text": "I have a transaction that shows several times", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 146, "text": "Please stop my purchase.", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 147, "text": "Can you help me with a weird charge?  It's a pound charge that never goes away from the statement view on the app I'm using.  It's not described as anything but \"Pending\", and that status has never changed during the last two days.", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 148, "text": "Where is my refund? I have been checking my account all day.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 149, "text": "Can you please check if I was charged twice?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 150, "text": "There's a refund missing from my statement", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 151, "text": "The refund isn't showing up on my account.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 152, "text": "What is the €1 fee for?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 153, "text": "I don't want the item, I bought it on accident, can I get a refund?", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 154, "text": "Where can I see the refund in my account", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 155, "text": "How do I get refunded?", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 156, "text": "I would like a refund for something I bought", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 157, "text": "I wasn't charged the correct amount for an item I purchased, how can I fix this?", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 158, "text": "I got double charged for a payment so how do I fix that?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 159, "text": "I noticed after looking over my transactions that I have been charged twice from an earlier restaurant visit this week. Is it possible that one of these can be removed so I get the money back for the one that is not accurate?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 160, "text": "I see that I have been charged multiple times for the same transaction.", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 161, "text": "Why doesn't a return show up im my account from a purchase I made?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 162, "text": "A transaction is repeated several times on my account.", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 163, "text": "I have a 1 euro fee on my statement.", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 164, "text": "More than one time this week, I have been charged more than once for the same transaction. Please correct the issue and refund the duplicate charges.", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 165, "text": "There is an extra charge on my app that I was not told about or I was aware of!", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 166, "text": "I bought something and returned it and the money from the return isn't in my account.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 167, "text": "I want a refund because my package has been taking too long to arrive. How do I go about doing that?", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 168, "text": "Can I receive a refund for my item?", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 169, "text": "It's been two weeks, why has the transaction for $1.00 not been reversed?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 170, "text": "I would like a refund on the extra pound I was charged.", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 171, "text": "I asked for a refund last week but nothing has happened yet, can you help me please?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 172, "text": "Why have I been charged twice for the same transaction?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 173, "text": "Why is there an extra 1 pound charge on my card?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 174, "text": "My refund is missing", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 175, "text": "The refund has not appeared in my account", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 176, "text": "Why am I being charged twice fro a restaurant?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 177, "text": "I have been charged twice", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 178, "text": "Why am I being charged twice?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 179, "text": "I need help. I asked for a refund from a merchant a while ago, but I have not gotten my money back. I keep checking my account, but nothing is showing up. What should I do now?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
-{"id": 180, "text": "It looks like this week I was double charged for a couple things. Is there any way that you can look into this for me and return the double charged items back to my card?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 181, "text": "My card has been charged two separate times for a single transaction.", "gold": "payments_fees", "fine": "transaction_charged_twice"}
-{"id": 182, "text": "Why does my statement have these extra charges?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
-{"id": 183, "text": "I would appreciate it if I could get an item refunded", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 184, "text": "I would like to cancel a payment. I purchased something several days ago and i still have not received it.", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 185, "text": "How do I cancel a previous purchase", "gold": "payments_fees", "fine": "request_refund"}
-{"id": 186, "text": "I made a cash deposit almost a week ago but it's still not there!! please sort this out asap I need the money", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 187, "text": "My account got charged for taking out cash, why did this happen?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 188, "text": "Is there a fee for withdrawing cash?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 189, "text": "Do ATM cash withdrawals carry a charge now? They've been free in the past, but all of a sudden I have to pay to make ATM withdrawals?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 190, "text": "I Submitted a cheque couple days ago, nothing happened to my account yet.Would you please check What could be the possible issue?", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 191, "text": "Is there a limit on how much I can withdraw from my account without being charged?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 192, "text": "\nWhich ATMs accept this card?", "gold": "cash_atm", "fine": "atm_support"}
-{"id": 193, "text": "I tired to deposit some cash into my account but it's not there", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 194, "text": "When I got cash, I'm pretty sure there was a glitch that overcharged me.", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 195, "text": "Cash withdrawal still pending?", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
-{"id": 196, "text": "I took cash and got charged a fee", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 197, "text": "I asked for 100 but only got 20.", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
-{"id": 198, "text": "What is this charge on my account for a cash withdrawl?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 199, "text": "Hi, My card withdrawal was declined this morning. It was working fine till yesterday. Please check and inform me.", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
-{"id": 200, "text": "The right amount of cash was not sent to me.", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
-{"id": 201, "text": "There is a cash withdrawal transaction that I am unsure of.", "gold": "cash_atm", "fine": "cash_withdrawal_not_recognised"}
-{"id": 202, "text": "What do I do if the ATM didn't give me the correct amount I withdrew? I pulled out 30 pounds and the ATM gave me 10 pounds.", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
-{"id": 203, "text": "At what ATMS am I able to use the card?", "gold": "cash_atm", "fine": "atm_support"}
-{"id": 204, "text": "I checked the exchange rate when I withdrew cash. But the actual rate that you applied was different.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
-{"id": 205, "text": "I was charged for a cash withdrawal.", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 206, "text": "The ATM did not allow me to withdraw", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
-{"id": 207, "text": "There's a cash withdraw on my statement that I didn't make.", "gold": "cash_atm", "fine": "cash_withdrawal_not_recognised"}
-{"id": 208, "text": "Why can't I get cash?", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
-{"id": 209, "text": "I was declined when I tried to get cash.", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
-{"id": 210, "text": "What ATMs can I withdraw money from?", "gold": "cash_atm", "fine": "atm_support"}
-{"id": 211, "text": "locations to withdraw money", "gold": "cash_atm", "fine": "atm_support"}
-{"id": 212, "text": "I have withdrawn cash from ATM but i received the wrong amount. I want cash back as in app its showing actual amount which i got. Please help me in this.", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
-{"id": 213, "text": "I have paid money into my account but it doesn't show.", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 214, "text": "how long does it take to post atm with drawl", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
-{"id": 215, "text": "I deposited a check but my balance is still the same.", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 216, "text": "Hey I tried to get some money out earlier but the machine didn't work. Now just saw the transaction still seems in progress! Can you please check what's going there, seems something is broken, I don't want to be charged for money that I haven't actually received!", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
-{"id": 217, "text": "Using an ATM caused me to incur an additional fee. Why?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 218, "text": "Why is there an extra charge for money that was withdrawn?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 219, "text": "Is my pending cash withdrawal processed?", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
-{"id": 220, "text": "A fee was charged for my recent withdrawal.", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 221, "text": "I have got out the wrong amount from an ATM. Please tell me the process to get the cash back as in app its showing the amount i have been actually received.", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
-{"id": 222, "text": "How do I know which ATMs will accept this card?", "gold": "cash_atm", "fine": "atm_support"}
-{"id": 223, "text": "The cash withdrawal exchange rate is not correct.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
-{"id": 224, "text": "I am still waiting for a cash withdrawal to show", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
-{"id": 225, "text": "My cash deposit from a week ago hasn't shown up. I need the money - how quickly can you sort this out?", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 226, "text": "how do you determine your exchange rates because one of yours was off when i got cash", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
-{"id": 227, "text": "Cash deposit to my account but it has not appeared.", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 228, "text": "I took out a foreign currency and the exchange rate is wrong.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
-{"id": 229, "text": "I can't get money out of the ATM", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
-{"id": 230, "text": "Where is the cash from my cheque I recently deposited?", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 231, "text": "I attempted to get cash but was declined.", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
-{"id": 232, "text": "IM still waiting for my account to update from a cash deposit?", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 233, "text": "How can I get the cash deposit to show up on my account?", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 234, "text": "My transaction is still showing that is pending from my cash withdrawal.", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
-{"id": 235, "text": "Where can I withdrawal my money?", "gold": "cash_atm", "fine": "atm_support"}
-{"id": 236, "text": "Why did I have to pay a fee when I got cash?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 237, "text": "cash from this morning has not deposited", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 238, "text": "What happened to the cash that I tried to deposit into my account? It's gone!", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
-{"id": 239, "text": "How do I cancel my card? There are charges on my account that I didn't make.", "gold": "cash_atm", "fine": "cash_withdrawal_not_recognised"}
-{"id": 240, "text": "My ecchange rate was wrong for a cash transaction.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
-{"id": 241, "text": "I couldn't get cash at the atm", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
-{"id": 242, "text": "It seems I was overcharged when I used an ATM while on vacation. If I knew about your fees in advance I sure would have gone somewhere else.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
-{"id": 243, "text": "If I have this card, which ATMs can I go to?", "gold": "cash_atm", "fine": "atm_support"}
-{"id": 244, "text": "I got a fee for an ATM withdrawal.", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
-{"id": 245, "text": "I have not received the amount of cash i was supposed to.", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
-{"id": 246, "text": "Hi, I was trying to use my card but it was declining by ATM. I have cross checked with two different ATMs but i was facing the same issue. Could you please check my account.", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
-{"id": 247, "text": "I just got $20 when I tried to get $100", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
-{"id": 248, "text": "Is there a reason my top up hasn't gone through", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 249, "text": "why isnt top up working", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 250, "text": "I need to know why my credit card was declined for top up? What is the deal here and why did it not go through?", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 251, "text": "I attempted to top up but the app denied it.", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 252, "text": "I topped up by card a while ago and it's still pending, surely it should be done by now?", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 253, "text": "What's the deal? My card was just denied for top up. Why is it not going through?", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 254, "text": "When I top up what are the amoutn limits.", "gold": "top_up", "fine": "top_up_limits"}
-{"id": 255, "text": "The top-up has a definite problem! I regularly use your service and haven't had a problem before, but now the top-up just shows pending. Please tell my why it continues to show pending.", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 256, "text": "I'm pretty sure my top up failed. How do I fix this?", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 257, "text": "how do I top up my money automatically", "gold": "top_up", "fine": "automatic_top_up"}
-{"id": 258, "text": "Problems with top up", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 259, "text": "Do you do SWIFT transfers?", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
-{"id": 260, "text": "So, I tried topping up my card for the today. Unfortunately, it failed. A couple of days back I used it and it works fine. Can you double check and tell me what's going on?", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 261, "text": "I put money into my account for the minimum balance but the application didn't accept.", "gold": "top_up", "fine": "top_up_reverted"}
-{"id": 262, "text": "Will I be charged a fee if I receive a SEPA transfer", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
-{"id": 263, "text": "Can I send a cheque to do my top ups?", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
-{"id": 264, "text": "Please tell me about SWIFT transfers at this bank.", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
-{"id": 265, "text": "Is there a limit to top-ups?", "gold": "top_up", "fine": "top_up_limits"}
-{"id": 266, "text": "Why am i to verify the top-ups?", "gold": "top_up", "fine": "verify_top_up"}
-{"id": 267, "text": "Why can't I top up?", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 268, "text": "My top-up showed as complete, but it's no longer there! What's going on here?", "gold": "top_up", "fine": "top_up_reverted"}
-{"id": 269, "text": "Can I top up using a cheque?", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
-{"id": 270, "text": "Was my top up reversed?", "gold": "top_up", "fine": "top_up_reverted"}
-{"id": 271, "text": "I think my top-up was cancelled.", "gold": "top_up", "fine": "top_up_reverted"}
-{"id": 272, "text": "What is the limit to top-up?", "gold": "top_up", "fine": "top_up_limits"}
-{"id": 273, "text": "What are the top-up limits?", "gold": "top_up", "fine": "top_up_limits"}
-{"id": 274, "text": "Will I be charged if someone needs to send me money?", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
-{"id": 275, "text": "Can you please make my top up go through as soon as possible. I really need the money and it has been pending for an hour already.", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 276, "text": "Is there a top-up feature, if there isn't a lot of money left?", "gold": "top_up", "fine": "automatic_top_up"}
-{"id": 277, "text": "top-up is slow to process", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 278, "text": "I'm running out of money, can I  auto top up?", "gold": "top_up", "fine": "automatic_top_up"}
-{"id": 279, "text": "My top-up failed, WHY?", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 280, "text": "What reason did my top-up fail for?", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 281, "text": "can you assist me with the auto top up ?", "gold": "top_up", "fine": "automatic_top_up"}
-{"id": 282, "text": "Why caused my top up to not work?", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 283, "text": "Is there a charge for topping up by transfer?", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
-{"id": 284, "text": "What are the restrictions to top-offs?", "gold": "top_up", "fine": "top_up_limits"}
-{"id": 285, "text": "Is there a verification code for top-ups?", "gold": "top_up", "fine": "verify_top_up"}
-{"id": 286, "text": "Are there limits on auto top-up?", "gold": "top_up", "fine": "automatic_top_up"}
-{"id": 287, "text": "So I just put my top-up into the card and it hasn't changed.", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 288, "text": "How can I find the top-up verification code?", "gold": "top_up", "fine": "verify_top_up"}
-{"id": 289, "text": "I topped up but it didn't complete", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 290, "text": "Why is it important to verify a top-up card?", "gold": "top_up", "fine": "verify_top_up"}
-{"id": 291, "text": "Why would my top up be cancelled?", "gold": "top_up", "fine": "top_up_reverted"}
-{"id": 292, "text": "I  do not see a top-up processed.", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 293, "text": "Can you tell me why my top up was reverted?", "gold": "top_up", "fine": "top_up_reverted"}
-{"id": 294, "text": "Is there something wrong with your website? I tried topping up my account and it's been close to two hours now and it's still at \"pending\" for some reason. I just joined with you guys and this is the first attempt at this, so maybe I'm wrong, but shouldn't this be instant?", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 295, "text": "Could you explain why my top-up has gone through yet?", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 296, "text": "Will it automatically top-up or do I need to do that manually if there isn't much cash left?", "gold": "top_up", "fine": "automatic_top_up"}
-{"id": 297, "text": "how much can i top up?", "gold": "top_up", "fine": "top_up_limits"}
-{"id": 298, "text": "My top up failed.", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 299, "text": "What is going on? My top-up is still pending. I use your system all the time but now it is just showing as pending.", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 300, "text": "Why is my top-up still outstanding?", "gold": "top_up", "fine": "pending_top_up"}
-{"id": 301, "text": "What methods can I use to top up my account?", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
-{"id": 302, "text": "I don't understand why it says I have to verify the top-up.", "gold": "top_up", "fine": "verify_top_up"}
-{"id": 303, "text": "Causes of top-up cancellation", "gold": "top_up", "fine": "top_up_reverted"}
-{"id": 304, "text": "Is it necessary to verify my top up?", "gold": "top_up", "fine": "verify_top_up"}
-{"id": 305, "text": "What's the top up limit?", "gold": "top_up", "fine": "top_up_limits"}
-{"id": 306, "text": "Why did my top up not work?", "gold": "top_up", "fine": "top_up_failed"}
-{"id": 307, "text": "What are the charges for receiving money?", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
-{"id": 308, "text": "Can you tell me if my top-up has been cancelled?", "gold": "top_up", "fine": "top_up_reverted"}
-{"id": 309, "text": "Is a SWIFT transfer okay?", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
-{"id": 310, "text": "I am sick of this damn company and want to close out my account.", "gold": "account", "fine": "terminate_account"}
-{"id": 311, "text": "I need help changing my last name on my account.", "gold": "account", "fine": "edit_personal_details"}
-{"id": 312, "text": "I cannot verify my identity", "gold": "account", "fine": "unable_to_verify_identity"}
-{"id": 313, "text": "I can't prove my identity.", "gold": "account", "fine": "unable_to_verify_identity"}
-{"id": 314, "text": "Where can I find your locations?", "gold": "account", "fine": "country_support"}
-{"id": 315, "text": "Do my kids have to be a certain age to use this service?", "gold": "account", "fine": "age_limit"}
-{"id": 316, "text": "I would like to see the source of my money.", "gold": "account", "fine": "verify_source_of_funds"}
-{"id": 317, "text": "what is the identity check?", "gold": "account", "fine": "why_verify_identity"}
-{"id": 318, "text": "Can I verify the source of my funds?", "gold": "account", "fine": "verify_source_of_funds"}
-{"id": 319, "text": "I lost my password", "gold": "account", "fine": "passcode_forgotten"}
-{"id": 320, "text": "I need to update my personal details", "gold": "account", "fine": "edit_personal_details"}
-{"id": 321, "text": "Can you help me get rid of my account?", "gold": "account", "fine": "terminate_account"}
-{"id": 322, "text": "I am having issues with identity verification", "gold": "account", "fine": "unable_to_verify_identity"}
-{"id": 323, "text": "When getting my ID checked, what are the steps involved?", "gold": "account", "fine": "verify_my_identity"}
-{"id": 324, "text": "The hotel called and said I left my phone in the room.", "gold": "account", "fine": "lost_or_stolen_phone"}
-{"id": 325, "text": "What countries do you currently do business in?", "gold": "account", "fine": "country_support"}
-{"id": 326, "text": "Why do you need to know so much about me", "gold": "account", "fine": "why_verify_identity"}
-{"id": 327, "text": "My address has changed. How do I report it?", "gold": "account", "fine": "edit_personal_details"}
-{"id": 328, "text": "Is there a specific type you need for identity verification?", "gold": "account", "fine": "verify_my_identity"}
-{"id": 329, "text": "How can I lookup where funds came from?", "gold": "account", "fine": "verify_source_of_funds"}
-{"id": 330, "text": "How do I change my information?", "gold": "account", "fine": "edit_personal_details"}
-{"id": 331, "text": "My ID won't be verified!", "gold": "account", "fine": "unable_to_verify_identity"}
-{"id": 332, "text": "What countries do you do business in?", "gold": "account", "fine": "country_support"}
-{"id": 333, "text": "Where do you support?", "gold": "account", "fine": "country_support"}
-{"id": 334, "text": "will i be able to open an account for my daughter", "gold": "account", "fine": "age_limit"}
-{"id": 335, "text": "I need the source of my funds verified. How do I do this?", "gold": "account", "fine": "verify_source_of_funds"}
-{"id": 336, "text": "This company is terrible! Can you delete my account?", "gold": "account", "fine": "terminate_account"}
-{"id": 337, "text": "My passcode doesn't work", "gold": "account", "fine": "passcode_forgotten"}
-{"id": 338, "text": "Someone stole my phone.", "gold": "account", "fine": "lost_or_stolen_phone"}
-{"id": 339, "text": "Why am I having trouble verifying my id?", "gold": "account", "fine": "unable_to_verify_identity"}
-{"id": 340, "text": "I got mugged yesterday and lost access to the app. I need to regain it.", "gold": "account", "fine": "lost_or_stolen_phone"}
-{"id": 341, "text": "What is the age to open an account?", "gold": "account", "fine": "age_limit"}
-{"id": 342, "text": "i want to close an account but im not sure about setting up a new one in the future, what do you recommend", "gold": "account", "fine": "terminate_account"}
-{"id": 343, "text": "What all am I required to show for the identity check?", "gold": "account", "fine": "verify_my_identity"}
-{"id": 344, "text": "What do i have to do to change my name?", "gold": "account", "fine": "edit_personal_details"}
-{"id": 345, "text": "I live in the US but want to get a card", "gold": "account", "fine": "country_support"}
-{"id": 346, "text": "Where can I go to modify my detail?", "gold": "account", "fine": "edit_personal_details"}
-{"id": 347, "text": "I'm not sure where my phone is, I think someone stole it or it's lost.", "gold": "account", "fine": "lost_or_stolen_phone"}
-{"id": 348, "text": "I lost my phone!", "gold": "account", "fine": "lost_or_stolen_phone"}
-{"id": 349, "text": "Do I have to do an identity check?", "gold": "account", "fine": "why_verify_identity"}
-{"id": 350, "text": "I have forgotten my password.", "gold": "account", "fine": "passcode_forgotten"}
-{"id": 351, "text": "Show me please how to reset my passcode.", "gold": "account", "fine": "passcode_forgotten"}
-{"id": 352, "text": "Please delete my account right now!", "gold": "account", "fine": "terminate_account"}
-{"id": 353, "text": "Why does my money come from?", "gold": "account", "fine": "verify_source_of_funds"}
-{"id": 354, "text": "I do not wish to verify my identity.", "gold": "account", "fine": "why_verify_identity"}
-{"id": 355, "text": "i live in the US can i still get a card?", "gold": "account", "fine": "country_support"}
-{"id": 356, "text": "Help my verify my id.", "gold": "account", "fine": "unable_to_verify_identity"}
-{"id": 357, "text": "How do I use the app if I don't have my phone with me?", "gold": "account", "fine": "lost_or_stolen_phone"}
-{"id": 358, "text": "Is there an age limit?", "gold": "account", "fine": "age_limit"}
-{"id": 359, "text": "How to change my address.", "gold": "account", "fine": "edit_personal_details"}
-{"id": 360, "text": "Can I open an account for a child?", "gold": "account", "fine": "age_limit"}
-{"id": 361, "text": "What's the minimum age for opening an account?", "gold": "account", "fine": "age_limit"}
-{"id": 362, "text": "for some reason I am having a problem with verifying my identity.", "gold": "account", "fine": "unable_to_verify_identity"}
-{"id": 363, "text": "Do you support the EU?", "gold": "account", "fine": "country_support"}
-{"id": 364, "text": "lost my phone, dont want others to use it.", "gold": "account", "fine": "lost_or_stolen_phone"}
-{"id": 365, "text": "My phone is not with me at the moment so I will not be able to access the app.", "gold": "account", "fine": "lost_or_stolen_phone"}
-{"id": 366, "text": "Your service is terrible,.  Delete my account,", "gold": "account", "fine": "terminate_account"}
-{"id": 367, "text": "Do I need to verify my identity each time I wish to use my account?", "gold": "account", "fine": "why_verify_identity"}
-{"id": 368, "text": "What are the countries you operate in.", "gold": "account", "fine": "country_support"}
-{"id": 369, "text": "Why do you require so many details about my identity?", "gold": "account", "fine": "why_verify_identity"}
-{"id": 370, "text": "I am experiencing difficulty providing my identity.", "gold": "account", "fine": "unable_to_verify_identity"}
-{"id": 371, "text": "Are your cards available in Europe?", "gold": "account", "fine": "country_support"}
-{"id": 372, "text": "can you tell me why my transfer failed?", "gold": "transfers", "fine": "failed_transfer"}
-{"id": 373, "text": "For what reason was my transfer declined?", "gold": "transfers", "fine": "declined_transfer"}
-{"id": 374, "text": "Hey, I need some help figuring out way my transfer is not complete yet. My Landlord hasn't got the money yet.She should have received it by now.", "gold": "transfers", "fine": "transfer_not_received_by_recipient"}
-{"id": 375, "text": "I would like to transfer funds from one account to another.", "gold": "transfers", "fine": "transfer_into_account"}
-{"id": 376, "text": "My transfer didn't work", "gold": "transfers", "fine": "failed_transfer"}
-{"id": 377, "text": "I know that I am able to make transfers for free.  That was something that I valued.  After I bought something online from abroad I noticed that I got charged a fee?  What is this and can it be removed?", "gold": "transfers", "fine": "transfer_fee_charged"}
-{"id": 378, "text": "I want to buy cryptocurrency, but your app doesn't let me. Why?", "gold": "transfers", "fine": "beneficiary_not_allowed"}
-{"id": 379, "text": "Why did my transfer decline", "gold": "transfers", "fine": "declined_transfer"}
-{"id": 380, "text": "Can I add funds to the card directly from my bank account?", "gold": "transfers", "fine": "transfer_into_account"}
-{"id": 381, "text": "How many days does a transfer from the US take?", "gold": "transfers", "fine": "transfer_timing"}
-{"id": 382, "text": "I made a transfer a few hours ago from a UK banking account.  I do not yet see the transfer.  Please check on this for me.", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
-{"id": 383, "text": "Why did I get a message saying that my transfer is not possible?  I have done this before no problem.  Please fix.", "gold": "transfers", "fine": "beneficiary_not_allowed"}
-{"id": 384, "text": "I tried to buy something online yesterday but it wouldn't stop saying declined. Tried again today but same thing happened. What's Broken?", "gold": "transfers", "fine": "declined_transfer"}
-{"id": 385, "text": "I transferred the rent payment for my new place a couple days ago but the landlord says it's not there yet, despite showing up as done on my side. I checked the account number I sent it to and it's definitely correct. Can you please verify if the transaction really went through or not?", "gold": "transfers", "fine": "transfer_not_received_by_recipient"}
-{"id": 386, "text": "A transfer to an account was not allowed", "gold": "transfers", "fine": "beneficiary_not_allowed"}
-{"id": 387, "text": "I get paid in GBP. Should I configure this and if so, where?", "gold": "transfers", "fine": "receiving_money"}
-{"id": 388, "text": "How long is it going to take for my funds to show in my account?", "gold": "transfers", "fine": "transfer_timing"}
-{"id": 389, "text": "how come my transfer didn't work", "gold": "transfers", "fine": "failed_transfer"}
-{"id": 390, "text": "I need someone to alert me as to what's going on. I had transferred an amount but the receiver is saying that the amount is somewhat less than what I sent over. I now have to make another transfer to make up the difference.", "gold": "transfers", "fine": "transfer_fee_charged"}
-{"id": 391, "text": "I had to pay in order to do a transfer", "gold": "transfers", "fine": "transfer_fee_charged"}
-{"id": 392, "text": "I made an out of country transfer and it hasn't went through yet.", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
-{"id": 393, "text": "Why doesn't my balance reflect my transfer", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
-{"id": 394, "text": "Someone transferred money to me and it doesn't show", "gold": "transfers", "fine": "pending_transfer"}
-{"id": 395, "text": "Is it possible to deposit money in GBP?", "gold": "transfers", "fine": "receiving_money"}
-{"id": 396, "text": "Where is the transfer I started?", "gold": "transfers", "fine": "transfer_not_received_by_recipient"}
-{"id": 397, "text": "Can I use this to receive my salary?", "gold": "transfers", "fine": "receiving_money"}
-{"id": 398, "text": "When will the transfer go through?", "gold": "transfers", "fine": "pending_transfer"}
-{"id": 399, "text": "How long does a UK transfer take?", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
-{"id": 400, "text": "My friend still hasn't gotten a transaction I made.", "gold": "transfers", "fine": "transfer_not_received_by_recipient"}
-{"id": 401, "text": "I transferred some money but I think it has gotten lost somewhere.", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
-{"id": 402, "text": "What if I need my salary in a different currency?", "gold": "transfers", "fine": "receiving_money"}
-{"id": 403, "text": "I submitted my transfer but it has been pending for quite a while and I was wondering what takes so long? why hasn't it completed", "gold": "transfers", "fine": "pending_transfer"}
-{"id": 404, "text": "I would like to know why my payment is still pending, can you help?", "gold": "transfers", "fine": "pending_transfer"}
-{"id": 405, "text": "Why is my balance the same?  I processed a transfer.", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
-{"id": 406, "text": "I tried to make a transfer and it was declined. Why?", "gold": "transfers", "fine": "declined_transfer"}
-{"id": 407, "text": "My transaction needs to be canceled.", "gold": "transfers", "fine": "cancel_transfer"}
-{"id": 408, "text": "I'm trying to transfer money into my account.", "gold": "transfers", "fine": "transfer_into_account"}
-{"id": 409, "text": "I need to make an immediate cancellation related to a transfer. This was a mistake. Please assist quickly so this does not actually go through.", "gold": "transfers", "fine": "cancel_transfer"}
-{"id": 410, "text": "Pending transfer?", "gold": "transfers", "fine": "pending_transfer"}
-{"id": 411, "text": "How long does it take for funds to come through the US to my account?", "gold": "transfers", "fine": "transfer_timing"}
-{"id": 412, "text": "Why doesn't it show that I did a balance transfer?", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
-{"id": 413, "text": "I was attempting to purchase a golf club off eBay yesterday, but my credit card was declined. I tried multiple times, and again this morning. Can you check into my card please?", "gold": "transfers", "fine": "declined_transfer"}
-{"id": 414, "text": "transaction failed?", "gold": "transfers", "fine": "transfer_not_received_by_recipient"}
-{"id": 415, "text": "Please help me make a transfer. I keep receiving an error and I'm trying to make the initial mortgage payment for a flat I'm buying. What is the deal here?", "gold": "transfers", "fine": "failed_transfer"}
-{"id": 416, "text": "I am not able to do a transfer to an account", "gold": "transfers", "fine": "beneficiary_not_allowed"}
-{"id": 417, "text": "I couldn't do a transfer to an account", "gold": "transfers", "fine": "beneficiary_not_allowed"}
-{"id": 418, "text": "I didn't get the money I transferred", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
-{"id": 419, "text": "Can I cancel my transaction?", "gold": "transfers", "fine": "cancel_transfer"}
-{"id": 420, "text": "When I submit a transfer, it is being declined.  The information I put in has been reviewed.", "gold": "transfers", "fine": "declined_transfer"}
-{"id": 421, "text": "I got charged and extra fee when I transferred money so why was I charged?", "gold": "transfers", "fine": "transfer_fee_charged"}
-{"id": 422, "text": "Why has my transfer failed?", "gold": "transfers", "fine": "failed_transfer"}
-{"id": 423, "text": "What's the deal with no cryptocurrency on your app?", "gold": "transfers", "fine": "beneficiary_not_allowed"}
-{"id": 424, "text": "I'm out of money, can I add money with my bank?", "gold": "transfers", "fine": "transfer_into_account"}
-{"id": 425, "text": "How can someone send me money?", "gold": "transfers", "fine": "receiving_money"}
-{"id": 426, "text": "I initiated a Bank transfer form Europe, how long will this take?", "gold": "transfers", "fine": "transfer_timing"}
-{"id": 427, "text": "I need to bank account transfer from another account into this one, what is the easiest way that can be done, and what information do i need?", "gold": "transfers", "fine": "transfer_into_account"}
-{"id": 428, "text": "Why couldn't I do a transfer to a beneficiary?", "gold": "transfers", "fine": "beneficiary_not_allowed"}
-{"id": 429, "text": "I've tried numerous times to submit a transfer of funds. Why isn't it going through?", "gold": "transfers", "fine": "beneficiary_not_allowed"}
-{"id": 430, "text": "How many days does it take until funds are in my account?", "gold": "transfers", "fine": "transfer_timing"}
-{"id": 431, "text": "I am getting continuous failure for all my transfers. I have cross checked each recipient detail again and again and everything is correct.", "gold": "transfers", "fine": "declined_transfer"}
-{"id": 432, "text": "What are the ways for others to transfer me money?", "gold": "transfers", "fine": "receiving_money"}
-{"id": 433, "text": "How do I deposit my paycheck to this account?", "gold": "transfers", "fine": "receiving_money"}
-{"id": 434, "text": "Can I top up from my Apple Watch?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 435, "text": "Someone has taken my money and I don't know who", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 436, "text": "Is Apple Pay a possible top up option?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 437, "text": "There is a suspicious direct debit payment.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 438, "text": "Can I use the system Google Pay for top-ups?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 439, "text": "Even though it's late, I wanted to see about disputing a charge. I was just looking through my transactions over the past couple of months and noticed a pretty large amount that was not completed by me. Is this possibly something I can still do.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 440, "text": "I have a direct debit charge that I do not recognize", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 441, "text": "There is a Direct Debit that I don't recognize.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 442, "text": "Is the top up feature available on the Apple Watch?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 443, "text": "I have a strange direct debit in my statement", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 444, "text": "I was charged on my account that shouldn't be there.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 445, "text": "There was a transaction from two weeks ago from a business that I don't know. I'm fairly certain it wasn't me who made it, but is it an option to trace it to confirm?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 446, "text": "How do I get the Top Up feature on my apple watch working?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 447, "text": "I understand that this is extremely late. After going over my transactions for the last couple of months I noticed a large charge that I'm sure I did not make. Is there anyway I can still dispute this?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 448, "text": "Can I use Apple Pay to top up?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 449, "text": "Can I use my American Express stored in Apple Pay to top up?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 450, "text": "There is a transaction from my account that I don't recognize can you trace back the information so I can make sure it's something I did or not?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 451, "text": "This Direct Debit payment may not be right.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 452, "text": "I found a charge for a direct debit that was not made by me.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 453, "text": "Why isn't my top up working using my saved American Express in ApplePay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 454, "text": "How do I top up? Can I use my apple watch?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 455, "text": "Can I add money with Apple Pay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 456, "text": "Google pay and top up, I want it, can I get it?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 457, "text": "I am seeing a weird payment showing up that I know I did not make, how can I get it cancelled?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 458, "text": "Does Google Play have an app to Top up?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 459, "text": "I don't think I made this charge on my debit statement.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 460, "text": "I am concerned about the security in my account and would like to make a dispute.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 461, "text": "Why is there a direct debit I didn't make showing in the app?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 462, "text": "Why can't I use my American Express with Apple Pay to top up my account?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 463, "text": "My American Express is in my Apple Pay and the top up is failing, why?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 464, "text": "Does Apple Pay give the option to top up?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 465, "text": "Why is there a direct debit payment on my app that is not from me?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 466, "text": "I don't know how to top up my Google pay.", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 467, "text": "I can't top up my account using my American Express with Apple Pay.", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 468, "text": "I didn't make this direct debit transaction", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 469, "text": "There's a direct debit on my account that I didn't authorize", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 470, "text": "I don't recognize a debit payment that was made and would like to find out about the payment.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 471, "text": "Unknown direct deposit", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 472, "text": "I received my American Express card, but I am having problems making it work with Apple pay.  Can you help me with this problem?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 473, "text": "There is a direct debit that's not mine.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 474, "text": "My top up is not working in Apple Pay.", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 475, "text": "Is it possible to use Apple Pay to put money in my account?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 476, "text": "I don't understand where this debit came from and want it removed.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 477, "text": "I have a direct debit transaction I have not set up, but would like to .", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 478, "text": "How can I top-ff my account using my Apple Watch?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 479, "text": "How can I top up my Google Pay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 480, "text": "Top up on my Google Pay isn't working.", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 481, "text": "what is this charge on my account", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 482, "text": "There's a direct debit I wish to dispute", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 483, "text": "can google pay be used to make a top-up", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 484, "text": "I may have a fraud charge on my debit statement.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 485, "text": "There is a direct debit I do not recognise in my statement", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 486, "text": "is apple pay costly?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 487, "text": "How do I top up with Apple Pay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 488, "text": "is apple pay eligible for top up", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 489, "text": "Can I dispute a payment even if I notice it several weeks after it was made?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 490, "text": "If I want to top up, can I use Apple Pay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 491, "text": "im so mad right now. theres several charges that I think my x boyfriend made on my card. the companys on the website wouldn't refund me my money, they told me to contact my bank. DO something please.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 492, "text": "How can I top up with Google Pay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 493, "text": "A couple weeks ago some money was deducted from my account by some seller that I don't remember. I'm pretty sure I didn't do that, but is it possible to trace back who that is just to make sure?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 494, "text": "someone stole my money", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
-{"id": 495, "text": "My American express is experiencing a problem with apple play with top up, can you fix it?", "gold": "other", "fine": "apple_pay_or_google_pay"}
-{"id": 496, "text": "Is there any way to cancel a transfer?", "gold": "transfers", "fine": "cancel_transfer"}
-{"id": 497, "text": "I double checked that I have the correct account details , they're right for sure. Transfer is still pending since forever. What should be done now?", "gold": "transfers", "fine": "pending_transfer"}
-{"id": 498, "text": "There is an unauthorized cash withdrawal from my account for 500£.  I definitely didn't make this withdrawal.  I need your help.", "gold": "cash_atm", "fine": "cash_withdrawal_not_recognised"}
-{"id": 499, "text": "Why is identity verification mandatory?", "gold": "account", "fine": "why_verify_identity"}
+{"id": 0, "text": "Is my PIN sent separably?", "gold": "cards", "fine": "get_physical_card"}
+{"id": 1, "text": "I sent a payment but now it's not showing up.", "gold": "cards", "fine": "reverted_card_payment?"}
+{"id": 2, "text": "I think that my card has been stolen!", "gold": "cards", "fine": "lost_or_stolen_card"}
+{"id": 3, "text": "I got a card, how do I get it in the app?", "gold": "cards", "fine": "card_linking"}
+{"id": 4, "text": "I didn't cancel my card payment.", "gold": "cards", "fine": "reverted_card_payment?"}
+{"id": 5, "text": "Can I change my PIN at my local bank?", "gold": "cards", "fine": "change_pin"}
+{"id": 6, "text": "Why is my card payment still pending?", "gold": "cards", "fine": "pending_card_payment"}
+{"id": 7, "text": "It's been a week since I ordered my card and it's not here. Please help?", "gold": "cards", "fine": "card_arrival"}
+{"id": 8, "text": "Why is the exchange rate on my card wrong?", "gold": "cards", "fine": "card_payment_wrong_exchange_rate"}
+{"id": 9, "text": "Do you accept Visa or Mastercard?", "gold": "cards", "fine": "visa_or_mastercard"}
+{"id": 10, "text": "My account was charged a fee. When did you start charging extra for card payments?", "gold": "cards", "fine": "card_payment_fee_charged"}
+{"id": 11, "text": "When using my card I was charged a fee for doing so, why?", "gold": "cards", "fine": "card_payment_fee_charged"}
+{"id": 12, "text": "Can you activate my card pls", "gold": "cards", "fine": "activate_my_card"}
+{"id": 13, "text": "Why am I being charged more on exchange with things I bought abroad?", "gold": "cards", "fine": "card_payment_wrong_exchange_rate"}
+{"id": 14, "text": "I'm not recognizing the card payment.", "gold": "cards", "fine": "card_payment_not_recognised"}
+{"id": 15, "text": "I need a card reactivation, I had reported my card lost but I ran across it in my jacket.", "gold": "cards", "fine": "card_linking"}
+{"id": 16, "text": "I can't get the virtual card to work", "gold": "cards", "fine": "virtual_card_not_working"}
+{"id": 17, "text": "Can I revive a physical card.", "gold": "cards", "fine": "order_physical_card"}
+{"id": 18, "text": "Can I use my American Express card to add money into my account?", "gold": "cards", "fine": "supported_cards_and_currencies"}
+{"id": 19, "text": "What do I do if my card has been lost or stolen?", "gold": "cards", "fine": "lost_or_stolen_card"}
+{"id": 20, "text": "My card won't work right now.", "gold": "cards", "fine": "card_not_working"}
+{"id": 21, "text": "What do I do to link my new card?", "gold": "cards", "fine": "card_linking"}
+{"id": 22, "text": "is it ok if i use both visa and mastercard", "gold": "cards", "fine": "visa_or_mastercard"}
+{"id": 23, "text": "Will you charge me more if I use a European bank card for a top up?", "gold": "cards", "fine": "top_up_by_card_charge"}
+{"id": 24, "text": "I paid with my card and was charged extra", "gold": "cards", "fine": "card_payment_fee_charged"}
+{"id": 25, "text": "There's a problem - I bought something about a week or two ago but just today the payment somehow came back into my account! I already received the item though, what's going on here?", "gold": "cards", "fine": "reverted_card_payment?"}
+{"id": 26, "text": "my payment was rejected, do you know why?", "gold": "cards", "fine": "declined_card_payment"}
+{"id": 27, "text": "How do I activate my card that just arrived?", "gold": "cards", "fine": "activate_my_card"}
+{"id": 28, "text": "What businesses accept my card?", "gold": "cards", "fine": "card_acceptance"}
+{"id": 29, "text": "Can I pay more to get it deliver quicker?", "gold": "cards", "fine": "card_delivery_estimate"}
+{"id": 30, "text": "Why was the price higher when I paid with my card?", "gold": "cards", "fine": "card_payment_fee_charged"}
+{"id": 31, "text": "What do I do?  The ATM took my card!", "gold": "cards", "fine": "card_swallowed"}
+{"id": 32, "text": "how to get card pin?", "gold": "cards", "fine": "get_physical_card"}
+{"id": 33, "text": "Am I allowed to carry an additional card?", "gold": "cards", "fine": "getting_spare_card"}
+{"id": 34, "text": "I was blocked by using the wrong pin too many times, can you help me?", "gold": "cards", "fine": "pin_blocked"}
+{"id": 35, "text": "I want to reactivate my card, I found it after thinking it was lost.", "gold": "cards", "fine": "card_linking"}
+{"id": 36, "text": "my card was refused, why?", "gold": "cards", "fine": "declined_card_payment"}
+{"id": 37, "text": "Am I able to use my American Express to add money to my account balance?", "gold": "cards", "fine": "supported_cards_and_currencies"}
+{"id": 38, "text": "Is there a fee for european bank cards?", "gold": "cards", "fine": "top_up_by_card_charge"}
+{"id": 39, "text": "Where can I order a card?", "gold": "cards", "fine": "order_physical_card"}
+{"id": 40, "text": "What does it mean when it says that I have a payment that is pending?", "gold": "cards", "fine": "pending_card_payment"}
+{"id": 41, "text": "The payment on my card shows as pending.", "gold": "cards", "fine": "pending_card_payment"}
+{"id": 42, "text": "Will I get Visa or MasterCard?", "gold": "cards", "fine": "visa_or_mastercard"}
+{"id": 43, "text": "Please explain why my payment was declined? I thought everything was good.", "gold": "cards", "fine": "declined_card_payment"}
+{"id": 44, "text": "What cards do you accept to top up my account?", "gold": "cards", "fine": "supported_cards_and_currencies"}
+{"id": 45, "text": "Your ATM pin can be changed at any VISA or MasterCard ATM with PIN services. Certain countries don't support ATM pin changes.", "gold": "cards", "fine": "change_pin"}
+{"id": 46, "text": "What is the proper way to activate a card?", "gold": "cards", "fine": "activate_my_card"}
+{"id": 47, "text": "How long should it take for my new card to arrive in them mail? What should I do if I never receive it?", "gold": "cards", "fine": "card_arrival"}
+{"id": 48, "text": "How long does it take to activate my card?", "gold": "cards", "fine": "activate_my_card"}
+{"id": 49, "text": "What happens if I forget my PIN?", "gold": "cards", "fine": "pin_blocked"}
+{"id": 50, "text": "There are transactions that I did not make on my account, I think someone has my information.", "gold": "cards", "fine": "compromised_card"}
+{"id": 51, "text": "How can I fund another account with my American Express?", "gold": "cards", "fine": "supported_cards_and_currencies"}
+{"id": 52, "text": "Something's wrong my card won't work.", "gold": "cards", "fine": "card_not_working"}
+{"id": 53, "text": "When can I expect my card to arrive?", "gold": "cards", "fine": "card_delivery_estimate"}
+{"id": 54, "text": "What areas are cards delivered to?", "gold": "cards", "fine": "order_physical_card"}
+{"id": 55, "text": "I have one other credit card from the US. Do you take that?", "gold": "cards", "fine": "supported_cards_and_currencies"}
+{"id": 56, "text": "What can I and can't do with the disposable cards?", "gold": "cards", "fine": "disposable_card_limits"}
+{"id": 57, "text": "Help me unblock my PIN.", "gold": "cards", "fine": "pin_blocked"}
+{"id": 58, "text": "can i get a virtual card online", "gold": "cards", "fine": "get_disposable_virtual_card"}
+{"id": 59, "text": "I would like to change the the PIN on my card.", "gold": "cards", "fine": "change_pin"}
+{"id": 60, "text": "If I add money with an international card, are there any fees?", "gold": "cards", "fine": "top_up_by_card_charge"}
+{"id": 61, "text": "Why is their a charge pending on my card still?", "gold": "cards", "fine": "pending_card_payment"}
+{"id": 62, "text": "Could you help my figure out the exchange fee?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 63, "text": "Can I use this app to change money?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 64, "text": "Which currencies will you exchange?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 65, "text": "I want to hold and exchange fiat currencies, what can I use to do so?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 66, "text": "How do I change to a different currency?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 67, "text": "How can I exchange to EUR?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 68, "text": "Are EUR exchanges allowed?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 69, "text": "What fiat currencies do you support?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 70, "text": "What's the procedure with currency exchange?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 71, "text": "How can I hold and exchange fiat currencies?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 72, "text": "where do you find your exchange rates?", "gold": "fx", "fine": "exchange_rate"}
+{"id": 73, "text": "is there a frequent currency discount?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 74, "text": "Is there a charge for exchanging foreign currencies?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 75, "text": "How do I exchange currencies using the app?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 76, "text": "Does this app allow currencies to be exchanged?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 77, "text": "Can I change from AUD to GBP?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 78, "text": "Does it cost extra to exchange foreign currencies?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 79, "text": "Will you tell me how to exchange USD for GBP in the app?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 80, "text": "How can I exchange currencies with this app?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 81, "text": "How do I start an exchange between GBP and AUD?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 82, "text": "Where can I find the exchange rate for my transfer?", "gold": "fx", "fine": "exchange_rate"}
+{"id": 83, "text": "What are the currency types that I can keep money in.", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 84, "text": "I need Australian dollars instead of UK currency.", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 85, "text": "Are you able to make exchanges to EUR?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 86, "text": "Do I get a discount if I exchange currencies a lot?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 87, "text": "How do I change my AUD into GBP?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 88, "text": "I exchange my currency quite a bit.  Do I get an exchange price break?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 89, "text": "Could you tell me the fiat currencies that you work with?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 90, "text": "I am trying to find out how to exchange currency X with currency Y.", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 91, "text": "How's the exchange rate looking right now?", "gold": "fx", "fine": "exchange_rate"}
+{"id": 92, "text": "Can I exchange currency for different types?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 93, "text": "What is the exchange rate for EUR?", "gold": "fx", "fine": "exchange_rate"}
+{"id": 94, "text": "Can I exchange currencies usign this app?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 95, "text": "What are the fiat currencies used?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 96, "text": "What's the process for exchanges?", "gold": "fx", "fine": "exchange_rate"}
+{"id": 97, "text": "What currencies can I hold?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 98, "text": "Do yo charge a fee for exchanging foreign currencies?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 99, "text": "I'd like to know what the foreign exchange rate will be.", "gold": "fx", "fine": "exchange_rate"}
+{"id": 100, "text": "Are there any discounts in exchanging currencies frequently?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 101, "text": "How do I exchange currencies with this", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 102, "text": "Do you support changing the currency I use?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 103, "text": "Will this app allow me to exchange currencies?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 104, "text": "Is the EUR accepted for exchanges?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 105, "text": "How do I go forth on holding money in multiple currencies?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 106, "text": "What currencies are available for my use in holding and exchange?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 107, "text": "What are the currency exchange fees?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 108, "text": "Can you tell me if I can hold money in several currencies?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 109, "text": "I heard that you support more than one type of fiat currency, would you tell me which ones please?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 110, "text": "Do you charge extra for exchanging currencies?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 111, "text": "Can my account have different types of currency in it.", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 112, "text": "If I exchange currencies on a regular basis, is there a discount?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 113, "text": "I want to exchange USD and GBP with the app", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 114, "text": "What is the exchange looking like?", "gold": "fx", "fine": "exchange_rate"}
+{"id": 115, "text": "how much do I have to pay for exchange of currency?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 116, "text": "Is it possible to exchange currencies on the app?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 117, "text": "How do I switch to a different currency?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 118, "text": "If I exchange currency frequently, can I get a discounted rate?", "gold": "fx", "fine": "exchange_charge"}
+{"id": 119, "text": "Is EUR one of the currencies you deal with?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 120, "text": "How do you determine your exchange rates?", "gold": "fx", "fine": "exchange_rate"}
+{"id": 121, "text": "Is there a specific source that the exchange rate for the transfer I'm planning on making is pulled from?", "gold": "fx", "fine": "exchange_rate"}
+{"id": 122, "text": "Are you okay with exchanges to EUR?", "gold": "fx", "fine": "fiat_currency_support"}
+{"id": 123, "text": "I need to exchange between different currencies, like GBP and USD. Can I do that with your app?", "gold": "fx", "fine": "exchange_via_app"}
+{"id": 124, "text": "I have been charged twice for the same thing!", "gold": "payments_fees", "fine": "transaction_charged_twice"}
+{"id": 125, "text": "Can you refund my purchase?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 126, "text": "I would like to get an item refunded", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 127, "text": "Can you please help me in canceling my order.", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 128, "text": "There is a charge for 1£ on my statement.  I do not think that I bought anything that costed 1£.  What is going on?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 129, "text": "I keep checking my statements but nothing shows up. I requested a refund a long time ago but seems it's not reaching my account for some reason. Would you please help me get the money back from the seller.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 130, "text": "What happens when I am charged twice?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
+{"id": 131, "text": "Please update me on whether you have received the funds for the refund of the large purchase I made recently. I have requested this from the merchant days ago but still haven't got anything.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 132, "text": "There's a €1 fee on my statement, why?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 133, "text": "How come I was charged a transaction of $1?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 134, "text": "Why did a transaction I made charge me $1?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 135, "text": "Why did I get charged more than once?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
+{"id": 136, "text": "what was the $1 fee i got", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 137, "text": "I want to return an item for a refund can I do that?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 138, "text": "Is it possible to have an item refunded?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 139, "text": "I received a refund, however I cannot see it in my account", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 140, "text": "My statement has not shown my refund.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 141, "text": "I can't find my refund. Please help.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 142, "text": "I requested a refund from Next because the dress I purchased had three arm holes. They said they sent the refund last Wednesday which is nearly a week ago and I still don't have it.  Why not?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 143, "text": "I didn't enjoy my tutor session and want a refund back. How do I go about doing this?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 144, "text": "My statement contained a one pound extra fee", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 145, "text": "I would like my money back for an item I purchased", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 146, "text": "I was charged multiple times for one transaction.", "gold": "payments_fees", "fine": "transaction_charged_twice"}
+{"id": 147, "text": "I would like to receive a refund for something I bought.", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 148, "text": "There is a transaction showing up several times.", "gold": "payments_fees", "fine": "transaction_charged_twice"}
+{"id": 149, "text": "Why is there a 1 euro fee on my statement?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 150, "text": "I need some help figuring out what this strange payment is on my account. It's stays pending and won't go away.", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 151, "text": "I can't see a refund for a return I completed recently.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 152, "text": "Three months ago I bought a new house for my cat, fluffy.  Unfortunately Fluffy was not a fan of the house and it had to be returned to Pet Smart last week.  They said they have sent a refund but it's not there, can you tell me where it is?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 153, "text": "I no longer want this can i cancel my purchase?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 154, "text": "Why is it showing that my account has been charged a dollar that is showing as pending?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 155, "text": "I bought something online a week ago and i never got it in the mail.Can I just get my money back now I don't want to keep waiting on something that isn't going to show up.", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 156, "text": "How can I get a refund for an item I purchased but has not yet arrived?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 157, "text": "To many charges on my card how do I go about fixing that?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
+{"id": 158, "text": "There is a €1 extra fee in my statement", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 159, "text": "How can I go about getting a refund?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 160, "text": "My refund has not shown up on my statement.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 161, "text": "I am unhappy with an item I bought. How do I get a refund?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 162, "text": "I want this fee reversed from my account.", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 163, "text": "Can I have a refund for one of your products?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 164, "text": "I bought something that I need a refund for.", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 165, "text": "Please, I need your help as to whether or not you have money for a large refunded purchase I made. I requested it some time ago from the seller, but nothing is showing up.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 166, "text": "Hi. I noticed I have a duplicate charge which I have not made twice. Who should I talk to take care of this?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
+{"id": 167, "text": "How do I get my money back for something I bought?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 168, "text": "i need a refund from you because the merchant is refusing, can you do that?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 169, "text": "I got charged in double and want a refund", "gold": "payments_fees", "fine": "transaction_charged_twice"}
+{"id": 170, "text": "Is it possible to refund an item?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 171, "text": "I should have a refund in my statement but I can't see it", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 172, "text": "My statement is showing an extra £1 charge and I am unsure why. Is there an explanation for this?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 173, "text": "The $1.00 has still not been reverted as indicated in the previous email.", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 174, "text": "Please help me get a refund?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 175, "text": "I want to know about your refund policy.", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 176, "text": "There is an extra 1£ charge on my app. Why did you charge me extra?", "gold": "payments_fees", "fine": "extra_charge_on_statement"}
+{"id": 177, "text": "My refund is still pending", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 178, "text": "There is not a refund in my statement.", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 179, "text": "i need a refund right away but the funds aren't available in my account", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 180, "text": "Can you tell me why a refund I'm owed is not showing on my statement?", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 181, "text": "I got double charged!", "gold": "payments_fees", "fine": "transaction_charged_twice"}
+{"id": 182, "text": "When will I be able to see the refund", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 183, "text": "Can you please assist on my item that needs to be refunded?", "gold": "payments_fees", "fine": "request_refund"}
+{"id": 184, "text": "Hi, I just looked at my card transactions and saw that I've been charged twice for a restaurant I went to this week. Can you remove the double charge, please?", "gold": "payments_fees", "fine": "transaction_charged_twice"}
+{"id": 185, "text": "I was supposed to get a refund but it is not showing up on my card", "gold": "payments_fees", "fine": "Refund_not_showing_up"}
+{"id": 186, "text": "I was only given $20 after trying to withdraw $100", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
+{"id": 187, "text": "Can I use my card at an ATM?", "gold": "cash_atm", "fine": "atm_support"}
+{"id": 188, "text": "Why is the pending status on my cash withdrawal taking so long?", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
+{"id": 189, "text": "I got less than what i asked for in the ATM, why?", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
+{"id": 190, "text": "I believe a wrong exchange rate was applied towards a cash transaction I made abroad.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 191, "text": "Why isn't my cash deposit showing up in my account? I deposited it this morning.", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
+{"id": 192, "text": "The app is showing mt withdrawals that aren't  mine.", "gold": "cash_atm", "fine": "cash_withdrawal_not_recognised"}
+{"id": 193, "text": "Is there any reason my cash withdrawal still shows as pending?", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
+{"id": 194, "text": "My app says I withdraw money from my account from an ATM.", "gold": "cash_atm", "fine": "cash_withdrawal_not_recognised"}
+{"id": 195, "text": "How can I fix this? The ATM gave me more cash than I'd asked for.", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
+{"id": 196, "text": "I made an ATM withdraw it didn't give me the amount I asked for but is showing a withdraw for that amount.", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
+{"id": 197, "text": "Every ATM I visit is rejecting my card and I don't know why. There should be money on it. Can you check it to see if something is wrong or if I'm doing something wrong?", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
+{"id": 198, "text": "Why won't the ATM let me withdraw money?", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
+{"id": 199, "text": "Please provide me a list of ATMs that accept my card.", "gold": "cash_atm", "fine": "atm_support"}
+{"id": 200, "text": "I withdrew cash abroad and the exchange rate applied is wrong.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 201, "text": "Why are you charging me for ATM withdrawal? It has always been free before.", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
+{"id": 202, "text": "My ATM withdrawal was declined.", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
+{"id": 203, "text": "Why is it I am charged an extra fee when I use the ATM?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
+{"id": 204, "text": "There are funds in my app that I did not receive.", "gold": "cash_atm", "fine": "cash_withdrawal_not_recognised"}
+{"id": 205, "text": "Are there any ATM's near me that accept this card?", "gold": "cash_atm", "fine": "atm_support"}
+{"id": 206, "text": "I am having trouble withdrawing cash.", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
+{"id": 207, "text": "If I have already completed a cash withdrawal at an ATM, is it normal for it to show as a pending transaction on the app?", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
+{"id": 208, "text": "Which ATM's can I use to make a withdrawal?", "gold": "cash_atm", "fine": "atm_support"}
+{"id": 209, "text": "my check or cash deposit has not shown up", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
+{"id": 210, "text": "I made a deposit in the ATM and it has not cleared", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
+{"id": 211, "text": "I tried to withdraw cash, but got declined!", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
+{"id": 212, "text": "Where can money withdrawals be made?", "gold": "cash_atm", "fine": "atm_support"}
+{"id": 213, "text": "Where can I find an ATM?", "gold": "cash_atm", "fine": "atm_support"}
+{"id": 214, "text": "cash and check deposit has not gone thru", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
+{"id": 215, "text": "When I went to $100, all the machine would give me was $20.", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
+{"id": 216, "text": "My ATM transaction shorted me on cash, and I think the exchange rate was wrong. Did I receive the correct rate?", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 217, "text": "I cannot withdraw money from the ATM", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
+{"id": 218, "text": "I made an ATM withdrawal over the holiday and then later realized I was charged an exorbitant fee!  I never would've made this withdrawal if I'd known I'd be charged so much.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 219, "text": "I think when I withdrew money when out of country the exchange rate was wrong.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 220, "text": "My card has been declined by two separate ATM, and I'm worried something is wrong with my account. Would you please see if my account is okay?", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
+{"id": 221, "text": "Even though I made a cash deposit, I am not seeing it in my account.", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
+{"id": 222, "text": "On my last trip, I received the incorrect exchange rate.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 223, "text": "I only got $20 of the $100 that I attempted to withdraw.", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
+{"id": 224, "text": "Machines make mistakes too! The ATM gave me the wrong amount of money. Too much!", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
+{"id": 225, "text": "What is going on with my cash deposit. I'm looking at my account balance and it is not there. It has been almost a week. Someone better get back to me asap.", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
+{"id": 226, "text": "Why did I only receive this much currency?", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 227, "text": "I deposited cash into my account a week ago and it is still not available, please tell me why? I need the cash back now.", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
+{"id": 228, "text": "extra fees on a cash withdrawal, not cool.", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
+{"id": 229, "text": "You've incorrectly calculated the exchange rate for my cash withdrawal", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 230, "text": "According to the app, I got cash from an ATM but I haven't made any transactions.", "gold": "cash_atm", "fine": "cash_withdrawal_not_recognised"}
+{"id": 231, "text": "Why hasn't my cheque processed?", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
+{"id": 232, "text": "How long will it take for my cash withdrawal to stop pending", "gold": "cash_atm", "fine": "pending_cash_withdrawal"}
+{"id": 233, "text": "I took out cash from the ATM, but something must have went wrong, My account shows the correct amount of cash I took out, but the ATM didn't give me that amount. How do I get my money back?", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
+{"id": 234, "text": "When will my deposit from this morning show up?", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
+{"id": 235, "text": "I selected to withdrawal 30 pounds but only received 10. I'm still standing in front of the ATM. The app shows i took out 30 pounds also. How do i fix this?", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
+{"id": 236, "text": "This past holiday I made a withdraw at the ATM machine, and it seems I've been charged too much.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 237, "text": "How can I get cash back? The ATM just gave me the wrong amount that I've been actually charged though...", "gold": "cash_atm", "fine": "wrong_amount_of_cash_received"}
+{"id": 238, "text": "Why hasn't my account updated?", "gold": "cash_atm", "fine": "balance_not_updated_after_cheque_or_cash_deposit"}
+{"id": 239, "text": "Is there a reason I was charged an extra fee for using the ATM?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
+{"id": 240, "text": "How did you arrive at the rate of exchange? I thought that I would get more cash.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 241, "text": "I needed some cash while abroad, and I'm pretty sure the wrong exchange rate was applied.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 242, "text": "How many ATMs will take this card?", "gold": "cash_atm", "fine": "atm_support"}
+{"id": 243, "text": "My card rejected a cash withdrawal. Why?", "gold": "cash_atm", "fine": "declined_cash_withdrawal"}
+{"id": 244, "text": "There is a cash withdrawal from an ATM listed but I don't remember making this withdrawal.", "gold": "cash_atm", "fine": "cash_withdrawal_not_recognised"}
+{"id": 245, "text": "I have been charged a fee for getting cash", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
+{"id": 246, "text": "The rate of exchange for my cash withdrawal is wrong.", "gold": "cash_atm", "fine": "wrong_exchange_rate_for_cash_withdrawal"}
+{"id": 247, "text": "Tell me why there is an extra charge when I used an ATM?", "gold": "cash_atm", "fine": "cash_withdrawal_charge"}
+{"id": 248, "text": "What about an auto top-up, is that a option?", "gold": "top_up", "fine": "automatic_top_up"}
+{"id": 249, "text": "Help my find the verification code on a top-up.", "gold": "top_up", "fine": "verify_top_up"}
+{"id": 250, "text": "Says that my top-up is incomplete?", "gold": "top_up", "fine": "pending_top_up"}
+{"id": 251, "text": "Did you revert my top up?", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 252, "text": "What's the maximum amount I can top up my card with please?", "gold": "top_up", "fine": "top_up_limits"}
+{"id": 253, "text": "Hello, I trying to top up with my card today but it didn't work. When I tried last time it worked but today it isn't. Could you take a look at it for me?", "gold": "top_up", "fine": "top_up_failed"}
+{"id": 254, "text": "Does the top-up need verified?", "gold": "top_up", "fine": "verify_top_up"}
+{"id": 255, "text": "How many top-ups can I use?", "gold": "top_up", "fine": "top_up_limits"}
+{"id": 256, "text": "Why did you revert my top up?", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 257, "text": "Are there any hidden limit on the auto top-up?", "gold": "top_up", "fine": "automatic_top_up"}
+{"id": 258, "text": "How long does it take for my top up to clear?", "gold": "top_up", "fine": "pending_top_up"}
+{"id": 259, "text": "How long after a failed topup will funds refurn to account", "gold": "top_up", "fine": "pending_top_up"}
+{"id": 260, "text": "I thought you offer crypto top up but it doesn't seem to be right ? Money just disappeared from my account, How it would work ?", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 261, "text": "I got a cheque that I want to top up with?", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
+{"id": 262, "text": "How long does it take for a top up to go through", "gold": "top_up", "fine": "pending_top_up"}
+{"id": 263, "text": "What is the significance of verifying the top-up?", "gold": "top_up", "fine": "verify_top_up"}
+{"id": 264, "text": "How much is ok for me to top up with?", "gold": "top_up", "fine": "top_up_limits"}
+{"id": 265, "text": "How much does each transfer cost?", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
+{"id": 266, "text": "Can I top up using my cheque?", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
+{"id": 267, "text": "Can I auto top up multiple times?", "gold": "top_up", "fine": "automatic_top_up"}
+{"id": 268, "text": "If I were to do a transfer, what is the rate for that?", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
+{"id": 269, "text": "Why verify the top-ups?", "gold": "top_up", "fine": "verify_top_up"}
+{"id": 270, "text": "why do i need to verify the top up?", "gold": "top_up", "fine": "verify_top_up"}
+{"id": 271, "text": "How long does it take for a top up to be approved?", "gold": "top_up", "fine": "pending_top_up"}
+{"id": 272, "text": "Why would my top up be reverted?", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 273, "text": "What is wrong with my top-up?", "gold": "top_up", "fine": "pending_top_up"}
+{"id": 274, "text": "My top up was reverted. Can you help?", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 275, "text": "What is not accepted in order for me to top up my account?", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
+{"id": 276, "text": "I just tried to top-up and now I'm getting an additional verification message, why?", "gold": "top_up", "fine": "verify_top_up"}
+{"id": 277, "text": "Where do I access the auto top-up function?", "gold": "top_up", "fine": "automatic_top_up"}
+{"id": 278, "text": "Can i set up an auto top-up?", "gold": "top_up", "fine": "automatic_top_up"}
+{"id": 279, "text": "How do I top up by cheque?", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
+{"id": 280, "text": "My money is gone :( I had topped up recently and saw it was there and went through, but now it's disappeared, what's going on?", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 281, "text": "Where is the verification code display?", "gold": "top_up", "fine": "verify_top_up"}
+{"id": 282, "text": "My top-up didn't go through; it still says pending. What's up with that?", "gold": "top_up", "fine": "pending_top_up"}
+{"id": 283, "text": "I added funds to my account but the app didn't process it.", "gold": "top_up", "fine": "top_up_failed"}
+{"id": 284, "text": "Is my top up not working?", "gold": "top_up", "fine": "pending_top_up"}
+{"id": 285, "text": "If someone sends me money, will I be charged?", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
+{"id": 286, "text": "Explain top-up cancellation", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 287, "text": "What are the auto top-up policies?", "gold": "top_up", "fine": "automatic_top_up"}
+{"id": 288, "text": "When the time is right will this automatically replenish my balance?", "gold": "top_up", "fine": "automatic_top_up"}
+{"id": 289, "text": "Why is my top-up showing as cancelled?", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 290, "text": "I know there's an auto-top option but I can not locate it when I look?", "gold": "top_up", "fine": "automatic_top_up"}
+{"id": 291, "text": "What's the amount that I can top-up?", "gold": "top_up", "fine": "top_up_limits"}
+{"id": 292, "text": "Will I be able to top up by cheque?", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
+{"id": 293, "text": "Something is wrong, my top-up is gone and I don't know what happened to my money.", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 294, "text": "What does top-up verification do?", "gold": "top_up", "fine": "verify_top_up"}
+{"id": 295, "text": "What I topped up was reverted by the app.", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 296, "text": "Where do i verify a top-up card?", "gold": "top_up", "fine": "verify_top_up"}
+{"id": 297, "text": "I want to do a swift transfer", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
+{"id": 298, "text": "I went to top up my card and it was cancelled.", "gold": "top_up", "fine": "top_up_reverted"}
+{"id": 299, "text": "I am having trouble finding the top-up card verification code.", "gold": "top_up", "fine": "verify_top_up"}
+{"id": 300, "text": "Even though I added money ey to the card, I couldn't use it", "gold": "top_up", "fine": "pending_top_up"}
+{"id": 301, "text": "What is the max amount of top-ups?", "gold": "top_up", "fine": "top_up_limits"}
+{"id": 302, "text": "i have been trying to top up my account with a check but it won't work", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
+{"id": 303, "text": "How do I add cash to my account?", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
+{"id": 304, "text": "when i travel can it top up automatically", "gold": "top_up", "fine": "automatic_top_up"}
+{"id": 305, "text": "what are limits to top up", "gold": "top_up", "fine": "top_up_limits"}
+{"id": 306, "text": "Why has my top up not gone through yet?", "gold": "top_up", "fine": "pending_top_up"}
+{"id": 307, "text": "is there a limit on top ups", "gold": "top_up", "fine": "top_up_limits"}
+{"id": 308, "text": "Can I deposit a check?", "gold": "top_up", "fine": "top_up_by_cash_or_cheque"}
+{"id": 309, "text": "I'd like to make a SEPA transfer to my account, but will I be charged?", "gold": "top_up", "fine": "top_up_by_bank_transfer_charge"}
+{"id": 310, "text": "Can you help me with proving my identity?", "gold": "account", "fine": "unable_to_verify_identity"}
+{"id": 311, "text": "What happens if I use my account and my identity verification hasn't finished?", "gold": "account", "fine": "why_verify_identity"}
+{"id": 312, "text": "I am not able to verify my id. Why?", "gold": "account", "fine": "unable_to_verify_identity"}
+{"id": 313, "text": "I can't upload my identification.", "gold": "account", "fine": "unable_to_verify_identity"}
+{"id": 314, "text": "Do you offer account services for children and teens?", "gold": "account", "fine": "age_limit"}
+{"id": 315, "text": "Are there steps to see where my funds come from?", "gold": "account", "fine": "verify_source_of_funds"}
+{"id": 316, "text": "I need to change my last name on my account because I just got married.", "gold": "account", "fine": "edit_personal_details"}
+{"id": 317, "text": "I don't have my cell phone with me so I cannot access the system to complete the transaction.", "gold": "account", "fine": "lost_or_stolen_phone"}
+{"id": 318, "text": "Can I see where my funds come from?", "gold": "account", "fine": "verify_source_of_funds"}
+{"id": 319, "text": "Please tell me how to get a card if I reside in the US.", "gold": "account", "fine": "country_support"}
+{"id": 320, "text": "I am unable to access my app due to forgetting my passcode.", "gold": "account", "fine": "passcode_forgotten"}
+{"id": 321, "text": "I no longer have my phone.", "gold": "account", "fine": "lost_or_stolen_phone"}
+{"id": 322, "text": "I need to modify my details.", "gold": "account", "fine": "edit_personal_details"}
+{"id": 323, "text": "Why do I have to give you my drivers license", "gold": "account", "fine": "why_verify_identity"}
+{"id": 324, "text": "My identity can't be verified.", "gold": "account", "fine": "unable_to_verify_identity"}
+{"id": 325, "text": "At what age can I open an account?", "gold": "account", "fine": "age_limit"}
+{"id": 326, "text": "How long does it take to verify a person's identity?", "gold": "account", "fine": "unable_to_verify_identity"}
+{"id": 327, "text": "Please tell me the steps to verify my identity.", "gold": "account", "fine": "verify_my_identity"}
+{"id": 328, "text": "I've forgotten my app passcode completely.", "gold": "account", "fine": "passcode_forgotten"}
+{"id": 329, "text": "How do I verify my identity online", "gold": "account", "fine": "verify_my_identity"}
+{"id": 330, "text": "I have kids and I'm curious at what age could they start to use your service.", "gold": "account", "fine": "age_limit"}
+{"id": 331, "text": "Do you have to be 18 to make an account?", "gold": "account", "fine": "age_limit"}
+{"id": 332, "text": "I am still waiting for verification.  Can I use my account before I am verified?", "gold": "account", "fine": "why_verify_identity"}
+{"id": 333, "text": "For the identity check, what kind of documents do I need to have?", "gold": "account", "fine": "verify_my_identity"}
+{"id": 334, "text": "How old do my kids need to be to open an account?", "gold": "account", "fine": "age_limit"}
+{"id": 335, "text": "Can someone in the US have a card?", "gold": "account", "fine": "country_support"}
+{"id": 336, "text": "I have lost my phone or it has been stolen.", "gold": "account", "fine": "lost_or_stolen_phone"}
+{"id": 337, "text": "Where are you present globally?", "gold": "account", "fine": "country_support"}
+{"id": 338, "text": "I live in the EU, can I get one of your cards?", "gold": "account", "fine": "country_support"}
+{"id": 339, "text": "The app won't identify me.", "gold": "account", "fine": "unable_to_verify_identity"}
+{"id": 340, "text": "Where do I go to reset my passcode?", "gold": "account", "fine": "passcode_forgotten"}
+{"id": 341, "text": "Help!  I forgot my password.", "gold": "account", "fine": "passcode_forgotten"}
+{"id": 342, "text": "I was mugged.  They took everything.  I can't use the app.  What do I do?", "gold": "account", "fine": "lost_or_stolen_phone"}
+{"id": 343, "text": "How do I change my name?", "gold": "account", "fine": "edit_personal_details"}
+{"id": 344, "text": "What would the age limit be?", "gold": "account", "fine": "age_limit"}
+{"id": 345, "text": "What do you demand for identity verification?", "gold": "account", "fine": "verify_my_identity"}
+{"id": 346, "text": "where exactly does money come from", "gold": "account", "fine": "verify_source_of_funds"}
+{"id": 347, "text": "I need to close my account.  Your company is terrible!", "gold": "account", "fine": "terminate_account"}
+{"id": 348, "text": "What am i missing to verify my id?", "gold": "account", "fine": "unable_to_verify_identity"}
+{"id": 349, "text": "Can my daughter make an account?", "gold": "account", "fine": "age_limit"}
+{"id": 350, "text": "How many years old do I have to be?", "gold": "account", "fine": "age_limit"}
+{"id": 351, "text": "How can I change my password?", "gold": "account", "fine": "passcode_forgotten"}
+{"id": 352, "text": "How do I go about changing my address?", "gold": "account", "fine": "edit_personal_details"}
+{"id": 353, "text": "Where can I check to see where the money in my account came from?", "gold": "account", "fine": "verify_source_of_funds"}
+{"id": 354, "text": "I answered so many questions about my identity. Why do you need this info?", "gold": "account", "fine": "why_verify_identity"}
+{"id": 355, "text": "How can I know where did my funds come from?", "gold": "account", "fine": "verify_source_of_funds"}
+{"id": 356, "text": "How does identity check work?", "gold": "account", "fine": "why_verify_identity"}
+{"id": 357, "text": "Are you available in my country?", "gold": "account", "fine": "country_support"}
+{"id": 358, "text": "This place has been too much work so I'd just like to close out my account & be done.", "gold": "account", "fine": "terminate_account"}
+{"id": 359, "text": "How old do you have to be?", "gold": "account", "fine": "age_limit"}
+{"id": 360, "text": "What do you do with all the identity information you're collecting from me?", "gold": "account", "fine": "why_verify_identity"}
+{"id": 361, "text": "Help, my phone was stolen, please advise!", "gold": "account", "fine": "lost_or_stolen_phone"}
+{"id": 362, "text": "Explain how to verify my identity?", "gold": "account", "fine": "verify_my_identity"}
+{"id": 363, "text": "At what age can my children use your service?", "gold": "account", "fine": "age_limit"}
+{"id": 364, "text": "Is getting my identity verified required before I can use my account?", "gold": "account", "fine": "why_verify_identity"}
+{"id": 365, "text": "I will not be able to verify my identity.", "gold": "account", "fine": "unable_to_verify_identity"}
+{"id": 366, "text": "What documents do I need for the identity check?", "gold": "account", "fine": "verify_my_identity"}
+{"id": 367, "text": "Can my children have an account?", "gold": "account", "fine": "age_limit"}
+{"id": 368, "text": "I no longer have my phone, what should I do?", "gold": "account", "fine": "lost_or_stolen_phone"}
+{"id": 369, "text": "I don't know my password anymore.", "gold": "account", "fine": "passcode_forgotten"}
+{"id": 370, "text": "Can I use my account now, even though my identity verification has not gone through yet?", "gold": "account", "fine": "why_verify_identity"}
+{"id": 371, "text": "is there a way i can see source of money?", "gold": "account", "fine": "verify_source_of_funds"}
+{"id": 372, "text": "I have an account that is empty of funds. Can I transfer some from another bank?", "gold": "transfers", "fine": "transfer_into_account"}
+{"id": 373, "text": "Errors keep showing up every time I try to make this transfer and I am on a time crunch,  could you please help.", "gold": "transfers", "fine": "failed_transfer"}
+{"id": 374, "text": "So, I see a strange fee that I've never seen before after making an online purchase from abroad. I was under the impression transfers could be made for free. I don't think this seems fair.", "gold": "transfers", "fine": "transfer_fee_charged"}
+{"id": 375, "text": "How long does it take for a transfer to show up in my account?", "gold": "transfers", "fine": "transfer_timing"}
+{"id": 376, "text": "I don't need to transfer anymore and I want to cancel it.", "gold": "transfers", "fine": "cancel_transfer"}
+{"id": 377, "text": "What does it mean when a transfer is \"pending\"?", "gold": "transfers", "fine": "pending_transfer"}
+{"id": 378, "text": "How can I find a way to transfer money without it being rejected?", "gold": "transfers", "fine": "declined_transfer"}
+{"id": 379, "text": "I am still waiting on my bank transfer", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
+{"id": 380, "text": "I couldn't make a transfer", "gold": "transfers", "fine": "failed_transfer"}
+{"id": 381, "text": "I have checked the account information several times to be sure that it is correct, but the in country transfer I did a few days ago still has not appeared! What is the hold up?", "gold": "transfers", "fine": "transfer_not_received_by_recipient"}
+{"id": 382, "text": "I would like to cancel a transfer...is this possible?", "gold": "transfers", "fine": "cancel_transfer"}
+{"id": 383, "text": "How long do I wait for a transfer to take?", "gold": "transfers", "fine": "pending_transfer"}
+{"id": 384, "text": "I need you to stop the transfer I just started as soon as possible, I just realized it's not correct!", "gold": "transfers", "fine": "cancel_transfer"}
+{"id": 385, "text": "MY transfer has still not appeared.", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
+{"id": 386, "text": "Why hasn't my account updated to reflect my current balance?", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
+{"id": 387, "text": "Hi, I'm trying to transfer money from one country to another, but it's taking a long time! All the account information is right, so why is it taking so long?", "gold": "transfers", "fine": "pending_transfer"}
+{"id": 388, "text": "A receiver made me aware that they did not receive the full transfer that I made. The amount was showing to be a bit less. I now have to make a second transfer just to make up the difference. Can you reach out and let me know what's going on?", "gold": "transfers", "fine": "transfer_fee_charged"}
+{"id": 389, "text": "I have an outgoing transfer", "gold": "transfers", "fine": "pending_transfer"}
+{"id": 390, "text": "How do I transfer money into my account?", "gold": "transfers", "fine": "transfer_into_account"}
+{"id": 391, "text": "I was doing a transfer and received a \"decline\" message.", "gold": "transfers", "fine": "declined_transfer"}
+{"id": 392, "text": "My account transfer was blocked.", "gold": "transfers", "fine": "beneficiary_not_allowed"}
+{"id": 393, "text": "How do I fix a transaction to the wrong account?", "gold": "transfers", "fine": "cancel_transfer"}
+{"id": 394, "text": "Tell me how to top up my account using bank transfer.", "gold": "transfers", "fine": "transfer_into_account"}
+{"id": 395, "text": "Why is my transfer still pending?", "gold": "transfers", "fine": "pending_transfer"}
+{"id": 396, "text": "I have been trying to exchange this for crypto but the app won't work could you please help me?", "gold": "transfers", "fine": "beneficiary_not_allowed"}
+{"id": 397, "text": "How do I go forth with bank transfers for top up accounts?", "gold": "transfers", "fine": "transfer_into_account"}
+{"id": 398, "text": "I have questions about how to transfer money to my account.", "gold": "transfers", "fine": "transfer_into_account"}
+{"id": 399, "text": "What can I use to receive my salary?", "gold": "transfers", "fine": "receiving_money"}
+{"id": 400, "text": "I do not like this, I made a simple transfer but I have an additional charge for doing so.", "gold": "transfers", "fine": "transfer_fee_charged"}
+{"id": 401, "text": "Hi I am trying to transfer money to another country but it is showing pending and it has been a long time.  I have checked numbers and they are correct.  Could you please help?", "gold": "transfers", "fine": "pending_transfer"}
+{"id": 402, "text": "i accidentally entered in my retailers information, what should i do next", "gold": "transfers", "fine": "transfer_not_received_by_recipient"}
+{"id": 403, "text": "I have been doing some online shopping, but when checking out, it keeps getting declined. I tried a few times and it wouldn't work. What could be wrong?", "gold": "transfers", "fine": "declined_transfer"}
+{"id": 404, "text": "Why hasn't my transfer from Europe gone through?", "gold": "transfers", "fine": "transfer_timing"}
+{"id": 405, "text": "How long will it take to receive my money from my transfer transaction?", "gold": "transfers", "fine": "transfer_not_received_by_recipient"}
+{"id": 406, "text": "I sent a transfer and it has been pending for awhile. How long will it stay pending?", "gold": "transfers", "fine": "pending_transfer"}
+{"id": 407, "text": "Why is my transaction taking so long to complete?", "gold": "transfers", "fine": "transfer_not_received_by_recipient"}
+{"id": 408, "text": "Can you tell me why I wasn't able to complete my transfer?", "gold": "transfers", "fine": "failed_transfer"}
+{"id": 409, "text": "why was i chargged", "gold": "transfers", "fine": "transfer_fee_charged"}
+{"id": 410, "text": "Do international transfers take longer?? I made a transfer from France 2 days ago but it's still not there yet...", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
+{"id": 411, "text": "My payment shows that it is pending will I be charged more money?", "gold": "transfers", "fine": "pending_transfer"}
+{"id": 412, "text": "I would like to know how to transfer money into my account.", "gold": "transfers", "fine": "transfer_into_account"}
+{"id": 413, "text": "why do i have a failed transfer", "gold": "transfers", "fine": "failed_transfer"}
+{"id": 414, "text": "I tried to transfer but it was declined", "gold": "transfers", "fine": "declined_transfer"}
+{"id": 415, "text": "Someone made a mistake on my money transfer because I was charged extra fees.", "gold": "transfers", "fine": "transfer_fee_charged"}
+{"id": 416, "text": "After I transferred money the balance remained the same.", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
+{"id": 417, "text": "Why was I charged this extra fee while doing a transfer?", "gold": "transfers", "fine": "transfer_fee_charged"}
+{"id": 418, "text": "How long does it take transfers from Europe to complete?", "gold": "transfers", "fine": "transfer_timing"}
+{"id": 419, "text": "I needed to make a payment on my account, but I typed in the incorrect number.  The app won't allow me to cancel this transaction.  I need it cancelled ASAP!!", "gold": "transfers", "fine": "cancel_transfer"}
+{"id": 420, "text": "Can someone explain why I'm getting a message on my screen saying my transfer isn't possible? I've done several in the past and haven't had a single problem until now. What's going on?", "gold": "transfers", "fine": "beneficiary_not_allowed"}
+{"id": 421, "text": "I need to know why a money transfer is available.", "gold": "transfers", "fine": "pending_transfer"}
+{"id": 422, "text": "Can my salary be received and transferred to my current currency in my country?", "gold": "transfers", "fine": "receiving_money"}
+{"id": 423, "text": "Why did I get charged a fee for transferring money?", "gold": "transfers", "fine": "transfer_fee_charged"}
+{"id": 424, "text": "Seems like my transfer was declined how come?", "gold": "transfers", "fine": "declined_transfer"}
+{"id": 425, "text": "I need to transfer something to China. It is urgent. How many days will it take to get there?", "gold": "transfers", "fine": "transfer_timing"}
+{"id": 426, "text": "I don't think my transfer wen through. Why?", "gold": "transfers", "fine": "failed_transfer"}
+{"id": 427, "text": "Hello, my transfers are getting failed continuously, in spite of the fact that all the recipient details are correct. Please advise.", "gold": "transfers", "fine": "declined_transfer"}
+{"id": 428, "text": "Can I transfer money using a different currency?", "gold": "transfers", "fine": "receiving_money"}
+{"id": 429, "text": "Why isn't the transfer to my account showing up?", "gold": "transfers", "fine": "balance_not_updated_after_bank_transfer"}
+{"id": 430, "text": "Why am I getting declines when trying to make a purchase online?", "gold": "transfers", "fine": "declined_transfer"}
+{"id": 431, "text": "I payed my rent to my landlord a few days ago and he is saying the it never went though. Everything looks good to me and I even double checked the account number. I don't know what could be causing the confusion. Can you help me please?", "gold": "transfers", "fine": "transfer_not_received_by_recipient"}
+{"id": 432, "text": "Please help me!  A payment I made had an error on the account number and I can't cancel on my side.  Can you cancel it?", "gold": "transfers", "fine": "cancel_transfer"}
+{"id": 433, "text": "How long does it take for a transfer to be in my account?", "gold": "transfers", "fine": "transfer_timing"}
+{"id": 434, "text": "There is a direct debit transaction that I did not authorize", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 435, "text": "If I found an error in my account for a transaction I didn't make, how long to I have to dispute it?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 436, "text": "There is a direct debit charge on my account that is not mine.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 437, "text": "There was a direct debit from my account and I didn't authorise it", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 438, "text": "Can you show me how to top up with Google play?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 439, "text": "Can I use google pay for topping -up", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 440, "text": "I have an unknown debit charge in my statement, why?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 441, "text": "Purchases I did not make are appearing in my bank statement?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 442, "text": "I do not understand what this particular direct debit is ?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 443, "text": "I found a direct debit I would like to dispute", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 444, "text": "Can Google Pay be used for top up, please help?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 445, "text": "how do i set up my apple pay watch to connect to my account", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 446, "text": "Is it possible to dispute a debit payment from a couple of months ago.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 447, "text": "I would like to dispute a payment I didnt make", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 448, "text": "There is a potentially fraudulent direct debit on my account.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 449, "text": "Unusual direct deposit", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 450, "text": "How do i top up my google pay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 451, "text": "I want a refund on a direct debit.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 452, "text": "top up for my american express card is not working", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 453, "text": "I'm trying to use my Apple Watch to top up my google pay. Do I need a special app?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 454, "text": "i do not know what this charge is for", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 455, "text": "Can I top-up my google pay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 456, "text": "The app is showing a direct debit payment that I never made", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 457, "text": "what is this charge i didnt do it what can i do", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 458, "text": "after going over my transactions for the last couple of months I noticed a pretty large charge that I know I did not make. I know it's been a while but can I still dispute this charge?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 459, "text": "How do I dispute a direct debit that I didn't do?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 460, "text": "There is a payment showing on my app that I didn't do. Will you please cancel this payment and refund my money ?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 461, "text": "Will be Apple Watch be able to let me top up?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 462, "text": "I would like to dispute a direct debit transaction", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 463, "text": "How do I dispute a direct debit on my account?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 464, "text": "In regards to top-ups, can I do them via Google Pay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 465, "text": "What do I do if I find a debit charge that I know I didn't do in my billing statement?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 466, "text": "i would like to dispute a direct debit payment", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 467, "text": "What can I do about a direct debit transaction on my card that I didn't make?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 468, "text": "I just found a payment from a while back in my account that I didn't make.  Can I still dispute it even though it was a couple of months ago?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 469, "text": "I would like to know if I can top up with Google Pay.", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 470, "text": "I need to top up, can I use google pay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 471, "text": "I got my American Express in Apple Pay, why is top up not working in my country?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 472, "text": "I can't recognise this Direct Debit payment.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 473, "text": "I don't know where a direct debit payment came from", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 474, "text": "I have a direct debit I didn't make", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 475, "text": "How do you Top Up on the apple watch?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 476, "text": "Is it possible for me to top up with Google Pay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 477, "text": "Apple watch top up help, please?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 478, "text": "Please help my find out why there is an odd direct debit in my records.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 479, "text": "I just noticed that I supposedly made a payment to a seller a while back. The problem is, I don't recognize the seller. There must be a way to see who it is or track the payment. Can you do that, because I don't remember this transaction?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 480, "text": "Can I use my Apple watch to fill my gas tank?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 481, "text": "Can I add funds directly from my Apple Watch?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 482, "text": "Can I use Apple Pay to top-up?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 483, "text": "Why is there a direct debit fee in the App when I didn't do it?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 484, "text": "I can't get my Google Pay Top to work. Are there any issues on your end?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 485, "text": "I haven't used my card all day but there is a payment showing in the app. Please cancel it!", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 486, "text": "I see a direct debit transaction in my history that I did not set up.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 487, "text": "My account was charged a debit payment I don't recognize.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 488, "text": "I don't recognize the direct debit payment from the app.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 489, "text": "What do I do if my Google pay top up isn't working?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 490, "text": "Hi, i was checking my old statements and found a discrepancy with a large amount transaction. I am sure it was not done by me. Please let me know if i could raise a dispute as its very late.", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 491, "text": "I saw money was taken out of my account by a seller a while back. I do not recognize the seller, but I'm pretty certain I didn't make that payment. Can you track who the seller is?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 492, "text": "I am having a slight problem with my American express in apple play, can you help me fix the problem with top up?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 493, "text": "Why isn't my google top-up pay working?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 494, "text": "i received my American Express in Apple pay, is there a reason why top up is not working?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 495, "text": "why top up is not working even if I got my American Express in Apple Bay?", "gold": "other", "fine": "apple_pay_or_google_pay"}
+{"id": 496, "text": "I'm not sure how disposable virtual cards work. Please help.", "gold": "cards", "fine": "get_disposable_virtual_card"}
+{"id": 497, "text": "How can I dispute a direct debit transaction?", "gold": "other", "fine": "direct_debit_payment_not_recognised"}
+{"id": 498, "text": "Not sure what my password is.", "gold": "account", "fine": "passcode_forgotten"}
+{"id": 499, "text": "how do the cards work?", "gold": "cards", "fine": "get_disposable_virtual_card"}

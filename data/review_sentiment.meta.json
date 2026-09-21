@@ -1,8 +1,10 @@
 {
   "dataset": "SST-2 validation",
-  "n": 500,
+  "n": 356,
   "label_counts": {
-    "positive": 250,
-    "negative": 250
-  }
+    "positive": 178,
+    "negative": 178
+  },
+  "seed": 11,
+  "excludes_v1_rows": true
 }

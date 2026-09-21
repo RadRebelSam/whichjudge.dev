@@ -37,7 +37,8 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "raw"
 DATA = ROOT / "data"
 
-SEED = 7
+from sampling_common import SEED, exclude_previous  # noqa: E402
+
 N = 500
 MIN_CHARS = 40
 MAX_CHARS = 2000
@@ -62,6 +63,8 @@ def main() -> None:
     df["text"] = df["text"].astype(str).str.strip()
     df = df[df["text"].str.len().between(MIN_CHARS, MAX_CHARS)]
     df["gold"] = (df["toxicity"] >= TOXIC_AT).map({True: "toxic", False: "not_toxic"})
+    df = df.drop_duplicates(subset=["text"])
+    df = exclude_previous(df, "text", "civil_toxicity")
     print(f"usable comments: {len(df)}")
     print("class counts:", df["gold"].value_counts().to_dict())
 
@@ -82,6 +85,7 @@ def main() -> None:
         "task_id": "civil_toxicity",
         "n": len(picked),
         "seed": SEED,
+        "excludes_v1_rows": True,
         "source": "google/civil_comments test split (CC0)",
         "why": ("Clean-licence gold for the same content-gating decision as the "
                 "TweetEval hate row, kept alongside it so the Don't verdict can be "

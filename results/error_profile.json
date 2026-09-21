@@ -3,70 +3,70 @@
     "jev": {
       "per_class": {
         "injection": {
-          "n": 150,
-          "recall": 0.6,
-          "missed": 60,
-          "missed_rate": 0.4,
+          "n": 100,
+          "recall": 0.61,
+          "missed": 39,
+          "missed_rate": 0.39,
           "false_positives": 0,
           "false_positive_rate": 0.0
         },
         "legitimate": {
-          "n": 150,
+          "n": 100,
           "recall": 1.0,
           "missed": 0,
           "missed_rate": 0.0,
-          "false_positives": 60,
-          "false_positive_rate": 0.4
+          "false_positives": 39,
+          "false_positive_rate": 0.39
         }
       },
       "recall_at_gate": {
         "0.5": {
           "injection": {
-            "covered": 150,
-            "recall_on_covered": 0.6
+            "covered": 100,
+            "recall_on_covered": 0.61
           },
           "legitimate": {
-            "covered": 150,
+            "covered": 100,
             "recall_on_covered": 1.0
           }
         },
         "0.6": {
           "injection": {
-            "covered": 138,
-            "recall_on_covered": 0.6087
+            "covered": 93,
+            "recall_on_covered": 0.6129
           },
           "legitimate": {
-            "covered": 150,
+            "covered": 100,
             "recall_on_covered": 1.0
           }
         },
         "0.7": {
           "injection": {
-            "covered": 127,
-            "recall_on_covered": 0.6063
+            "covered": 83,
+            "recall_on_covered": 0.6265
           },
           "legitimate": {
-            "covered": 150,
+            "covered": 100,
             "recall_on_covered": 1.0
           }
         },
         "0.8": {
           "injection": {
-            "covered": 108,
-            "recall_on_covered": 0.6481
+            "covered": 76,
+            "recall_on_covered": 0.6579
           },
           "legitimate": {
-            "covered": 150,
+            "covered": 100,
             "recall_on_covered": 1.0
           }
         },
         "0.9": {
           "injection": {
-            "covered": 89,
-            "recall_on_covered": 0.6629
+            "covered": 68,
+            "recall_on_covered": 0.6618
           },
           "legitimate": {
-            "covered": 149,
+            "covered": 100,
             "recall_on_covered": 1.0
           }
         }
@@ -75,20 +75,20 @@
     "mini": {
       "per_class": {
         "injection": {
-          "n": 150,
-          "recall": 0.6267,
-          "missed": 56,
-          "missed_rate": 0.3733,
-          "false_positives": 1,
-          "false_positive_rate": 0.0067
+          "n": 100,
+          "recall": 0.49,
+          "missed": 51,
+          "missed_rate": 0.51,
+          "false_positives": 0,
+          "false_positive_rate": 0.0
         },
         "legitimate": {
-          "n": 150,
-          "recall": 0.9933,
-          "missed": 1,
-          "missed_rate": 0.0067,
-          "false_positives": 56,
-          "false_positive_rate": 0.3733
+          "n": 100,
+          "recall": 1.0,
+          "missed": 0,
+          "missed_rate": 0.0,
+          "false_positives": 51,
+          "false_positive_rate": 0.51
         }
       },
       "recall_at_gate": {}
@@ -120,70 +120,70 @@
       "per_class": {
         "not_toxic": {
           "n": 250,
-          "recall": 0.84,
-          "missed": 40,
-          "missed_rate": 0.16,
-          "false_positives": 70,
-          "false_positive_rate": 0.28
+          "recall": 0.868,
+          "missed": 33,
+          "missed_rate": 0.132,
+          "false_positives": 83,
+          "false_positive_rate": 0.332
         },
         "toxic": {
           "n": 250,
-          "recall": 0.72,
-          "missed": 70,
-          "missed_rate": 0.28,
-          "false_positives": 40,
-          "false_positive_rate": 0.16
+          "recall": 0.668,
+          "missed": 83,
+          "missed_rate": 0.332,
+          "false_positives": 33,
+          "false_positive_rate": 0.132
         }
       },
       "recall_at_gate": {
         "0.5": {
           "not_toxic": {
             "covered": 250,
-            "recall_on_covered": 0.84
+            "recall_on_covered": 0.868
           },
           "toxic": {
             "covered": 250,
-            "recall_on_covered": 0.72
+            "recall_on_covered": 0.668
           }
         },
         "0.6": {
           "not_toxic": {
-            "covered": 226,
-            "recall_on_covered": 0.8805
+            "covered": 234,
+            "recall_on_covered": 0.8932
           },
           "toxic": {
-            "covered": 223,
-            "recall_on_covered": 0.7399
+            "covered": 226,
+            "recall_on_covered": 0.6991
           }
         },
         "0.7": {
           "not_toxic": {
-            "covered": 208,
-            "recall_on_covered": 0.899
+            "covered": 214,
+            "recall_on_covered": 0.9112
           },
           "toxic": {
-            "covered": 191,
-            "recall_on_covered": 0.7539
+            "covered": 207,
+            "recall_on_covered": 0.7101
           }
         },
         "0.8": {
           "not_toxic": {
-            "covered": 189,
-            "recall_on_covered": 0.9259
+            "covered": 196,
+            "recall_on_covered": 0.9286
           },
           "toxic": {
-            "covered": 154,
-            "recall_on_covered": 0.7922
+            "covered": 168,
+            "recall_on_covered": 0.7321
           }
         },
         "0.9": {
           "not_toxic": {
-            "covered": 160,
-            "recall_on_covered": 0.9625
+            "covered": 165,
+            "recall_on_covered": 0.9576
           },
           "toxic": {
-            "covered": 107,
-            "recall_on_covered": 0.8318
+            "covered": 129,
+            "recall_on_covered": 0.7519
           }
         }
       }
@@ -192,19 +192,19 @@
       "per_class": {
         "not_toxic": {
           "n": 250,
-          "recall": 0.672,
-          "missed": 82,
-          "missed_rate": 0.328,
-          "false_positives": 33,
-          "false_positive_rate": 0.132
+          "recall": 0.848,
+          "missed": 38,
+          "missed_rate": 0.152,
+          "false_positives": 100,
+          "false_positive_rate": 0.4
         },
         "toxic": {
           "n": 250,
-          "recall": 0.868,
-          "missed": 33,
-          "missed_rate": 0.132,
-          "false_positives": 82,
-          "false_positive_rate": 0.328
+          "recall": 0.6,
+          "missed": 100,
+          "missed_rate": 0.4,
+          "false_positives": 38,
+          "false_positive_rate": 0.152
         }
       },
       "recall_at_gate": {}
@@ -236,65 +236,65 @@
       "per_class": {
         "bank_account": {
           "n": 63,
-          "recall": 0.8254,
-          "missed": 11,
-          "missed_rate": 0.1746,
-          "false_positives": 19,
-          "false_positive_rate": 0.0435
+          "recall": 0.8889,
+          "missed": 7,
+          "missed_rate": 0.1111,
+          "false_positives": 20,
+          "false_positive_rate": 0.0458
         },
         "cards": {
           "n": 62,
-          "recall": 0.8548,
-          "missed": 9,
-          "missed_rate": 0.1452,
-          "false_positives": 9,
-          "false_positive_rate": 0.0205
+          "recall": 0.7903,
+          "missed": 13,
+          "missed_rate": 0.2097,
+          "false_positives": 11,
+          "false_positive_rate": 0.0251
         },
         "credit_reporting": {
+          "n": 62,
+          "recall": 0.871,
+          "missed": 8,
+          "missed_rate": 0.129,
+          "false_positives": 27,
+          "false_positive_rate": 0.0616
+        },
+        "debt_collection": {
+          "n": 63,
+          "recall": 0.7302,
+          "missed": 17,
+          "missed_rate": 0.2698,
+          "false_positives": 9,
+          "false_positive_rate": 0.0206
+        },
+        "loans": {
+          "n": 63,
+          "recall": 0.8889,
+          "missed": 7,
+          "missed_rate": 0.1111,
+          "false_positives": 9,
+          "false_positive_rate": 0.0206
+        },
+        "money_transfer": {
+          "n": 63,
+          "recall": 0.6825,
+          "missed": 20,
+          "missed_rate": 0.3175,
+          "false_positives": 3,
+          "false_positive_rate": 0.0069
+        },
+        "mortgage": {
           "n": 62,
           "recall": 0.9677,
           "missed": 2,
           "missed_rate": 0.0323,
-          "false_positives": 31,
-          "false_positive_rate": 0.0708
-        },
-        "debt_collection": {
-          "n": 62,
-          "recall": 0.6774,
-          "missed": 20,
-          "missed_rate": 0.3226,
-          "false_positives": 12,
-          "false_positive_rate": 0.0274
-        },
-        "loans": {
-          "n": 64,
-          "recall": 0.6875,
-          "missed": 20,
-          "missed_rate": 0.3125,
-          "false_positives": 3,
-          "false_positive_rate": 0.0069
-        },
-        "money_transfer": {
-          "n": 62,
-          "recall": 0.7742,
-          "missed": 14,
-          "missed_rate": 0.2258,
-          "false_positives": 7,
-          "false_positive_rate": 0.016
-        },
-        "mortgage": {
-          "n": 63,
-          "recall": 0.9048,
-          "missed": 6,
-          "missed_rate": 0.0952,
-          "false_positives": 5,
-          "false_positive_rate": 0.0114
+          "false_positives": 2,
+          "false_positive_rate": 0.0046
         },
         "student_loan": {
           "n": 62,
-          "recall": 0.9355,
-          "missed": 4,
-          "missed_rate": 0.0645,
+          "recall": 0.8871,
+          "missed": 7,
+          "missed_rate": 0.1129,
           "false_positives": 0,
           "false_positive_rate": 0.0
         }
@@ -303,171 +303,171 @@
         "0.5": {
           "bank_account": {
             "covered": 63,
-            "recall_on_covered": 0.8254
+            "recall_on_covered": 0.8889
           },
           "cards": {
-            "covered": 62,
-            "recall_on_covered": 0.8548
+            "covered": 59,
+            "recall_on_covered": 0.8136
           },
           "credit_reporting": {
             "covered": 62,
-            "recall_on_covered": 0.9677
+            "recall_on_covered": 0.871
           },
           "debt_collection": {
-            "covered": 62,
-            "recall_on_covered": 0.6774
+            "covered": 63,
+            "recall_on_covered": 0.7302
           },
           "loans": {
-            "covered": 64,
-            "recall_on_covered": 0.6875
+            "covered": 63,
+            "recall_on_covered": 0.8889
           },
           "money_transfer": {
-            "covered": 62,
-            "recall_on_covered": 0.7742
+            "covered": 61,
+            "recall_on_covered": 0.7049
           },
           "mortgage": {
-            "covered": 62,
-            "recall_on_covered": 0.9194
+            "covered": 60,
+            "recall_on_covered": 0.9833
           },
           "student_loan": {
             "covered": 61,
-            "recall_on_covered": 0.9508
+            "recall_on_covered": 0.9016
           }
         },
         "0.6": {
           "bank_account": {
-            "covered": 59,
-            "recall_on_covered": 0.8305
+            "covered": 60,
+            "recall_on_covered": 0.9
           },
           "cards": {
-            "covered": 60,
-            "recall_on_covered": 0.8667
+            "covered": 56,
+            "recall_on_covered": 0.8214
           },
           "credit_reporting": {
             "covered": 62,
-            "recall_on_covered": 0.9677
+            "recall_on_covered": 0.871
           },
           "debt_collection": {
-            "covered": 55,
-            "recall_on_covered": 0.7273
+            "covered": 58,
+            "recall_on_covered": 0.7414
           },
           "loans": {
-            "covered": 61,
-            "recall_on_covered": 0.7213
+            "covered": 62,
+            "recall_on_covered": 0.9032
           },
           "money_transfer": {
-            "covered": 62,
-            "recall_on_covered": 0.7742
+            "covered": 56,
+            "recall_on_covered": 0.7143
           },
           "mortgage": {
-            "covered": 62,
-            "recall_on_covered": 0.9194
+            "covered": 58,
+            "recall_on_covered": 1.0
           },
           "student_loan": {
             "covered": 61,
-            "recall_on_covered": 0.9508
+            "recall_on_covered": 0.9016
           }
         },
         "0.7": {
           "bank_account": {
-            "covered": 54,
-            "recall_on_covered": 0.8519
+            "covered": 56,
+            "recall_on_covered": 0.9286
           },
           "cards": {
-            "covered": 57,
-            "recall_on_covered": 0.8947
+            "covered": 54,
+            "recall_on_covered": 0.8333
           },
           "credit_reporting": {
             "covered": 61,
-            "recall_on_covered": 0.9836
+            "recall_on_covered": 0.8689
           },
           "debt_collection": {
-            "covered": 50,
-            "recall_on_covered": 0.74
+            "covered": 57,
+            "recall_on_covered": 0.7368
           },
           "loans": {
-            "covered": 57,
-            "recall_on_covered": 0.7544
+            "covered": 59,
+            "recall_on_covered": 0.9322
           },
           "money_transfer": {
-            "covered": 58,
-            "recall_on_covered": 0.8103
+            "covered": 50,
+            "recall_on_covered": 0.76
           },
           "mortgage": {
-            "covered": 60,
-            "recall_on_covered": 0.9333
+            "covered": 57,
+            "recall_on_covered": 1.0
           },
           "student_loan": {
-            "covered": 57,
-            "recall_on_covered": 0.9825
+            "covered": 60,
+            "recall_on_covered": 0.9
           }
         },
         "0.8": {
           "bank_account": {
-            "covered": 51,
-            "recall_on_covered": 0.8824
+            "covered": 54,
+            "recall_on_covered": 0.9259
           },
           "cards": {
-            "covered": 53,
-            "recall_on_covered": 0.9623
-          },
-          "credit_reporting": {
-            "covered": 58,
-            "recall_on_covered": 0.9828
-          },
-          "debt_collection": {
-            "covered": 47,
-            "recall_on_covered": 0.7447
-          },
-          "loans": {
-            "covered": 54,
-            "recall_on_covered": 0.7593
-          },
-          "money_transfer": {
             "covered": 52,
             "recall_on_covered": 0.8462
           },
-          "mortgage": {
+          "credit_reporting": {
+            "covered": 59,
+            "recall_on_covered": 0.8983
+          },
+          "debt_collection": {
+            "covered": 50,
+            "recall_on_covered": 0.78
+          },
+          "loans": {
             "covered": 57,
             "recall_on_covered": 0.9474
           },
+          "money_transfer": {
+            "covered": 45,
+            "recall_on_covered": 0.8
+          },
+          "mortgage": {
+            "covered": 57,
+            "recall_on_covered": 1.0
+          },
           "student_loan": {
-            "covered": 55,
-            "recall_on_covered": 0.9818
+            "covered": 58,
+            "recall_on_covered": 0.9138
           }
         },
         "0.9": {
           "bank_account": {
-            "covered": 48,
-            "recall_on_covered": 0.8958
+            "covered": 49,
+            "recall_on_covered": 0.9184
           },
           "cards": {
-            "covered": 47,
-            "recall_on_covered": 0.9787
+            "covered": 46,
+            "recall_on_covered": 0.9348
           },
           "credit_reporting": {
-            "covered": 57,
-            "recall_on_covered": 0.9825
+            "covered": 59,
+            "recall_on_covered": 0.8983
           },
           "debt_collection": {
-            "covered": 42,
-            "recall_on_covered": 0.7143
+            "covered": 41,
+            "recall_on_covered": 0.7805
           },
           "loans": {
-            "covered": 43,
-            "recall_on_covered": 0.814
+            "covered": 52,
+            "recall_on_covered": 1.0
           },
           "money_transfer": {
-            "covered": 41,
-            "recall_on_covered": 0.9024
+            "covered": 35,
+            "recall_on_covered": 0.8
           },
           "mortgage": {
             "covered": 56,
-            "recall_on_covered": 0.9643
+            "recall_on_covered": 1.0
           },
           "student_loan": {
-            "covered": 53,
-            "recall_on_covered": 0.9811
+            "covered": 55,
+            "recall_on_covered": 0.9636
           }
         }
       }
@@ -476,65 +476,65 @@
       "per_class": {
         "bank_account": {
           "n": 63,
-          "recall": 0.8254,
-          "missed": 11,
-          "missed_rate": 0.1746,
-          "false_positives": 16,
-          "false_positive_rate": 0.0366
+          "recall": 0.8413,
+          "missed": 10,
+          "missed_rate": 0.1587,
+          "false_positives": 25,
+          "false_positive_rate": 0.0572
         },
         "cards": {
           "n": 62,
-          "recall": 0.8548,
-          "missed": 9,
-          "missed_rate": 0.1452,
-          "false_positives": 15,
-          "false_positive_rate": 0.0342
+          "recall": 0.6935,
+          "missed": 19,
+          "missed_rate": 0.3065,
+          "false_positives": 8,
+          "false_positive_rate": 0.0183
         },
         "credit_reporting": {
           "n": 62,
           "recall": 0.9194,
           "missed": 5,
           "missed_rate": 0.0806,
-          "false_positives": 33,
-          "false_positive_rate": 0.0753
+          "false_positives": 49,
+          "false_positive_rate": 0.1119
         },
         "debt_collection": {
-          "n": 62,
-          "recall": 0.6774,
-          "missed": 20,
-          "missed_rate": 0.3226,
-          "false_positives": 15,
-          "false_positive_rate": 0.0342
+          "n": 63,
+          "recall": 0.6984,
+          "missed": 19,
+          "missed_rate": 0.3016,
+          "false_positives": 14,
+          "false_positive_rate": 0.032
         },
         "loans": {
-          "n": 64,
-          "recall": 0.6875,
-          "missed": 20,
-          "missed_rate": 0.3125,
-          "false_positives": 7,
-          "false_positive_rate": 0.0161
+          "n": 63,
+          "recall": 0.746,
+          "missed": 16,
+          "missed_rate": 0.254,
+          "false_positives": 12,
+          "false_positive_rate": 0.0275
         },
         "money_transfer": {
-          "n": 62,
-          "recall": 0.6935,
-          "missed": 19,
-          "missed_rate": 0.3065,
-          "false_positives": 5,
-          "false_positive_rate": 0.0114
-        },
-        "mortgage": {
           "n": 63,
-          "recall": 0.9048,
-          "missed": 6,
-          "missed_rate": 0.0952,
+          "recall": 0.6032,
+          "missed": 25,
+          "missed_rate": 0.3968,
           "false_positives": 4,
           "false_positive_rate": 0.0092
         },
+        "mortgage": {
+          "n": 62,
+          "recall": 0.8548,
+          "missed": 9,
+          "missed_rate": 0.1452,
+          "false_positives": 1,
+          "false_positive_rate": 0.0023
+        },
         "student_loan": {
           "n": 62,
-          "recall": 0.9194,
-          "missed": 5,
-          "missed_rate": 0.0806,
+          "recall": 0.8387,
+          "missed": 10,
+          "missed_rate": 0.1613,
           "false_positives": 0,
           "false_positive_rate": 0.0
         }
@@ -616,225 +616,225 @@
       "per_class": {
         "account": {
           "n": 63,
-          "recall": 0.8571,
-          "missed": 9,
-          "missed_rate": 0.1429,
-          "false_positives": 2,
-          "false_positive_rate": 0.0046
+          "recall": 0.873,
+          "missed": 8,
+          "missed_rate": 0.127,
+          "false_positives": 4,
+          "false_positive_rate": 0.0092
         },
         "cards": {
-          "n": 62,
-          "recall": 0.6774,
-          "missed": 20,
-          "missed_rate": 0.3226,
+          "n": 64,
+          "recall": 0.5781,
+          "missed": 27,
+          "missed_rate": 0.4219,
           "false_positives": 5,
-          "false_positive_rate": 0.0114
+          "false_positive_rate": 0.0115
         },
         "cash_atm": {
-          "n": 63,
-          "recall": 0.5873,
+          "n": 62,
+          "recall": 0.5806,
           "missed": 26,
-          "missed_rate": 0.4127,
-          "false_positives": 2,
-          "false_positive_rate": 0.0046
+          "missed_rate": 0.4194,
+          "false_positives": 1,
+          "false_positive_rate": 0.0023
         },
         "fx": {
           "n": 62,
-          "recall": 0.9516,
-          "missed": 3,
-          "missed_rate": 0.0484,
-          "false_positives": 12,
-          "false_positive_rate": 0.0274
+          "recall": 0.9839,
+          "missed": 1,
+          "missed_rate": 0.0161,
+          "false_positives": 14,
+          "false_positive_rate": 0.032
         },
         "other": {
-          "n": 62,
-          "recall": 0.0484,
-          "missed": 59,
-          "missed_rate": 0.9516,
-          "false_positives": 8,
-          "false_positive_rate": 0.0183
+          "n": 63,
+          "recall": 0.0159,
+          "missed": 62,
+          "missed_rate": 0.9841,
+          "false_positives": 6,
+          "false_positive_rate": 0.0137
         },
         "payments_fees": {
           "n": 62,
-          "recall": 1.0,
-          "missed": 0,
-          "missed_rate": 0.0,
-          "false_positives": 60,
-          "false_positive_rate": 0.137
+          "recall": 0.9839,
+          "missed": 1,
+          "missed_rate": 0.0161,
+          "false_positives": 72,
+          "false_positive_rate": 0.1644
         },
         "top_up": {
           "n": 62,
           "recall": 0.8871,
           "missed": 7,
           "missed_rate": 0.1129,
-          "false_positives": 43,
-          "false_positive_rate": 0.0982
+          "false_positives": 36,
+          "false_positive_rate": 0.0822
         },
         "transfers": {
-          "n": 64,
-          "recall": 0.7344,
+          "n": 62,
+          "recall": 0.7258,
           "missed": 17,
-          "missed_rate": 0.2656,
-          "false_positives": 9,
-          "false_positive_rate": 0.0206
+          "missed_rate": 0.2742,
+          "false_positives": 11,
+          "false_positive_rate": 0.0251
         }
       },
       "recall_at_gate": {
         "0.5": {
           "account": {
-            "covered": 62,
-            "recall_on_covered": 0.871
+            "covered": 63,
+            "recall_on_covered": 0.873
           },
           "cards": {
             "covered": 61,
-            "recall_on_covered": 0.6885
+            "recall_on_covered": 0.5902
           },
           "cash_atm": {
-            "covered": 59,
-            "recall_on_covered": 0.6102
+            "covered": 60,
+            "recall_on_covered": 0.6
           },
           "fx": {
             "covered": 62,
-            "recall_on_covered": 0.9516
+            "recall_on_covered": 0.9839
           },
           "other": {
-            "covered": 62,
-            "recall_on_covered": 0.0484
+            "covered": 63,
+            "recall_on_covered": 0.0159
           },
           "payments_fees": {
             "covered": 62,
-            "recall_on_covered": 1.0
+            "recall_on_covered": 0.9839
           },
           "top_up": {
             "covered": 62,
             "recall_on_covered": 0.8871
           },
           "transfers": {
-            "covered": 64,
-            "recall_on_covered": 0.7344
+            "covered": 61,
+            "recall_on_covered": 0.7377
           }
         },
         "0.6": {
           "account": {
             "covered": 59,
-            "recall_on_covered": 0.8983
+            "recall_on_covered": 0.9153
           },
           "cards": {
-            "covered": 57,
-            "recall_on_covered": 0.7368
+            "covered": 58,
+            "recall_on_covered": 0.6034
           },
           "cash_atm": {
-            "covered": 50,
-            "recall_on_covered": 0.6
+            "covered": 53,
+            "recall_on_covered": 0.6038
           },
           "fx": {
-            "covered": 61,
-            "recall_on_covered": 0.9508
+            "covered": 62,
+            "recall_on_covered": 0.9839
           },
           "other": {
-            "covered": 61,
-            "recall_on_covered": 0.0328
+            "covered": 63,
+            "recall_on_covered": 0.0159
           },
           "payments_fees": {
             "covered": 62,
-            "recall_on_covered": 1.0
+            "recall_on_covered": 0.9839
           },
           "top_up": {
-            "covered": 62,
-            "recall_on_covered": 0.8871
+            "covered": 61,
+            "recall_on_covered": 0.8852
           },
           "transfers": {
-            "covered": 62,
-            "recall_on_covered": 0.7419
+            "covered": 60,
+            "recall_on_covered": 0.7333
           }
         },
         "0.7": {
           "account": {
-            "covered": 58,
-            "recall_on_covered": 0.9138
+            "covered": 59,
+            "recall_on_covered": 0.9153
           },
           "cards": {
-            "covered": 55,
-            "recall_on_covered": 0.7636
+            "covered": 56,
+            "recall_on_covered": 0.625
           },
           "cash_atm": {
-            "covered": 45,
-            "recall_on_covered": 0.6
+            "covered": 48,
+            "recall_on_covered": 0.625
           },
           "fx": {
-            "covered": 60,
-            "recall_on_covered": 0.9667
+            "covered": 62,
+            "recall_on_covered": 0.9839
           },
           "other": {
-            "covered": 60,
-            "recall_on_covered": 0.0333
+            "covered": 63,
+            "recall_on_covered": 0.0159
           },
           "payments_fees": {
             "covered": 62,
-            "recall_on_covered": 1.0
+            "recall_on_covered": 0.9839
           },
           "top_up": {
-            "covered": 61,
-            "recall_on_covered": 0.9016
+            "covered": 57,
+            "recall_on_covered": 0.9123
           },
           "transfers": {
-            "covered": 61,
-            "recall_on_covered": 0.7541
+            "covered": 52,
+            "recall_on_covered": 0.7885
           }
         },
         "0.8": {
           "account": {
-            "covered": 55,
-            "recall_on_covered": 0.9455
-          },
-          "cards": {
-            "covered": 50,
-            "recall_on_covered": 0.78
-          },
-          "cash_atm": {
-            "covered": 40,
-            "recall_on_covered": 0.6
-          },
-          "fx": {
-            "covered": 60,
-            "recall_on_covered": 0.9667
-          },
-          "other": {
-            "covered": 55,
-            "recall_on_covered": 0.0182
-          },
-          "payments_fees": {
-            "covered": 62,
-            "recall_on_covered": 1.0
-          },
-          "top_up": {
             "covered": 59,
             "recall_on_covered": 0.9153
           },
+          "cards": {
+            "covered": 55,
+            "recall_on_covered": 0.6364
+          },
+          "cash_atm": {
+            "covered": 42,
+            "recall_on_covered": 0.6429
+          },
+          "fx": {
+            "covered": 61,
+            "recall_on_covered": 0.9836
+          },
+          "other": {
+            "covered": 58,
+            "recall_on_covered": 0.0172
+          },
+          "payments_fees": {
+            "covered": 62,
+            "recall_on_covered": 0.9839
+          },
+          "top_up": {
+            "covered": 53,
+            "recall_on_covered": 0.9245
+          },
           "transfers": {
-            "covered": 54,
-            "recall_on_covered": 0.8333
+            "covered": 49,
+            "recall_on_covered": 0.8163
           }
         },
         "0.9": {
           "account": {
-            "covered": 50,
-            "recall_on_covered": 0.96
+            "covered": 54,
+            "recall_on_covered": 0.963
           },
           "cards": {
-            "covered": 45,
-            "recall_on_covered": 0.8
+            "covered": 46,
+            "recall_on_covered": 0.6957
           },
           "cash_atm": {
-            "covered": 32,
-            "recall_on_covered": 0.625
+            "covered": 36,
+            "recall_on_covered": 0.7222
           },
           "fx": {
-            "covered": 56,
-            "recall_on_covered": 0.9643
+            "covered": 59,
+            "recall_on_covered": 1.0
           },
           "other": {
-            "covered": 44,
+            "covered": 50,
             "recall_on_covered": 0.0
           },
           "payments_fees": {
@@ -842,12 +842,12 @@
             "recall_on_covered": 1.0
           },
           "top_up": {
-            "covered": 56,
-            "recall_on_covered": 0.9286
+            "covered": 50,
+            "recall_on_covered": 0.96
           },
           "transfers": {
-            "covered": 48,
-            "recall_on_covered": 0.8958
+            "covered": 45,
+            "recall_on_covered": 0.8667
           }
         }
       }
@@ -856,67 +856,67 @@
       "per_class": {
         "account": {
           "n": 63,
-          "recall": 0.4444,
-          "missed": 35,
-          "missed_rate": 0.5556,
-          "false_positives": 31,
-          "false_positive_rate": 0.0709
+          "recall": 0.873,
+          "missed": 8,
+          "missed_rate": 0.127,
+          "false_positives": 5,
+          "false_positive_rate": 0.0114
         },
         "cards": {
-          "n": 62,
-          "recall": 0.6774,
-          "missed": 20,
-          "missed_rate": 0.3226,
-          "false_positives": 11,
-          "false_positive_rate": 0.0251
+          "n": 64,
+          "recall": 0.4531,
+          "missed": 35,
+          "missed_rate": 0.5469,
+          "false_positives": 6,
+          "false_positive_rate": 0.0138
         },
         "cash_atm": {
-          "n": 63,
-          "recall": 0.6508,
-          "missed": 22,
-          "missed_rate": 0.3492,
-          "false_positives": 3,
-          "false_positive_rate": 0.0069
+          "n": 62,
+          "recall": 0.5,
+          "missed": 31,
+          "missed_rate": 0.5,
+          "false_positives": 1,
+          "false_positive_rate": 0.0023
         },
         "fx": {
           "n": 62,
-          "recall": 0.9677,
-          "missed": 2,
-          "missed_rate": 0.0323,
-          "false_positives": 9,
-          "false_positive_rate": 0.0205
+          "recall": 1.0,
+          "missed": 0,
+          "missed_rate": 0.0,
+          "false_positives": 15,
+          "false_positive_rate": 0.0342
         },
         "other": {
-          "n": 62,
-          "recall": 0.0645,
+          "n": 63,
+          "recall": 0.0794,
           "missed": 58,
-          "missed_rate": 0.9355,
-          "false_positives": 47,
-          "false_positive_rate": 0.1073
+          "missed_rate": 0.9206,
+          "false_positives": 34,
+          "false_positive_rate": 0.0778
         },
         "payments_fees": {
           "n": 62,
-          "recall": 0.7258,
-          "missed": 17,
-          "missed_rate": 0.2742,
-          "false_positives": 37,
-          "false_positive_rate": 0.0845
+          "recall": 0.9516,
+          "missed": 3,
+          "missed_rate": 0.0484,
+          "false_positives": 70,
+          "false_positive_rate": 0.1598
         },
         "top_up": {
           "n": 62,
-          "recall": 0.8871,
-          "missed": 7,
-          "missed_rate": 0.1129,
-          "false_positives": 33,
-          "false_positive_rate": 0.0753
+          "recall": 0.7742,
+          "missed": 14,
+          "missed_rate": 0.2258,
+          "false_positives": 29,
+          "false_positive_rate": 0.0662
         },
         "transfers": {
-          "n": 64,
-          "recall": 0.7344,
-          "missed": 17,
-          "missed_rate": 0.2656,
-          "false_positives": 7,
-          "false_positive_rate": 0.0161
+          "n": 62,
+          "recall": 0.6935,
+          "missed": 19,
+          "missed_rate": 0.3065,
+          "false_positives": 8,
+          "false_positive_rate": 0.0183
         }
       },
       "recall_at_gate": {}
@@ -996,126 +996,126 @@
       "per_class": {
         "business": {
           "n": 125,
-          "recall": 0.936,
-          "missed": 8,
-          "missed_rate": 0.064,
-          "false_positives": 47,
-          "false_positive_rate": 0.1253
+          "recall": 0.912,
+          "missed": 11,
+          "missed_rate": 0.088,
+          "false_positives": 28,
+          "false_positive_rate": 0.0747
         },
         "sci_tech": {
           "n": 125,
-          "recall": 0.656,
-          "missed": 43,
-          "missed_rate": 0.344,
-          "false_positives": 9,
-          "false_positive_rate": 0.024
+          "recall": 0.728,
+          "missed": 34,
+          "missed_rate": 0.272,
+          "false_positives": 7,
+          "false_positive_rate": 0.0187
         },
         "sports": {
           "n": 125,
-          "recall": 0.984,
-          "missed": 2,
-          "missed_rate": 0.016,
-          "false_positives": 2,
-          "false_positive_rate": 0.0053
+          "recall": 0.992,
+          "missed": 1,
+          "missed_rate": 0.008,
+          "false_positives": 3,
+          "false_positive_rate": 0.008
         },
         "world": {
           "n": 125,
-          "recall": 0.848,
-          "missed": 19,
-          "missed_rate": 0.152,
-          "false_positives": 14,
-          "false_positive_rate": 0.0373
+          "recall": 0.96,
+          "missed": 5,
+          "missed_rate": 0.04,
+          "false_positives": 13,
+          "false_positive_rate": 0.0347
         }
       },
       "recall_at_gate": {
         "0.5": {
           "business": {
             "covered": 125,
-            "recall_on_covered": 0.936
+            "recall_on_covered": 0.912
           },
           "sci_tech": {
             "covered": 125,
-            "recall_on_covered": 0.656
+            "recall_on_covered": 0.728
           },
           "sports": {
             "covered": 125,
-            "recall_on_covered": 0.984
+            "recall_on_covered": 0.992
           },
           "world": {
             "covered": 125,
-            "recall_on_covered": 0.848
+            "recall_on_covered": 0.96
           }
         },
         "0.6": {
           "business": {
-            "covered": 124,
-            "recall_on_covered": 0.9435
+            "covered": 116,
+            "recall_on_covered": 0.9569
           },
           "sci_tech": {
-            "covered": 115,
-            "recall_on_covered": 0.6696
+            "covered": 119,
+            "recall_on_covered": 0.7479
           },
           "sports": {
             "covered": 125,
-            "recall_on_covered": 0.984
+            "recall_on_covered": 0.992
           },
           "world": {
             "covered": 124,
-            "recall_on_covered": 0.8548
+            "recall_on_covered": 0.9597
           }
         },
         "0.7": {
           "business": {
-            "covered": 121,
-            "recall_on_covered": 0.9587
+            "covered": 114,
+            "recall_on_covered": 0.9649
           },
           "sci_tech": {
-            "covered": 100,
-            "recall_on_covered": 0.69
+            "covered": 109,
+            "recall_on_covered": 0.7615
           },
           "sports": {
             "covered": 125,
-            "recall_on_covered": 0.984
+            "recall_on_covered": 0.992
           },
           "world": {
-            "covered": 123,
-            "recall_on_covered": 0.8618
+            "covered": 122,
+            "recall_on_covered": 0.9672
           }
         },
         "0.8": {
           "business": {
-            "covered": 119,
-            "recall_on_covered": 0.958
+            "covered": 111,
+            "recall_on_covered": 0.964
           },
           "sci_tech": {
-            "covered": 86,
-            "recall_on_covered": 0.7442
+            "covered": 102,
+            "recall_on_covered": 0.7451
           },
           "sports": {
             "covered": 123,
-            "recall_on_covered": 0.9919
+            "recall_on_covered": 1.0
           },
           "world": {
-            "covered": 120,
-            "recall_on_covered": 0.875
+            "covered": 122,
+            "recall_on_covered": 0.9672
           }
         },
         "0.9": {
           "business": {
-            "covered": 112,
-            "recall_on_covered": 0.9821
+            "covered": 107,
+            "recall_on_covered": 0.972
           },
           "sci_tech": {
-            "covered": 75,
-            "recall_on_covered": 0.8
+            "covered": 86,
+            "recall_on_covered": 0.7791
           },
           "sports": {
-            "covered": 120,
-            "recall_on_covered": 0.9917
+            "covered": 123,
+            "recall_on_covered": 1.0
           },
           "world": {
-            "covered": 115,
-            "recall_on_covered": 0.8957
+            "covered": 121,
+            "recall_on_covered": 0.9669
           }
         }
       }
@@ -1124,35 +1124,35 @@
       "per_class": {
         "business": {
           "n": 125,
-          "recall": 0.952,
-          "missed": 6,
-          "missed_rate": 0.048,
-          "false_positives": 59,
-          "false_positive_rate": 0.1573
+          "recall": 0.896,
+          "missed": 13,
+          "missed_rate": 0.104,
+          "false_positives": 35,
+          "false_positive_rate": 0.0933
         },
         "sci_tech": {
           "n": 125,
-          "recall": 0.616,
-          "missed": 48,
-          "missed_rate": 0.384,
-          "false_positives": 12,
-          "false_positive_rate": 0.032
+          "recall": 0.64,
+          "missed": 45,
+          "missed_rate": 0.36,
+          "false_positives": 8,
+          "false_positive_rate": 0.0213
         },
         "sports": {
           "n": 125,
           "recall": 0.96,
           "missed": 5,
           "missed_rate": 0.04,
-          "false_positives": 3,
-          "false_positive_rate": 0.008
+          "false_positives": 5,
+          "false_positive_rate": 0.0133
         },
         "world": {
           "n": 125,
-          "recall": 0.776,
-          "missed": 28,
-          "missed_rate": 0.224,
-          "false_positives": 13,
-          "false_positive_rate": 0.0347
+          "recall": 0.944,
+          "missed": 7,
+          "missed_rate": 0.056,
+          "false_positives": 22,
+          "false_positive_rate": 0.0587
         }
       },
       "recall_at_gate": {}
@@ -1200,98 +1200,98 @@
       "per_class": {
         "negative": {
           "n": 167,
-          "recall": 0.9162,
-          "missed": 14,
-          "missed_rate": 0.0838,
-          "false_positives": 78,
-          "false_positive_rate": 0.2342
+          "recall": 0.9042,
+          "missed": 16,
+          "missed_rate": 0.0958,
+          "false_positives": 71,
+          "false_positive_rate": 0.2132
         },
         "neutral": {
           "n": 167,
-          "recall": 0.4551,
-          "missed": 91,
-          "missed_rate": 0.5449,
-          "false_positives": 25,
-          "false_positive_rate": 0.0751
+          "recall": 0.5389,
+          "missed": 77,
+          "missed_rate": 0.4611,
+          "false_positives": 36,
+          "false_positive_rate": 0.1081
         },
         "positive": {
           "n": 166,
-          "recall": 0.8434,
-          "missed": 26,
-          "missed_rate": 0.1566,
-          "false_positives": 28,
-          "false_positive_rate": 0.0838
+          "recall": 0.753,
+          "missed": 41,
+          "missed_rate": 0.247,
+          "false_positives": 27,
+          "false_positive_rate": 0.0808
         }
       },
       "recall_at_gate": {
         "0.5": {
           "negative": {
-            "covered": 165,
-            "recall_on_covered": 0.9212
+            "covered": 163,
+            "recall_on_covered": 0.9202
           },
           "neutral": {
-            "covered": 164,
-            "recall_on_covered": 0.4573
+            "covered": 163,
+            "recall_on_covered": 0.546
           },
           "positive": {
             "covered": 160,
-            "recall_on_covered": 0.8688
+            "recall_on_covered": 0.7562
           }
         },
         "0.6": {
           "negative": {
             "covered": 157,
-            "recall_on_covered": 0.9427
+            "recall_on_covered": 0.9236
           },
           "neutral": {
-            "covered": 142,
-            "recall_on_covered": 0.4577
+            "covered": 144,
+            "recall_on_covered": 0.5208
           },
           "positive": {
-            "covered": 152,
-            "recall_on_covered": 0.8947
+            "covered": 148,
+            "recall_on_covered": 0.777
           }
         },
         "0.7": {
           "negative": {
-            "covered": 150,
-            "recall_on_covered": 0.9667
+            "covered": 147,
+            "recall_on_covered": 0.9524
           },
           "neutral": {
-            "covered": 122,
-            "recall_on_covered": 0.4672
+            "covered": 128,
+            "recall_on_covered": 0.4922
           },
           "positive": {
-            "covered": 140,
-            "recall_on_covered": 0.9143
+            "covered": 132,
+            "recall_on_covered": 0.8333
           }
         },
         "0.8": {
           "negative": {
-            "covered": 141,
-            "recall_on_covered": 0.9716
+            "covered": 137,
+            "recall_on_covered": 0.9781
           },
           "neutral": {
             "covered": 105,
-            "recall_on_covered": 0.4381
+            "recall_on_covered": 0.4667
           },
           "positive": {
-            "covered": 126,
-            "recall_on_covered": 0.9286
+            "covered": 121,
+            "recall_on_covered": 0.8595
           }
         },
         "0.9": {
           "negative": {
-            "covered": 132,
-            "recall_on_covered": 0.9773
+            "covered": 122,
+            "recall_on_covered": 0.9836
           },
           "neutral": {
-            "covered": 86,
-            "recall_on_covered": 0.3953
+            "covered": 84,
+            "recall_on_covered": 0.4405
           },
           "positive": {
-            "covered": 108,
-            "recall_on_covered": 0.9537
+            "covered": 101,
+            "recall_on_covered": 0.8713
           }
         }
       }
@@ -1300,27 +1300,27 @@
       "per_class": {
         "negative": {
           "n": 167,
-          "recall": 0.8323,
-          "missed": 28,
-          "missed_rate": 0.1677,
-          "false_positives": 46,
-          "false_positive_rate": 0.1381
+          "recall": 0.8204,
+          "missed": 30,
+          "missed_rate": 0.1796,
+          "false_positives": 50,
+          "false_positive_rate": 0.1502
         },
         "neutral": {
           "n": 167,
-          "recall": 0.5269,
-          "missed": 79,
-          "missed_rate": 0.4731,
-          "false_positives": 53,
-          "false_positive_rate": 0.1592
+          "recall": 0.5749,
+          "missed": 71,
+          "missed_rate": 0.4251,
+          "false_positives": 58,
+          "false_positive_rate": 0.1742
         },
         "positive": {
           "n": 166,
-          "recall": 0.8193,
-          "missed": 30,
-          "missed_rate": 0.1807,
-          "false_positives": 38,
-          "false_positive_rate": 0.1138
+          "recall": 0.747,
+          "missed": 42,
+          "missed_rate": 0.253,
+          "false_positives": 35,
+          "false_positive_rate": 0.1048
         }
       },
       "recall_at_gate": {}
@@ -1359,71 +1359,71 @@
     "jev": {
       "per_class": {
         "negative": {
-          "n": 250,
-          "recall": 0.976,
-          "missed": 6,
-          "missed_rate": 0.024,
-          "false_positives": 9,
-          "false_positive_rate": 0.036
+          "n": 178,
+          "recall": 0.9719,
+          "missed": 5,
+          "missed_rate": 0.0281,
+          "false_positives": 8,
+          "false_positive_rate": 0.0449
         },
         "positive": {
-          "n": 250,
-          "recall": 0.964,
-          "missed": 9,
-          "missed_rate": 0.036,
-          "false_positives": 6,
-          "false_positive_rate": 0.024
+          "n": 178,
+          "recall": 0.9551,
+          "missed": 8,
+          "missed_rate": 0.0449,
+          "false_positives": 5,
+          "false_positive_rate": 0.0281
         }
       },
       "recall_at_gate": {
         "0.5": {
           "negative": {
-            "covered": 250,
-            "recall_on_covered": 0.976
+            "covered": 178,
+            "recall_on_covered": 0.9719
           },
           "positive": {
-            "covered": 250,
-            "recall_on_covered": 0.964
+            "covered": 178,
+            "recall_on_covered": 0.9551
           }
         },
         "0.6": {
           "negative": {
-            "covered": 247,
-            "recall_on_covered": 0.9798
+            "covered": 176,
+            "recall_on_covered": 0.9773
           },
           "positive": {
-            "covered": 247,
-            "recall_on_covered": 0.9676
+            "covered": 177,
+            "recall_on_covered": 0.9548
           }
         },
         "0.7": {
           "negative": {
-            "covered": 244,
-            "recall_on_covered": 0.9877
+            "covered": 172,
+            "recall_on_covered": 0.9884
           },
           "positive": {
-            "covered": 242,
-            "recall_on_covered": 0.9711
+            "covered": 174,
+            "recall_on_covered": 0.9655
           }
         },
         "0.8": {
           "negative": {
-            "covered": 242,
-            "recall_on_covered": 0.9917
+            "covered": 168,
+            "recall_on_covered": 0.994
           },
           "positive": {
-            "covered": 229,
-            "recall_on_covered": 0.9782
+            "covered": 164,
+            "recall_on_covered": 0.9634
           }
         },
         "0.9": {
           "negative": {
-            "covered": 230,
-            "recall_on_covered": 0.9913
+            "covered": 164,
+            "recall_on_covered": 0.9939
           },
           "positive": {
-            "covered": 212,
-            "recall_on_covered": 0.9764
+            "covered": 149,
+            "recall_on_covered": 0.9597
           }
         }
       }
@@ -1431,20 +1431,20 @@
     "mini": {
       "per_class": {
         "negative": {
-          "n": 250,
-          "recall": 0.984,
-          "missed": 4,
-          "missed_rate": 0.016,
-          "false_positives": 14,
-          "false_positive_rate": 0.056
+          "n": 178,
+          "recall": 0.9831,
+          "missed": 3,
+          "missed_rate": 0.0169,
+          "false_positives": 13,
+          "false_positive_rate": 0.073
         },
         "positive": {
-          "n": 250,
-          "recall": 0.944,
-          "missed": 14,
-          "missed_rate": 0.056,
-          "false_positives": 4,
-          "false_positive_rate": 0.016
+          "n": 178,
+          "recall": 0.927,
+          "missed": 13,
+          "missed_rate": 0.073,
+          "false_positives": 3,
+          "false_positive_rate": 0.0169
         }
       },
       "recall_at_gate": {}
@@ -1476,9 +1476,9 @@
       "per_class": {
         "ham": {
           "n": 250,
-          "recall": 0.968,
-          "missed": 8,
-          "missed_rate": 0.032,
+          "recall": 0.948,
+          "missed": 13,
+          "missed_rate": 0.052,
           "false_positives": 10,
           "false_positive_rate": 0.04
         },
@@ -1487,15 +1487,15 @@
           "recall": 0.96,
           "missed": 10,
           "missed_rate": 0.04,
-          "false_positives": 8,
-          "false_positive_rate": 0.032
+          "false_positives": 13,
+          "false_positive_rate": 0.052
         }
       },
       "recall_at_gate": {
         "0.5": {
           "ham": {
             "covered": 250,
-            "recall_on_covered": 0.968
+            "recall_on_covered": 0.948
           },
           "spam": {
             "covered": 250,
@@ -1505,41 +1505,41 @@
         "0.6": {
           "ham": {
             "covered": 243,
-            "recall_on_covered": 0.9712
+            "recall_on_covered": 0.9588
           },
           "spam": {
-            "covered": 248,
-            "recall_on_covered": 0.9677
+            "covered": 243,
+            "recall_on_covered": 0.9712
           }
         },
         "0.7": {
           "ham": {
-            "covered": 233,
-            "recall_on_covered": 0.97
+            "covered": 237,
+            "recall_on_covered": 0.9747
           },
           "spam": {
-            "covered": 245,
-            "recall_on_covered": 0.9714
+            "covered": 241,
+            "recall_on_covered": 0.9751
           }
         },
         "0.8": {
           "ham": {
-            "covered": 219,
-            "recall_on_covered": 0.9863
+            "covered": 222,
+            "recall_on_covered": 0.9865
           },
           "spam": {
-            "covered": 238,
-            "recall_on_covered": 0.979
+            "covered": 235,
+            "recall_on_covered": 0.9745
           }
         },
         "0.9": {
           "ham": {
-            "covered": 193,
-            "recall_on_covered": 0.9896
+            "covered": 206,
+            "recall_on_covered": 0.9951
           },
           "spam": {
-            "covered": 233,
-            "recall_on_covered": 0.9871
+            "covered": 224,
+            "recall_on_covered": 0.9777
           }
         }
       }
@@ -1548,9 +1548,9 @@
       "per_class": {
         "ham": {
           "n": 250,
-          "recall": 0.952,
-          "missed": 12,
-          "missed_rate": 0.048,
+          "recall": 0.916,
+          "missed": 21,
+          "missed_rate": 0.084,
           "false_positives": 6,
           "false_positive_rate": 0.024
         },
@@ -1559,8 +1559,8 @@
           "recall": 0.976,
           "missed": 6,
           "missed_rate": 0.024,
-          "false_positives": 12,
-          "false_positive_rate": 0.048
+          "false_positives": 21,
+          "false_positive_rate": 0.084
         }
       },
       "recall_at_gate": {}
@@ -1591,71 +1591,71 @@
     "jev": {
       "per_class": {
         "not_offensive": {
-          "n": 256,
-          "recall": 0.8984,
-          "missed": 26,
-          "missed_rate": 0.1016,
-          "false_positives": 91,
-          "false_positive_rate": 0.373
+          "n": 250,
+          "recall": 0.808,
+          "missed": 48,
+          "missed_rate": 0.192,
+          "false_positives": 89,
+          "false_positive_rate": 0.356
         },
         "offensive": {
-          "n": 244,
-          "recall": 0.627,
-          "missed": 91,
-          "missed_rate": 0.373,
-          "false_positives": 26,
-          "false_positive_rate": 0.1016
+          "n": 250,
+          "recall": 0.644,
+          "missed": 89,
+          "missed_rate": 0.356,
+          "false_positives": 48,
+          "false_positive_rate": 0.192
         }
       },
       "recall_at_gate": {
         "0.5": {
           "not_offensive": {
-            "covered": 256,
-            "recall_on_covered": 0.8984
+            "covered": 250,
+            "recall_on_covered": 0.808
           },
           "offensive": {
-            "covered": 244,
-            "recall_on_covered": 0.627
+            "covered": 250,
+            "recall_on_covered": 0.644
           }
         },
         "0.6": {
           "not_offensive": {
-            "covered": 244,
-            "recall_on_covered": 0.9057
+            "covered": 232,
+            "recall_on_covered": 0.8276
           },
           "offensive": {
-            "covered": 216,
-            "recall_on_covered": 0.6481
+            "covered": 226,
+            "recall_on_covered": 0.6549
           }
         },
         "0.7": {
           "not_offensive": {
-            "covered": 231,
-            "recall_on_covered": 0.9221
+            "covered": 217,
+            "recall_on_covered": 0.8387
           },
           "offensive": {
-            "covered": 183,
-            "recall_on_covered": 0.6721
+            "covered": 198,
+            "recall_on_covered": 0.6515
           }
         },
         "0.8": {
           "not_offensive": {
-            "covered": 214,
-            "recall_on_covered": 0.9393
+            "covered": 194,
+            "recall_on_covered": 0.8763
           },
           "offensive": {
-            "covered": 157,
-            "recall_on_covered": 0.6879
+            "covered": 167,
+            "recall_on_covered": 0.7006
           }
         },
         "0.9": {
           "not_offensive": {
-            "covered": 185,
-            "recall_on_covered": 0.9514
+            "covered": 165,
+            "recall_on_covered": 0.903
           },
           "offensive": {
-            "covered": 116,
-            "recall_on_covered": 0.7328
+            "covered": 130,
+            "recall_on_covered": 0.7
           }
         }
       }
@@ -1663,20 +1663,20 @@
     "mini": {
       "per_class": {
         "not_offensive": {
-          "n": 256,
-          "recall": 0.8359,
-          "missed": 42,
-          "missed_rate": 0.1641,
-          "false_positives": 104,
-          "false_positive_rate": 0.4262
+          "n": 250,
+          "recall": 0.804,
+          "missed": 49,
+          "missed_rate": 0.196,
+          "false_positives": 90,
+          "false_positive_rate": 0.36
         },
         "offensive": {
-          "n": 244,
-          "recall": 0.5738,
-          "missed": 104,
-          "missed_rate": 0.4262,
-          "false_positives": 42,
-          "false_positive_rate": 0.1641
+          "n": 250,
+          "recall": 0.64,
+          "missed": 90,
+          "missed_rate": 0.36,
+          "false_positives": 49,
+          "false_positive_rate": 0.196
         }
       },
       "recall_at_gate": {}
@@ -1708,70 +1708,70 @@
       "per_class": {
         "hate": {
           "n": 250,
-          "recall": 0.508,
-          "missed": 123,
-          "missed_rate": 0.492,
-          "false_positives": 46,
-          "false_positive_rate": 0.184
+          "recall": 0.476,
+          "missed": 131,
+          "missed_rate": 0.524,
+          "false_positives": 41,
+          "false_positive_rate": 0.164
         },
         "not_hate": {
           "n": 250,
-          "recall": 0.816,
-          "missed": 46,
-          "missed_rate": 0.184,
-          "false_positives": 123,
-          "false_positive_rate": 0.492
+          "recall": 0.836,
+          "missed": 41,
+          "missed_rate": 0.164,
+          "false_positives": 131,
+          "false_positive_rate": 0.524
         }
       },
       "recall_at_gate": {
         "0.5": {
           "hate": {
             "covered": 250,
-            "recall_on_covered": 0.508
+            "recall_on_covered": 0.476
           },
           "not_hate": {
             "covered": 250,
-            "recall_on_covered": 0.816
+            "recall_on_covered": 0.836
           }
         },
         "0.6": {
           "hate": {
             "covered": 227,
-            "recall_on_covered": 0.489
+            "recall_on_covered": 0.4758
           },
           "not_hate": {
-            "covered": 229,
-            "recall_on_covered": 0.8384
+            "covered": 228,
+            "recall_on_covered": 0.8684
           }
         },
         "0.7": {
           "hate": {
-            "covered": 187,
-            "recall_on_covered": 0.4759
+            "covered": 201,
+            "recall_on_covered": 0.5025
           },
           "not_hate": {
-            "covered": 203,
-            "recall_on_covered": 0.8621
+            "covered": 208,
+            "recall_on_covered": 0.9087
           }
         },
         "0.8": {
           "hate": {
-            "covered": 146,
-            "recall_on_covered": 0.4932
+            "covered": 170,
+            "recall_on_covered": 0.5294
           },
           "not_hate": {
-            "covered": 175,
-            "recall_on_covered": 0.8857
+            "covered": 186,
+            "recall_on_covered": 0.9409
           }
         },
         "0.9": {
           "hate": {
-            "covered": 100,
-            "recall_on_covered": 0.51
+            "covered": 113,
+            "recall_on_covered": 0.5575
           },
           "not_hate": {
-            "covered": 133,
-            "recall_on_covered": 0.9398
+            "covered": 152,
+            "recall_on_covered": 0.9605
           }
         }
       }
@@ -1780,19 +1780,19 @@
       "per_class": {
         "hate": {
           "n": 250,
-          "recall": 0.804,
-          "missed": 49,
-          "missed_rate": 0.196,
-          "false_positives": 81,
-          "false_positive_rate": 0.324
+          "recall": 0.64,
+          "missed": 90,
+          "missed_rate": 0.36,
+          "false_positives": 48,
+          "false_positive_rate": 0.192
         },
         "not_hate": {
           "n": 250,
-          "recall": 0.676,
-          "missed": 81,
-          "missed_rate": 0.324,
-          "false_positives": 49,
-          "false_positive_rate": 0.196
+          "recall": 0.808,
+          "missed": 48,
+          "missed_rate": 0.192,
+          "false_positives": 90,
+          "false_positive_rate": 0.36
         }
       },
       "recall_at_gate": {}
@@ -1823,127 +1823,127 @@
     "jev": {
       "per_class": {
         "anger": {
-          "n": 126,
-          "recall": 0.8413,
-          "missed": 20,
-          "missed_rate": 0.1587,
-          "false_positives": 35,
-          "false_positive_rate": 0.0936
-        },
-        "joy": {
           "n": 125,
           "recall": 0.88,
           "missed": 15,
           "missed_rate": 0.12,
-          "false_positives": 33,
-          "false_positive_rate": 0.088
+          "false_positives": 42,
+          "false_positive_rate": 0.112
+        },
+        "joy": {
+          "n": 125,
+          "recall": 0.792,
+          "missed": 26,
+          "missed_rate": 0.208,
+          "false_positives": 25,
+          "false_positive_rate": 0.0667
         },
         "optimism": {
-          "n": 123,
-          "recall": 0.626,
-          "missed": 46,
-          "missed_rate": 0.374,
-          "false_positives": 9,
-          "false_positive_rate": 0.0239
+          "n": 125,
+          "recall": 0.624,
+          "missed": 47,
+          "missed_rate": 0.376,
+          "false_positives": 10,
+          "false_positive_rate": 0.0267
         },
         "sadness": {
-          "n": 126,
-          "recall": 0.8413,
-          "missed": 20,
-          "missed_rate": 0.1587,
-          "false_positives": 24,
-          "false_positive_rate": 0.0642
+          "n": 125,
+          "recall": 0.832,
+          "missed": 21,
+          "missed_rate": 0.168,
+          "false_positives": 32,
+          "false_positive_rate": 0.0853
         }
       },
       "recall_at_gate": {
         "0.5": {
           "anger": {
-            "covered": 124,
-            "recall_on_covered": 0.8468
+            "covered": 123,
+            "recall_on_covered": 0.878
           },
           "joy": {
             "covered": 121,
-            "recall_on_covered": 0.8843
+            "recall_on_covered": 0.8017
           },
           "optimism": {
-            "covered": 118,
-            "recall_on_covered": 0.6356
+            "covered": 121,
+            "recall_on_covered": 0.6446
           },
           "sadness": {
-            "covered": 125,
-            "recall_on_covered": 0.848
+            "covered": 120,
+            "recall_on_covered": 0.8417
           }
         },
         "0.6": {
           "anger": {
-            "covered": 114,
-            "recall_on_covered": 0.8684
+            "covered": 118,
+            "recall_on_covered": 0.9068
           },
           "joy": {
-            "covered": 116,
-            "recall_on_covered": 0.9052
+            "covered": 112,
+            "recall_on_covered": 0.8214
           },
           "optimism": {
-            "covered": 104,
-            "recall_on_covered": 0.6827
+            "covered": 108,
+            "recall_on_covered": 0.6481
           },
           "sadness": {
-            "covered": 115,
-            "recall_on_covered": 0.8696
+            "covered": 110,
+            "recall_on_covered": 0.8545
           }
         },
         "0.7": {
           "anger": {
-            "covered": 105,
-            "recall_on_covered": 0.9238
+            "covered": 113,
+            "recall_on_covered": 0.9115
           },
           "joy": {
-            "covered": 109,
-            "recall_on_covered": 0.9174
+            "covered": 106,
+            "recall_on_covered": 0.8491
           },
           "optimism": {
-            "covered": 89,
-            "recall_on_covered": 0.6966
+            "covered": 94,
+            "recall_on_covered": 0.6596
           },
           "sadness": {
-            "covered": 103,
-            "recall_on_covered": 0.8932
+            "covered": 102,
+            "recall_on_covered": 0.8824
           }
         },
         "0.8": {
+          "anger": {
+            "covered": 104,
+            "recall_on_covered": 0.9423
+          },
+          "joy": {
+            "covered": 95,
+            "recall_on_covered": 0.8737
+          },
+          "optimism": {
+            "covered": 84,
+            "recall_on_covered": 0.6905
+          },
+          "sadness": {
+            "covered": 90,
+            "recall_on_covered": 0.9
+          }
+        },
+        "0.9": {
           "anger": {
             "covered": 97,
             "recall_on_covered": 0.9485
           },
           "joy": {
-            "covered": 104,
-            "recall_on_covered": 0.9231
+            "covered": 83,
+            "recall_on_covered": 0.9036
           },
           "optimism": {
-            "covered": 72,
-            "recall_on_covered": 0.7222
+            "covered": 61,
+            "recall_on_covered": 0.7377
           },
           "sadness": {
-            "covered": 93,
-            "recall_on_covered": 0.9032
-          }
-        },
-        "0.9": {
-          "anger": {
-            "covered": 92,
-            "recall_on_covered": 0.9565
-          },
-          "joy": {
-            "covered": 94,
-            "recall_on_covered": 0.9574
-          },
-          "optimism": {
-            "covered": 60,
-            "recall_on_covered": 0.7333
-          },
-          "sadness": {
-            "covered": 85,
-            "recall_on_covered": 0.9059
+            "covered": 80,
+            "recall_on_covered": 0.9125
           }
         }
       }
@@ -1951,36 +1951,36 @@
     "mini": {
       "per_class": {
         "anger": {
-          "n": 126,
-          "recall": 0.8492,
-          "missed": 19,
-          "missed_rate": 0.1508,
-          "false_positives": 25,
-          "false_positive_rate": 0.0668
+          "n": 125,
+          "recall": 0.84,
+          "missed": 20,
+          "missed_rate": 0.16,
+          "false_positives": 37,
+          "false_positive_rate": 0.0987
         },
         "joy": {
           "n": 125,
-          "recall": 0.904,
-          "missed": 12,
-          "missed_rate": 0.096,
-          "false_positives": 50,
-          "false_positive_rate": 0.1333
+          "recall": 0.84,
+          "missed": 20,
+          "missed_rate": 0.16,
+          "false_positives": 38,
+          "false_positive_rate": 0.1013
         },
         "optimism": {
-          "n": 123,
-          "recall": 0.3659,
-          "missed": 78,
-          "missed_rate": 0.6341,
+          "n": 125,
+          "recall": 0.52,
+          "missed": 60,
+          "missed_rate": 0.48,
           "false_positives": 5,
           "false_positive_rate": 0.0133
         },
         "sadness": {
-          "n": 126,
-          "recall": 0.873,
-          "missed": 16,
-          "missed_rate": 0.127,
-          "false_positives": 45,
-          "false_positive_rate": 0.1203
+          "n": 125,
+          "recall": 0.848,
+          "missed": 19,
+          "missed_rate": 0.152,
+          "false_positives": 39,
+          "false_positive_rate": 0.104
         }
       },
       "recall_at_gate": {}

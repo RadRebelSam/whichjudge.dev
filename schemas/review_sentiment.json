@@ -12,7 +12,7 @@
       }
     }
   },
-  "openai_prompt": "Classify review polarity. Reply with JSON {\"label\": <one of: negative, positive>}.",
+  "openai_prompt": "Is this movie-review snippet positive or negative?\nChoose exactly one label:\n- negative: Negative review\n- positive: Positive review\nReply with JSON {\"label\": <one of: negative, positive>}.",
   "labels": [
     "negative",
     "positive"

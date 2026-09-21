@@ -7,7 +7,7 @@ Columns are models: **Jev `jev-1.13.0`**, **`gpt-4o-mini-2024-07-18`**, **`gpt-5
 The next System One-style model is another column, not another site.
 
 <!-- generated:ece-line -->
-**Calibration (ECE on p_chosen, 10 bins, `scripts/calibrate.py`):** review polarity 0.015, sms spam gate 0.016, comment toxicity gate 0.075, message emotion 0.083, news topic 0.096, consumer complaint routing 0.100, offensive language screen 0.110, prompt-injection screen 0.134, social sentiment (3-way) 0.141, hate-speech screen 0.187, banking queue routing 0.213. Low ECE means the number may be quoted as a probability. Whether a threshold is safe is a separate question, answered per class in the gate tables below, not by ECE.
+**Calibration (ECE on p_chosen, 10 bins, `scripts/calibrate.py`):** sms spam gate 0.015, review polarity 0.030, news topic 0.068, consumer complaint routing 0.094, message emotion 0.100, comment toxicity gate 0.101, prompt-injection screen 0.137, offensive language screen 0.151, social sentiment (3-way) 0.157, hate-speech screen 0.196, banking queue routing 0.232. Low ECE means the number may be quoted as a probability. Whether a threshold is safe is a separate question, answered per class in the gate tables below, not by ECE.
 <!-- /generated:ece-line -->
 
 Domain: [whichjudge.dev](https://whichjudge.dev). **Judge = in-loop decision**, not “grade this agent.” Do not rename. Eyebrow: “which model for this decision.” Contact: contact@radrebeldeveloper.com
@@ -29,7 +29,8 @@ whichjudge/
     pages.yml               verify receipts, check site is generated, deploy to Pages
   scripts/
     download_raw.py         optional: re-fetch public datasets
-    prepare_samples.py      build the academic data/*.jsonl (seed=7, n=500)
+    prepare_samples.py      build the academic data/*.jsonl (seed=11, n=500, v1 rows excluded)
+    sampling_common.py      the v1-exclusion rule every preparer applies
     run_eval.py             Jev vs gpt-4o-mini; writes hashed receipts
     verify_run.py           re-read every raw response, recompute every statistic (no API)
     selfcheck_verify.py     corrupt a copy six ways; verify_run.py must fail each time
@@ -45,7 +46,8 @@ whichjudge/
     rehydrate.py            restore that text from upstream, hash-checked
     build_site.py           GENERATE site from results/ (--check gates CI)
     audit_site.py           CI cross-checks --check cannot make
-  data/                     FROZEN samples + meta (n=500, injection n=300)
+  data/                     FROZEN v2 samples + meta (n=500, injection n=200)
+  data/previous_samples.json  hashes of every v1 text, excluded from the v2 draw
   schemas/                  frozen questions + Mini prompts
   results/                  summary, calibration.json, tfidf_*.json
   results/code_patches.json scripts changed after the run, with before/after hashes
@@ -66,6 +68,15 @@ restores them.
 `site/` is the comparison page. Open `site/index.html` locally or dump the three files on any static host (Vercel / Cloudflare Pages / GitHub Pages) pointed at whichjudge.dev.
 
 ---
+
+## Two runs: v1 and the normalized v2
+
+The first published run (git tag `v1-config-comparison`, commit `8542e66`) gave Jev a
+criteria sentence per label and gave the OpenAI models the label names only. An outside
+review pointed out that this compares two amounts of task information, not two models.
+Everything below is the v2 run: both prompt formats generated from one rubric per task
+(`openai_prompt_from()` in `scripts/run_eval.py`), scored on fresh samples that exclude
+every v1 row. The v1 numbers, receipts and site are intact at that tag.
 
 ## Reproduce the table
 
@@ -90,7 +101,10 @@ python3 scripts/run_eval.py sms_spam        # one task
 Jev: `POST https://api.typesafe.ai/v1/systemone` with `model: jev-latest` (resolved to `jev-1.13.0` on 2026-09-20).
 Mini: `POST https://api.openai.com/v1/chat/completions`, `temperature: 0`, `response_format: json_object`.
 
-A full run of the two main arms across every task is about **$0.12**. The current-model column adds roughly the same again. Output tokens on Jev are free; Mini is $0.15 / $0.60 per million in/out.
+A full run of the two main arms across every task was **$0.24** at list price for v2 (the
+normalized prompt makes every Mini call longer). The current-model column used about
+0.87M tokens; its price is left unset. Output tokens on Jev are free; Mini is $0.15 / $0.60
+per million in/out.
 
 ### Rebuild samples (optional)
 
@@ -99,31 +113,32 @@ python3 scripts/download_raw.py
 python3 scripts/prepare_samples.py
 ```
 
-Sampling: `random_state=7`, `N=500`, balanced across labels.
+Sampling: `random_state=11`, `N=500`, balanced across labels, exact duplicate texts
+collapsed, and every text the v1 samples used excluded (`data/previous_samples.json`).
 BANKING77 is collapsed from 77 fine intents → 8 queues by keyword (see `coarse_banking()`). That gold is noisy; the Mix verdict on that row is not a production bake-off.
 
 ---
 
 <!-- generated:main-table -->
-## Results, seed 7, n=500 per task except prompt-injection screen (n=300)
+## Results, seed 11, n=500 per task except prompt-injection screen (n=200), review polarity (n=356)
 
 Wilson 95% CI. McNemar on paired errors, Holm-corrected across the 11 Jev-vs-Mini
 tests. `ns` = Holm p >= 0.05: insufficient evidence of a difference at this n. It does not
-say the two are equal, only that neither may be crowned on this sample. 2 row(s) clear the raw 0.05 and not the corrected one: offensive language screen, news topic.
+say the two are equal, only that neither may be crowned on this sample. No row changes verdict under the correction.
 
 | Decision | n | Jev | Mini | McNemar | ECE | Verdict |
 |---|---|---|---|---|---|---|
-| Prompt-injection screen | 300 | 80.0% [75.1%-84.1%] | 81.0% | ns raw p=0.719, Holm p=1 | 0.134 | ns, Neither |
-| Consumer complaint routing | 500 | 82.8% [79.2%-85.9%] | 81.0% | ns raw p=0.253, Holm p=1 | 0.100 | ns |
-| Comment toxicity gate | 500 | 78.0% [74.2%-81.4%] | 77.0% | ns raw p=0.688, Holm p=1 | 0.075 | ns |
-| SMS spam gate | 500 | 96.4% [94.4%-97.7%] | 96.4% | ns raw p=0.773, Holm p=1 | 0.016 | ns |
-| Review polarity | 500 | 97.0% [95.1%-98.2%] | 96.4% | ns raw p=0.546, Holm p=1 | 0.015 | ns |
-| Message emotion | 500 | 79.8% [76.1%-83.1%] | 75.0% | jev raw p=0.00528, Holm p=0.0476 | 0.083 | Replace |
-| Offensive language screen | 500 | 76.6% [72.7%-80.1%] | 70.8% | ns raw p=0.00787, Holm p=0.063 | 0.110 | ns |
-| Social sentiment (3-way) | 500 | 73.8% [69.8%-77.5%] | 72.6% | ns raw p=0.576, Holm p=1 | 0.141 | ns |
-| News topic | 500 | 85.6% [82.3%-88.4%] | 82.6% | ns raw p=0.00933, Holm p=0.0653 | 0.096 | ns |
-| Banking queue routing | 500 | 71.8% [67.7%-75.6%] | 64.4% | jev raw p=3.23e-05, Holm p=0.000355 | 0.213 | Replace |
-| Hate-speech screen | 500 | 66.2% [61.9%-70.2%] | 74.0% | mini raw p=0.00258, Holm p=0.0258 | 0.187 | Don't |
+| Prompt-injection screen | 200 | 80.5% [74.5%-85.4%] | 74.5% | jev raw p=0.00596, Holm p=0.0358 | 0.137 | Neither |
+| Consumer complaint routing | 500 | 83.8% [80.3%-86.8%] | 77.4% | jev raw p=1.72e-05, Holm p=0.000189 | 0.094 | Replace |
+| Comment toxicity gate | 500 | 76.8% [72.9%-80.3%] | 72.4% | jev raw p=0.00501, Holm p=0.0351 | 0.101 | Replace |
+| SMS spam gate | 500 | 95.4% [93.2%-96.9%] | 94.6% | ns raw p=0.48, Holm p=1 | 0.015 | ns |
+| Review polarity | 356 | 96.3% [93.9%-97.9%] | 95.5% | ns raw p=0.546, Holm p=1 | 0.030 | ns |
+| Message emotion | 500 | 78.2% [74.4%-81.6%] | 76.2% | ns raw p=0.229, Holm p=1 | 0.100 | ns |
+| Offensive language screen | 500 | 72.6% [68.5%-76.3%] | 72.2% | ns raw p=0.901, Holm p=1 | 0.151 | ns |
+| Social sentiment (3-way) | 500 | 73.2% [69.2%-76.9%] | 71.4% | ns raw p=0.349, Holm p=1 | 0.157 | ns |
+| News topic | 500 | 89.8% [86.8%-92.2%] | 86.0% | jev raw p=0.00308, Holm p=0.0247 | 0.068 | Replace |
+| Banking queue routing | 500 | 70.2% [66.0%-74.0%] | 66.4% | jev raw p=0.00235, Holm p=0.0211 | 0.232 | Replace |
+| Hate-speech screen | 500 | 65.6% [61.3%-69.6%] | 72.4% | mini raw p=0.000187, Holm p=0.00187 | 0.196 | Don't |
 <!-- /generated:main-table -->
 
 ## Is Jev only beating a 2024 baseline?
@@ -135,26 +150,21 @@ Holm-corrected within their own family of 11 tests:
 
 | Decision | Jev | 4o-mini (2024) | gpt-5.4-mini (2026) | vs Jev | vs 4o-mini |
 |---|---|---|---|---|---|
-| Prompt-injection screen | 80.0% | 81.0% | 86.0% | **gpt-5.4-mini** | ns |
-| Consumer complaint routing | 82.8% | 81.0% | 78.6% | ns | ns |
-| Comment toxicity gate | 78.0% | 77.0% | 76.6% | ns | ns |
-| SMS spam gate | 96.4% | 96.4% | 94.6% | ns | ns |
-| Review polarity | 97.0% | 96.4% | 94.8% | ns | ns |
-| Message emotion | 79.8% | 75.0% | 77.6% | ns | ns |
-| Offensive language screen | 76.6% | 70.8% | 74.2% | ns | ns |
-| Social sentiment (3-way) | 73.8% | 72.6% | 74.4% | ns | ns |
-| News topic | 85.6% | 82.6% | 80.4% | Jev | ns |
-| Banking queue routing | 71.8% | 64.4% | 70.8% | ns | **gpt-5.4-mini** |
-| Hate-speech screen | 66.2% | 74.0% | 71.0% | ns | ns |
+| Prompt-injection screen | 80.5% | 74.5% | 80.0% | ns | ns |
+| Consumer complaint routing | 83.8% | 77.4% | 83.8% | ns | **gpt-5.4-mini** |
+| Comment toxicity gate | 76.8% | 72.4% | 75.6% | ns | ns |
+| SMS spam gate | 95.4% | 94.6% | 93.0% | ns | ns |
+| Review polarity | 96.3% | 95.5% | 97.2% | ns | ns |
+| Message emotion | 78.2% | 76.2% | 76.2% | ns | ns |
+| Offensive language screen | 72.6% | 72.2% | 73.6% | ns | ns |
+| Social sentiment (3-way) | 73.2% | 71.4% | 71.0% | ns | ns |
+| News topic | 89.8% | 86.0% | 86.8% | ns | ns |
+| Banking queue routing | 70.2% | 66.4% | 72.4% | ns | **gpt-5.4-mini** |
+| Hate-speech screen | 65.6% | 72.4% | 64.2% | ns | 4o-mini |
 
-**Jev 1 win, 9 ties, 1 loss** against a model two years newer. 2 row(s) that beat it at the raw 0.05 (consumer complaint routing, review polarity) do not survive the correction.
+**Jev 0 wins, 11 ties, 0 losses** against a model two years newer. 3 row(s) that beat it at the raw 0.05 (sms spam gate, news topic, banking queue routing) do not survive the correction.
 
-Out-of-schema labels, counted as wrong and reported as such: consumer complaint routing 4 (auto, auto_leasing, auto_loan, auto_loans); message emotion 3 (disgust, fear).
-The loss is prompt injection, and it matters: the 2026 model catches
-72.0% of injections against Jev's
-60.0%, at 0.0% and 0.0% false positives.
-It is genuinely better there and still misses 28.0%, so the Neither verdict
-on that row stands for all three.
+Out-of-schema labels, counted as wrong and reported as such: message emotion 2 (fear, sarcasm).
 <!-- /generated:modern-table -->
 
 Token cost per call is recorded; price is left unset rather than guessed, because a
@@ -178,17 +188,17 @@ automated, selected by that rule from the measured gates rather than chosen by h
 <!-- generated:gate-table -->
 | Decision | Gold | ECE | Auto slice (gate) | Lift vs ungated | Held-out acc on coverage | Halves under 50% |
 |---|---|---|---|---|---|---|
-| Prompt-injection screen | academic | 0.134 | 87.4% on 79.3% (>=0.9) | +7.4pt | 87.3% on 79.5% | 0/800 |
-| Consumer complaint routing | live system | 0.100 | 91.2% on 77.4% (>=0.9) | +8.4pt | 91.2% on 77.4% | 0/800 |
-| Comment toxicity gate | real text | 0.075 | 91.0% on 53.4% (>=0.9) | +13.0pt | 90.9% on 53.9% | 31/800 |
-| SMS spam gate | academic | 0.016 | 98.8% on 85.2% (>=0.9) | +2.4pt | 98.7% on 86.1% | 0/800 |
-| Review polarity | academic | 0.015 | 98.5% on 94.2% (>=0.8) | +1.5pt | 98.3% on 94.7% | 0/800 |
-| Message emotion | academic | 0.083 | 90.3% on 66.2% (>=0.9) | +10.5pt | 90.3% on 66.4% | 0/800 |
-| Offensive language screen | academic | 0.110 | 86.7% on 60.2% (>=0.9) | +10.1pt | 86.7% on 60.2% | 0/800 |
-| Social sentiment (3-way) | academic | 0.141 | 81.6% on 65.2% (>=0.9) | +7.8pt | 81.1% on 67.2% | 0/800 |
-| News topic | academic | 0.096 | 92.9% on 84.4% (>=0.9) | +7.3pt | 92.9% on 84.4% | 0/800 |
-| Banking queue routing | academic | 0.213 | 80.1% on 78.4% (>=0.9) | +8.3pt | 80.1% on 78.4% | 0/800 |
-| Hate-speech screen | academic | 0.187 | 70.7% on 64.2% (>=0.8) | +4.5pt | 71.1% on 62.9% | 61/800 |
+| Prompt-injection screen | academic | 0.137 | 86.3% on 84.0% (>=0.9) | +5.8pt | 86.0% on 84.7% | 0/800 |
+| Consumer complaint routing | live system | 0.094 | 92.1% on 78.6% (>=0.9) | +8.3pt | 92.1% on 78.6% | 0/800 |
+| Comment toxicity gate | real text | 0.101 | 86.7% on 58.8% (>=0.9) | +9.9pt | 86.7% on 58.9% | 0/800 |
+| SMS spam gate | academic | 0.015 | 98.6% on 86.0% (>=0.9) | +3.2pt | 98.4% on 86.8% | 0/800 |
+| Review polarity | academic | 0.030 | 97.9% on 93.3% (>=0.8) | +1.5pt | 97.6% on 95.5% | 0/800 |
+| Message emotion | academic | 0.100 | 88.8% on 64.2% (>=0.9) | +10.6pt | 88.8% on 64.2% | 0/800 |
+| Offensive language screen | academic | 0.151 | 81.4% on 59.0% (>=0.9) | +8.8pt | 81.1% on 59.8% | 0/800 |
+| Social sentiment (3-way) | academic | 0.157 | 79.8% on 61.4% (>=0.9) | +6.6pt | 79.3% on 64.0% | 0/800 |
+| News topic | academic | 0.068 | 94.0% on 87.4% (>=0.9) | +4.2pt | 94.0% on 87.4% | 0/800 |
+| Banking queue routing | academic | 0.232 | 79.0% on 80.2% (>=0.9) | +8.8pt | 79.0% on 80.2% | 0/800 |
+| Hate-speech screen | academic | 0.196 | 78.9% on 53.0% (>=0.9) | +13.3pt | 78.6% on 54.2% | 58/800 |
 
 Gating beats not gating on **11 of 11 rows** on this balanced sample; coverage here is benchmark coverage, not a forecast of production traffic. The held-out column chooses the gate on one random half and scores it on the other, 400 splits; the optimism of picking and scoring on the same rows is at most 0.5pt here. The 50% coverage rule is applied on the picking half, and the last column counts scoring halves that fell under it (most on hate-speech screen). Accepted-slice accuracy is one number; what a gate does to each class is in `results/error_profile.json` and, for the security row, in the next section.
 <!-- /generated:gate-table -->
@@ -196,26 +206,26 @@ Gating beats not gating on **11 of 11 rows** on this balanced sample; coverage h
 ### Accuracy is the wrong number for a security gate
 
 <!-- generated:injection-classes -->
-The prompt-injection row looks fine on accuracy: Jev 80.0%,
-Mini 81.0%, tied at raw p=0.719.
+The prompt-injection row looks fine on accuracy: Jev 80.5%,
+Mini 74.5%, tied at raw p=0.00596.
 Split it by class and the picture changes:
 
 |  | Jev | 4o-mini |
 |---|---|---|
-| Injections caught | 60.0% | 62.7% |
-| Injections missed | 60 of 150 | 56 of 150 |
-| Legitimate text wrongly blocked | 0.0% | 0.7% |
+| Injections caught | 61.0% | 49.0% |
+| Injections missed | 39 of 100 | 51 of 100 |
+| Legitimate text wrongly blocked | 0.0% | 0.0% |
 
 Both models are biased hard toward letting text through. They almost never block a
 legitimate request, and they miss roughly 4 injections in ten.
 
 The quit line does not rescue it either. Raising Jev's threshold from 0.5 to 0.9 moves
-injection recall from 60.0% to only
-66.3% on the 89 injections it still covers, while coverage falls, so the misses
+injection recall from 61.0% to only
+66.2% on the 68 injections it still covers, while coverage falls, so the misses
 move to a human rather than disappearing. That is a documented exception to this site's
 own headline, and it stays on the page.
 
-In counts, at p_chosen >= 0.9: 238 of 300 rows are handled automatically; 30 of them are injections passed as legitimate, 20.0% of all 150 attacks in the sample; and 61 attacks fall below the threshold to whatever fallback the operator supplies. Accepted-slice accuracy does not show any of that.
+In counts, at p_chosen >= 0.9: 168 of 200 rows are handled automatically; 23 of them are injections passed as legitimate, 23.0% of all 100 attacks in the sample; and 32 attacks fall below the threshold to whatever fallback the operator supplies. Accepted-slice accuracy does not show any of that.
 <!-- /generated:injection-classes -->
 
 `results/error_profile.json` carries per-class recall and recall-at-gate for every row,
@@ -228,12 +238,12 @@ Two rows, related judgements, different task definitions and datasets:
 <!-- generated:hate-vs-civil -->
 |  | TweetEval hate | Civil Comments (CC0) |
 |---|---|---|
-| Jev | 66.2% | 78.0% |
-| 4o-mini | 74.0% | 77.0% |
-| McNemar | Mini wins, Holm p=0.0258 | ns, Holm p=1 |
-| ECE | 0.187 | 0.075 |
+| Jev | 65.6% | 76.8% |
+| 4o-mini | 72.4% | 72.4% |
+| McNemar | Mini wins, Holm p=0.00187 | Jev wins, Holm p=0.0351 |
+| ECE | 0.196 | 0.101 |
 
-On TweetEval, Mini wins by 7.8 points and Jev's
+On TweetEval, Mini wins by 6.8 points and Jev's
 confidence is too badly calibrated to quote. On Civil Comments the models tie and the
 confidence becomes usable. These are not the same decision with different labels: the
 hate row asks for hate speech aimed at a protected group in tweets, the toxicity row asks
@@ -247,11 +257,10 @@ re-annotated under one rubric. Both rows stay up.
 **Consumer complaint routing is the only production decision here.** The CFPB runs it
 live, the consumer writes the narrative and picks the product, and the complaint is
 routed to the company on that basis. Its narratives are the longest on the board and clear the
-cost crossover: at about 1,157 characters per narrative, roughly 289 tokens, Jev costs
-$33.89 per million decisions against $53.21
+cost crossover: at about 1,113 characters per narrative, roughly 278 tokens, Jev costs
+$33.42 per million decisions against $78.59
 for 4o-mini. Text comes from a CC0 mirror; the gold label is joined from the Bureau's
-own export on Complaint ID, and 31,990 of 32,000 candidate rows agreed with zero
-disagreements. Product is chosen by the person filing, not an expert annotator.
+own export on Complaint ID: 31,982 candidate rows agreed, 0 disagreed, 18 were not found. Product is chosen by the person filing, not an expert annotator.
 <!-- /generated:cfpb-cost -->
 
 <!-- generated:tfidf-table -->
@@ -261,19 +270,19 @@ their family of 11:
 
 | Decision | TF-IDF | vs Jev | vs Mini |
 |---|---|---|---|
-| Prompt-injection screen | 85.7% | ns | ns |
-| Consumer complaint routing | 86.8% | ns | TF-IDF wins |
-| Comment toxicity gate | 82.8% | ns | ns |
-| SMS spam gate | 96.4% | ns | ns |
-| Review polarity | 82.6% | Jev wins | Mini wins |
-| Message emotion | 64.2% | Jev wins | Mini wins |
-| Offensive language screen | 73.8% | ns | ns |
-| Social sentiment (3-way) | 63.8% | Jev wins | Mini wins |
-| News topic | 90.8% | TF-IDF wins | TF-IDF wins |
-| Banking queue routing | 93.2% | TF-IDF wins | TF-IDF wins |
-| Hate-speech screen | 54.0% | Jev wins | Mini wins |
+| Prompt-injection screen | 90.5% | TF-IDF wins | TF-IDF wins |
+| Consumer complaint routing | 85.6% | ns | TF-IDF wins |
+| Comment toxicity gate | 85.2% | TF-IDF wins | TF-IDF wins |
+| SMS spam gate | 96.0% | ns | ns |
+| Review polarity | 84.8% | Jev wins | Mini wins |
+| Message emotion | 60.0% | Jev wins | Mini wins |
+| Offensive language screen | 69.4% | ns | ns |
+| Social sentiment (3-way) | 60.2% | Jev wins | Mini wins |
+| News topic | 93.8% | TF-IDF wins | TF-IDF wins |
+| Banking queue routing | 94.2% | TF-IDF wins | TF-IDF wins |
+| Hate-speech screen | 53.4% | Jev wins | Mini wins |
 
-If you have labels, skip both APIs on news topic, banking queue routing. Predicts in microseconds for $0.
+If you have labels, skip both APIs on prompt-injection screen, comment toxicity gate, news topic, banking queue routing. Predicts in microseconds for $0.
 <!-- /generated:tfidf-table -->
 
 **Calibration** is measured by `scripts/calibrate.py`. The two highest-ECE rows in the
@@ -299,12 +308,12 @@ is not which model is cheaper, it is how long your input is
 | 1361 | 1402 | 0 | $72.45 | $213.35 | jev |
 | 2743 | 2784 | 1323 | $133.97 | $321.35 | jev |
 
-Crossover: Jev becomes the cheaper option above roughly **24 tokens of actual input**, about 96 characters. That is after removing the ~41-token system prompt 4o-mini adds to every call; an earlier version of this page counted that prompt as content and reported 65. Mini prompt tokens the API reports as cached are priced at the cached rate ($0.075/M); only the longest point had any. Measured on the rows themselves, Jev is the cheaper API on **4 of 11**: prompt-injection screen, consumer complaint routing, comment toxicity gate, news topic. The short-text rows go to Mini. Receipts in `results/receipts/cost_curve.json`.
+Crossover: Jev becomes the cheaper option above roughly **24 tokens of actual input**, about 96 characters. That is after removing the ~41-token system prompt 4o-mini adds to every call; an earlier version of this page counted that prompt as content and reported 65. Mini prompt tokens the API reports as cached are priced at the cached rate ($0.075/M); only the longest point had any. Measured on the rows themselves, Jev is the cheaper API on **11 of 11**: prompt-injection screen, consumer complaint routing, comment toxicity gate, sms spam gate, review polarity, message emotion, offensive language screen, social sentiment (3-way), news topic, banking queue routing, hate-speech screen. Every row clears the crossover now: the normalized prompt gives Mini the label criteria Jev already carried, which lengthens Mini's input on every task. Receipts in `results/receipts/cost_curve.json`.
 <!-- /generated:cost-curve -->
 
 <!-- generated:latency -->
-**Latency** p50 was 807ms Jev against
-1057ms Mini on SMS in this run, including client
+**Latency** p50 was 716ms Jev against
+987ms Mini on SMS in this run, including client
 round-trip.
 <!-- /generated:latency -->
 An earlier run from a different network measured 193ms against 518ms. The
@@ -323,23 +332,20 @@ that could be measured have been. This list, like every table above, is generate
   label. That makes accuracy comparable across models but it is not the share of each
   label in real traffic, so a gate's coverage and accuracy here will not be the ones you
   see in production. A spam gate at 50% spam behaves differently from one at 3%.
-- **Some frozen rows repeat a text.** Rows whose text already appears earlier in the same
-  sample: consumer complaint routing 1, offensive language screen 11, message emotion 1, sms spam gate 18. SMS spam and CFPB duplicates are in the source data. 7 of the offensive rows and 1 of the emotion rows
-  were drawn twice by a top-up bug in `prepare_samples.py` (it dropped the wrong index
-  before refilling an unbalanced label; fixed, see `results/code_patches.json`). The
-  frozen samples and receipts are kept as run; a re-run on a corrected sample would move
-  those two rows by at most 1.4pt and 0.2pt.
+- **No frozen row repeats a text.** Exact duplicates are collapsed before the draw and every
+  v1 row is excluded, so each sample here is unique texts only. The v1 samples at tag
+  `v1-config-comparison` carried source duplicates and 8 rows from a top-up bug since fixed.
 - **The auto-slice gate is chosen and scored on the same rows.** That flatters it in
   principle. Measured: choosing the gate on one half and scoring it on the other, over
   400 random splits, moves the result by at most 0.5pt on any row, because there
   are only five candidate gates and the pick is stable. `results/gates.json` carries both
   numbers.
 - **11 comparisons at once.** Significance is Holm-corrected within each comparison
-  family. 2 row(s) that looked like wins for Jev over 4o-mini (offensive language screen, news topic) do not survive the correction and are shown as ties.
+  family. 
 - **Gating and calibration use one score.** An earlier version thresholded on Jev's
   `confidence` while computing ECE on `p_chosen`; they differ on hundreds of rows.
   Both now use `p_chosen`.
-- **Rows come from 4 invocations of `run_eval.py`.** Tasks were added one at a
+- **Rows come from 1 invocations of `run_eval.py`.** Tasks were added one at a
   time, so the table is not one run. Each row's receipts carry their own timestamps and the
   site shows which invocation a row came from.
 - **The two prompt formats do not carry the same information.** Jev's choice questions
@@ -358,7 +364,7 @@ that could be measured have been. This list, like every table above, is generate
 
 ## Provenance - four layers
 
-1. **Frozen inputs.** `data/*.jsonl` (seed=7, n=500 per task except prompt injection at n=300) and `schemas/*.json`. SHA-256 in `results/manifest.json`. Seven of the eleven tasks ship a SHA-256 of each text instead of the text, because their terms either favour sharing ids or declare no licence at all; `scripts/rehydrate.py` restores and re-checks it. See `ATTRIBUTION.md`.
+1. **Frozen inputs.** `data/*.jsonl` (seed=11, n=500 per task except prompt injection at n=200, every v1 row excluded) and `schemas/*.json`. SHA-256 in `results/manifest.json`. Seven of the eleven tasks ship a SHA-256 of each text instead of the text, because their terms either favour sharing ids or declare no licence at all; `scripts/rehydrate.py` restores and re-checks it. See `ATTRIBUTION.md`.
 2. **Per-call receipts.** `results/receipts/<task>.json` (full JSON). `site/receipts/` is a slimmer copy for the UI. Open a row, then open that task's receipts.
 3. **Don't stays on the homepage.** Hate-speech: Mini wins by 7.8 points, and the row is kept in full view.
 4. **Re-run / recount.** No API: `python3 scripts/verify_run.py` (must print ALL CHECKS PASSED).

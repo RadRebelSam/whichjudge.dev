@@ -43,15 +43,17 @@ HF = "https://huggingface.co/datasets/{repo}/resolve/main/{path}"
 # task -> where its text came from, and which column holds it.
 SOURCES = {
     "message_emotion": {
-        "cache": "tweet_emotion_test.parquet", "column": "text",
+        # v2 draws from the train split; v1 exhausted one class of the test split
+        "cache": "tweet_emo_train.parquet", "column": "text",
         "url": HF.format(repo="cardiffnlp/tweet_eval",
-                         path="emotion/test-00000-of-00001.parquet"),
+                         path="emotion/train-00000-of-00001.parquet"),
         "why": "TweetEval: platform terms favour sharing ids over tweet text",
     },
     "content_offensive": {
-        "cache": "tweet_offensive_test.parquet", "column": "text",
+        # v2 draws from the train split; v1 exhausted one class of the test split
+        "cache": "tweet_off_train.parquet", "column": "text",
         "url": HF.format(repo="cardiffnlp/tweet_eval",
-                         path="offensive/test-00000-of-00001.parquet"),
+                         path="offensive/train-00000-of-00001.parquet"),
         "why": "TweetEval: platform terms favour sharing ids over tweet text",
     },
     "content_hate": {

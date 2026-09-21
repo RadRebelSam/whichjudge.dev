@@ -12,7 +12,7 @@
       }
     }
   },
-  "openai_prompt": "Is this tweet hate speech? Reply with JSON {\"label\": <one of: not_hate, hate>}.",
+  "openai_prompt": "Does this tweet contain hate speech targeting a protected group?\nChoose exactly one label:\n- not_hate: Not hate speech\n- hate: Hate speech\nReply with JSON {\"label\": <one of: not_hate, hate>}.",
   "labels": [
     "not_hate",
     "hate"

@@ -13,7 +13,7 @@
       }
     }
   },
-  "openai_prompt": "Classify sentiment. Reply with JSON {\"label\": <one of: negative, neutral, positive>}.",
+  "openai_prompt": "What is the sentiment of this social media message?\nChoose exactly one label:\n- negative: Negative, angry, sad, or complaining\n- neutral: Neutral, factual, or mixed without a clear valence\n- positive: Positive, happy, or complimentary\nReply with JSON {\"label\": <one of: negative, neutral, positive>}.",
   "labels": [
     "negative",
     "neutral",

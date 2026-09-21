@@ -6,5 +6,7 @@
     "sci_tech": 125,
     "sports": 125,
     "world": 125
-  }
+  },
+  "seed": 11,
+  "excludes_v1_rows": true
 }
