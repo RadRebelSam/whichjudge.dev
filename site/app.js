@@ -295,6 +295,7 @@ function render() {
           <a class="underline decoration-zinc-300 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200" href="${SITE.repo}" rel="noopener">Source</a>
           <a class="underline decoration-zinc-300 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200" href="terms.html">Terms</a>
           <a class="underline decoration-zinc-300 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200" href="privacy.html">Privacy</a>
+          <span class="mono">build ${RUN.dataVersion}</span>
         </p>
       </div>
     </footer>

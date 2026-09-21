@@ -916,6 +916,9 @@ def render_index_meta(site, run, tasks) -> str:
         f'  <meta property="og:description" content="{e(desc)}">',
         f'  <meta property="og:url" content="{e(site["domain"])}/">',
         '  <meta name="twitter:card" content="summary">',
+        # The same stamp the decision pages carry. The homepage went without one
+        # while the site claimed every page had it.
+        f'  <meta name="whichjudge-build" content="{e(run["dataVersion"])}">',
         f'  <script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>',
         "  " + META_END,
     ])
