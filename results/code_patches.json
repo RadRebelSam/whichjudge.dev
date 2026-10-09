@@ -12,9 +12,9 @@
     {
       "path": "scripts/verify_run.py",
       "run_sha256": "0e3324004a3e5b4166de196476ffe2ad028d92bcf82a2ebaaa25bde7c7f6b2ac",
-      "current_sha256": "3f1e52ddc6b13f05c2d68fd5d4516eccb64a1a88aa6e7aecf824c96fa96919ea",
+      "current_sha256": "2fff405802a68b5fc380f64cdcf18f0d1c7869d6bd58d6c4699dd1ed8303babe",
       "patched_utc": "2026-09-21",
-      "reason": "Added the Laya column checks (coverage, reparsed preds, hashes, statistics, ECE, error profile) and a check of the current-model per-class error profile, which had been published from an older run's receipts. No measurement changed."
+      "reason": "Added the Laya column checks (coverage, reparsed preds, hashes, statistics, ECE, error profile) and a check of the current-model per-class error profile, which had been published from an older run's receipts. No measurement changed. Later (2026-10-07): added checks for the OpenAI Decisions (gpt-6-luna) and Cloudflare clef columns (hashes, reparsed preds, statistics, cost, ECE, error profile). No measurement changed."
     }
   ]
 }

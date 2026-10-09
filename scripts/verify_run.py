@@ -244,6 +244,9 @@ JEV_INPUT_USD_PER_M = 0.042
 MINI_INPUT_USD_PER_M = 0.15
 MINI_OUTPUT_USD_PER_M = 0.60
 GATES = (0.5, 0.6, 0.7, 0.8, 0.9)
+# Vendor list prices (USD per million input tokens, output not billed) for the typed-decision
+# columns, kept here independently of the files they are checked against.
+EXTRA_COLUMN_USD_PER_M = {"decisions": 0.10, "clef": 0.24, "clef-flash": 0.09}
 BINS = 10
 
 
@@ -362,6 +365,14 @@ def reparse_jev(response: dict, key: str) -> tuple[str, float, float]:
     return str(choice), conf, float(probs.get(choice, 0) if choice else 0)
 
 
+def reparse_decisions(response: dict, key: str) -> tuple[str, float, float]:
+    """The same reading of an OpenAI Decisions reply that run_decisions_baseline.py makes."""
+    ans = next(a for a in response["answers"] if a.get("name") == key)
+    choice = ans.get("choice")
+    probs = {p["value"]: p["probability"] for p in ans.get("probabilities") or []}
+    return str(choice), float(ans.get("confidence") or 0), float(probs.get(choice, 0) if choice else 0)
+
+
 def reparse_mini(response: dict, labels: list[str]) -> str:
     content = response["choices"][0]["message"]["content"]
     try:
@@ -414,6 +425,14 @@ def check_derived(summary: list[dict], fast: bool = False) -> Derived:
     modern = {r["task_id"]: r for r in load(modern_path)["tasks"]} if modern_path.exists() else {}
     laya_path = RESULTS / "laya_baseline.json"
     laya = {r["task_id"]: r for r in load(laya_path)["tasks"]} if laya_path.exists() else {}
+    extra = {}  # decisions / clef / clef-flash: typed-decision API columns
+    for col in EXTRA_COLUMN_USD_PER_M:
+        cpath_ = RESULTS / f"{col}_baseline.json"
+        if cpath_.exists():
+            top_ = load(cpath_)
+            extra[col] = ({r["task_id"]: r for r in top_["tasks"]}, top_)
+            d.expect(f"{col}.prices.input", top_["prices_usd_per_million"]["input"], EXTRA_COLUMN_USD_PER_M[col])
+            d.expect(f"{col}.prices.output", top_["prices_usd_per_million"]["output"], 0.0)
 
     from calibrate import cross_validated_slice  # same seeded splits as the producer
 
@@ -664,6 +683,78 @@ def check_derived(summary: list[dict], fast: bool = False) -> Derived:
             if profile[tid].get("laya"):
                 d.expect(f"{tid} error_profile.laya.per_class", per_class(lcalls), profile[tid]["laya"]["per_class"])
 
+        # typed-decision API columns (OpenAI Decisions, Cloudflare clef): same reading as the Jev arm
+        for col, (cdata, ctop) in extra.items():
+            if tid not in cdata:
+                continue
+            cd = cdata[tid]
+            cpath = RECEIPTS / f"{tid}.{col}.json"
+            crec = load(cpath) if cpath.exists() else None
+            if not isinstance(crec, dict) or not isinstance(crec.get("calls"), list) or not crec["calls"]:
+                print(f"{col.upper()} RECEIPTS {tid}: missing or malformed {cpath.name}")
+                d.errors += 1
+                continue
+            ccalls = crec["calls"]
+            coverage(col, ccalls)
+            d.expect(f"{tid} {col}.model", cd["model"], crec.get("model"))
+            reparse = reparse_decisions if col == "decisions" else reparse_jev
+            c_invalid = 0
+            for r in ccalls:
+                if sha256_bytes(canonical_bytes(r["response"])) != r["response_sha256"]:
+                    print("RESPONSE HASH", tid, col, r["id"])
+                    d.errors += 1
+                if sha256_bytes(canonical_bytes(r["request"])) != r["request_sha256"]:
+                    print("REQUEST HASH", tid, col, r["id"])
+                    d.errors += 1
+                if gold[r["id"]] != r["gold"]:
+                    print("GOLD DRIFT", tid, col, r["id"])
+                    d.errors += 1
+                pred, conf, p_chosen = reparse(r["response"], schema["question_key"])
+                d.expect(f"{tid} {col}[{r['id']}].pred reparsed", pred, r["pred"])
+                d.expect(f"{tid} {col}[{r['id']}].confidence reparsed", conf, r.get("confidence"))
+                d.expect(f"{tid} {col}[{r['id']}].p_chosen reparsed", p_chosen, r.get("p_chosen"))
+                d.expect(f"{tid} {col}[{r['id']}].model_returned", r["response"].get("model"), r.get("model_returned"))
+                if r["pred"] not in schema["labels"]:
+                    c_invalid += 1
+            d.expect(f"{tid} {col}.invalid_labels", c_invalid, cd.get("invalid_labels"))
+            c_ok = [r["pred"] == r["gold"] for r in ccalls]
+            d.expect(f"{tid} {col}.n", len(c_ok), cd["n"])
+            d.expect(f"{tid} {col}.acc", sum(c_ok) / len(c_ok), cd["acc"])
+            lo, hi = wilson(sum(c_ok), len(c_ok))
+            d.expect(f"{tid} {col}.wilson.lo", lo, cd["wilson"]["lo"])
+            d.expect(f"{tid} {col}.wilson.hi", hi, cd["wilson"]["hi"])
+            lat = sorted(r["latency_ms"] for r in ccalls)
+            d.expect(f"{tid} {col}.p50_ms", lat[len(lat) // 2], cd["p50_ms"])
+            d.expect(f"{tid} {col}.p95_ms", lat[int(len(lat) * 0.95)], cd["p95_ms"])
+            c_in = sum(r["input_tokens"] or 0 for r in ccalls)
+            c_out = sum(r["output_tokens"] or 0 for r in ccalls)
+            d.expect(f"{tid} {col}.input_tokens", c_in, cd["input_tokens"])
+            d.expect(f"{tid} {col}.output_tokens", c_out, cd["output_tokens"])
+            d.expect(f"{tid} {col}.tokens_per_call", round((c_in + c_out) / len(ccalls), 1), cd["tokens_per_call"])
+            d.expect(f"{tid} {col}.cost_usd", c_in / 1e6 * EXTRA_COLUMN_USD_PER_M[col], cd["cost_usd"], 1e-12)
+            cconfs = [r["confidence"] for r in ccalls]
+            d.expect(f"{tid} {col}.mean_confidence", sum(cconfs) / len(cconfs), cd["mean_confidence"])
+            jev_by = dict(zip([r["id"] for r in jev], jev_ok))
+            j_al = [jev_by[r["id"]] for r in ccalls]
+            m_al = [mini_by[r["id"]] for r in ccalls]
+            for key, other in (("mcnemar_vs_jev", j_al), ("mcnemar_vs_mini", m_al)):
+                a, b_, p = mcnemar(c_ok, other)
+                d.expect(f"{tid} {col}.{key}.a_only_correct", a, cd[key]["a_only_correct"])
+                d.expect(f"{tid} {col}.{key}.b_only_correct", b_, cd[key]["b_only_correct"])
+                d.expect(f"{tid} {col}.{key}.p_value", p, cd[key]["p_value"], 1e-12)
+            if calib[tid].get(col):
+                rel = reliability(ccalls)
+                d.expect(f"{tid} {col}.ece", rel["ece"], calib[tid][col]["ece"])
+                d.expect(f"{tid} {col}.mce", rel["mce"], calib[tid][col]["mce"])
+            else:
+                print(f"DERIVED MISMATCH {tid} calibration.{col}: missing, run scripts/calibrate.py")
+                d.errors += 1
+            if profile[tid].get(col):
+                d.expect(f"{tid} error_profile.{col}.per_class", per_class(ccalls), profile[tid][col]["per_class"])
+            else:
+                print(f"DERIVED MISMATCH {tid} error_profile.{col}: missing, run scripts/calibrate.py")
+                d.errors += 1
+
         # the same text twice in one sample, reported so nobody has to find it
         seen, dup = set(), 0
         for r in jev:
@@ -707,6 +798,8 @@ def check_derived(summary: list[dict], fast: bool = False) -> Derived:
         "TF-IDF accuracy, Wilson, McNemar vs both arms from its stored per-row predictions",
         "current-model accuracy, Wilson, latency, tokens per call, McNemar vs both arms, response hashes",
         "Laya accuracy, Wilson, latency, McNemar vs both arms, ECE, error profile, response hashes, reparsed preds",
+        "OpenAI Decisions and Cloudflare clef/clef-flash: coverage, request and response hashes, reparsed preds,",
+        "accuracy, Wilson, McNemar vs both arms, latency, tokens, list-price cost, ECE and error profile",
         "cost-curve points, crossover and overheads re-aggregated from per-call receipts",
     ]
     return d

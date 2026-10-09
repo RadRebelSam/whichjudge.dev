@@ -40,13 +40,15 @@ SEVERE = {"serious", "critical"}
 
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
+    protocol_version = "HTTP/1.1"  # keep-alive: HTTP/1.0 close-per-request gets connections reset under parallel loads
     def log_message(self, *args):  # noqa: D102 - silence per-request lines
         pass
 
 
 def serve() -> tuple[socketserver.TCPServer, int]:
     handler = partial(Quiet, directory=str(SITE))
-    srv = socketserver.TCPServer(("127.0.0.1", 0), handler)
+    http.server.ThreadingHTTPServer.request_queue_size = 128  # the default 5 resets parallel page loads
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     return srv, srv.server_address[1]
 
@@ -113,6 +115,31 @@ def main() -> None:
         if back != task:
             failures.append(f"dialog: Escape returned focus to {back!r}, expected the {task!r} row")
         print(f"dialog focus contract on {task}: {'ok' if not any(f.startswith('dialog') for f in failures) else 'FAILED'}")
+
+        # Typed-decision API columns: each one data.js carries must be in the table header and in the
+        # phone cards, and adding columns must not push the desktop table past the viewport.
+        page.keyboard.press("Escape")
+        api = page.evaluate("RUN.apiColumns || []")
+        for width in (1200, 1440):
+            page.set_viewport_size({"width": width, "height": 900})
+            page.wait_for_timeout(200)
+            sw = page.evaluate("Math.max(document.documentElement.scrollWidth, document.body.scrollWidth)")
+            if sw > width:
+                failures.append(f"desktop: page is {sw}px wide at {width}px with {len(api)} API columns")
+        head = page.evaluate("[...document.querySelectorAll('.hidden.md\\\\:block > div:first-child span.text-right')].map(e => e.innerText)")
+        for m in api:
+            if not any(m["label"].lower() in h.lower() for h in head):  # header text is CSS-uppercased
+                failures.append(f"desktop: table header has no {m['label']} column")
+        if not api and any("gpt-6-luna" in h.lower() or "clef" in h.lower() for h in head):
+            failures.append("desktop: table names an API column that data.js does not carry")
+        page.set_viewport_size(PHONE)
+        page.wait_for_timeout(200)
+        cards = page.evaluate("document.querySelector('.md\\\\:hidden') ? document.querySelector('.md\\\\:hidden').innerText : ''")
+        for m in api:
+            if m["label"] not in cards:
+                failures.append(f"phone: cards do not show {m['label']}")
+        print(f"API columns in table and cards ({', '.join(m['label'] for m in api) or 'none'}): "
+              f"{'ok' if not any(f.startswith(('desktop', 'phone')) for f in failures) else 'FAILED'}")
         ctx.close()
         browser.close()
     srv.shutdown()

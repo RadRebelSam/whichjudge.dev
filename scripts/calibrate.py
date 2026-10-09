@@ -222,6 +222,13 @@ def main() -> None:
             ld = json.loads(laya_path.read_text(encoding="utf-8"))
             errors[tid]["laya"] = error_profile({"calls": ld["calls"]}, "calls")
             out[tid]["laya"] = reliability([(score_of(r), r["pred"] == r["gold"]) for r in ld["calls"]])
+        # OpenAI Decisions and Cloudflare clef also return p_chosen, so same measure again.
+        for col in ("decisions", "clef", "clef-flash"):
+            col_path = RECEIPTS / f"{tid}.{col}.json"
+            if col_path.exists():
+                cd = json.loads(col_path.read_text(encoding="utf-8"))
+                errors[tid][col] = error_profile({"calls": cd["calls"]}, "calls")
+                out[tid][col] = reliability([(score_of(r), r["pred"] == r["gold"]) for r in cd["calls"]])
         rel = out[tid]["p_chosen"]
         occupied = sum(1 for b in rel["bins"] if b["n"])
         print(f"{tid:24} ECE {rel['ece']:.3f}  MCE {rel['mce']:.3f}  bins used {occupied}/{BINS}")

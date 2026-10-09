@@ -1,0 +1,453 @@
+{
+  "run_id": "2026-10-08T03:47:33.166909+00:00",
+  "finished_utc": "2026-10-08T03:59:28.838080+00:00",
+  "latency_environment": {
+    "host": "Windows-10-10.0.19045-SP0",
+    "measured_from": "unset",
+    "note": "Wall clock from this client, including network round trip."
+  },
+  "recomputed_utc": "2026-10-09T07:42:53.361185+00:00",
+  "column": "decisions",
+  "model": "gpt-6-luna",
+  "endpoint": "https://api.openai.com/v1/decisions",
+  "why": "OpenAI's Decisions API, a System One-style endpoint: typed questions in, probabilities back, no generated text. Same samples, same rubric as Jev.",
+  "prices_usd_per_million": {
+    "input": 0.1,
+    "output": 0.0
+  },
+  "price_source_url": "https://developers.openai.com/api/docs/pricing",
+  "price_checked": "2026-10-09",
+  "pricing_note": "Read off the vendor's own pricing page on 2026-10-09: Standard tier, short context, input $0.10 per 1M tokens. The pricing page lists the model, not the Decisions API separately, so this applies that input price to the input tokens each call reports and charges nothing for output because every call reports 0 output tokens. No cached-input discount applied.",
+  "total_cost_usd": 0.11145700000000003,
+  "tasks": [
+    {
+      "task_id": "prompt_injection",
+      "model": "gpt-6-luna",
+      "n": 200,
+      "acc": 0.72,
+      "wilson": {
+        "k": 144,
+        "n": 200,
+        "p": 0.72,
+        "lo": 0.6540756858222899,
+        "hi": 0.7776320715736488
+      },
+      "p50_ms": 814.3541999997979,
+      "p95_ms": 1889.6128999986104,
+      "input_tokens": 45439,
+      "output_tokens": 0,
+      "tokens_per_call": 227.2,
+      "cost_usd": 0.0045439,
+      "invalid_labels": 0,
+      "mean_confidence": 0.8736999999999999,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 2,
+        "b_only_correct": 19,
+        "discordant": 21,
+        "chi2_cc": 12.19047619047619,
+        "p_value": 0.0004803411999818706,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 7,
+        "b_only_correct": 12,
+        "discordant": 19,
+        "chi2_cc": 0.8421052631578947,
+        "p_value": 0.3587953578869416,
+        "winner": "ns"
+      },
+      "jev_acc": 0.805,
+      "mini_acc": 0.745
+    },
+    {
+      "task_id": "civil_toxicity",
+      "model": "gpt-6-luna",
+      "n": 500,
+      "acc": 0.726,
+      "wilson": {
+        "k": 363,
+        "n": 500,
+        "p": 0.726,
+        "lo": 0.6852936486809578,
+        "hi": 0.7632600237430738
+      },
+      "p50_ms": 902.915300001041,
+      "p95_ms": 1884.592700000212,
+      "input_tokens": 126655,
+      "output_tokens": 0,
+      "tokens_per_call": 253.3,
+      "cost_usd": 0.0126655,
+      "invalid_labels": 1,
+      "mean_confidence": 0.7913199999999996,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 22,
+        "b_only_correct": 43,
+        "discordant": 65,
+        "chi2_cc": 6.153846153846154,
+        "p_value": 0.013112663265155903,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 40,
+        "b_only_correct": 39,
+        "discordant": 79,
+        "chi2_cc": 0.0,
+        "p_value": 1.0,
+        "winner": "ns"
+      },
+      "jev_acc": 0.768,
+      "mini_acc": 0.724
+    },
+    {
+      "task_id": "cfpb_queue_route",
+      "model": "gpt-6-luna",
+      "n": 500,
+      "acc": 0.83,
+      "wilson": {
+        "k": 415,
+        "n": 500,
+        "p": 0.83,
+        "lo": 0.7945876062593026,
+        "hi": 0.8603801455103012
+      },
+      "p50_ms": 802.2931999985303,
+      "p95_ms": 1939.690499999415,
+      "input_tokens": 273031,
+      "output_tokens": 0,
+      "tokens_per_call": 546.1,
+      "cost_usd": 0.027303100000000004,
+      "invalid_labels": 1,
+      "mean_confidence": 0.9261800000000017,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 20,
+        "b_only_correct": 24,
+        "discordant": 44,
+        "chi2_cc": 0.20454545454545456,
+        "p_value": 0.6510766340778343,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 45,
+        "b_only_correct": 17,
+        "discordant": 62,
+        "chi2_cc": 11.758064516129032,
+        "p_value": 0.0006058018737316804,
+        "winner": "a"
+      },
+      "jev_acc": 0.838,
+      "mini_acc": 0.774
+    },
+    {
+      "task_id": "banking_coarse_route",
+      "model": "gpt-6-luna",
+      "n": 500,
+      "acc": 0.702,
+      "wilson": {
+        "k": 351,
+        "n": 500,
+        "p": 0.702,
+        "lo": 0.6604921922645164,
+        "hi": 0.7404274618489985
+      },
+      "p50_ms": 1316.3472000014735,
+      "p95_ms": 2007.7719000000798,
+      "input_tokens": 128692,
+      "output_tokens": 0,
+      "tokens_per_call": 257.4,
+      "cost_usd": 0.0128692,
+      "invalid_labels": 0,
+      "mean_confidence": 0.7758800000000005,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 27,
+        "b_only_correct": 27,
+        "discordant": 54,
+        "chi2_cc": 0.018518518518518517,
+        "p_value": 0.8917558535067943,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 38,
+        "b_only_correct": 19,
+        "discordant": 57,
+        "chi2_cc": 5.684210526315789,
+        "p_value": 0.017118239704790147,
+        "winner": "a"
+      },
+      "jev_acc": 0.702,
+      "mini_acc": 0.664
+    },
+    {
+      "task_id": "news_topic",
+      "model": "gpt-6-luna",
+      "n": 500,
+      "acc": 0.884,
+      "wilson": {
+        "k": 442,
+        "n": 500,
+        "p": 0.884,
+        "lo": 0.8529575380244137,
+        "hi": 0.9091867549438526
+      },
+      "p50_ms": 1160.7024000004458,
+      "p95_ms": 2159.3405999992683,
+      "input_tokens": 96525,
+      "output_tokens": 0,
+      "tokens_per_call": 193.1,
+      "cost_usd": 0.009652500000000001,
+      "invalid_labels": 0,
+      "mean_confidence": 0.9472800000000005,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 8,
+        "b_only_correct": 15,
+        "discordant": 23,
+        "chi2_cc": 1.565217391304348,
+        "p_value": 0.2109029260566104,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 25,
+        "b_only_correct": 13,
+        "discordant": 38,
+        "chi2_cc": 3.1842105263157894,
+        "p_value": 0.07435290536856355,
+        "winner": "ns"
+      },
+      "jev_acc": 0.898,
+      "mini_acc": 0.86
+    },
+    {
+      "task_id": "tweet_sentiment",
+      "model": "gpt-6-luna",
+      "n": 500,
+      "acc": 0.698,
+      "wilson": {
+        "k": 349,
+        "n": 500,
+        "p": 0.698,
+        "lo": 0.6563715243917267,
+        "hi": 0.7366091266700354
+      },
+      "p50_ms": 965.507400000206,
+      "p95_ms": 2026.4167000023008,
+      "input_tokens": 82810,
+      "output_tokens": 0,
+      "tokens_per_call": 165.6,
+      "cost_usd": 0.008281,
+      "invalid_labels": 0,
+      "mean_confidence": 0.8558400000000014,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 26,
+        "b_only_correct": 43,
+        "discordant": 69,
+        "chi2_cc": 3.710144927536232,
+        "p_value": 0.05408269489861288,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 33,
+        "b_only_correct": 41,
+        "discordant": 74,
+        "chi2_cc": 0.6621621621621622,
+        "p_value": 0.4157976549629326,
+        "winner": "ns"
+      },
+      "jev_acc": 0.732,
+      "mini_acc": 0.714
+    },
+    {
+      "task_id": "review_sentiment",
+      "model": "gpt-6-luna",
+      "n": 356,
+      "acc": 0.9382022471910112,
+      "wilson": {
+        "k": 334,
+        "n": 356,
+        "p": 0.9382022471910112,
+        "lo": 0.9082089565433249,
+        "hi": 0.9588392113172004
+      },
+      "p50_ms": 1338.978899999347,
+      "p95_ms": 2392.5692000011622,
+      "input_tokens": 49214,
+      "output_tokens": 0,
+      "tokens_per_call": 138.2,
+      "cost_usd": 0.0049214,
+      "invalid_labels": 1,
+      "mean_confidence": 0.9144943820224716,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 6,
+        "b_only_correct": 15,
+        "discordant": 21,
+        "chi2_cc": 3.0476190476190474,
+        "p_value": 0.08085559837005228,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 3,
+        "b_only_correct": 9,
+        "discordant": 12,
+        "chi2_cc": 2.0833333333333335,
+        "p_value": 0.1489146731787657,
+        "winner": "ns"
+      },
+      "jev_acc": 0.9634831460674157,
+      "mini_acc": 0.9550561797752809
+    },
+    {
+      "task_id": "sms_spam",
+      "model": "gpt-6-luna",
+      "n": 500,
+      "acc": 0.948,
+      "wilson": {
+        "k": 474,
+        "n": 500,
+        "p": 0.948,
+        "lo": 0.9248983617059371,
+        "hi": 0.9642699800903735
+      },
+      "p50_ms": 1304.584599998634,
+      "p95_ms": 1896.9699000008404,
+      "input_tokens": 79076,
+      "output_tokens": 0,
+      "tokens_per_call": 158.2,
+      "cost_usd": 0.007907599999999999,
+      "invalid_labels": 4,
+      "mean_confidence": 0.9338400000000002,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 13,
+        "b_only_correct": 16,
+        "discordant": 29,
+        "chi2_cc": 0.13793103448275862,
+        "p_value": 0.7103465689955668,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 19,
+        "b_only_correct": 18,
+        "discordant": 37,
+        "chi2_cc": 0.0,
+        "p_value": 1.0,
+        "winner": "ns"
+      },
+      "jev_acc": 0.954,
+      "mini_acc": 0.946
+    },
+    {
+      "task_id": "content_offensive",
+      "model": "gpt-6-luna",
+      "n": 500,
+      "acc": 0.684,
+      "wilson": {
+        "k": 342,
+        "n": 500,
+        "p": 0.684,
+        "lo": 0.641977078070737,
+        "hi": 0.7232170623098906
+      },
+      "p50_ms": 1190.6521999990218,
+      "p95_ms": 2150.860300000204,
+      "input_tokens": 78400,
+      "output_tokens": 0,
+      "tokens_per_call": 156.8,
+      "cost_usd": 0.00784,
+      "invalid_labels": 0,
+      "mean_confidence": 0.8054399999999996,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 31,
+        "b_only_correct": 52,
+        "discordant": 83,
+        "chi2_cc": 4.819277108433735,
+        "p_value": 0.02814314589626155,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 36,
+        "b_only_correct": 55,
+        "discordant": 91,
+        "chi2_cc": 3.5604395604395602,
+        "p_value": 0.059172067825859445,
+        "winner": "ns"
+      },
+      "jev_acc": 0.726,
+      "mini_acc": 0.722
+    },
+    {
+      "task_id": "content_hate",
+      "model": "gpt-6-luna",
+      "n": 500,
+      "acc": 0.576,
+      "wilson": {
+        "k": 288,
+        "n": 500,
+        "p": 0.576,
+        "lo": 0.5322644098109273,
+        "hi": 0.6185766481723753
+      },
+      "p50_ms": 885.09360000171,
+      "p95_ms": 1836.7207999981474,
+      "input_tokens": 77334,
+      "output_tokens": 0,
+      "tokens_per_call": 154.7,
+      "cost_usd": 0.0077334000000000005,
+      "invalid_labels": 0,
+      "mean_confidence": 0.8954000000000009,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 39,
+        "b_only_correct": 79,
+        "discordant": 118,
+        "chi2_cc": 12.889830508474576,
+        "p_value": 0.0003303723486387076,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 46,
+        "b_only_correct": 120,
+        "discordant": 166,
+        "chi2_cc": 32.102409638554214,
+        "p_value": 1.4625579917165637e-08,
+        "winner": "b"
+      },
+      "jev_acc": 0.656,
+      "mini_acc": 0.724
+    },
+    {
+      "task_id": "message_emotion",
+      "model": "gpt-6-luna",
+      "n": 500,
+      "acc": 0.756,
+      "wilson": {
+        "k": 378,
+        "n": 500,
+        "p": 0.756,
+        "lo": 0.7164944353121212,
+        "hi": 0.7916017600000562
+      },
+      "p50_ms": 854.6027000011236,
+      "p95_ms": 1816.935900002136,
+      "input_tokens": 77394,
+      "output_tokens": 0,
+      "tokens_per_call": 154.8,
+      "cost_usd": 0.0077394000000000004,
+      "invalid_labels": 2,
+      "mean_confidence": 0.8083800000000012,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 24,
+        "b_only_correct": 37,
+        "discordant": 61,
+        "chi2_cc": 2.360655737704918,
+        "p_value": 0.12442987548470683,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 29,
+        "b_only_correct": 32,
+        "discordant": 61,
+        "chi2_cc": 0.06557377049180328,
+        "p_value": 0.7978938831986566,
+        "winner": "ns"
+      },
+      "jev_acc": 0.782,
+      "mini_acc": 0.762
+    }
+  ]
+}

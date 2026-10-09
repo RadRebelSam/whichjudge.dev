@@ -77,7 +77,83 @@ def holm(pvalues: dict) -> dict:
     return adjusted
 
 
-def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows, laya=None):
+# Typed-decision API columns (results column name, key on each task, label shown). A column is
+# rendered when results/<name>_baseline.json exists and not otherwise, so adding one later is a
+# data-only change: run its script, run calibrate.py, run build_site.py. Nothing mentions a
+# column whose file is absent.
+API_COLUMNS = (
+    ("decisions", "decisions", "gpt-6-luna", "OpenAI Decisions API"),
+    ("clef", "clef", "clef", "Cloudflare Workers AI"),
+    ("clef-flash", "clefFlash", "clef-flash", "Cloudflare Workers AI"),
+)
+
+
+def load_api_columns() -> dict:
+    out = {}
+    for col, _key, _label, _vendor in API_COLUMNS:
+        path = RESULTS / f"{col}_baseline.json"
+        if path.exists():
+            out[col] = load(path)
+    return out
+
+
+def api_run_meta(api: dict) -> list[dict]:
+    """Per-column facts the site states once: model, vendor, verified list price and where."""
+    meta = []
+    for col, key, label, vendor in API_COLUMNS:
+        if col not in api:
+            continue
+        top = api[col]
+        meta.append({
+            "key": key, "label": label, "model": top["model"], "vendor": vendor,
+            "priceIn": top["prices_usd_per_million"]["input"],
+            "priceUrl": top["price_source_url"], "priceChecked": top["price_checked"],
+            "priceBasis": top["pricing_note"].split(": ", 1)[-1],
+            "totalCostUsd": round(top["total_cost_usd"], 4),
+        })
+    return meta
+
+
+def new_columns_report() -> None:
+    """Print the unpublished columns with Holm-corrected tests, one family per comparison.
+    Writes nothing; this is the source of the numbers in NOTES-new-columns.md."""
+    summary = {r["task_id"]: r for r in load(RESULTS / "summary.json")}
+    calib = load(RESULTS / "calibration.json")
+    order = list(summary)
+    for col in (c[0] for c in API_COLUMNS):
+        path = RESULTS / f"{col}_baseline.json"
+        if not path.exists():
+            continue
+        top = load(path)
+        by_id = {r["task_id"]: r for r in top["tasks"]}
+        hj = holm({t: r["mcnemar_vs_jev"]["p_value"] for t, r in by_id.items()})
+        hm = holm({t: r["mcnemar_vs_mini"]["p_value"] for t, r in by_id.items()})
+        rows, wins, ties, losses = [], 0, 0, 0
+        for tid in order:
+            r = by_id.get(tid)
+            if not r:
+                continue
+            vj = "ns" if hj[tid] >= 0.05 else (col if r["mcnemar_vs_jev"]["winner"] == "a" else "Jev")
+            vm = "ns" if hm[tid] >= 0.05 else (col if r["mcnemar_vs_mini"]["winner"] == "a" else "4o-mini")
+            wins += vj == col
+            ties += vj == "ns"
+            losses += vj == "Jev"
+            rows.append([tid, str(r["n"]), pct(r["acc"]), pct(r["jev_acc"]), pct(r["mini_acc"]),
+                         f"{(r['acc'] - r['jev_acc']) * 100:+.1f}", vj, f"{hj[tid]:.3g}", vm, f"{hm[tid]:.3g}",
+                         f"{calib[tid][col]['ece']:.3f}" if calib[tid].get(col) else "-",
+                         f"{r['p50_ms']:.0f}", f"{r['cost_usd']:.5f}"])
+        print(f"\n### {col} ({top['model']})  vs Jev: {wins} {col} wins, {ties} ties, {losses} Jev wins; "
+              f"total ${top['total_cost_usd']:.4f}\n")
+        print(md_table(["task", "n", col, "Jev", "4o-mini", "diff pts", "vs Jev (Holm)", "p_holm", "vs 4o-mini (Holm)",
+                        "p_holm", "ECE", "p50 ms", "cost USD"], rows))
+
+
+def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows, laya=None, api=None):
+    api = api or {}
+    api_by_id = {col: {r["task_id"]: r for r in top["tasks"]} for col, top in api.items()}
+    api_holm = {col: (holm({t: r["mcnemar_vs_jev"]["p_value"] for t, r in by.items()}),
+                      holm({t: r["mcnemar_vs_mini"]["p_value"] for t, r in by.items()}))
+                for col, by in api_by_id.items()}
     by_id = {r["task_id"]: r for r in summary}
     laya_by_id = {r["task_id"]: r for r in (laya or {}).get("tasks", [])}
     holm_laya = holm({r["task_id"]: r["mcnemar_vs_jev"]["p_value"] for r in (laya or {}).get("tasks", [])})
@@ -177,6 +253,11 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows, 
             known.add(round(ld["wilson"]["lo"] * 100, 1))
             known.add(round(ld["wilson"]["hi"] * 100, 1))
             known.add(round(abs(ld["acc"] - s["jev_acc"]) * 100, 1))
+        for col, by in api_by_id.items():
+            ad = by.get(tid)
+            if ad:
+                for v_ in (ad["acc"], ad["wilson"]["lo"], ad["wilson"]["hi"], abs(ad["acc"] - s["jev_acc"])):
+                    known.add(round(v_ * 100, 1))
         for gate, v in gtab.items():
             if v["accuracy"] is None:
                 continue
@@ -226,6 +307,12 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows, 
             if re.search(r"Laya[^.]{0,40}beats Jev", text) and (not ld or holm_laya.get(tid, 1.0) >= 0.05
                                                                 or ld["mcnemar_vs_jev"]["winner"] != "a"):
                 raise SystemExit(f"{tid}: copy.json {field} says Laya beats Jev but the corrected test does not.")
+            for col, _key, label, _vendor in API_COLUMNS:
+                if re.search(re.escape(label) + r"[^.]{0,40}beats Jev", text):
+                    ad = api_by_id.get(col, {}).get(tid)
+                    if (not ad or api_holm[col][0].get(tid, 1.0) >= 0.05
+                            or ad["mcnemar_vs_jev"]["winner"] != "a"):
+                        raise SystemExit(f"{tid}: copy.json {field} says {label} beats Jev but the corrected test does not.")
             claim = re.search(r"TF-IDF (?:beats|wins)( both| again)?", text)
             if not claim:
                 continue
@@ -242,7 +329,7 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows, 
             for b in calib[tid]["p_chosen"]["bins"]
             if b["n"]
         ]
-        out.append({
+        row = {
             "id": tid,
             "n": n,
             "title": c["title"],
@@ -356,7 +443,30 @@ def build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows, 
                 "ece": (round(calib[tid]["laya"]["ece"], 3) if calib[tid].get("laya") else None),
                 "invalidLabels": ld.get("invalid_labels", 0),
             } if ld else None),
-        })
+        }
+        for col, key, label, _vendor in API_COLUMNS:
+            ad = api_by_id.get(col, {}).get(tid)
+            if not ad:
+                continue
+            hj, hm = api_holm[col][0][tid], api_holm[col][1][tid]
+            row[key] = {
+                "model": ad["model"], "label": label,
+                "acc": ad["acc"],
+                "lo": round(ad["wilson"]["lo"], 3), "hi": round(ad["wilson"]["hi"], 3),
+                "p50": round(ad["p50_ms"]), "p95": round(ad["p95_ms"]),
+                "tokens": ad["tokens_per_call"],
+                "costUsd": round(ad["cost_usd"], 5),
+                "perM": per_million(ad["cost_usd"], ad["n"]),
+                "vsJev": ("ns" if hj >= 0.05 else (key if ad["mcnemar_vs_jev"]["winner"] == "a" else "jev")),
+                "vsMini": ("ns" if hm >= 0.05 else (key if ad["mcnemar_vs_mini"]["winner"] == "a" else "mini")),
+                "pJev": float(f"{ad['mcnemar_vs_jev']['p_value']:.3g}"),
+                "pJevHolm": float(f"{hj:.3g}"),
+                "pMini": float(f"{ad['mcnemar_vs_mini']['p_value']:.3g}"),
+                "pMiniHolm": float(f"{hm:.3g}"),
+                "ece": (round(calib[tid][col]["ece"], 3) if calib[tid].get(col) else None),
+                "invalidLabels": ad.get("invalid_labels", 0),
+            }
+        out.append(row)
     return out
 
 
@@ -444,7 +554,46 @@ def topup_duplicates(task_id: str, ids) -> int:
     return dup
 
 
+def api_readme_block(tasks, run) -> dict:
+    """README table for the typed-decision API columns. Empty when none has been run."""
+    cols = [c for c in API_COLUMNS if any(t.get(c[1]) for t in tasks)]
+    if not cols:
+        return {}
+    def cell(v, key, label):
+        return {"ns": "ns", key: f"**{label}**", "jev": "Jev"}.get(v, v)
+    header = ["Decision", "Jev", "4o-mini"]
+    for _c, key, label, _v in cols:
+        header += [label, f"{label} vs Jev"]
+    rows = []
+    for t in tasks:
+        r = [t["title"], pct(t["jev"]["acc"]), pct(t["mini"]["acc"])]
+        for _c, key, label, _v in cols:
+            a = t.get(key)
+            r += [pct(a["acc"]), cell(a["vsJev"], key, label)] if a else ["-", "-"]
+        rows.append(r)
+    meta = {m["key"]: m for m in run["apiColumns"]}
+    paras = []
+    for _c, key, label, _v in cols:
+        ts = [t for t in tasks if t.get(key)]
+        w = sum(1 for t in ts if t[key]["vsJev"] == "jev")
+        l = sum(1 for t in ts if t[key]["vsJev"] == key)
+        ties = len(ts) - w - l
+        m = meta[key]
+        paras.append(
+            f"**{label}** (`{m['model']}`, {m['vendor']}): Jev {w} win{'s' if w != 1 else ''}, "
+            f"{ties} tie{'s' if ties != 1 else ''}, {l} loss{'es' if l != 1 else ''}. "
+            f"List price ${m['priceIn']:.2f} per 1M input tokens, read from {m['priceUrl']} on "
+            f"{m['priceChecked']} ({m['priceBasis']}) The whole {len(ts)}-task run cost ${m['totalCostUsd']}.")
+    return {"api-columns-table": (
+        "Each vs-Jev column is Holm-corrected within its family of "
+        f"{len(tasks)} tests; a winner is named only when the corrected test clears 0.05.\n\n"
+        + md_table(header, rows) + "\n\n" + "\n\n".join(paras) + "\n\n"
+        "Latency is not compared: it was measured from one machine with the region unset and "
+        "includes the network round trip, so it is not comparable across vendors.")}
+
+
 def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
+    blocks_extra = api_readme_block(tasks, run)
     """Every table and numeric sentence in README.md, derived from results/.
 
     The README used to be typed by hand and drifted three times behind the site
@@ -776,6 +925,7 @@ def readme_blocks(tasks, run, curve, errors, gatefile, modern) -> dict:
         "- **Public gold.** Nine of eleven rows are academic benchmarks. Only CFPB routing uses\n"
         "  a live system's own labels, and those are chosen by the person filing, not an expert."
     )
+    blocks.update(blocks_extra)
     return blocks
 
 
@@ -815,6 +965,9 @@ def render_decision_page(t, run, site) -> str:
         notes.append(f"{t['modern']['model']} beats Jev here at {pct(t['modern']['acc'])}.")
     if t.get("laya") and t["laya"]["vsJev"] == "laya":
         notes.append(f"Laya, self-hosted, beats Jev here at {pct(t['laya']['acc'])}.")
+    for _col, key, label, _vendor in API_COLUMNS:
+        if t.get(key) and t[key]["vsJev"] == key:
+            notes.append(f"{label} beats Jev here at {pct(t[key]['acc'])}.")
     if t["ece"]["ece"] > 0.12:
         notes.append(f"ECE {t['ece']['ece']}: do not quote the confidence as a probability.")
     caveats = ("<ul class=\"caveats\">" + "".join(f"<li>{e(n)}</li>" for n in notes) + "</ul>"
@@ -830,7 +983,8 @@ def render_decision_page(t, run, site) -> str:
         verdict = VERDICT_TEXT[t["verdict"]]
     ns_tag = ""
     # rows in the comparison table: Jev, 4o-mini, TF-IDF, plus the current model
-    others = 2 + (1 if t.get("modern") else 0) + (1 if t.get("laya") else 0)
+    others = 2 + (1 if t.get("modern") else 0) + (1 if t.get("laya") else 0) \
+        + sum(1 for c in API_COLUMNS if t.get(c[1]))
     title = f"{t['title']}: Jev vs {others} other models, measured | {site['name']}"
     desc = (
         f"{t['title']} on {t['dataset']}, n={t['n']} frozen gold. "
@@ -888,6 +1042,15 @@ def render_decision_page(t, run, site) -> str:
                                     f"[{pct(la['lo'])} - {pct(la['hi'])}]",
                                     f"{la['p50']} ms local {la['device'] or ''}, no network",
                                     "$0 API, compute not priced"))
+    meta_by_key = {m["key"]: m for m in run.get("apiColumns", [])}
+    for _col, key, label, _vendor in API_COLUMNS:
+        if not t.get(key):
+            continue
+        a, m = t[key], meta_by_key[key]
+        rows.insert(len(rows) - 1, (
+            f"{a['model']} ({m['vendor']})", pct(a["acc"]), f"[{pct(a['lo'])} - {pct(a['hi'])}]",
+            f"{a['p50']} ms, one client, region unset, includes network",
+            f"${a['perM']} (list ${m['priceIn']:.2f} per 1M input tokens, {m['priceChecked']})"))
     tbody = "\n".join(
         "        <tr>" + "".join(f"<td>{e(c)}</td>" for c in r) + "</tr>" for r in rows
     )
@@ -1089,6 +1252,9 @@ def write(path: Path, content: str, check: bool, drift: list) -> None:
 
 
 def main() -> None:
+    if "--new-columns" in sys.argv:
+        new_columns_report()
+        return
     check = "--check" in sys.argv
     copy = load(SITE / "copy.json")
     site = copy["site"]
@@ -1106,7 +1272,8 @@ def main() -> None:
     curve = load(curve_path) if curve_path.exists() else None
 
     runs, windows = run_windows(summary)
-    tasks = build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows, laya)
+    api = load_api_columns()
+    tasks = build_tasks(copy, summary, calib, tfidf, errors, modern, gatefile, windows, laya, api)
     # Tasks may differ in size. Prompt injection only has 662 rows in existence, so
     # freezing 500 would leave nothing to train the classical baseline on. The site
     # shows each task's own n instead of claiming one number for all of them.
@@ -1124,6 +1291,7 @@ def main() -> None:
     fingerprint = hashlib.sha256()
     for part in ("summary.json", "calibration.json", "gates.json", "error_profile.json",
                  "tfidf_baseline_summary.json", "modern_baseline.json", "laya_baseline.json",
+                 *(f"{c[0]}_baseline.json" for c in API_COLUMNS),
                  "cost_curve.json"):
         f = RESULTS / part
         if f.exists():
@@ -1148,6 +1316,7 @@ def main() -> None:
         "nMax": sizes[-1],
         "seed": manifest["seed"],
         "tasks": len(tasks),
+        "apiColumns": api_run_meta(api),
         "note": (f"Frozen samples (seed={manifest['seed']}, n={sizes[0]}-{sizes[-1]} per task). "
                  "Wilson 95% CI on accuracy. "
                  "McNemar on paired errors. Full receipts in results/receipts/. "
@@ -1157,6 +1326,7 @@ def main() -> None:
     modern_name = next((t["modern"]["model"] for t in tasks if t.get("modern")), None)
     site["description"] = site["descriptionTemplate"].format(
         tasks=len(tasks), modern=modern_name or "no current model column",
+        api="".join(f" vs {c[2]}" for c in API_COLUMNS if c[0] in api),
         nmin=sizes[0], nmax=sizes[-1])
 
     drift: list = []

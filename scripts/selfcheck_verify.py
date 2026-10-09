@@ -109,8 +109,50 @@ def laya_pred_edited(root: Path) -> str:
     return "news_topic: one Laya pred edited to gold, raw response untouched"
 
 
+def _api_column_pred_edited(root: Path, col: str) -> str:
+    """A typed-decision API answer edited in the receipt while the raw response still says otherwise."""
+    p = root / "results/receipts" / f"news_topic.{col}.json"
+    if not p.exists():
+        return "skip"
+    rec = load(p)
+    wrong = next(r for r in rec["calls"] if r["pred"] != r["gold"])
+    wrong["pred"] = wrong["gold"]
+    dump(p, rec)
+    return f"news_topic: one {col} pred edited to gold, raw response untouched"
+
+
+def decisions_pred_edited(root: Path) -> str:
+    return _api_column_pred_edited(root, "decisions")
+
+
+def clef_pred_edited(root: Path) -> str:
+    return _api_column_pred_edited(root, "clef")
+
+
+def decisions_cost_edited(root: Path) -> str:
+    """A cost shaved in the published column without touching the token counts."""
+    p = root / "results/decisions_baseline.json"
+    if not p.exists():
+        return "skip"
+    m = load(p)
+    m["tasks"][0]["cost_usd"] *= 0.5
+    dump(p, m)
+    return f"{m['tasks'][0]['task_id']}: Decisions cost halved while the tokens stay"
+
+
+def clef_receipt_row_dropped(root: Path) -> str:
+    p = root / "results/receipts/sms_spam.clef.json"
+    if not p.exists():
+        return "skip"
+    rec = load(p)
+    rec["calls"].pop()
+    dump(p, rec)
+    return "sms_spam: one clef receipt removed"
+
+
 CASES = [flip_pred_and_summary, empty_modern_receipt, stale_calibration,
-         drop_receipt_row, invalid_label_uncounted, wrong_cost_curve, laya_pred_edited]
+         drop_receipt_row, invalid_label_uncounted, wrong_cost_curve, laya_pred_edited,
+         decisions_pred_edited, clef_pred_edited, decisions_cost_edited, clef_receipt_row_dropped]
 
 
 def copy_tree(dst: Path) -> None:

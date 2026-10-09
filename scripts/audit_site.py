@@ -132,6 +132,9 @@ def check_numbers_in_app_js() -> None:
             known_pct.add(round(g["cov"] * 100, 1))
         if t.get("modern"):
             known_pct.add(round(t["modern"]["acc"] * 100, 1))
+        for key in ("decisions", "clef", "clefFlash"):
+            if t.get(key):
+                known_pct.add(round(t[key]["acc"] * 100, 1))
     for raw in set(re.findall(r"(\d{2}\.\d)\s*%", literal)):
         if float(raw) not in known_pct:
             fail(f"app.js hardcodes {raw}% with no matching measurement in results/")
@@ -143,6 +146,10 @@ def check_models_named_have_columns() -> None:
     """Prose must not cite a model the tables do not show."""
     tasks = tasks_from_data_js()
     shown = {"jev", "gpt-4o-mini", "4o-mini", "tf-idf", "tfidf", "laya"}
+    for t in tasks:
+        for key in ("decisions", "clef", "clefFlash"):
+            if t.get(key):
+                shown |= {t[key]["model"].lower(), t[key]["label"].lower()}
     modern = next((t["modern"]["model"] for t in tasks if t.get("modern")), None)
     if modern:
         shown |= {modern.lower(), modern.split("-2026")[0].lower(), "5.4-mini"}
@@ -156,14 +163,40 @@ def check_models_named_have_columns() -> None:
     laya = next((t["laya"] for t in tasks if t.get("laya")), None)
     if laya and "Laya" not in (SITE / "app.js").read_text(encoding="utf-8"):
         fail("a Laya column exists in results/ but the table does not show it")
+    # Typed-decision API columns: not on the site until the owner publishes them, but once a
+    # task in data.js carries one, the app and every decision page must show it.
+    if any(t.get(k) for t in tasks for k in ("decisions", "clef", "clefFlash"))             and "API_COLS" not in (SITE / "app.js").read_text(encoding="utf-8"):
+        fail("a typed-decision API column is in data.js but app.js has no renderer for it")
     for t in tasks:
         page = SITE / "decision" / f"{t['id'].replace('_', '-')}.html"
+        for key, needle in (("decisions", "gpt-6-luna"), ("clef", "@cf/cloudflare/clef"), ("clefFlash", "@cf/cloudflare/clef-flash")):
+            if t.get(key) and page.exists() and needle not in page.read_text(encoding="utf-8"):
+                fail(f"{page.name} omits the {needle} row")
         if t.get("modern") and page.exists():
             if t["modern"]["model"] not in page.read_text(encoding="utf-8"):
                 fail(f"{page.name} omits the {t['modern']['model']} row")
         if t.get("laya") and page.exists():
             if "Laya (self-hosted" not in page.read_text(encoding="utf-8"):
                 fail(f"{page.name} omits the Laya row")
+
+
+def check_api_column_prices() -> None:
+    """Every published API price must be the vendor price recorded in results/, with its source and date."""
+    src = (SITE / "data.js").read_text(encoding="utf-8")
+    run = json.loads(src.split("const RUN = ", 1)[1].split("const TASKS", 1)[0].rstrip().rstrip(";"))
+    names = {"decisions": "decisions", "clef": "clef", "clefFlash": "clef-flash"}
+    for m in run.get("apiColumns", []):
+        res = load(RESULTS / f"{names[m['key']]}_baseline.json")
+        if m["priceIn"] != res["prices_usd_per_million"]["input"]:
+            fail(f"{m['key']}: site price {m['priceIn']} differs from results/")
+        if not str(m["priceUrl"]).startswith("https://") or not re.fullmatch(r"\d{4}-\d\d-\d\d", str(m["priceChecked"])):
+            fail(f"{m['key']}: price has no vendor URL and check date")
+        for t in tasks_from_data_js():
+            page = SITE / "decision" / f"{t['id'].replace('_', '-')}.html"
+            if t.get(m["key"]) and page.exists() and m["priceChecked"] not in page.read_text(encoding="utf-8"):
+                fail(f"{page.name}: {m['key']} row states a price without its check date")
+        if m["priceUrl"] not in (ROOT / "README.md").read_text(encoding="utf-8"):
+            fail(f"README.md states {m['key']} without its price source URL")
 
 
 def check_verdicts() -> None:
@@ -304,6 +337,7 @@ def main() -> None:
     check_numbers_in_app_js()
     check_models_named_have_columns()
     check_verdicts()
+    check_api_column_prices()
     check_task_counts()
 
     for n in notes:
