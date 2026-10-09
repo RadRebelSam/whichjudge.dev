@@ -11,7 +11,11 @@ const FILTERS = [
 
 // Header and rows share this exact template. The old markup used <th> cells for the
 // header and a CSS grid for the rows, which is why the columns never lined up.
-const GRID = "minmax(0,1.6fr) 4.6rem minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) minmax(3.6rem,0.5fr) 3.2rem minmax(5.6rem,0.75fr)";
+// Hosted typed-decision API columns (OpenAI Decisions, Cloudflare clef). RUN.apiColumns lists
+// the ones build_site.py found in results/; nothing is drawn for a column that has no data.
+const API_COLS = (RUN.apiColumns || []).filter((m) => TASKS.some((t) => t[m.key]));
+const apiMark = (a, m) => (a.vsJev === m.key ? "beats Jev" : a.vsJev === "jev" ? "loses" : "ns");
+const GRID = "minmax(0,1.6fr) 4.6rem" + " minmax(3.6rem,0.5fr)".repeat(5 + API_COLS.length) + " 3.2rem minmax(5.6rem,0.75fr)";
 
 const receiptCache = {};
 let modalOpen = false;
@@ -202,6 +206,13 @@ function render() {
         ${statCard("Gating beats not gating", `${c.gateHelps}/${TASKS.length}`, "Lift shown per row, from gates on the same score as ECE.")}
         ${c.modernModel ? statCard("vs a 2026 model", `${c.jevBeatsModern}W ${c.modernTies}T ${c.modernBeatsJev}L`, `Jev against ${c.modernModel.model}, Holm-corrected. ` + TASKS.filter((t) => t.modern && t.modern.vsJev !== "ns").map((t) => (t.modern.vsJev === "jev" ? "Jev wins " : "loses ") + t.title.toLowerCase()).join("; ") + ".") : ""}
         ${c.layaModel ? statCard("vs Laya, self-hosted", `${c.jevBeatsLaya}W ${c.layaTies}T ${c.layaBeatsJev}L`, `Jev against an open-weight System One model on the same schema questions, Holm-corrected. ` + (TASKS.filter((t) => t.laya && t.laya.vsJev === "laya").map((t) => "Laya wins " + t.title.toLowerCase()).join("; ") || "Laya wins nowhere") + ".") : ""}
+        ${API_COLS.map((m) => {
+          const ts = TASKS.filter((t) => t[m.key]);
+          const w = ts.filter((t) => t[m.key].vsJev === "jev");
+          const l = ts.filter((t) => t[m.key].vsJev === m.key);
+          const said = [...l.map((t) => m.label + " wins " + t.title.toLowerCase()), ...w.map((t) => "Jev wins " + t.title.toLowerCase())];
+          return statCard("vs " + m.label, `${w.length}W ${ts.length - w.length - l.length}T ${l.length}L`, `Jev against ${m.vendor} ${m.model} on the same rubric, Holm-corrected. ` + (said.join("; ") || "No row separates them") + ".");
+        }).join("")}
         ${statCard(`TF-IDF wins ${c.tfidfWins}`, c.tfidfNames || "none", "If you have labels, skip both APIs")}
         ${statCard("Non-academic gold", `${c.realGold}/${TASKS.length}`, `${c.liveGold} live system, ${c.realGold - c.liveGold} real text. The rest are benchmarks.`)}
         ${statCard("Best case, not typical", pct(c.best.autoSlice.acc), c.best.title.toLowerCase() + " above " + c.best.autoSlice.gate + ", on " + pct(c.best.autoSlice.cov) + " of traffic. Highest on the board.")}
@@ -228,6 +239,7 @@ function render() {
               <span class="text-right">4o-mini<br><span class="normal-case tracking-normal text-zinc-400">2024</span></span>
               <span class="text-right">5.4-mini<br><span class="normal-case tracking-normal text-zinc-400">2026</span></span>
               <span class="text-right">Laya<br><span class="normal-case tracking-normal text-zinc-400">local</span></span>
+              ${API_COLS.map((m) => `<span class="text-right">${m.label}<br><span class="normal-case tracking-normal text-zinc-400">${m.vendor.split(" ")[0]}</span></span>`).join("")}
               <span class="text-right">TF-IDF</span>
               <span class="text-right">ECE</span>
               <span class="text-right">Auto slice</span>
@@ -264,6 +276,7 @@ function render() {
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">ns</span> - insufficient evidence of a difference at this n; it does not say the models are equal. Do not crown a winner on 1-2pt. On the safety rows, ignore accuracy entirely and read the miss rate in red.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Don't</span> - Mini significantly better on that dataset. Hate speech stays up on purpose, and the Civil Comments row shows the same judgement on CC0 gold where the gap disappears.</li>
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">Laya</span> - an open-weight System One-style model (Apache-2.0) run on this machine with the same schema questions as Jev. No API bill; its latency is a local forward pass and is not comparable with the API columns.</li>
+            ${API_COLS.length ? `<li><span class="font-medium text-zinc-900 dark:text-zinc-100">${API_COLS.map((m) => m.label).join(" / ")}</span> - hosted typed-decision APIs given the same rubric Jev gets. ${API_COLS.map((m) => `${m.label} (${m.vendor}) lists ${usd(m.priceIn)} per 1M input tokens, <a class="underline" href="${m.priceUrl}">vendor page</a> read ${m.priceChecked}`).join("; ")}. Latency is not compared: it was measured from one machine with the region unset and includes the network.</li>` : ""}
             <li><span class="font-medium text-zinc-900 dark:text-zinc-100">TF-IDF</span> - $0, microseconds per row, leftover train never overlapping the frozen rows. If it wins, skip both APIs.</li>
           </ul>
           <p class="mt-4 text-xs leading-relaxed text-zinc-500">${RUN.note}</p>
@@ -457,6 +470,7 @@ function cardHtml(t, on) {
           <span>4o-mini ${pct(t.mini.acc)}</span>
           ${t.modern ? `<span>2026 ${pct(t.modern.acc)}${t.modern.vsJev === "modern" ? " · beats Jev" : t.modern.vsJev === "jev" ? " · Jev wins" : ""}</span>` : ""}
           ${t.laya ? `<span>Laya ${pct(t.laya.acc)}${t.laya.vsJev === "laya" ? " · beats Jev" : t.laya.vsJev === "jev" ? " · Jev wins" : ""}</span>` : ""}
+          ${API_COLS.map((m) => (t[m.key] ? `<span>${m.label} ${pct(t[m.key].acc)}${t[m.key].vsJev === m.key ? " · beats Jev" : t[m.key].vsJev === "jev" ? " · Jev wins" : ""}</span>` : "")).join("")}
           <span>TF-IDF ${pct(t.tfidf.acc)}${t.tfidf.vsJev === "tfidf" ? " · beats Jev" : ""}</span>
         </span>
         <span class="mt-1 block text-xs text-zinc-500">${a ? "auto slice ≥" + a.gate + " " + pct(a.acc) + " on " + pct(a.cov) : "no gate keeps half the traffic"} · ${ms(t.jev.p50)}</span>
@@ -485,11 +499,13 @@ function rowHtml(t, on) {
           ${t.tfidf.vsJev === "tfidf" ? `<span class="mt-1 block text-[10px] font-medium text-amber-700 dark:text-amber-500">TF-IDF wins</span>` : ""}
           ${t.modern && t.modern.vsJev === "modern" ? `<span class="mt-0.5 block text-[10px] text-zinc-500">2026 wins</span>` : ""}
           ${t.laya && t.laya.vsJev === "laya" ? `<span class="mt-0.5 block text-[10px] text-zinc-500">Laya wins</span>` : ""}
+          ${API_COLS.map((m) => (t[m.key] && t[m.key].vsJev === m.key ? `<span class="mt-0.5 block text-[10px] text-zinc-500">${m.label} wins</span>` : "")).join("")}
         </span>
         <span class="text-right tabular-nums">${pct(t.jev.acc)}<span class="block text-[10px] font-normal text-zinc-400">${pct(t.jev.lo)}-${pct(t.jev.hi)}</span></span>
         <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${pct(t.mini.acc)}<span class="block text-[10px] text-zinc-400">${dLabel}</span></span>
         <span class="text-right tabular-nums ${t.modern && t.modern.vsJev === "modern" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${t.modern ? pct(t.modern.acc) : "-"}<span class="block text-[10px] font-normal text-zinc-400">${t.modern ? (t.modern.vsJev === "modern" ? "beats Jev" : t.modern.vsJev === "jev" ? "loses" : "ns") : ""}</span></span>
         <span class="text-right tabular-nums ${t.laya && t.laya.vsJev === "laya" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${t.laya ? pct(t.laya.acc) : "-"}<span class="block text-[10px] font-normal text-zinc-400">${t.laya ? "vs Jev " + t.laya.vsJev : ""}</span></span>
+        ${API_COLS.map((m) => { const a = t[m.key]; return `<span class="text-right tabular-nums ${a && a.vsJev === m.key ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${a ? pct(a.acc) : "-"}<span class="block text-[10px] font-normal text-zinc-400">${a ? apiMark(a, m) : ""}</span></span>`; }).join("")}
         <span class="text-right tabular-nums ${t.tfidf.vsJev === "tfidf" ? "font-medium" : "text-zinc-600 dark:text-zinc-400"}">${pct(t.tfidf.acc)}<span class="block text-[10px] font-normal text-zinc-400">$0</span></span>
         <span class="text-right tabular-nums text-zinc-600 dark:text-zinc-400">${t.ece.ece.toFixed(3)}</span>
         <span class="text-right tabular-nums">${pct(t.autoSlice.acc)}<span class="block text-[10px] font-normal text-zinc-400">on ${pct(t.autoSlice.cov)} · ${(t.autoSlice.lift * 100 >= 0 ? "+" : "") + (t.autoSlice.lift * 100).toFixed(1)}pt</span></span>
@@ -569,6 +585,7 @@ function detailHtml(t) {
         ${metric("TF-IDF vs Jev", t.tfidf.vsJev)}
         ${t.modern ? metric("Current small model", pct(t.modern.acc) + "  [" + pct(t.modern.lo) + "-" + pct(t.modern.hi) + "] · " + t.modern.model + " · vs Jev " + t.modern.vsJev) : ""}
         ${t.laya ? metric("Laya, self-hosted", pct(t.laya.acc) + "  [" + pct(t.laya.lo) + "-" + pct(t.laya.hi) + "] · vs Jev " + t.laya.vsJev + " · ECE " + (t.laya.ece == null ? "-" : t.laya.ece.toFixed(3)) + " · " + ms(t.laya.p50) + " local " + (t.laya.device || "") + ", no network") : ""}
+        ${API_COLS.map((m) => { const a = t[m.key]; return a ? metric(m.label + ", " + m.vendor, pct(a.acc) + "  [" + pct(a.lo) + "-" + pct(a.hi) + "] · " + (a.vsJev === m.key ? m.label + " beats Jev" : a.vsJev === "jev" ? "Jev wins" : "ns vs Jev") + " · ECE " + (a.ece == null ? "-" : a.ece.toFixed(3)) + " · " + ms(a.p50) + " from one client, region unset, includes network · " + usd(a.perM) + " / million decisions at list " + usd(m.priceIn) + " per 1M input tokens, " + m.priceChecked) : ""; }).join("")}
         ${metric("Jev p50 / p95", ms(t.jev.p50) + " / " + ms(t.jev.p95))}
         ${metric("Mini p50", ms(t.mini.p50) + " · " + su + "× · includes RTT, local to one client")}
         ${metric("$ / million", usd(t.jev.perM) + " vs " + usd(t.mini.perM))}

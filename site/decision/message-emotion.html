@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Message emotion: Jev vs 4 other models, measured | WhichJudge</title>
+<title>Message emotion: Jev vs 7 other models, measured | WhichJudge</title>
 <meta name="description" content="Message emotion on tweet_eval emotion, train split (test exhausted by v1), n=500 frozen gold. Jev 78.2%, gpt-4o-mini 76.2%, TF-IDF 60.0%. Verdict: ns. ECE 0.1.">
 <link rel="canonical" href="https://whichjudge.dev/decision/message-emotion.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Message emotion: Jev vs 4 other models, measured | WhichJudge">
+<meta property="og:title" content="Message emotion: Jev vs 7 other models, measured | WhichJudge">
 <meta property="og:description" content="Message emotion on tweet_eval emotion, train split (test exhausted by v1), n=500 frozen gold. Jev 78.2%, gpt-4o-mini 76.2%, TF-IDF 60.0%. Verdict: ns. ECE 0.1.">
 <meta property="og:url" content="https://whichjudge.dev/decision/message-emotion.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="a7924c438d">
+<meta name="whichjudge-build" content="e6d1f683a4">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Message emotion - cheap decision model bake-off", "description": "Message emotion on tweet_eval emotion, train split (test exhausted by v1), n=500 frozen gold. Jev 78.2%, gpt-4o-mini 76.2%, TF-IDF 60.0%. Verdict: ns. ECE 0.1.", "url": "https://whichjudge.dev/decision/message-emotion.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "tweet_eval emotion, train split (test exhausted by v1)", "dateModified": "2026-09-21", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/message_emotion.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.782}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.762}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.6}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.1}]}</script>
 <style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#52525b}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}</style>
 </head>
@@ -35,6 +35,9 @@
         <tr><td>gpt-4o-mini-2024-07-18</td><td>76.2%</td><td>[72.3% - 79.7%]</td><td>968 ms</td><td>$18.29</td></tr>
         <tr><td>gpt-5.4-mini-2026-03-17</td><td>76.2%</td><td>[72.3% - 79.7%]</td><td>876 ms</td><td>unpriced (104.2 tok/call)</td></tr>
         <tr><td>Laya (self-hosted, convaiinnovations/laya)</td><td>69.4%</td><td>[65.2% - 73.3%]</td><td>190 ms local cpu, no network</td><td>$0 API, compute not priced</td></tr>
+        <tr><td>gpt-6-luna (OpenAI Decisions API)</td><td>75.6%</td><td>[71.6% - 79.2%]</td><td>855 ms, one client, region unset, includes network</td><td>$15.48 (list $0.10 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>@cf/cloudflare/clef (Cloudflare Workers AI)</td><td>78.4%</td><td>[74.6% - 81.8%]</td><td>770 ms, one client, region unset, includes network</td><td>$46.34 (list $0.24 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>@cf/cloudflare/clef-flash (Cloudflare Workers AI)</td><td>76.4%</td><td>[72.5% - 79.9%]</td><td>667 ms, one client, region unset, includes network</td><td>$17.38 (list $0.09 per 1M input tokens, 2026-10-09)</td></tr>
         <tr><td>TF-IDF + LR (train n=2,757)</td><td>60.0%</td><td>[55.6% - 64.2%]</td><td>24 us mean per row, batched</td><td>$0</td></tr>
   </tbody>
 </table></div>
@@ -66,6 +69,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build a7924c438d &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
+<p class="stamp">build e6d1f683a4 &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
 </body>
 </html>

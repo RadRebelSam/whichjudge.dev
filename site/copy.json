@@ -9,7 +9,7 @@
     "contact": "contact@radrebeldeveloper.com",
     "x": "RadRebelDev",
     "xUrl": "https://x.com/RadRebelDev",
-    "descriptionTemplate": "Independent bake-off of cheap in-loop decision models on {tasks} decisions: Jev vs gpt-4o-mini vs {modern} vs TF-IDF, n={nmin}-{nmax} frozen gold, full per-call receipts."
+    "descriptionTemplate": "Independent bake-off of cheap in-loop decision models on {tasks} decisions: Jev vs gpt-4o-mini vs {modern} vs TF-IDF{api}, n={nmin}-{nmax} frozen gold, full per-call receipts."
   },
   "tasks": [
     {
@@ -55,14 +55,14 @@
       "labels": "toxic / not_toxic",
       "verdict": "replace",
       "ns": false,
-      "why": "A neighbour of the hate-speech row: toxicity in comments rather than hate speech aimed at a group in tweets, on CC0 gold. Jev 76.8% beats Mini 72.4% (Holm p=0.035). TF-IDF beats both at 85.2%. Read this next to the hate row: a different task and dataset gives a different ranking, which is the point, not proof that the hate loss was label noise.",
+      "why": "A neighbour of the hate-speech row: toxicity in comments rather than hate speech aimed at a group in tweets, on CC0 gold. Jev 76.8% beats Mini 72.4% (Holm p=0.035). TF-IDF beats both at 85.2%, and clef, a hosted typed-decision API, beats Jev at 86.0%, as clef-flash beats Jev at 85.4%. Read this next to the hate row: a different task and dataset gives a different ranking, which is the point, not proof that the hate loss was label noise.",
       "gate": "86.7% on 58.8% of comments at >=0.9, 9.9pt above ungated, and ECE 0.101 is low enough to state the confidence out loud. Publish that slice automatically and queue the rest.",
       "sourceName": "google/civil_comments",
       "sourceUrl": "https://huggingface.co/datasets/google/civil_comments",
       "goldTier": "real",
       "goldNote": "Real content from a news site, labels from crowd annotators",
       "rowNoteKind": "warn",
-      "rowNote": "Misses 33.2% of toxic comments; Mini misses 40.0%. TF-IDF beats both at 85.2%."
+      "rowNote": "Misses 33.2% of toxic comments; Mini misses 40.0%. TF-IDF beats both at 85.2%; clef beats Jev at 86.0%, clef-flash beats Jev at 85.4%."
     },
     {
       "id": "sms_spam",
@@ -151,7 +151,7 @@
       "labels": "world / sports / business / sci_tech",
       "verdict": "replace",
       "why": "Jev 89.8% beats Mini 86.0% by 3.8pt (Holm p=0.025), and the 2026 model at 86.8% ties Jev. Laya, self-hosted, scores 93.4%, ns against Jev after correction; TF-IDF at 93.8% after training on 120k rows beats both APIs. If you have labels, skip both.",
-      "gate": "Jev first among APIs. At >=0.9: 94.0% on 87.4% of articles, 4.2pt above ungated, ECE 0.068.",
+      "gate": "Among APIs Jev 89.8% ties clef and clef-flash, both 91.2%, after correction. At >=0.9: 94.0% on 87.4% of articles, 4.2pt above ungated, ECE 0.068.",
       "ns": false,
       "sourceName": "fancyzhx/ag_news",
       "sourceUrl": "https://huggingface.co/datasets/fancyzhx/ag_news",
@@ -167,7 +167,7 @@
       "dataset": "BANKING77 train split, collapsed 77 to 8 queues",
       "labels": "cards / top_up / cash_atm / transfers / fx / account / payments_fees / other",
       "verdict": "replace",
-      "why": "TF-IDF 94.2% beats both neural judges by more than 20 points if you have labels. Among APIs Jev 70.2% beats Mini 66.4% (Holm p=0.021) and ties the 2026 model at 72.4%. The 'other' queue is the failure: Jev routes 1.6% of it correctly. Do not pay for a model on this task if you can train one.",
+      "why": "TF-IDF 94.2% beats both neural judges by more than 20 points if you have labels. Among APIs Jev 70.2% beats Mini 66.4% (Holm p=0.021) and ties the 2026 model at 72.4%; clef beats Jev at 76.2% and clef-flash beats Jev at 81.4%, and both still trail TF-IDF. The 'other' queue is the failure: Jev routes 1.6% of it correctly. Do not pay for a model on this task if you can train one.",
       "gate": "Gating works here even though the calibration does not: at >=0.9 it is 79.0% on 80.2% of tickets, 8.9pt above ungated. What ECE 0.232 costs you is the right to quote the confidence as a probability, not the right to threshold on it.",
       "ns": false,
       "sourceName": "PolyAI BANKING77",
@@ -175,7 +175,7 @@
       "goldTier": "research",
       "goldNote": "Research corpus of customer queries, intents collapsed by keyword",
       "rowNoteKind": "info",
-      "rowNote": "Replace is vs Mini only. TF-IDF beats both at 94.2%."
+      "rowNote": "Replace is vs Mini only. TF-IDF beats both at 94.2%; clef beats Jev at 76.2%, clef-flash beats Jev at 81.4%."
     },
     {
       "id": "content_hate",

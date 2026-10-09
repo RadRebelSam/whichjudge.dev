@@ -9,8 +9,8 @@ const SITE = {
   "contact": "contact@radrebeldeveloper.com",
   "x": "RadRebelDev",
   "xUrl": "https://x.com/RadRebelDev",
-  "descriptionTemplate": "Independent bake-off of cheap in-loop decision models on {tasks} decisions: Jev vs gpt-4o-mini vs {modern} vs TF-IDF, n={nmin}-{nmax} frozen gold, full per-call receipts.",
-  "description": "Independent bake-off of cheap in-loop decision models on 11 decisions: Jev vs gpt-4o-mini vs gpt-5.4-mini-2026-03-17 vs TF-IDF, n=200-500 frozen gold, full per-call receipts."
+  "descriptionTemplate": "Independent bake-off of cheap in-loop decision models on {tasks} decisions: Jev vs gpt-4o-mini vs {modern} vs TF-IDF{api}, n={nmin}-{nmax} frozen gold, full per-call receipts.",
+  "description": "Independent bake-off of cheap in-loop decision models on 11 decisions: Jev vs gpt-4o-mini vs gpt-5.4-mini-2026-03-17 vs TF-IDF vs gpt-6-luna vs clef vs clef-flash, n=200-500 frozen gold, full per-call receipts."
 };
 
 const CALLS = {
@@ -242,7 +242,7 @@ const RUN = {
   "runIds": [
     "2026-09-21T06:23:44.713812+00:00"
   ],
-  "dataVersion": "a7924c438d",
+  "dataVersion": "e6d1f683a4",
   "modelJev": "jev-1.13.0",
   "modelMini": "gpt-4o-mini-2024-07-18",
   "n": 500,
@@ -250,6 +250,41 @@ const RUN = {
   "nMax": 500,
   "seed": 11,
   "tasks": 11,
+  "apiColumns": [
+    {
+      "key": "decisions",
+      "label": "gpt-6-luna",
+      "model": "gpt-6-luna",
+      "vendor": "OpenAI Decisions API",
+      "priceIn": 0.1,
+      "priceUrl": "https://developers.openai.com/api/docs/pricing",
+      "priceChecked": "2026-10-09",
+      "priceBasis": "Standard tier, short context, input $0.10 per 1M tokens. The pricing page lists the model, not the Decisions API separately, so this applies that input price to the input tokens each call reports and charges nothing for output because every call reports 0 output tokens. No cached-input discount applied.",
+      "totalCostUsd": 0.1115
+    },
+    {
+      "key": "clef",
+      "label": "clef",
+      "model": "@cf/cloudflare/clef",
+      "vendor": "Cloudflare Workers AI",
+      "priceIn": 0.24,
+      "priceUrl": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "priceChecked": "2026-10-09",
+      "priceBasis": "Workers AI list price, $0.240 per 1M input tokens (21818 neurons per 1M). Output tokens are 0 on every call.",
+      "totalCostUsd": 0.3104
+    },
+    {
+      "key": "clefFlash",
+      "label": "clef-flash",
+      "model": "@cf/cloudflare/clef-flash",
+      "vendor": "Cloudflare Workers AI",
+      "priceIn": 0.09,
+      "priceUrl": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "priceChecked": "2026-10-09",
+      "priceBasis": "Workers AI list price, $0.090 per 1M input tokens (8182 neurons per 1M). Output tokens are 0 on every call.",
+      "totalCostUsd": 0.1164
+    }
+  ],
   "note": "Frozen samples (seed=11, n=200-500 per task). Wilson 95% CI on accuracy. McNemar on paired errors. Full receipts in results/receipts/. APIs do not sign responses."
 };
 
@@ -513,6 +548,69 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "injection": {
+            "n": 100,
+            "recall": 0.44,
+            "missed": 56,
+            "missed_rate": 0.56,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          },
+          "legitimate": {
+            "n": 100,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 56,
+            "false_positive_rate": 0.56
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "injection": {
+            "n": 100,
+            "recall": 0.58,
+            "missed": 42,
+            "missed_rate": 0.42,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          },
+          "legitimate": {
+            "n": 100,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 42,
+            "false_positive_rate": 0.42
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "injection": {
+            "n": 100,
+            "recall": 0.36,
+            "missed": 64,
+            "missed_rate": 0.64,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          },
+          "legitimate": {
+            "n": 100,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 64,
+            "false_positive_rate": 0.64
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -558,6 +656,66 @@ const TASKS = [
       "pMini": 0.000205,
       "pMiniHolm": 0.00103,
       "ece": 0.204,
+      "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.72,
+      "lo": 0.654,
+      "hi": 0.778,
+      "p50": 814,
+      "p95": 1890,
+      "tokens": 227.2,
+      "costUsd": 0.00454,
+      "perM": 22.72,
+      "vsJev": "jev",
+      "vsMini": "ns",
+      "pJev": 0.00048,
+      "pJevHolm": 0.0048,
+      "pMini": 0.359,
+      "pMiniHolm": 1.0,
+      "ece": 0.245,
+      "invalidLabels": 0
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.79,
+      "lo": 0.728,
+      "hi": 0.841,
+      "p50": 966,
+      "p95": 2161,
+      "tokens": 244.6,
+      "costUsd": 0.01174,
+      "perM": 58.69,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.628,
+      "pJevHolm": 1.0,
+      "pMini": 0.0523,
+      "pMiniHolm": 0.209,
+      "ece": 0.167,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.68,
+      "lo": 0.612,
+      "hi": 0.741,
+      "p50": 648,
+      "p95": 1661,
+      "tokens": 244.6,
+      "costUsd": 0.0044,
+      "perM": 22.01,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 3.86e-06,
+      "pJevHolm": 3.47e-05,
+      "pMini": 0.00361,
+      "pMiniHolm": 0.018,
+      "ece": 0.201,
       "invalidLabels": 0
     }
   },
@@ -1144,6 +1302,213 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "bank_account": {
+            "n": 63,
+            "recall": 0.9048,
+            "missed": 6,
+            "missed_rate": 0.0952,
+            "false_positives": 16,
+            "false_positive_rate": 0.0366
+          },
+          "cards": {
+            "n": 62,
+            "recall": 0.8226,
+            "missed": 11,
+            "missed_rate": 0.1774,
+            "false_positives": 8,
+            "false_positive_rate": 0.0183
+          },
+          "credit_reporting": {
+            "n": 62,
+            "recall": 0.8871,
+            "missed": 7,
+            "missed_rate": 0.1129,
+            "false_positives": 42,
+            "false_positive_rate": 0.0959
+          },
+          "debt_collection": {
+            "n": 63,
+            "recall": 0.5079,
+            "missed": 31,
+            "missed_rate": 0.4921,
+            "false_positives": 5,
+            "false_positive_rate": 0.0114
+          },
+          "loans": {
+            "n": 63,
+            "recall": 0.9365,
+            "missed": 4,
+            "missed_rate": 0.0635,
+            "false_positives": 9,
+            "false_positive_rate": 0.0206
+          },
+          "money_transfer": {
+            "n": 63,
+            "recall": 0.7143,
+            "missed": 18,
+            "missed_rate": 0.2857,
+            "false_positives": 3,
+            "false_positive_rate": 0.0069
+          },
+          "mortgage": {
+            "n": 62,
+            "recall": 0.9516,
+            "missed": 3,
+            "missed_rate": 0.0484,
+            "false_positives": 1,
+            "false_positive_rate": 0.0023
+          },
+          "student_loan": {
+            "n": 62,
+            "recall": 0.9194,
+            "missed": 5,
+            "missed_rate": 0.0806,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "bank_account": {
+            "n": 63,
+            "recall": 0.873,
+            "missed": 8,
+            "missed_rate": 0.127,
+            "false_positives": 21,
+            "false_positive_rate": 0.0481
+          },
+          "cards": {
+            "n": 62,
+            "recall": 0.7258,
+            "missed": 17,
+            "missed_rate": 0.2742,
+            "false_positives": 7,
+            "false_positive_rate": 0.016
+          },
+          "credit_reporting": {
+            "n": 62,
+            "recall": 0.9194,
+            "missed": 5,
+            "missed_rate": 0.0806,
+            "false_positives": 41,
+            "false_positive_rate": 0.0936
+          },
+          "debt_collection": {
+            "n": 63,
+            "recall": 0.7302,
+            "missed": 17,
+            "missed_rate": 0.2698,
+            "false_positives": 10,
+            "false_positive_rate": 0.0229
+          },
+          "loans": {
+            "n": 63,
+            "recall": 0.8095,
+            "missed": 12,
+            "missed_rate": 0.1905,
+            "false_positives": 4,
+            "false_positive_rate": 0.0092
+          },
+          "money_transfer": {
+            "n": 63,
+            "recall": 0.6508,
+            "missed": 22,
+            "missed_rate": 0.3492,
+            "false_positives": 3,
+            "false_positive_rate": 0.0069
+          },
+          "mortgage": {
+            "n": 62,
+            "recall": 0.9516,
+            "missed": 3,
+            "missed_rate": 0.0484,
+            "false_positives": 2,
+            "false_positive_rate": 0.0046
+          },
+          "student_loan": {
+            "n": 62,
+            "recall": 0.9194,
+            "missed": 5,
+            "missed_rate": 0.0806,
+            "false_positives": 1,
+            "false_positive_rate": 0.0023
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "bank_account": {
+            "n": 63,
+            "recall": 0.8889,
+            "missed": 7,
+            "missed_rate": 0.1111,
+            "false_positives": 27,
+            "false_positive_rate": 0.0618
+          },
+          "cards": {
+            "n": 62,
+            "recall": 0.6613,
+            "missed": 21,
+            "missed_rate": 0.3387,
+            "false_positives": 6,
+            "false_positive_rate": 0.0137
+          },
+          "credit_reporting": {
+            "n": 62,
+            "recall": 0.9032,
+            "missed": 6,
+            "missed_rate": 0.0968,
+            "false_positives": 41,
+            "false_positive_rate": 0.0936
+          },
+          "debt_collection": {
+            "n": 63,
+            "recall": 0.6825,
+            "missed": 20,
+            "missed_rate": 0.3175,
+            "false_positives": 21,
+            "false_positive_rate": 0.0481
+          },
+          "loans": {
+            "n": 63,
+            "recall": 0.7302,
+            "missed": 17,
+            "missed_rate": 0.2698,
+            "false_positives": 13,
+            "false_positive_rate": 0.0297
+          },
+          "money_transfer": {
+            "n": 63,
+            "recall": 0.5714,
+            "missed": 27,
+            "missed_rate": 0.4286,
+            "false_positives": 3,
+            "false_positive_rate": 0.0069
+          },
+          "mortgage": {
+            "n": 62,
+            "recall": 0.9194,
+            "missed": 5,
+            "missed_rate": 0.0806,
+            "false_positives": 4,
+            "false_positive_rate": 0.0091
+          },
+          "student_loan": {
+            "n": 62,
+            "recall": 0.8065,
+            "missed": 12,
+            "missed_rate": 0.1935,
+            "false_positives": 0,
+            "false_positive_rate": 0.0
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -1190,6 +1555,66 @@ const TASKS = [
       "pMiniHolm": 4.1e-13,
       "ece": 0.059,
       "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.83,
+      "lo": 0.795,
+      "hi": 0.86,
+      "p50": 802,
+      "p95": 1940,
+      "tokens": 546.1,
+      "costUsd": 0.0273,
+      "perM": 54.61,
+      "vsJev": "ns",
+      "vsMini": "decisions",
+      "pJev": 0.651,
+      "pJevHolm": 1.0,
+      "pMini": 0.000606,
+      "pMiniHolm": 0.00606,
+      "ece": 0.112,
+      "invalidLabels": 1
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.822,
+      "lo": 0.786,
+      "hi": 0.853,
+      "p50": 1429,
+      "p95": 2145,
+      "tokens": 640.7,
+      "costUsd": 0.07688,
+      "perM": 153.76,
+      "vsJev": "ns",
+      "vsMini": "clef",
+      "pJev": 0.216,
+      "pJevHolm": 1.0,
+      "pMini": 0.000387,
+      "pMiniHolm": 0.00309,
+      "ece": 0.078,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.77,
+      "lo": 0.731,
+      "hi": 0.805,
+      "p50": 621,
+      "p95": 1621,
+      "tokens": 640.7,
+      "costUsd": 0.02883,
+      "perM": 57.66,
+      "vsJev": "jev",
+      "vsMini": "ns",
+      "pJev": 7.1e-06,
+      "pJevHolm": 5.68e-05,
+      "pMini": 0.88,
+      "pMiniHolm": 1.0,
+      "ece": 0.098,
+      "invalidLabels": 0
     }
   },
   {
@@ -1201,10 +1626,10 @@ const TASKS = [
     "labels": "toxic / not_toxic",
     "verdict": "replace",
     "ns": false,
-    "why": "A neighbour of the hate-speech row: toxicity in comments rather than hate speech aimed at a group in tweets, on CC0 gold. Jev 76.8% beats Mini 72.4% (Holm p=0.035). TF-IDF beats both at 85.2%. Read this next to the hate row: a different task and dataset gives a different ranking, which is the point, not proof that the hate loss was label noise.",
+    "why": "A neighbour of the hate-speech row: toxicity in comments rather than hate speech aimed at a group in tweets, on CC0 gold. Jev 76.8% beats Mini 72.4% (Holm p=0.035). TF-IDF beats both at 85.2%, and clef, a hosted typed-decision API, beats Jev at 86.0%, as clef-flash beats Jev at 85.4%. Read this next to the hate row: a different task and dataset gives a different ranking, which is the point, not proof that the hate loss was label noise.",
     "gate": "86.7% on 58.8% of comments at >=0.9, 9.9pt above ungated, and ECE 0.101 is low enough to state the confidence out loud. Publish that slice automatically and queue the rest.",
     "goldTier": "real",
-    "rowNote": "Misses 33.2% of toxic comments; Mini misses 40.0%. TF-IDF beats both at 85.2%.",
+    "rowNote": "Misses 33.2% of toxic comments; Mini misses 40.0%. TF-IDF beats both at 85.2%; clef beats Jev at 86.0%, clef-flash beats Jev at 85.4%.",
     "rowNoteKind": "warn",
     "goldNote": "Real content from a news site, labels from crowd annotators",
     "sourceName": "google/civil_comments",
@@ -1451,6 +1876,69 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "not_toxic": {
+            "n": 250,
+            "recall": 0.86,
+            "missed": 35,
+            "missed_rate": 0.14,
+            "false_positives": 102,
+            "false_positive_rate": 0.408
+          },
+          "toxic": {
+            "n": 250,
+            "recall": 0.592,
+            "missed": 102,
+            "missed_rate": 0.408,
+            "false_positives": 34,
+            "false_positive_rate": 0.136
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "not_toxic": {
+            "n": 250,
+            "recall": 0.908,
+            "missed": 23,
+            "missed_rate": 0.092,
+            "false_positives": 47,
+            "false_positive_rate": 0.188
+          },
+          "toxic": {
+            "n": 250,
+            "recall": 0.812,
+            "missed": 47,
+            "missed_rate": 0.188,
+            "false_positives": 23,
+            "false_positive_rate": 0.092
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "not_toxic": {
+            "n": 250,
+            "recall": 0.924,
+            "missed": 19,
+            "missed_rate": 0.076,
+            "false_positives": 54,
+            "false_positive_rate": 0.216
+          },
+          "toxic": {
+            "n": 250,
+            "recall": 0.784,
+            "missed": 54,
+            "missed_rate": 0.216,
+            "false_positives": 19,
+            "false_positive_rate": 0.076
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -1496,6 +1984,66 @@ const TASKS = [
       "pMini": 1.0,
       "pMiniHolm": 1.0,
       "ece": 0.094,
+      "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.726,
+      "lo": 0.685,
+      "hi": 0.763,
+      "p50": 903,
+      "p95": 1885,
+      "tokens": 253.3,
+      "costUsd": 0.01267,
+      "perM": 25.33,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.0131,
+      "pJevHolm": 0.118,
+      "pMini": 1.0,
+      "pMiniHolm": 1.0,
+      "ece": 0.169,
+      "invalidLabels": 1
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.86,
+      "lo": 0.827,
+      "hi": 0.888,
+      "p50": 1167,
+      "p95": 2148,
+      "tokens": 269.5,
+      "costUsd": 0.03234,
+      "perM": 64.68,
+      "vsJev": "clef",
+      "vsMini": "clef",
+      "pJev": 3.48e-07,
+      "pJevHolm": 3.83e-06,
+      "pMini": 2.84e-12,
+      "pMiniHolm": 3.13e-11,
+      "ece": 0.037,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.854,
+      "lo": 0.82,
+      "hi": 0.882,
+      "p50": 1286,
+      "p95": 1698,
+      "tokens": 269.5,
+      "costUsd": 0.01213,
+      "perM": 24.25,
+      "vsJev": "clefFlash",
+      "vsMini": "clefFlash",
+      "pJev": 2e-05,
+      "pJevHolm": 0.00014,
+      "pMini": 8.78e-10,
+      "pMiniHolm": 8.78e-09,
+      "ece": 0.038,
       "invalidLabels": 0
     }
   },
@@ -1758,6 +2306,69 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "ham": {
+            "n": 250,
+            "recall": 0.98,
+            "missed": 5,
+            "missed_rate": 0.02,
+            "false_positives": 21,
+            "false_positive_rate": 0.084
+          },
+          "spam": {
+            "n": 250,
+            "recall": 0.916,
+            "missed": 21,
+            "missed_rate": 0.084,
+            "false_positives": 1,
+            "false_positive_rate": 0.004
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "ham": {
+            "n": 250,
+            "recall": 0.904,
+            "missed": 24,
+            "missed_rate": 0.096,
+            "false_positives": 9,
+            "false_positive_rate": 0.036
+          },
+          "spam": {
+            "n": 250,
+            "recall": 0.964,
+            "missed": 9,
+            "missed_rate": 0.036,
+            "false_positives": 24,
+            "false_positive_rate": 0.096
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "ham": {
+            "n": 250,
+            "recall": 0.844,
+            "missed": 39,
+            "missed_rate": 0.156,
+            "false_positives": 9,
+            "false_positive_rate": 0.036
+          },
+          "spam": {
+            "n": 250,
+            "recall": 0.964,
+            "missed": 9,
+            "missed_rate": 0.036,
+            "false_positives": 39,
+            "false_positive_rate": 0.156
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -1803,6 +2414,66 @@ const TASKS = [
       "pMini": 0.155,
       "pMiniHolm": 0.309,
       "ece": 0.05,
+      "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.948,
+      "lo": 0.925,
+      "hi": 0.964,
+      "p50": 1305,
+      "p95": 1897,
+      "tokens": 158.2,
+      "costUsd": 0.00791,
+      "perM": 15.82,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.71,
+      "pJevHolm": 1.0,
+      "pMini": 1.0,
+      "pMiniHolm": 1.0,
+      "ece": 0.024,
+      "invalidLabels": 4
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.934,
+      "lo": 0.909,
+      "hi": 0.953,
+      "p50": 893,
+      "p95": 2051,
+      "tokens": 176.8,
+      "costUsd": 0.02121,
+      "perM": 42.42,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.055,
+      "pJevHolm": 0.33,
+      "pMini": 0.345,
+      "pMiniHolm": 0.899,
+      "ece": 0.017,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.904,
+      "lo": 0.875,
+      "hi": 0.927,
+      "p50": 686,
+      "p95": 1731,
+      "tokens": 176.8,
+      "costUsd": 0.00795,
+      "perM": 15.91,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 4.98e-05,
+      "pJevHolm": 0.000299,
+      "pMini": 0.00136,
+      "pMiniHolm": 0.00817,
+      "ece": 0.047,
       "invalidLabels": 0
     }
   },
@@ -2065,6 +2736,69 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "negative": {
+            "n": 178,
+            "recall": 0.9607,
+            "missed": 7,
+            "missed_rate": 0.0393,
+            "false_positives": 15,
+            "false_positive_rate": 0.0843
+          },
+          "positive": {
+            "n": 178,
+            "recall": 0.9157,
+            "missed": 15,
+            "missed_rate": 0.0843,
+            "false_positives": 6,
+            "false_positive_rate": 0.0337
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "negative": {
+            "n": 178,
+            "recall": 0.9831,
+            "missed": 3,
+            "missed_rate": 0.0169,
+            "false_positives": 8,
+            "false_positive_rate": 0.0449
+          },
+          "positive": {
+            "n": 178,
+            "recall": 0.9551,
+            "missed": 8,
+            "missed_rate": 0.0449,
+            "false_positives": 3,
+            "false_positive_rate": 0.0169
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "negative": {
+            "n": 178,
+            "recall": 0.9719,
+            "missed": 5,
+            "missed_rate": 0.0281,
+            "false_positives": 7,
+            "false_positive_rate": 0.0393
+          },
+          "positive": {
+            "n": 178,
+            "recall": 0.9607,
+            "missed": 7,
+            "missed_rate": 0.0393,
+            "false_positives": 5,
+            "false_positive_rate": 0.0281
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -2110,6 +2844,66 @@ const TASKS = [
       "pMini": 0.00365,
       "pMiniHolm": 0.0112,
       "ece": 0.019,
+      "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.9382022471910112,
+      "lo": 0.908,
+      "hi": 0.959,
+      "p50": 1339,
+      "p95": 2393,
+      "tokens": 138.2,
+      "costUsd": 0.00492,
+      "perM": 13.82,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.0809,
+      "pJevHolm": 0.485,
+      "pMini": 0.149,
+      "pMiniHolm": 0.893,
+      "ece": 0.032,
+      "invalidLabels": 1
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.9691011235955056,
+      "lo": 0.946,
+      "hi": 0.983,
+      "p50": 941,
+      "p95": 1992,
+      "tokens": 152.8,
+      "costUsd": 0.01306,
+      "perM": 36.68,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.752,
+      "pJevHolm": 1.0,
+      "pMini": 0.302,
+      "pMiniHolm": 0.899,
+      "ece": 0.013,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.9662921348314607,
+      "lo": 0.942,
+      "hi": 0.981,
+      "p50": 664,
+      "p95": 1673,
+      "tokens": 152.8,
+      "costUsd": 0.0049,
+      "perM": 13.76,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 1.0,
+      "pJevHolm": 1.0,
+      "pMini": 0.423,
+      "pMiniHolm": 1.0,
+      "ece": 0.012,
       "invalidLabels": 0
     }
   },
@@ -2488,6 +3282,117 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "anger": {
+            "n": 125,
+            "recall": 0.792,
+            "missed": 26,
+            "missed_rate": 0.208,
+            "false_positives": 39,
+            "false_positive_rate": 0.104
+          },
+          "joy": {
+            "n": 125,
+            "recall": 0.8,
+            "missed": 25,
+            "missed_rate": 0.2,
+            "false_positives": 39,
+            "false_positive_rate": 0.104
+          },
+          "optimism": {
+            "n": 125,
+            "recall": 0.624,
+            "missed": 47,
+            "missed_rate": 0.376,
+            "false_positives": 14,
+            "false_positive_rate": 0.0373
+          },
+          "sadness": {
+            "n": 125,
+            "recall": 0.808,
+            "missed": 24,
+            "missed_rate": 0.192,
+            "false_positives": 28,
+            "false_positive_rate": 0.0747
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "anger": {
+            "n": 125,
+            "recall": 0.832,
+            "missed": 21,
+            "missed_rate": 0.168,
+            "false_positives": 33,
+            "false_positive_rate": 0.088
+          },
+          "joy": {
+            "n": 125,
+            "recall": 0.752,
+            "missed": 31,
+            "missed_rate": 0.248,
+            "false_positives": 16,
+            "false_positive_rate": 0.0427
+          },
+          "optimism": {
+            "n": 125,
+            "recall": 0.76,
+            "missed": 30,
+            "missed_rate": 0.24,
+            "false_positives": 37,
+            "false_positive_rate": 0.0987
+          },
+          "sadness": {
+            "n": 125,
+            "recall": 0.792,
+            "missed": 26,
+            "missed_rate": 0.208,
+            "false_positives": 22,
+            "false_positive_rate": 0.0587
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "anger": {
+            "n": 125,
+            "recall": 0.832,
+            "missed": 21,
+            "missed_rate": 0.168,
+            "false_positives": 36,
+            "false_positive_rate": 0.096
+          },
+          "joy": {
+            "n": 125,
+            "recall": 0.752,
+            "missed": 31,
+            "missed_rate": 0.248,
+            "false_positives": 20,
+            "false_positive_rate": 0.0533
+          },
+          "optimism": {
+            "n": 125,
+            "recall": 0.728,
+            "missed": 34,
+            "missed_rate": 0.272,
+            "false_positives": 43,
+            "false_positive_rate": 0.1147
+          },
+          "sadness": {
+            "n": 125,
+            "recall": 0.744,
+            "missed": 32,
+            "missed_rate": 0.256,
+            "false_positives": 19,
+            "false_positive_rate": 0.0507
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -2536,6 +3441,66 @@ const TASKS = [
       "pMini": 0.00281,
       "pMiniHolm": 0.0112,
       "ece": 0.067,
+      "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.756,
+      "lo": 0.716,
+      "hi": 0.792,
+      "p50": 855,
+      "p95": 1817,
+      "tokens": 154.8,
+      "costUsd": 0.00774,
+      "perM": 15.48,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.124,
+      "pJevHolm": 0.622,
+      "pMini": 0.798,
+      "pMiniHolm": 1.0,
+      "ece": 0.108,
+      "invalidLabels": 2
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.784,
+      "lo": 0.746,
+      "hi": 0.818,
+      "p50": 770,
+      "p95": 1925,
+      "tokens": 193.1,
+      "costUsd": 0.02317,
+      "perM": 46.34,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 1.0,
+      "pJevHolm": 1.0,
+      "pMini": 0.3,
+      "pMiniHolm": 0.899,
+      "ece": 0.029,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.764,
+      "lo": 0.725,
+      "hi": 0.799,
+      "p50": 667,
+      "p95": 1631,
+      "tokens": 193.1,
+      "costUsd": 0.00869,
+      "perM": 17.38,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.402,
+      "pJevHolm": 0.931,
+      "pMini": 1.0,
+      "pMiniHolm": 1.0,
+      "ece": 0.061,
       "invalidLabels": 0
     }
   },
@@ -2798,6 +3763,69 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "not_offensive": {
+            "n": 250,
+            "recall": 0.884,
+            "missed": 29,
+            "missed_rate": 0.116,
+            "false_positives": 129,
+            "false_positive_rate": 0.516
+          },
+          "offensive": {
+            "n": 250,
+            "recall": 0.484,
+            "missed": 129,
+            "missed_rate": 0.516,
+            "false_positives": 29,
+            "false_positive_rate": 0.116
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "not_offensive": {
+            "n": 250,
+            "recall": 0.84,
+            "missed": 40,
+            "missed_rate": 0.16,
+            "false_positives": 75,
+            "false_positive_rate": 0.3
+          },
+          "offensive": {
+            "n": 250,
+            "recall": 0.7,
+            "missed": 75,
+            "missed_rate": 0.3,
+            "false_positives": 40,
+            "false_positive_rate": 0.16
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "not_offensive": {
+            "n": 250,
+            "recall": 0.932,
+            "missed": 17,
+            "missed_rate": 0.068,
+            "false_positives": 107,
+            "false_positive_rate": 0.428
+          },
+          "offensive": {
+            "n": 250,
+            "recall": 0.572,
+            "missed": 107,
+            "missed_rate": 0.428,
+            "false_positives": 17,
+            "false_positive_rate": 0.068
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -2843,6 +3871,66 @@ const TASKS = [
       "pMini": 1.71e-06,
       "pMiniHolm": 1.53e-05,
       "ece": 0.141,
+      "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.684,
+      "lo": 0.642,
+      "hi": 0.723,
+      "p50": 1191,
+      "p95": 2151,
+      "tokens": 156.8,
+      "costUsd": 0.00784,
+      "perM": 15.68,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.0281,
+      "pJevHolm": 0.225,
+      "pMini": 0.0592,
+      "pMiniHolm": 0.473,
+      "ece": 0.232,
+      "invalidLabels": 0
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.77,
+      "lo": 0.731,
+      "hi": 0.805,
+      "p50": 850,
+      "p95": 1881,
+      "tokens": 175.4,
+      "costUsd": 0.02104,
+      "perM": 42.09,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.0189,
+      "pJevHolm": 0.151,
+      "pMini": 0.0121,
+      "pMiniHolm": 0.0605,
+      "ece": 0.152,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.752,
+      "lo": 0.712,
+      "hi": 0.788,
+      "p50": 741,
+      "p95": 1699,
+      "tokens": 175.4,
+      "costUsd": 0.00789,
+      "perM": 15.78,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.223,
+      "pJevHolm": 0.892,
+      "pMini": 0.151,
+      "pMiniHolm": 0.604,
+      "ece": 0.147,
       "invalidLabels": 0
     }
   },
@@ -3169,6 +4257,93 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "negative": {
+            "n": 167,
+            "recall": 0.9102,
+            "missed": 15,
+            "missed_rate": 0.0898,
+            "false_positives": 77,
+            "false_positive_rate": 0.2312
+          },
+          "neutral": {
+            "n": 167,
+            "recall": 0.4551,
+            "missed": 91,
+            "missed_rate": 0.5449,
+            "false_positives": 40,
+            "false_positive_rate": 0.1201
+          },
+          "positive": {
+            "n": 166,
+            "recall": 0.7289,
+            "missed": 45,
+            "missed_rate": 0.2711,
+            "false_positives": 34,
+            "false_positive_rate": 0.1018
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "negative": {
+            "n": 167,
+            "recall": 0.4371,
+            "missed": 94,
+            "missed_rate": 0.5629,
+            "false_positives": 9,
+            "false_positive_rate": 0.027
+          },
+          "neutral": {
+            "n": 167,
+            "recall": 0.9162,
+            "missed": 14,
+            "missed_rate": 0.0838,
+            "false_positives": 168,
+            "false_positive_rate": 0.5045
+          },
+          "positive": {
+            "n": 166,
+            "recall": 0.5422,
+            "missed": 76,
+            "missed_rate": 0.4578,
+            "false_positives": 7,
+            "false_positive_rate": 0.021
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "negative": {
+            "n": 167,
+            "recall": 0.3653,
+            "missed": 106,
+            "missed_rate": 0.6347,
+            "false_positives": 11,
+            "false_positive_rate": 0.033
+          },
+          "neutral": {
+            "n": 167,
+            "recall": 0.9281,
+            "missed": 12,
+            "missed_rate": 0.0719,
+            "false_positives": 187,
+            "false_positive_rate": 0.5616
+          },
+          "positive": {
+            "n": 166,
+            "recall": 0.494,
+            "missed": 84,
+            "missed_rate": 0.506,
+            "false_positives": 4,
+            "false_positive_rate": 0.012
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -3215,6 +4390,66 @@ const TASKS = [
       "pMiniHolm": 4.46e-07,
       "ece": 0.175,
       "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.698,
+      "lo": 0.656,
+      "hi": 0.737,
+      "p50": 966,
+      "p95": 2026,
+      "tokens": 165.6,
+      "costUsd": 0.00828,
+      "perM": 16.56,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.0541,
+      "pJevHolm": 0.379,
+      "pMini": 0.416,
+      "pMiniHolm": 1.0,
+      "ece": 0.208,
+      "invalidLabels": 0
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.632,
+      "lo": 0.589,
+      "hi": 0.673,
+      "p50": 1074,
+      "p95": 2202,
+      "tokens": 190.2,
+      "costUsd": 0.02283,
+      "perM": 45.66,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 0.000378,
+      "pJevHolm": 0.0034,
+      "pMini": 0.00209,
+      "pMiniHolm": 0.0146,
+      "ece": 0.197,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.596,
+      "lo": 0.552,
+      "hi": 0.638,
+      "p50": 629,
+      "p95": 1642,
+      "tokens": 190.2,
+      "costUsd": 0.00856,
+      "perM": 17.12,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 2.43e-06,
+      "pJevHolm": 2.43e-05,
+      "pMini": 1.81e-05,
+      "pMiniHolm": 0.000145,
+      "ece": 0.235,
+      "invalidLabels": 0
     }
   },
   {
@@ -3227,7 +4462,7 @@ const TASKS = [
     "verdict": "replace",
     "ns": false,
     "why": "Jev 89.8% beats Mini 86.0% by 3.8pt (Holm p=0.025), and the 2026 model at 86.8% ties Jev. Laya, self-hosted, scores 93.4%, ns against Jev after correction; TF-IDF at 93.8% after training on 120k rows beats both APIs. If you have labels, skip both.",
-    "gate": "Jev first among APIs. At >=0.9: 94.0% on 87.4% of articles, 4.2pt above ungated, ECE 0.068.",
+    "gate": "Among APIs Jev 89.8% ties clef and clef-flash, both 91.2%, after correction. At >=0.9: 94.0% on 87.4% of articles, 4.2pt above ungated, ECE 0.068.",
     "goldTier": "research",
     "rowNote": "Replace is vs Mini only. TF-IDF beats both at 93.8%; Laya scores 93.4%, ns vs Jev.",
     "rowNoteKind": "info",
@@ -3580,6 +4815,117 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "business": {
+            "n": 125,
+            "recall": 0.928,
+            "missed": 9,
+            "missed_rate": 0.072,
+            "false_positives": 35,
+            "false_positive_rate": 0.0933
+          },
+          "sci_tech": {
+            "n": 125,
+            "recall": 0.664,
+            "missed": 42,
+            "missed_rate": 0.336,
+            "false_positives": 7,
+            "false_positive_rate": 0.0187
+          },
+          "sports": {
+            "n": 125,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 3,
+            "false_positive_rate": 0.008
+          },
+          "world": {
+            "n": 125,
+            "recall": 0.944,
+            "missed": 7,
+            "missed_rate": 0.056,
+            "false_positives": 13,
+            "false_positive_rate": 0.0347
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "business": {
+            "n": 125,
+            "recall": 0.76,
+            "missed": 30,
+            "missed_rate": 0.24,
+            "false_positives": 6,
+            "false_positive_rate": 0.016
+          },
+          "sci_tech": {
+            "n": 125,
+            "recall": 0.928,
+            "missed": 9,
+            "missed_rate": 0.072,
+            "false_positives": 23,
+            "false_positive_rate": 0.0613
+          },
+          "sports": {
+            "n": 125,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 3,
+            "false_positive_rate": 0.008
+          },
+          "world": {
+            "n": 125,
+            "recall": 0.96,
+            "missed": 5,
+            "missed_rate": 0.04,
+            "false_positives": 12,
+            "false_positive_rate": 0.032
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "business": {
+            "n": 125,
+            "recall": 0.832,
+            "missed": 21,
+            "missed_rate": 0.168,
+            "false_positives": 10,
+            "false_positive_rate": 0.0267
+          },
+          "sci_tech": {
+            "n": 125,
+            "recall": 0.864,
+            "missed": 17,
+            "missed_rate": 0.136,
+            "false_positives": 16,
+            "false_positive_rate": 0.0427
+          },
+          "sports": {
+            "n": 125,
+            "recall": 0.992,
+            "missed": 1,
+            "missed_rate": 0.008,
+            "false_positives": 3,
+            "false_positive_rate": 0.008
+          },
+          "world": {
+            "n": 125,
+            "recall": 0.96,
+            "missed": 5,
+            "missed_rate": 0.04,
+            "false_positives": 15,
+            "false_positive_rate": 0.04
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -3626,6 +4972,66 @@ const TASKS = [
       "pMiniHolm": 8.74e-05,
       "ece": 0.029,
       "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.884,
+      "lo": 0.853,
+      "hi": 0.909,
+      "p50": 1161,
+      "p95": 2159,
+      "tokens": 193.1,
+      "costUsd": 0.00965,
+      "perM": 19.31,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.211,
+      "pJevHolm": 0.844,
+      "pMini": 0.0744,
+      "pMiniHolm": 0.52,
+      "ece": 0.076,
+      "invalidLabels": 0
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.912,
+      "lo": 0.884,
+      "hi": 0.934,
+      "p50": 1233,
+      "p95": 2404,
+      "tokens": 228.4,
+      "costUsd": 0.02741,
+      "perM": 54.82,
+      "vsJev": "ns",
+      "vsMini": "clef",
+      "pJev": 0.371,
+      "pJevHolm": 1.0,
+      "pMini": 0.00209,
+      "pMiniHolm": 0.0146,
+      "ece": 0.022,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.912,
+      "lo": 0.884,
+      "hi": 0.934,
+      "p50": 699,
+      "p95": 1666,
+      "tokens": 228.4,
+      "costUsd": 0.01028,
+      "perM": 20.56,
+      "vsJev": "ns",
+      "vsMini": "clefFlash",
+      "pJev": 0.31,
+      "pJevHolm": 0.931,
+      "pMini": 0.000407,
+      "pMiniHolm": 0.00285,
+      "ece": 0.041,
+      "invalidLabels": 0
     }
   },
   {
@@ -3637,10 +5043,10 @@ const TASKS = [
     "labels": "cards / top_up / cash_atm / transfers / fx / account / payments_fees / other",
     "verdict": "replace",
     "ns": false,
-    "why": "TF-IDF 94.2% beats both neural judges by more than 20 points if you have labels. Among APIs Jev 70.2% beats Mini 66.4% (Holm p=0.021) and ties the 2026 model at 72.4%. The 'other' queue is the failure: Jev routes 1.6% of it correctly. Do not pay for a model on this task if you can train one.",
+    "why": "TF-IDF 94.2% beats both neural judges by more than 20 points if you have labels. Among APIs Jev 70.2% beats Mini 66.4% (Holm p=0.021) and ties the 2026 model at 72.4%; clef beats Jev at 76.2% and clef-flash beats Jev at 81.4%, and both still trail TF-IDF. The 'other' queue is the failure: Jev routes 1.6% of it correctly. Do not pay for a model on this task if you can train one.",
     "gate": "Gating works here even though the calibration does not: at >=0.9 it is 79.0% on 80.2% of tickets, 8.9pt above ungated. What ECE 0.232 costs you is the right to quote the confidence as a probability, not the right to threshold on it.",
     "goldTier": "research",
-    "rowNote": "Replace is vs Mini only. TF-IDF beats both at 94.2%.",
+    "rowNote": "Replace is vs Mini only. TF-IDF beats both at 94.2%; clef beats Jev at 76.2%, clef-flash beats Jev at 81.4%.",
     "rowNoteKind": "info",
     "goldNote": "Research corpus of customer queries, intents collapsed by keyword",
     "sourceName": "PolyAI BANKING77",
@@ -4211,6 +5617,213 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "account": {
+            "n": 63,
+            "recall": 0.873,
+            "missed": 8,
+            "missed_rate": 0.127,
+            "false_positives": 1,
+            "false_positive_rate": 0.0023
+          },
+          "cards": {
+            "n": 64,
+            "recall": 0.4844,
+            "missed": 33,
+            "missed_rate": 0.5156,
+            "false_positives": 4,
+            "false_positive_rate": 0.0092
+          },
+          "cash_atm": {
+            "n": 62,
+            "recall": 0.6774,
+            "missed": 20,
+            "missed_rate": 0.3226,
+            "false_positives": 1,
+            "false_positive_rate": 0.0023
+          },
+          "fx": {
+            "n": 62,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 10,
+            "false_positive_rate": 0.0228
+          },
+          "other": {
+            "n": 63,
+            "recall": 0.254,
+            "missed": 47,
+            "missed_rate": 0.746,
+            "false_positives": 37,
+            "false_positive_rate": 0.0847
+          },
+          "payments_fees": {
+            "n": 62,
+            "recall": 0.9194,
+            "missed": 5,
+            "missed_rate": 0.0806,
+            "false_positives": 53,
+            "false_positive_rate": 0.121
+          },
+          "top_up": {
+            "n": 62,
+            "recall": 0.7742,
+            "missed": 14,
+            "missed_rate": 0.2258,
+            "false_positives": 35,
+            "false_positive_rate": 0.0799
+          },
+          "transfers": {
+            "n": 62,
+            "recall": 0.6452,
+            "missed": 22,
+            "missed_rate": 0.3548,
+            "false_positives": 8,
+            "false_positive_rate": 0.0183
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "account": {
+            "n": 63,
+            "recall": 0.8889,
+            "missed": 7,
+            "missed_rate": 0.1111,
+            "false_positives": 1,
+            "false_positive_rate": 0.0023
+          },
+          "cards": {
+            "n": 64,
+            "recall": 0.6094,
+            "missed": 25,
+            "missed_rate": 0.3906,
+            "false_positives": 1,
+            "false_positive_rate": 0.0023
+          },
+          "cash_atm": {
+            "n": 62,
+            "recall": 0.7581,
+            "missed": 15,
+            "missed_rate": 0.2419,
+            "false_positives": 2,
+            "false_positive_rate": 0.0046
+          },
+          "fx": {
+            "n": 62,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 9,
+            "false_positive_rate": 0.0205
+          },
+          "other": {
+            "n": 63,
+            "recall": 0.2381,
+            "missed": 48,
+            "missed_rate": 0.7619,
+            "false_positives": 15,
+            "false_positive_rate": 0.0343
+          },
+          "payments_fees": {
+            "n": 62,
+            "recall": 0.9677,
+            "missed": 2,
+            "missed_rate": 0.0323,
+            "false_positives": 46,
+            "false_positive_rate": 0.105
+          },
+          "top_up": {
+            "n": 62,
+            "recall": 0.8871,
+            "missed": 7,
+            "missed_rate": 0.1129,
+            "false_positives": 37,
+            "false_positive_rate": 0.0845
+          },
+          "transfers": {
+            "n": 62,
+            "recall": 0.7581,
+            "missed": 15,
+            "missed_rate": 0.2419,
+            "false_positives": 8,
+            "false_positive_rate": 0.0183
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "account": {
+            "n": 63,
+            "recall": 0.9206,
+            "missed": 5,
+            "missed_rate": 0.0794,
+            "false_positives": 3,
+            "false_positive_rate": 0.0069
+          },
+          "cards": {
+            "n": 64,
+            "recall": 0.5469,
+            "missed": 29,
+            "missed_rate": 0.4531,
+            "false_positives": 1,
+            "false_positive_rate": 0.0023
+          },
+          "cash_atm": {
+            "n": 62,
+            "recall": 0.8548,
+            "missed": 9,
+            "missed_rate": 0.1452,
+            "false_positives": 1,
+            "false_positive_rate": 0.0023
+          },
+          "fx": {
+            "n": 62,
+            "recall": 1.0,
+            "missed": 0,
+            "missed_rate": 0.0,
+            "false_positives": 9,
+            "false_positive_rate": 0.0205
+          },
+          "other": {
+            "n": 63,
+            "recall": 0.619,
+            "missed": 24,
+            "missed_rate": 0.381,
+            "false_positives": 17,
+            "false_positive_rate": 0.0389
+          },
+          "payments_fees": {
+            "n": 62,
+            "recall": 0.9677,
+            "missed": 2,
+            "missed_rate": 0.0323,
+            "false_positives": 36,
+            "false_positive_rate": 0.0822
+          },
+          "top_up": {
+            "n": 62,
+            "recall": 0.8387,
+            "missed": 10,
+            "missed_rate": 0.1613,
+            "false_positives": 21,
+            "false_positive_rate": 0.0479
+          },
+          "transfers": {
+            "n": 62,
+            "recall": 0.7742,
+            "missed": 14,
+            "missed_rate": 0.2258,
+            "false_positives": 5,
+            "false_positive_rate": 0.0114
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -4256,6 +5869,66 @@ const TASKS = [
       "pMini": 6.31e-05,
       "pMiniHolm": 0.000442,
       "ece": 0.146,
+      "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.702,
+      "lo": 0.66,
+      "hi": 0.74,
+      "p50": 1316,
+      "p95": 2008,
+      "tokens": 257.4,
+      "costUsd": 0.01287,
+      "perM": 25.74,
+      "vsJev": "ns",
+      "vsMini": "ns",
+      "pJev": 0.892,
+      "pJevHolm": 1.0,
+      "pMini": 0.0171,
+      "pMiniHolm": 0.154,
+      "ece": 0.104,
+      "invalidLabels": 0
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.762,
+      "lo": 0.723,
+      "hi": 0.797,
+      "p50": 1152,
+      "p95": 2209,
+      "tokens": 334.7,
+      "costUsd": 0.04016,
+      "perM": 80.33,
+      "vsJev": "clef",
+      "vsMini": "clef",
+      "pJev": 2.55e-06,
+      "pJevHolm": 2.55e-05,
+      "pMini": 1.47e-09,
+      "pMiniHolm": 1.47e-08,
+      "ece": 0.091,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.814,
+      "lo": 0.778,
+      "hi": 0.846,
+      "p50": 715,
+      "p95": 1652,
+      "tokens": 334.7,
+      "costUsd": 0.01506,
+      "perM": 30.12,
+      "vsJev": "clefFlash",
+      "vsMini": "clefFlash",
+      "pJev": 1.62e-10,
+      "pJevHolm": 1.78e-09,
+      "pMini": 4.36e-15,
+      "pMiniHolm": 4.8e-14,
+      "ece": 0.051,
       "invalidLabels": 0
     }
   },
@@ -4518,6 +6191,69 @@ const TASKS = [
           }
         },
         "recall_at_gate": {}
+      },
+      "decisions": {
+        "per_class": {
+          "hate": {
+            "n": 250,
+            "recall": 0.16,
+            "missed": 210,
+            "missed_rate": 0.84,
+            "false_positives": 2,
+            "false_positive_rate": 0.008
+          },
+          "not_hate": {
+            "n": 250,
+            "recall": 0.992,
+            "missed": 2,
+            "missed_rate": 0.008,
+            "false_positives": 210,
+            "false_positive_rate": 0.84
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef": {
+        "per_class": {
+          "hate": {
+            "n": 250,
+            "recall": 0.328,
+            "missed": 168,
+            "missed_rate": 0.672,
+            "false_positives": 24,
+            "false_positive_rate": 0.096
+          },
+          "not_hate": {
+            "n": 250,
+            "recall": 0.904,
+            "missed": 24,
+            "missed_rate": 0.096,
+            "false_positives": 168,
+            "false_positive_rate": 0.672
+          }
+        },
+        "recall_at_gate": {}
+      },
+      "clef-flash": {
+        "per_class": {
+          "hate": {
+            "n": 250,
+            "recall": 0.256,
+            "missed": 186,
+            "missed_rate": 0.744,
+            "false_positives": 10,
+            "false_positive_rate": 0.04
+          },
+          "not_hate": {
+            "n": 250,
+            "recall": 0.96,
+            "missed": 10,
+            "missed_rate": 0.04,
+            "false_positives": 186,
+            "false_positive_rate": 0.744
+          }
+        },
+        "recall_at_gate": {}
       }
     },
     "modern": {
@@ -4563,6 +6299,66 @@ const TASKS = [
       "pMini": 7.12e-05,
       "pMiniHolm": 0.000442,
       "ece": 0.14,
+      "invalidLabels": 0
+    },
+    "decisions": {
+      "model": "gpt-6-luna",
+      "label": "gpt-6-luna",
+      "acc": 0.576,
+      "lo": 0.532,
+      "hi": 0.619,
+      "p50": 885,
+      "p95": 1837,
+      "tokens": 154.7,
+      "costUsd": 0.00773,
+      "perM": 15.47,
+      "vsJev": "jev",
+      "vsMini": "mini",
+      "pJev": 0.00033,
+      "pJevHolm": 0.00363,
+      "pMini": 1.46e-08,
+      "pMiniHolm": 1.61e-07,
+      "ece": 0.372,
+      "invalidLabels": 0
+    },
+    "clef": {
+      "model": "@cf/cloudflare/clef",
+      "label": "clef",
+      "acc": 0.616,
+      "lo": 0.573,
+      "hi": 0.658,
+      "p50": 826,
+      "p95": 1814,
+      "tokens": 171.5,
+      "costUsd": 0.02058,
+      "perM": 41.17,
+      "vsJev": "ns",
+      "vsMini": "mini",
+      "pJev": 0.0293,
+      "pJevHolm": 0.205,
+      "pMini": 1.31e-06,
+      "pMiniHolm": 1.18e-05,
+      "ece": 0.281,
+      "invalidLabels": 0
+    },
+    "clefFlash": {
+      "model": "@cf/cloudflare/clef-flash",
+      "label": "clef-flash",
+      "acc": 0.608,
+      "lo": 0.565,
+      "hi": 0.65,
+      "p50": 646,
+      "p95": 1667,
+      "tokens": 171.5,
+      "costUsd": 0.00772,
+      "perM": 15.44,
+      "vsJev": "ns",
+      "vsMini": "mini",
+      "pJev": 0.0202,
+      "pJevHolm": 0.101,
+      "pMini": 1.02e-06,
+      "pMiniHolm": 9.18e-06,
+      "ece": 0.313,
       "invalidLabels": 0
     }
   }

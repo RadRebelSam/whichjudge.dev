@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Comment toxicity gate: Jev vs 4 other models, measured | WhichJudge</title>
+<title>Comment toxicity gate: Jev vs 7 other models, measured | WhichJudge</title>
 <meta name="description" content="Comment toxicity gate on Civil Comments test split (CC0), n=500 frozen gold. Jev 76.8%, gpt-4o-mini 72.4%, TF-IDF 85.2%. Verdict: Replace. ECE 0.101.">
 <link rel="canonical" href="https://whichjudge.dev/decision/civil-toxicity.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Comment toxicity gate: Jev vs 4 other models, measured | WhichJudge">
+<meta property="og:title" content="Comment toxicity gate: Jev vs 7 other models, measured | WhichJudge">
 <meta property="og:description" content="Comment toxicity gate on Civil Comments test split (CC0), n=500 frozen gold. Jev 76.8%, gpt-4o-mini 72.4%, TF-IDF 85.2%. Verdict: Replace. ECE 0.101.">
 <meta property="og:url" content="https://whichjudge.dev/decision/civil-toxicity.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="a7924c438d">
+<meta name="whichjudge-build" content="e6d1f683a4">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Comment toxicity gate - cheap decision model bake-off", "description": "Comment toxicity gate on Civil Comments test split (CC0), n=500 frozen gold. Jev 76.8%, gpt-4o-mini 72.4%, TF-IDF 85.2%. Verdict: Replace. ECE 0.101.", "url": "https://whichjudge.dev/decision/civil-toxicity.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "Civil Comments test split (CC0)", "dateModified": "2026-09-21", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/civil_toxicity.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.768}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.724}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.852}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.101}]}</script>
 <style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#52525b}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}</style>
 </head>
@@ -21,8 +21,8 @@
 <h1>Comment toxicity gate</h1>
 <p><span class="verdict">Replace</span>
 <span class="scope">compares Jev with 4o-mini only</span></p>
-<ul class="caveats"><li>A TF-IDF classifier trained on labelled data beats both APIs here at 85.2%. If you have labels, do not buy either.</li></ul>
-<p>A neighbour of the hate-speech row: toxicity in comments rather than hate speech aimed at a group in tweets, on CC0 gold. Jev 76.8% beats Mini 72.4% (Holm p=0.035). TF-IDF beats both at 85.2%. Read this next to the hate row: a different task and dataset gives a different ranking, which is the point, not proof that the hate loss was label noise.</p>
+<ul class="caveats"><li>A TF-IDF classifier trained on labelled data beats both APIs here at 85.2%. If you have labels, do not buy either.</li><li>clef beats Jev here at 86.0%.</li><li>clef-flash beats Jev here at 85.4%.</li></ul>
+<p>A neighbour of the hate-speech row: toxicity in comments rather than hate speech aimed at a group in tweets, on CC0 gold. Jev 76.8% beats Mini 72.4% (Holm p=0.035). TF-IDF beats both at 85.2%, and clef, a hosted typed-decision API, beats Jev at 86.0%, as clef-flash beats Jev at 85.4%. Read this next to the hate row: a different task and dataset gives a different ranking, which is the point, not proof that the hate loss was label noise.</p>
 <p><strong>Replaces:</strong> Toxicity classifier gating user comments before publication<br>
 <strong>Gold:</strong> <a href="https://huggingface.co/datasets/google/civil_comments" rel="noopener">google/civil_comments</a>
 
@@ -35,6 +35,9 @@
         <tr><td>gpt-4o-mini-2024-07-18</td><td>72.4%</td><td>[68.3% - 76.1%]</td><td>996 ms</td><td>$33.87</td></tr>
         <tr><td>gpt-5.4-mini-2026-03-17</td><td>75.6%</td><td>[71.6% - 79.2%]</td><td>892 ms</td><td>unpriced (203.6 tok/call)</td></tr>
         <tr><td>Laya (self-hosted, convaiinnovations/laya)</td><td>72.2%</td><td>[68.1% - 75.9%]</td><td>391 ms local cpu, no network</td><td>$0 API, compute not priced</td></tr>
+        <tr><td>gpt-6-luna (OpenAI Decisions API)</td><td>72.6%</td><td>[68.5% - 76.3%]</td><td>903 ms, one client, region unset, includes network</td><td>$25.33 (list $0.10 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>@cf/cloudflare/clef (Cloudflare Workers AI)</td><td>86.0%</td><td>[82.7% - 88.8%]</td><td>1167 ms, one client, region unset, includes network</td><td>$64.68 (list $0.24 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>@cf/cloudflare/clef-flash (Cloudflare Workers AI)</td><td>85.4%</td><td>[82.0% - 88.2%]</td><td>1286 ms, one client, region unset, includes network</td><td>$24.25 (list $0.09 per 1M input tokens, 2026-10-09)</td></tr>
         <tr><td>TF-IDF + LR (train n=60,000)</td><td>85.2%</td><td>[81.8% - 88.0%]</td><td>77 us mean per row, batched</td><td>$0</td></tr>
   </tbody>
 </table></div>
@@ -66,6 +69,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build a7924c438d &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
+<p class="stamp">build e6d1f683a4 &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
 </body>
 </html>

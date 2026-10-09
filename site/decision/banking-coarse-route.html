@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Banking queue routing: Jev vs 4 other models, measured | WhichJudge</title>
+<title>Banking queue routing: Jev vs 7 other models, measured | WhichJudge</title>
 <meta name="description" content="Banking queue routing on BANKING77 train split, collapsed 77 to 8 queues, n=500 frozen gold. Jev 70.2%, gpt-4o-mini 66.4%, TF-IDF 94.2%. Verdict: Replace. ECE 0.232.">
 <link rel="canonical" href="https://whichjudge.dev/decision/banking-coarse-route.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Banking queue routing: Jev vs 4 other models, measured | WhichJudge">
+<meta property="og:title" content="Banking queue routing: Jev vs 7 other models, measured | WhichJudge">
 <meta property="og:description" content="Banking queue routing on BANKING77 train split, collapsed 77 to 8 queues, n=500 frozen gold. Jev 70.2%, gpt-4o-mini 66.4%, TF-IDF 94.2%. Verdict: Replace. ECE 0.232.">
 <meta property="og:url" content="https://whichjudge.dev/decision/banking-coarse-route.html">
 <meta name="twitter:card" content="summary">
-<meta name="whichjudge-build" content="a7924c438d">
+<meta name="whichjudge-build" content="e6d1f683a4">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Banking queue routing - cheap decision model bake-off", "description": "Banking queue routing on BANKING77 train split, collapsed 77 to 8 queues, n=500 frozen gold. Jev 70.2%, gpt-4o-mini 66.4%, TF-IDF 94.2%. Verdict: Replace. ECE 0.232.", "url": "https://whichjudge.dev/decision/banking-coarse-route.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "BANKING77 train split, collapsed 77 to 8 queues", "dateModified": "2026-09-21", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/banking_coarse_route.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.702}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.664}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.942}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.232}]}</script>
 <style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#52525b}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}</style>
 </head>
@@ -21,8 +21,8 @@
 <h1>Banking queue routing</h1>
 <p><span class="verdict">Replace</span>
 <span class="scope">compares Jev with 4o-mini only</span></p>
-<ul class="caveats"><li>A TF-IDF classifier trained on labelled data beats both APIs here at 94.2%. If you have labels, do not buy either.</li><li>ECE 0.232: do not quote the confidence as a probability.</li></ul>
-<p>TF-IDF 94.2% beats both neural judges by more than 20 points if you have labels. Among APIs Jev 70.2% beats Mini 66.4% (Holm p=0.021) and ties the 2026 model at 72.4%. The &#x27;other&#x27; queue is the failure: Jev routes 1.6% of it correctly. Do not pay for a model on this task if you can train one.</p>
+<ul class="caveats"><li>A TF-IDF classifier trained on labelled data beats both APIs here at 94.2%. If you have labels, do not buy either.</li><li>clef beats Jev here at 76.2%.</li><li>clef-flash beats Jev here at 81.4%.</li><li>ECE 0.232: do not quote the confidence as a probability.</li></ul>
+<p>TF-IDF 94.2% beats both neural judges by more than 20 points if you have labels. Among APIs Jev 70.2% beats Mini 66.4% (Holm p=0.021) and ties the 2026 model at 72.4%; clef beats Jev at 76.2% and clef-flash beats Jev at 81.4%, and both still trail TF-IDF. The &#x27;other&#x27; queue is the failure: Jev routes 1.6% of it correctly. Do not pay for a model on this task if you can train one.</p>
 <p><strong>Replaces:</strong> Support-queue classifier on banking tickets<br>
 <strong>Gold:</strong> <a href="https://github.com/PolyAI-LDN/task-specific-datasets" rel="noopener">PolyAI BANKING77</a>
 
@@ -35,6 +35,9 @@
         <tr><td>gpt-4o-mini-2024-07-18</td><td>66.4%</td><td>[62.1% - 70.4%]</td><td>1054 ms</td><td>$34.81</td></tr>
         <tr><td>gpt-5.4-mini-2026-03-17</td><td>72.4%</td><td>[68.3% - 76.1%]</td><td>847 ms</td><td>unpriced (216.8 tok/call)</td></tr>
         <tr><td>Laya (self-hosted, convaiinnovations/laya)</td><td>56.8%</td><td>[52.4% - 61.1%]</td><td>370 ms local cpu, no network</td><td>$0 API, compute not priced</td></tr>
+        <tr><td>gpt-6-luna (OpenAI Decisions API)</td><td>70.2%</td><td>[66.0% - 74.0%]</td><td>1316 ms, one client, region unset, includes network</td><td>$25.74 (list $0.10 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>@cf/cloudflare/clef (Cloudflare Workers AI)</td><td>76.2%</td><td>[72.3% - 79.7%]</td><td>1152 ms, one client, region unset, includes network</td><td>$80.33 (list $0.24 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>@cf/cloudflare/clef-flash (Cloudflare Workers AI)</td><td>81.4%</td><td>[77.8% - 84.6%]</td><td>715 ms, one client, region unset, includes network</td><td>$30.12 (list $0.09 per 1M input tokens, 2026-10-09)</td></tr>
         <tr><td>TF-IDF + LR (train n=9,503)</td><td>94.2%</td><td>[91.8% - 95.9%]</td><td>18 us mean per row, batched</td><td>$0</td></tr>
   </tbody>
 </table></div>
@@ -66,6 +69,6 @@ python3 scripts/run_eval.py     # hits the APIs again with your own keys</code><
 not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
 <a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
 <a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
-<p class="stamp">build a7924c438d &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
+<p class="stamp">build e6d1f683a4 &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
 </body>
 </html>

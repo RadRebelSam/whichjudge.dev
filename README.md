@@ -3,7 +3,7 @@
 Replacement matrix for cheap **judge / decision** models.
 
 Rows are decisions you already pay an LLM to make (spam gate, ticket route, hate screen).
-Columns are models: **Jev `jev-1.13.0`**, **`gpt-4o-mini-2024-07-18`**, **`gpt-5.4-mini-2026-03-17`**, **Laya** (`convaiinnovations/laya`, an open-weight System One-style model run locally) and a TF-IDF + logistic regression baseline.
+Columns are models: **Jev `jev-1.13.0`**, **`gpt-4o-mini-2024-07-18`**, **`gpt-5.4-mini-2026-03-17`**, **Laya** (`convaiinnovations/laya`, an open-weight System One-style model run locally), two hosted typed-decision APIs (**OpenAI Decisions `gpt-6-luna`** and **Cloudflare `clef`**) and a TF-IDF + logistic regression baseline.
 The next System One-style model is another column, not another site.
 
 <!-- generated:ece-line -->
@@ -33,7 +33,7 @@ whichjudge/
     sampling_common.py      the v1-exclusion rule every preparer applies
     run_eval.py             Jev vs gpt-4o-mini; writes hashed receipts
     verify_run.py           re-read every raw response, recompute every statistic (no API)
-    selfcheck_verify.py     corrupt a copy six ways; verify_run.py must fail each time
+    selfcheck_verify.py     corrupt a copy eleven ways; verify_run.py must fail each time
     smoke_site.py           headless browser: overflow at 390px, axe violations, dialog focus
     run_tfidf_baseline.py   TF-IDF + LR on leftover official train
     prepare_cfpb.py         freeze 500 CFPB complaints, labels joined from the Bureau
@@ -41,6 +41,8 @@ whichjudge/
     prepare_injection.py    freeze 300 prompt-injection rows (n is capped by the source)
     run_modern_baseline.py  same samples through a current small model (--recompute)
     run_laya_baseline.py    same samples and schema questions through Laya, self-hosted (--recompute)
+    run_decisions_baseline.py  same samples and rubric through OpenAI Decisions gpt-6-luna (--recompute, --dry N)
+    run_clef_baseline.py    same samples and schema questions through Cloudflare clef (--flash for clef-flash)
     calibrate.py            ECE + reliability bins from receipts (no API)
     cost_curve.py           cost and latency vs input length; finds the crossover
     redact_text.py          strip third-party text to hashes before publishing
@@ -203,6 +205,41 @@ bill. Measured here on the cpu of the author's workstation
 **Jev 7 wins, 4 ties, 0 losses** against Laya. Latency is not comparable across
 the two: Laya's p50 of 160 to 970 ms is one forward pass on this machine's cpu, no network; the API columns include a round trip.
 <!-- /generated:laya-table -->
+
+## Two hosted typed-decision APIs
+
+Two vendors now sell the same idea as Jev: send a state and typed questions, get a choice and
+probabilities back, no generated text. OpenAI's Decisions API (`gpt-6-luna`) and Cloudflare
+Workers AI's `clef` take the same rubric Jev takes: the question's instructions plus one criteria
+sentence per label, generated from the one schema file (`scripts/run_decisions_baseline.py`,
+`scripts/run_clef_baseline.py`). Neither has a hand-tuned prompt. The numbers below are on the same
+frozen samples as every other column.
+
+<!-- generated:api-columns-table -->
+Each vs-Jev column is Holm-corrected within its family of 11 tests; a winner is named only when the corrected test clears 0.05.
+
+| Decision | Jev | 4o-mini | gpt-6-luna | gpt-6-luna vs Jev | clef | clef vs Jev | clef-flash | clef-flash vs Jev |
+|---|---|---|---|---|---|---|---|---|
+| Prompt-injection screen | 80.5% | 74.5% | 72.0% | Jev | 79.0% | ns | 68.0% | Jev |
+| Consumer complaint routing | 83.8% | 77.4% | 83.0% | ns | 82.2% | ns | 77.0% | Jev |
+| Comment toxicity gate | 76.8% | 72.4% | 72.6% | ns | 86.0% | **clef** | 85.4% | **clef-flash** |
+| SMS spam gate | 95.4% | 94.6% | 94.8% | ns | 93.4% | ns | 90.4% | Jev |
+| Review polarity | 96.3% | 95.5% | 93.8% | ns | 96.9% | ns | 96.6% | ns |
+| Message emotion | 78.2% | 76.2% | 75.6% | ns | 78.4% | ns | 76.4% | ns |
+| Offensive language screen | 72.6% | 72.2% | 68.4% | ns | 77.0% | ns | 75.2% | ns |
+| Social sentiment (3-way) | 73.2% | 71.4% | 69.8% | ns | 63.2% | Jev | 59.6% | Jev |
+| News topic | 89.8% | 86.0% | 88.4% | ns | 91.2% | ns | 91.2% | ns |
+| Banking queue routing | 70.2% | 66.4% | 70.2% | ns | 76.2% | **clef** | 81.4% | **clef-flash** |
+| Hate-speech screen | 65.6% | 72.4% | 57.6% | Jev | 61.6% | ns | 60.8% | ns |
+
+**gpt-6-luna** (`gpt-6-luna`, OpenAI Decisions API): Jev 2 wins, 9 ties, 0 losses. List price $0.10 per 1M input tokens, read from https://developers.openai.com/api/docs/pricing on 2026-10-09 (Standard tier, short context, input $0.10 per 1M tokens. The pricing page lists the model, not the Decisions API separately, so this applies that input price to the input tokens each call reports and charges nothing for output because every call reports 0 output tokens. No cached-input discount applied.) The whole 11-task run cost $0.1115.
+
+**clef** (`@cf/cloudflare/clef`, Cloudflare Workers AI): Jev 1 win, 8 ties, 2 losses. List price $0.24 per 1M input tokens, read from https://developers.cloudflare.com/workers-ai/platform/pricing/ on 2026-10-09 (Workers AI list price, $0.240 per 1M input tokens (21818 neurons per 1M). Output tokens are 0 on every call.) The whole 11-task run cost $0.3104.
+
+**clef-flash** (`@cf/cloudflare/clef-flash`, Cloudflare Workers AI): Jev 4 wins, 5 ties, 2 losses. List price $0.09 per 1M input tokens, read from https://developers.cloudflare.com/workers-ai/platform/pricing/ on 2026-10-09 (Workers AI list price, $0.090 per 1M input tokens (8182 neurons per 1M). Output tokens are 0 on every call.) The whole 11-task run cost $0.1164.
+
+Latency is not compared: it was measured from one machine with the region unset and includes the network round trip, so it is not comparable across vendors.
+<!-- /generated:api-columns-table -->
 
 ### Calibration and gating are different questions
 
