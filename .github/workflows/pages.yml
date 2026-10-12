@@ -1,0 +1,95 @@
+name: Verify and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Recounts every published accuracy from the stored receipts and checks
+      # the frozen samples and schemas still hash to what the run recorded.
+      - name: Receipts match the published table
+        run: python scripts/verify_run.py
+
+      # A verifier that has never failed proves nothing. This corrupts a copy of
+      # results/ six ways (a pred flipped to gold with the summary adjusted, an
+      # empty current-model receipt, a stale ECE, a dropped receipt row, an
+      # invalid label reported as 0, a mispriced cost point) and requires
+      # verify_run.py to fail every time.
+      - name: Verifier fails on corrupted results
+        run: python scripts/selfcheck_verify.py
+
+      # Headless browser against the built site: no horizontal overflow at 390px,
+      # no serious axe violations (contrast included), and the dialog keeps focus.
+      - name: Install a browser for the smoke test
+        run: pip install playwright && playwright install --with-deps chromium
+      - name: Site smoke test (390px, axe, dialog focus)
+        run: python scripts/smoke_site.py
+
+      # Fails if site/data.js or any decision page disagrees with results/.
+      # This is what stops the site from drifting away from the receipts.
+      - name: Site is generated from results/
+        run: python scripts/build_site.py --check
+
+      # --check only proves the site matches what the generator would emit today.
+      # These are the cross-checks it cannot make: published text that should have
+      # been redacted, numbers typed into app.js by hand, prose citing a model with
+      # no column, a badge crowning a winner the test refused, and docs still
+      # describing an older number of rows. Every one has happened here.
+      - name: Audit for leaks, stale numbers and uncited columns
+        run: python scripts/audit_site.py
+
+      - name: Upload site
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: verify
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  # Every check above runs against the repo. This one asks the server. It fetches
+  # each published file from the public URL with a cache-busting query and requires
+  # it to be byte-identical to this commit. It proves the site answers such a
+  # request with this build; it cannot prove every Fastly edge has expired its plain
+  # copy, which GitHub Pages holds for up to 600s. Pages carry a build stamp so a
+  # reader can tell which generation an edge served.
+  verify-live:
+    needs: deploy
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Public URL serves exactly this build
+        run: python scripts/verify_live.py --wait 900
+

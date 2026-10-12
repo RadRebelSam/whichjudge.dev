@@ -1,0 +1,462 @@
+{
+  "run_id": "2026-09-21T06:40:52.350832+00:00",
+  "finished_utc": "2026-09-21T06:50:20.665447+00:00",
+  "latency_environment": {
+    "host": "Windows-10-10.0.19045-SP0",
+    "measured_from": "residential, author workstation",
+    "note": "Wall clock from this client, including network round trip."
+  },
+  "recomputed_utc": "2026-09-21T06:52:47.167246+00:00",
+  "model": "gpt-5.4-mini-2026-03-17",
+  "why": "A current small model, so the board is not Jev against a 2024 baseline. Same frozen samples and same prompts as the main run.",
+  "prices_usd_per_million": {
+    "input": null,
+    "output": null
+  },
+  "pricing_note": "Left unset on purpose. Token counts are measured; cost is only computed when a real published price is filled in.",
+  "tasks": [
+    {
+      "task_id": "prompt_injection",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 200,
+      "acc": 0.8,
+      "wilson": {
+        "k": 160,
+        "n": 200,
+        "p": 0.8,
+        "lo": 0.7391436038882958,
+        "hi": 0.8495487925607118
+      },
+      "p50_ms": 1058.481500018388,
+      "p95_ms": 1582.9898999654688,
+      "input_tokens": 32439,
+      "output_tokens": 2568,
+      "tokens_per_call": 175.0,
+      "cost_usd": null,
+      "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 9,
+        "b_only_correct": 10,
+        "discordant": 19,
+        "chi2_cc": 0.0,
+        "p_value": 1.0,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 15,
+        "b_only_correct": 4,
+        "discordant": 19,
+        "chi2_cc": 5.2631578947368425,
+        "p_value": 0.021781462791119498,
+        "winner": "a"
+      },
+      "jev_acc": 0.805,
+      "mini_acc": 0.745
+    },
+    {
+      "task_id": "civil_toxicity",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 500,
+      "acc": 0.756,
+      "wilson": {
+        "k": 378,
+        "n": 500,
+        "p": 0.756,
+        "lo": 0.7164944353121212,
+        "hi": 0.7916017600000562
+      },
+      "p50_ms": 892.4939999706112,
+      "p95_ms": 1395.598599978257,
+      "input_tokens": 95338,
+      "output_tokens": 6478,
+      "tokens_per_call": 203.6,
+      "cost_usd": null,
+      "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 23,
+        "b_only_correct": 29,
+        "discordant": 52,
+        "chi2_cc": 0.4807692307692308,
+        "p_value": 0.48807409316524814,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 38,
+        "b_only_correct": 22,
+        "discordant": 60,
+        "chi2_cc": 3.75,
+        "p_value": 0.05280751141611361,
+        "winner": "ns"
+      },
+      "jev_acc": 0.768,
+      "mini_acc": 0.724
+    },
+    {
+      "task_id": "cfpb_queue_route",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 500,
+      "acc": 0.838,
+      "wilson": {
+        "k": 419,
+        "n": 500,
+        "p": 0.838,
+        "lo": 0.8031470479440461,
+        "hi": 0.8676987099290632
+      },
+      "p50_ms": 822.3846000037156,
+      "p95_ms": 1174.5654999976978,
+      "input_tokens": 246834,
+      "output_tokens": 6187,
+      "tokens_per_call": 506.0,
+      "cost_usd": null,
+      "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 20,
+        "b_only_correct": 20,
+        "discordant": 40,
+        "chi2_cc": 0.025,
+        "p_value": 0.8743670611628918,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 50,
+        "b_only_correct": 18,
+        "discordant": 68,
+        "chi2_cc": 14.132352941176471,
+        "p_value": 0.0001703879348371563,
+        "winner": "a"
+      },
+      "jev_acc": 0.838,
+      "mini_acc": 0.774
+    },
+    {
+      "task_id": "banking_coarse_route",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 500,
+      "acc": 0.724,
+      "wilson": {
+        "k": 362,
+        "n": 500,
+        "p": 0.724,
+        "lo": 0.6832216523131053,
+        "hi": 0.76136251858505
+      },
+      "p50_ms": 847.1894000540487,
+      "p95_ms": 1183.6912999860942,
+      "input_tokens": 101692,
+      "output_tokens": 6684,
+      "tokens_per_call": 216.8,
+      "cost_usd": null,
+      "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 18,
+        "b_only_correct": 7,
+        "discordant": 25,
+        "chi2_cc": 4.0,
+        "p_value": 0.045500263896358396,
+        "winner": "a"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 41,
+        "b_only_correct": 11,
+        "discordant": 52,
+        "chi2_cc": 16.173076923076923,
+        "p_value": 5.7809945574285153e-05,
+        "winner": "a"
+      },
+      "jev_acc": 0.702,
+      "mini_acc": 0.664
+    },
+    {
+      "task_id": "news_topic",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 500,
+      "acc": 0.868,
+      "wilson": {
+        "k": 434,
+        "n": 500,
+        "p": 0.868,
+        "lo": 0.8355045607103054,
+        "hi": 0.8948837200509497
+      },
+      "p50_ms": 826.9884000183083,
+      "p95_ms": 1209.0440000174567,
+      "input_tokens": 66025,
+      "output_tokens": 5752,
+      "tokens_per_call": 143.6,
+      "cost_usd": null,
+      "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 9,
+        "b_only_correct": 24,
+        "discordant": 33,
+        "chi2_cc": 5.9393939393939394,
+        "p_value": 0.014806109127348447,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 18,
+        "b_only_correct": 14,
+        "discordant": 32,
+        "chi2_cc": 0.28125,
+        "p_value": 0.5958830905651777,
+        "winner": "ns"
+      },
+      "jev_acc": 0.898,
+      "mini_acc": 0.86
+    },
+    {
+      "task_id": "tweet_sentiment",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 500,
+      "acc": 0.71,
+      "wilson": {
+        "k": 355,
+        "n": 500,
+        "p": 0.71,
+        "lo": 0.6687444142064393,
+        "hi": 0.7480532460105812
+      },
+      "p50_ms": 856.3780999975279,
+      "p95_ms": 1208.2552000065334,
+      "input_tokens": 50810,
+      "output_tokens": 5800,
+      "tokens_per_call": 113.2,
+      "cost_usd": null,
+      "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 35,
+        "b_only_correct": 46,
+        "discordant": 81,
+        "chi2_cc": 1.2345679012345678,
+        "p_value": 0.26652052580501084,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 35,
+        "b_only_correct": 37,
+        "discordant": 72,
+        "chi2_cc": 0.013888888888888888,
+        "p_value": 0.9061856157549283,
+        "winner": "ns"
+      },
+      "jev_acc": 0.732,
+      "mini_acc": 0.714
+    },
+    {
+      "task_id": "review_sentiment",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 356,
+      "acc": 0.9719101123595506,
+      "wilson": {
+        "k": 346,
+        "n": 356,
+        "p": 0.9719101123595506,
+        "lo": 0.949072082894622,
+        "hi": 0.9846720978782515
+      },
+      "p50_ms": 856.6095000132918,
+      "p95_ms": 1207.5985000119545,
+      "input_tokens": 26186,
+      "output_tokens": 3916,
+      "tokens_per_call": 84.6,
+      "cost_usd": null,
+      "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 6,
+        "b_only_correct": 3,
+        "discordant": 9,
+        "chi2_cc": 0.4444444444444444,
+        "p_value": 0.5049850750938458,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 8,
+        "b_only_correct": 2,
+        "discordant": 10,
+        "chi2_cc": 2.5,
+        "p_value": 0.11384629800665803,
+        "winner": "ns"
+      },
+      "jev_acc": 0.9634831460674157,
+      "mini_acc": 0.9550561797752809
+    },
+    {
+      "task_id": "sms_spam",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 500,
+      "acc": 0.93,
+      "wilson": {
+        "k": 465,
+        "n": 500,
+        "p": 0.93,
+        "lo": 0.9042022712346763,
+        "hi": 0.9492405568287469
+      },
+      "p50_ms": 896.6855999897234,
+      "p95_ms": 1264.789999986533,
+      "input_tokens": 47080,
+      "output_tokens": 5518,
+      "tokens_per_call": 105.2,
+      "cost_usd": null,
+      "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 7,
+        "b_only_correct": 19,
+        "discordant": 26,
+        "chi2_cc": 4.653846153846154,
+        "p_value": 0.030984050098456645,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 7,
+        "b_only_correct": 15,
+        "discordant": 22,
+        "chi2_cc": 2.227272727272727,
+        "p_value": 0.13559300126630222,
+        "winner": "ns"
+      },
+      "jev_acc": 0.954,
+      "mini_acc": 0.946
+    },
+    {
+      "task_id": "content_offensive",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 500,
+      "acc": 0.736,
+      "wilson": {
+        "k": 368,
+        "n": 500,
+        "p": 0.736,
+        "lo": 0.6956683729184137,
+        "hi": 0.7727328071349999
+      },
+      "p50_ms": 812.298099976033,
+      "p95_ms": 1203.928500006441,
+      "input_tokens": 46900,
+      "output_tokens": 6464,
+      "tokens_per_call": 106.7,
+      "cost_usd": null,
+      "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 34,
+        "b_only_correct": 29,
+        "discordant": 63,
+        "chi2_cc": 0.25396825396825395,
+        "p_value": 0.6142946646634824,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 29,
+        "b_only_correct": 22,
+        "discordant": 51,
+        "chi2_cc": 0.7058823529411765,
+        "p_value": 0.4008141693829345,
+        "winner": "ns"
+      },
+      "jev_acc": 0.726,
+      "mini_acc": 0.722
+    },
+    {
+      "task_id": "content_hate",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 500,
+      "acc": 0.642,
+      "wilson": {
+        "k": 321,
+        "n": 500,
+        "p": 0.642,
+        "lo": 0.5990414871027679,
+        "hi": 0.6827931212344555
+      },
+      "p50_ms": 849.2285999818705,
+      "p95_ms": 1206.141699978616,
+      "input_tokens": 45834,
+      "output_tokens": 6538,
+      "tokens_per_call": 104.7,
+      "cost_usd": null,
+      "unparsed_replies": 0,
+      "invalid_labels": 0,
+      "invalid_label_values": [],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 36,
+        "b_only_correct": 43,
+        "discordant": 79,
+        "chi2_cc": 0.45569620253164556,
+        "p_value": 0.4996422576523561,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 32,
+        "b_only_correct": 73,
+        "discordant": 105,
+        "chi2_cc": 15.238095238095237,
+        "p_value": 9.477225139792278e-05,
+        "winner": "b"
+      },
+      "jev_acc": 0.656,
+      "mini_acc": 0.724
+    },
+    {
+      "task_id": "message_emotion",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "n": 500,
+      "acc": 0.762,
+      "wilson": {
+        "k": 381,
+        "n": 500,
+        "p": 0.762,
+        "lo": 0.7227631109081946,
+        "hi": 0.7972415889816121
+      },
+      "p50_ms": 876.4816999901086,
+      "p95_ms": 1259.5411000074819,
+      "input_tokens": 46150,
+      "output_tokens": 5973,
+      "tokens_per_call": 104.2,
+      "cost_usd": null,
+      "unparsed_replies": 2,
+      "invalid_labels": 2,
+      "invalid_label_values": [
+        "fear",
+        "sarcasm"
+      ],
+      "mcnemar_vs_jev": {
+        "a_only_correct": 21,
+        "b_only_correct": 31,
+        "discordant": 52,
+        "chi2_cc": 1.5576923076923077,
+        "p_value": 0.21200343092282575,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 27,
+        "b_only_correct": 27,
+        "discordant": 54,
+        "chi2_cc": 0.018518518518518517,
+        "p_value": 0.8917558535067943,
+        "winner": "ns"
+      },
+      "jev_acc": 0.782,
+      "mini_acc": 0.762
+    }
+  ]
+}

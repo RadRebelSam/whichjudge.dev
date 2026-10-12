@@ -1,0 +1,10 @@
+{
+  "dataset": "tweet_eval hate test",
+  "n": 500,
+  "label_counts": {
+    "not_hate": 250,
+    "hate": 250
+  },
+  "seed": 11,
+  "excludes_v1_rows": true
+}

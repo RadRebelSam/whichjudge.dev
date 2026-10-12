@@ -1,0 +1,12 @@
+{
+  "dataset": "tweet_eval emotion train (test split exhausted by v1)",
+  "n": 500,
+  "label_counts": {
+    "optimism": 125,
+    "anger": 125,
+    "joy": 125,
+    "sadness": 125
+  },
+  "seed": 11,
+  "excludes_v1_rows": true
+}

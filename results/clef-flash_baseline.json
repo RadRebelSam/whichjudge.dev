@@ -1,0 +1,453 @@
+{
+  "run_id": "2026-10-09T07:32:34.192245+00:00",
+  "finished_utc": "2026-10-09T07:42:36.375026+00:00",
+  "latency_environment": {
+    "host": "Windows-10-10.0.19045-SP0",
+    "measured_from": "unset",
+    "note": "Wall clock from this client, including network round trip."
+  },
+  "recomputed_utc": "2026-10-09T07:42:54.576676+00:00",
+  "column": "clef-flash",
+  "model": "@cf/cloudflare/clef-flash",
+  "endpoint": "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/run/@cf/cloudflare/clef-flash",
+  "why": "Cloudflare Workers AI clef-flash, the smaller sibling of clef, run on the same samples and schema and reported separately.",
+  "prices_usd_per_million": {
+    "input": 0.09,
+    "output": 0.0
+  },
+  "price_source_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+  "price_checked": "2026-10-09",
+  "pricing_note": "Read off the vendor's own pricing page on 2026-10-09: Workers AI list price, $0.090 per 1M input tokens (8182 neurons per 1M). Output tokens are 0 on every call.",
+  "total_cost_usd": 0.11640896999999999,
+  "tasks": [
+    {
+      "task_id": "prompt_injection",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 200,
+      "acc": 0.68,
+      "wilson": {
+        "k": 136,
+        "n": 200,
+        "p": 0.68,
+        "lo": 0.612479733946457,
+        "hi": 0.7407357039229475
+      },
+      "p50_ms": 648.2107000047108,
+      "p95_ms": 1661.26439999789,
+      "input_tokens": 48910,
+      "output_tokens": 0,
+      "tokens_per_call": 244.6,
+      "cost_usd": 0.0044019,
+      "invalid_labels": 0,
+      "mean_confidence": 0.6186604999999998,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 1,
+        "b_only_correct": 26,
+        "discordant": 27,
+        "chi2_cc": 21.333333333333332,
+        "p_value": 3.859616436928447e-06,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 2,
+        "b_only_correct": 15,
+        "discordant": 17,
+        "chi2_cc": 8.470588235294118,
+        "p_value": 0.0036093469359454356,
+        "winner": "b"
+      },
+      "jev_acc": 0.805,
+      "mini_acc": 0.745
+    },
+    {
+      "task_id": "civil_toxicity",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 500,
+      "acc": 0.854,
+      "wilson": {
+        "k": 427,
+        "n": 500,
+        "p": 0.854,
+        "lo": 0.8203500666587293,
+        "hi": 0.882251703421391
+      },
+      "p50_ms": 1286.4079999999376,
+      "p95_ms": 1698.3437000017148,
+      "input_tokens": 134744,
+      "output_tokens": 0,
+      "tokens_per_call": 269.5,
+      "cost_usd": 0.012126959999999999,
+      "invalid_labels": 0,
+      "mean_confidence": 0.6491450000000006,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 70,
+        "b_only_correct": 27,
+        "discordant": 97,
+        "chi2_cc": 18.185567010309278,
+        "p_value": 2.0039171683534657e-05,
+        "winner": "a"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 87,
+        "b_only_correct": 22,
+        "discordant": 109,
+        "chi2_cc": 37.57798165137615,
+        "p_value": 8.783035418793229e-10,
+        "winner": "a"
+      },
+      "jev_acc": 0.768,
+      "mini_acc": 0.724
+    },
+    {
+      "task_id": "cfpb_queue_route",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 500,
+      "acc": 0.77,
+      "wilson": {
+        "k": 385,
+        "n": 500,
+        "p": 0.77,
+        "lo": 0.7311370330150648,
+        "hi": 0.8047456729782474
+      },
+      "p50_ms": 620.683300003293,
+      "p95_ms": 1621.20560000767,
+      "input_tokens": 320327,
+      "output_tokens": 0,
+      "tokens_per_call": 640.7,
+      "cost_usd": 0.028829429999999996,
+      "invalid_labels": 0,
+      "mean_confidence": 0.7506727999999997,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 10,
+        "b_only_correct": 44,
+        "discordant": 54,
+        "chi2_cc": 20.166666666666668,
+        "p_value": 7.097908330908288e-06,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 21,
+        "b_only_correct": 23,
+        "discordant": 44,
+        "chi2_cc": 0.022727272727272728,
+        "p_value": 0.8801684549067255,
+        "winner": "ns"
+      },
+      "jev_acc": 0.838,
+      "mini_acc": 0.774
+    },
+    {
+      "task_id": "banking_coarse_route",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 500,
+      "acc": 0.814,
+      "wilson": {
+        "k": 407,
+        "n": 500,
+        "p": 0.814,
+        "lo": 0.7775451944568551,
+        "hi": 0.8456665451057376
+      },
+      "p50_ms": 715.4958999890368,
+      "p95_ms": 1651.8913000036264,
+      "input_tokens": 167344,
+      "output_tokens": 0,
+      "tokens_per_call": 334.7,
+      "cost_usd": 0.015060959999999998,
+      "invalid_labels": 0,
+      "mean_confidence": 0.7334720000000001,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 65,
+        "b_only_correct": 9,
+        "discordant": 74,
+        "chi2_cc": 40.87837837837838,
+        "p_value": 1.6200360732097837e-10,
+        "winner": "a"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 82,
+        "b_only_correct": 7,
+        "discordant": 89,
+        "chi2_cc": 61.52808988764045,
+        "p_value": 4.364716560905381e-15,
+        "winner": "a"
+      },
+      "jev_acc": 0.702,
+      "mini_acc": 0.664
+    },
+    {
+      "task_id": "news_topic",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 500,
+      "acc": 0.912,
+      "wilson": {
+        "k": 456,
+        "n": 500,
+        "p": 0.912,
+        "lo": 0.8839229514479334,
+        "hi": 0.9337943628826022
+      },
+      "p50_ms": 699.3849999998929,
+      "p95_ms": 1666.4935000007972,
+      "input_tokens": 114203,
+      "output_tokens": 0,
+      "tokens_per_call": 228.4,
+      "cost_usd": 0.010278269999999999,
+      "invalid_labels": 0,
+      "mean_confidence": 0.7756665999999995,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 21,
+        "b_only_correct": 14,
+        "discordant": 35,
+        "chi2_cc": 1.0285714285714285,
+        "p_value": 0.31049443431723495,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 38,
+        "b_only_correct": 12,
+        "discordant": 50,
+        "chi2_cc": 12.5,
+        "p_value": 0.0004069520174449589,
+        "winner": "a"
+      },
+      "jev_acc": 0.898,
+      "mini_acc": 0.86
+    },
+    {
+      "task_id": "tweet_sentiment",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 500,
+      "acc": 0.596,
+      "wilson": {
+        "k": 298,
+        "n": 500,
+        "p": 0.596,
+        "lo": 0.5524145429626023,
+        "hi": 0.6381215302794642
+      },
+      "p50_ms": 628.5452000010991,
+      "p95_ms": 1642.1658999897772,
+      "input_tokens": 95116,
+      "output_tokens": 0,
+      "tokens_per_call": 190.2,
+      "cost_usd": 0.00856044,
+      "invalid_labels": 0,
+      "mean_confidence": 0.6174626000000005,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 67,
+        "b_only_correct": 135,
+        "discordant": 202,
+        "chi2_cc": 22.222772277227723,
+        "p_value": 2.4277718630137956e-06,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 62,
+        "b_only_correct": 121,
+        "discordant": 183,
+        "chi2_cc": 18.382513661202186,
+        "p_value": 1.8070878027068368e-05,
+        "winner": "b"
+      },
+      "jev_acc": 0.732,
+      "mini_acc": 0.714
+    },
+    {
+      "task_id": "review_sentiment",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 356,
+      "acc": 0.9662921348314607,
+      "wilson": {
+        "k": 344,
+        "n": 356,
+        "p": 0.9662921348314607,
+        "lo": 0.9420135820471564,
+        "hi": 0.9806145965736591
+      },
+      "p50_ms": 664.3972000019858,
+      "p95_ms": 1673.2274000096368,
+      "input_tokens": 54414,
+      "output_tokens": 0,
+      "tokens_per_call": 152.8,
+      "cost_usd": 0.00489726,
+      "invalid_labels": 0,
+      "mean_confidence": 0.8924005617977523,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 6,
+        "b_only_correct": 5,
+        "discordant": 11,
+        "chi2_cc": 0.0,
+        "p_value": 1.0,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 9,
+        "b_only_correct": 5,
+        "discordant": 14,
+        "chi2_cc": 0.6428571428571429,
+        "p_value": 0.4226780741706354,
+        "winner": "ns"
+      },
+      "jev_acc": 0.9634831460674157,
+      "mini_acc": 0.9550561797752809
+    },
+    {
+      "task_id": "sms_spam",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 500,
+      "acc": 0.904,
+      "wilson": {
+        "k": 452,
+        "n": 500,
+        "p": 0.904,
+        "lo": 0.8750124461326017,
+        "hi": 0.9268268620944284
+      },
+      "p50_ms": 685.9117999993032,
+      "p95_ms": 1730.6249999965075,
+      "input_tokens": 88380,
+      "output_tokens": 0,
+      "tokens_per_call": 176.8,
+      "cost_usd": 0.0079542,
+      "invalid_labels": 0,
+      "mean_confidence": 0.7668468,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 5,
+        "b_only_correct": 30,
+        "discordant": 35,
+        "chi2_cc": 16.457142857142856,
+        "p_value": 4.9762334879074214e-05,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 9,
+        "b_only_correct": 30,
+        "discordant": 39,
+        "chi2_cc": 10.256410256410257,
+        "p_value": 0.0013621046715842032,
+        "winner": "b"
+      },
+      "jev_acc": 0.954,
+      "mini_acc": 0.946
+    },
+    {
+      "task_id": "content_offensive",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 500,
+      "acc": 0.752,
+      "wilson": {
+        "k": 376,
+        "n": 500,
+        "p": 0.752,
+        "lo": 0.7123207803781036,
+        "hi": 0.787836411882321
+      },
+      "p50_ms": 741.3912999909371,
+      "p95_ms": 1699.4880999991437,
+      "input_tokens": 87682,
+      "output_tokens": 0,
+      "tokens_per_call": 175.4,
+      "cost_usd": 0.00789138,
+      "invalid_labels": 0,
+      "mean_confidence": 0.6906591999999994,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 55,
+        "b_only_correct": 42,
+        "discordant": 97,
+        "chi2_cc": 1.4845360824742269,
+        "p_value": 0.22306615653402012,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 55,
+        "b_only_correct": 40,
+        "discordant": 95,
+        "chi2_cc": 2.0631578947368423,
+        "p_value": 0.15089717233443065,
+        "winner": "ns"
+      },
+      "jev_acc": 0.726,
+      "mini_acc": 0.722
+    },
+    {
+      "task_id": "content_hate",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 500,
+      "acc": 0.608,
+      "wilson": {
+        "k": 304,
+        "n": 500,
+        "p": 0.608,
+        "lo": 0.5645397124401949,
+        "hi": 0.6498133699571299
+      },
+      "p50_ms": 645.8235000027344,
+      "p95_ms": 1666.713600003277,
+      "input_tokens": 85761,
+      "output_tokens": 0,
+      "tokens_per_call": 171.5,
+      "cost_usd": 0.00771849,
+      "invalid_labels": 0,
+      "mean_confidence": 0.7238119999999995,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 37,
+        "b_only_correct": 61,
+        "discordant": 98,
+        "chi2_cc": 5.3979591836734695,
+        "p_value": 0.02016031205824075,
+        "winner": "b"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 39,
+        "b_only_correct": 97,
+        "discordant": 136,
+        "chi2_cc": 23.889705882352942,
+        "p_value": 1.0201582063743104e-06,
+        "winner": "b"
+      },
+      "jev_acc": 0.656,
+      "mini_acc": 0.724
+    },
+    {
+      "task_id": "message_emotion",
+      "model": "@cf/cloudflare/clef-flash",
+      "n": 500,
+      "acc": 0.764,
+      "wilson": {
+        "k": 382,
+        "n": 500,
+        "p": 0.764,
+        "lo": 0.7248548911970089,
+        "hi": 0.7991193102186741
+      },
+      "p50_ms": 666.801100000157,
+      "p95_ms": 1630.5060000013327,
+      "input_tokens": 96552,
+      "output_tokens": 0,
+      "tokens_per_call": 193.1,
+      "cost_usd": 0.00868968,
+      "invalid_labels": 0,
+      "mean_confidence": 0.6547635999999994,
+      "mcnemar_vs_jev": {
+        "a_only_correct": 41,
+        "b_only_correct": 50,
+        "discordant": 91,
+        "chi2_cc": 0.7032967032967034,
+        "p_value": 0.40167816646977306,
+        "winner": "ns"
+      },
+      "mcnemar_vs_mini": {
+        "a_only_correct": 50,
+        "b_only_correct": 49,
+        "discordant": 99,
+        "chi2_cc": 0.0,
+        "p_value": 1.0,
+        "winner": "ns"
+      },
+      "jev_acc": 0.782,
+      "mini_acc": 0.762
+    }
+  ]
+}

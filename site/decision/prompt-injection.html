@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt-injection screen: Jev vs 7 other models, measured | WhichJudge</title>
+<meta name="description" content="Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=200 (rows left after v1), n=200 frozen gold. Jev 80.5%, gpt-4o-mini 74.5%, TF-IDF 90.5%. Verdict: Neither. ECE 0.137.">
+<link rel="canonical" href="https://whichjudge.dev/decision/prompt-injection.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prompt-injection screen: Jev vs 7 other models, measured | WhichJudge">
+<meta property="og:description" content="Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=200 (rows left after v1), n=200 frozen gold. Jev 80.5%, gpt-4o-mini 74.5%, TF-IDF 90.5%. Verdict: Neither. ECE 0.137.">
+<meta property="og:url" content="https://whichjudge.dev/decision/prompt-injection.html">
+<meta name="twitter:card" content="summary">
+<meta name="whichjudge-build" content="e6d1f683a4">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Prompt-injection screen - cheap decision model bake-off", "description": "Prompt-injection screen on deepset/prompt-injections, train + test, multilingual, n=200 (rows left after v1), n=200 frozen gold. Jev 80.5%, gpt-4o-mini 74.5%, TF-IDF 90.5%. Verdict: Neither. ECE 0.137.", "url": "https://whichjudge.dev/decision/prompt-injection.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "deepset/prompt-injections, train + test, multilingual, n=200 (rows left after v1)", "dateModified": "2026-09-21", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/prompt_injection.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.805}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.745}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.905}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.137}]}</script>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#52525b}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}</style>
+</head>
+<body>
+<p><a href="../index.html">WhichJudge</a> / decision</p>
+<h1>Prompt-injection screen</h1>
+<p><span class="verdict">Neither</span>
+<span class="scope">compares Jev with 4o-mini only</span></p>
+<ul class="caveats"><li>A TF-IDF classifier trained on labelled data beats both APIs here at 90.5%. If you have labels, do not buy either.</li><li>ECE 0.137: do not quote the confidence as a probability.</li></ul>
+<p>Jev 80.5% against Mini 74.5% is a significant 6.0pt win (Holm p=0.036), and it does not matter: Jev misses 39.0% of injections, Mini 51.0%, the 2026 model 40.0%, all at 0.0% false positives. TF-IDF at 90.5% beats both APIs. A security gate is judged on what gets through, and every model here lets 39% or more through.</p>
+<p><strong>Replaces:</strong> LLM guard deciding whether untrusted input may reach an agent<br>
+<strong>Gold:</strong> <a href="https://huggingface.co/datasets/deepset/prompt-injections" rel="noopener">deepset/prompt-injections</a>
+
+- deepset/prompt-injections, train + test, multilingual, n=200 (rows left after v1), n=200, seed=11<br>
+<strong>Labels:</strong> <code>injection / legitimate</code></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Results table"><table>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>Latency (p50 unless stated)</th><th>Cost per 1M decisions</th></tr></thead>
+  <tbody>
+        <tr><td>Jev jev-1.13.0</td><td>80.5%</td><td>[74.5% - 85.4%]</td><td>797 ms</td><td>$18.09</td></tr>
+        <tr><td>gpt-4o-mini-2024-07-18</td><td>74.5%</td><td>[68.0% - 80.0%]</td><td>1107 ms</td><td>$28.91</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>80.0%</td><td>[73.9% - 85.0%]</td><td>1058 ms</td><td>unpriced (175.0 tok/call)</td></tr>
+        <tr><td>Laya (self-hosted, convaiinnovations/laya)</td><td>63.5%</td><td>[56.6% - 69.9%]</td><td>356 ms local cpu, no network</td><td>$0 API, compute not priced</td></tr>
+        <tr><td>gpt-6-luna (OpenAI Decisions API)</td><td>72.0%</td><td>[65.4% - 77.8%]</td><td>814 ms, one client, region unset, includes network</td><td>$22.72 (list $0.10 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>@cf/cloudflare/clef (Cloudflare Workers AI)</td><td>79.0%</td><td>[72.8% - 84.1%]</td><td>966 ms, one client, region unset, includes network</td><td>$58.69 (list $0.24 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>@cf/cloudflare/clef-flash (Cloudflare Workers AI)</td><td>68.0%</td><td>[61.2% - 74.1%]</td><td>648 ms, one client, region unset, includes network</td><td>$22.01 (list $0.09 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>TF-IDF + LR (train n=461)</td><td>90.5%</td><td>[85.6% - 93.8%]</td><td>39 us mean per row, batched</td><td>$0</td></tr>
+  </tbody>
+</table></div>
+<p><strong>McNemar Jev vs Mini:</strong> jev, p=0.00596
+(14 Jev-only correct, 2 Mini-only correct).
+<strong>TF-IDF vs Jev:</strong> tfidf.</p>
+<h2>Quit line</h2>
+<p>At &gt;=0.9: 86.3% on 84.0% of rows, 5.8pt above ungated. Recall of injections on the covered rows barely moves, so raising the bar hands the misses to a human instead of catching them.</p>
+<p><strong>Auto slice:</strong> at Jev confidence &ge; 0.9,
+86.3% accurate on 84.0% of traffic, which is
++5.8pt against 80.5% ungated. That threshold is the strongest
+one still covering at least half the traffic, picked by rule from the measured gates.</p>
+<p><strong>Calibration:</strong> ECE 0.137 (max bin gap 0.47).
+ECE says whether the confidence can be read as a probability. It does not say whether
+gating helps: thresholding only needs the model to rank its own answers, so a badly
+calibrated task can still gate well. High ECE costs you the right to quote the number,
+not the right to threshold on it.</p>
+<h2>Verify this</h2>
+<p>Frozen samples <code>7288f7ddd121</code>, schema <code>6c6520e72c9f</code>.
+<a href="../receipts/prompt_injection.json">receipts/prompt_injection.json</a> here is the slim copy: per call,
+the id, gold, prediction, confidence, latency and the SHA-256 of the request and response.
+The full request and response bodies are in the repository at
+<a href="https://github.com/RadRebelSam/whichjudge.dev/blob/main/results/receipts/prompt_injection.json">results/receipts/prompt_injection.json</a>
+.</p>
+<pre tabindex="0"><code>git clone https://github.com/RadRebelSam/whichjudge.dev
+python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
+python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
+<p>Independent bench, not affiliated with TypeSafe AI. Public gold labels, n=200,
+not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
+<a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
+<a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
+<p class="stamp">build e6d1f683a4 &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
+</body>
+</html>

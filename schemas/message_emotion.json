@@ -1,0 +1,29 @@
+{
+  "task_id": "message_emotion",
+  "title": "Message emotion",
+  "question_key": "emotion",
+  "questions": {
+    "emotion": {
+      "type": "choice",
+      "instructions": "Which emotion is primary in this tweet?",
+      "criteria": {
+        "anger": "Anger",
+        "joy": "Joy or happiness",
+        "optimism": "Optimism or hope",
+        "sadness": "Sadness"
+      }
+    }
+  },
+  "openai_prompt": "Which emotion is primary in this tweet?\nChoose exactly one label:\n- anger: Anger\n- joy: Joy or happiness\n- optimism: Optimism or hope\n- sadness: Sadness\nReply with JSON {\"label\": <one of: anger, joy, optimism, sadness>}.",
+  "labels": [
+    "anger",
+    "joy",
+    "optimism",
+    "sadness"
+  ],
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "jev_model_requested": "jev-latest",
+  "mini_endpoint": "https://api.openai.com/v1/chat/completions",
+  "mini_model": "gpt-4o-mini",
+  "mini_temperature": 0
+}

@@ -1,0 +1,4 @@
+# This repo is verified by SHA-256 over file bytes. Any line-ending translation on
+# checkout would change those bytes and make scripts/verify_run.py fail on a clone
+# with core.autocrlf=true (the Windows default). Keep every file byte-exact.
+* -text

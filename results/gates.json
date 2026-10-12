@@ -1,0 +1,442 @@
+{
+  "prompt_injection": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 1.0,
+        "accuracy": 0.805
+      },
+      "0.6": {
+        "coverage": 0.965,
+        "accuracy": 0.8135
+      },
+      "0.7": {
+        "coverage": 0.915,
+        "accuracy": 0.8306
+      },
+      "0.8": {
+        "coverage": 0.88,
+        "accuracy": 0.8523
+      },
+      "0.9": {
+        "coverage": 0.84,
+        "accuracy": 0.8631
+      }
+    },
+    "in_sample": {
+      "gate": 0.9,
+      "accuracy": 0.8631
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.8598,
+      "accuracy_lo": 0.8072,
+      "accuracy_hi": 0.9136,
+      "coverage_mean": 0.8473,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  },
+  "civil_toxicity": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 1.0,
+        "accuracy": 0.768
+      },
+      "0.6": {
+        "coverage": 0.92,
+        "accuracy": 0.7978
+      },
+      "0.7": {
+        "coverage": 0.842,
+        "accuracy": 0.8124
+      },
+      "0.8": {
+        "coverage": 0.728,
+        "accuracy": 0.8379
+      },
+      "0.9": {
+        "coverage": 0.588,
+        "accuracy": 0.8673
+      }
+    },
+    "in_sample": {
+      "gate": 0.9,
+      "accuracy": 0.8673
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.8671,
+      "accuracy_lo": 0.8288,
+      "accuracy_hi": 0.9067,
+      "coverage_mean": 0.5888,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  },
+  "cfpb_queue_route": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 0.984,
+        "accuracy": 0.8476
+      },
+      "0.6": {
+        "coverage": 0.946,
+        "accuracy": 0.8584
+      },
+      "0.7": {
+        "coverage": 0.908,
+        "accuracy": 0.8722
+      },
+      "0.8": {
+        "coverage": 0.864,
+        "accuracy": 0.8935
+      },
+      "0.9": {
+        "coverage": 0.786,
+        "accuracy": 0.9211
+      }
+    },
+    "in_sample": {
+      "gate": 0.9,
+      "accuracy": 0.9211
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.9211,
+      "accuracy_lo": 0.8939,
+      "accuracy_hi": 0.949,
+      "coverage_mean": 0.786,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  },
+  "banking_coarse_route": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 0.988,
+        "accuracy": 0.7085
+      },
+      "0.6": {
+        "coverage": 0.956,
+        "accuracy": 0.7155
+      },
+      "0.7": {
+        "coverage": 0.918,
+        "accuracy": 0.7298
+      },
+      "0.8": {
+        "coverage": 0.878,
+        "accuracy": 0.7449
+      },
+      "0.9": {
+        "coverage": 0.802,
+        "accuracy": 0.7905
+      }
+    },
+    "in_sample": {
+      "gate": 0.9,
+      "accuracy": 0.7905
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.7905,
+      "accuracy_lo": 0.7525,
+      "accuracy_hi": 0.8291,
+      "coverage_mean": 0.802,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  },
+  "news_topic": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 1.0,
+        "accuracy": 0.898
+      },
+      "0.6": {
+        "coverage": 0.968,
+        "accuracy": 0.9153
+      },
+      "0.7": {
+        "coverage": 0.94,
+        "accuracy": 0.9255
+      },
+      "0.8": {
+        "coverage": 0.916,
+        "accuracy": 0.9258
+      },
+      "0.9": {
+        "coverage": 0.874,
+        "accuracy": 0.9405
+      }
+    },
+    "in_sample": {
+      "gate": 0.9,
+      "accuracy": 0.9405
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.9403,
+      "accuracy_lo": 0.9167,
+      "accuracy_hi": 0.9638,
+      "coverage_mean": 0.8744,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  },
+  "tweet_sentiment": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 0.972,
+        "accuracy": 0.7407
+      },
+      "0.6": {
+        "coverage": 0.898,
+        "accuracy": 0.7461
+      },
+      "0.7": {
+        "coverage": 0.814,
+        "accuracy": 0.769
+      },
+      "0.8": {
+        "coverage": 0.726,
+        "accuracy": 0.7906
+      },
+      "0.9": {
+        "coverage": 0.614,
+        "accuracy": 0.798
+      }
+    },
+    "in_sample": {
+      "gate": 0.9,
+      "accuracy": 0.798
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.7932,
+      "accuracy_lo": 0.7515,
+      "accuracy_hi": 0.8323,
+      "coverage_mean": 0.6405,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  },
+  "review_sentiment": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 1.0,
+        "accuracy": 0.9635
+      },
+      "0.6": {
+        "coverage": 0.9916,
+        "accuracy": 0.966
+      },
+      "0.7": {
+        "coverage": 0.9719,
+        "accuracy": 0.9769
+      },
+      "0.8": {
+        "coverage": 0.9326,
+        "accuracy": 0.9789
+      },
+      "0.9": {
+        "coverage": 0.8792,
+        "accuracy": 0.9776
+      }
+    },
+    "in_sample": {
+      "gate": 0.8,
+      "accuracy": 0.9789
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.9759,
+      "accuracy_lo": 0.9551,
+      "accuracy_hi": 0.994,
+      "coverage_mean": 0.9549,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.8,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  },
+  "sms_spam": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 1.0,
+        "accuracy": 0.954
+      },
+      "0.6": {
+        "coverage": 0.972,
+        "accuracy": 0.965
+      },
+      "0.7": {
+        "coverage": 0.956,
+        "accuracy": 0.9749
+      },
+      "0.8": {
+        "coverage": 0.914,
+        "accuracy": 0.9803
+      },
+      "0.9": {
+        "coverage": 0.86,
+        "accuracy": 0.986
+      }
+    },
+    "in_sample": {
+      "gate": 0.9,
+      "accuracy": 0.986
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.9844,
+      "accuracy_lo": 0.969,
+      "accuracy_hi": 0.9954,
+      "coverage_mean": 0.8679,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  },
+  "content_offensive": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 1.0,
+        "accuracy": 0.726
+      },
+      "0.6": {
+        "coverage": 0.916,
+        "accuracy": 0.7424
+      },
+      "0.7": {
+        "coverage": 0.83,
+        "accuracy": 0.7494
+      },
+      "0.8": {
+        "coverage": 0.722,
+        "accuracy": 0.795
+      },
+      "0.9": {
+        "coverage": 0.59,
+        "accuracy": 0.8136
+      }
+    },
+    "in_sample": {
+      "gate": 0.9,
+      "accuracy": 0.8136
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.8112,
+      "accuracy_lo": 0.7688,
+      "accuracy_hi": 0.8521,
+      "coverage_mean": 0.5975,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  },
+  "content_hate": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 1.0,
+        "accuracy": 0.656
+      },
+      "0.6": {
+        "coverage": 0.91,
+        "accuracy": 0.6725
+      },
+      "0.7": {
+        "coverage": 0.818,
+        "accuracy": 0.709
+      },
+      "0.8": {
+        "coverage": 0.712,
+        "accuracy": 0.7444
+      },
+      "0.9": {
+        "coverage": 0.53,
+        "accuracy": 0.7887
+      }
+    },
+    "in_sample": {
+      "gate": 0.9,
+      "accuracy": 0.7887
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.786,
+      "accuracy_lo": 0.7293,
+      "accuracy_hi": 0.8382,
+      "coverage_mean": 0.5422,
+      "halves_below_min_coverage": 58,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  },
+  "message_emotion": {
+    "score": "p_chosen",
+    "gates": {
+      "0.5": {
+        "coverage": 0.97,
+        "accuracy": 0.7918
+      },
+      "0.6": {
+        "coverage": 0.896,
+        "accuracy": 0.8103
+      },
+      "0.7": {
+        "coverage": 0.83,
+        "accuracy": 0.8313
+      },
+      "0.8": {
+        "coverage": 0.746,
+        "accuracy": 0.8579
+      },
+      "0.9": {
+        "coverage": 0.642,
+        "accuracy": 0.8879
+      }
+    },
+    "in_sample": {
+      "gate": 0.9,
+      "accuracy": 0.8879
+    },
+    "cross_validated": {
+      "method": "400 random half splits, gate chosen on one half and scored on the other",
+      "accuracy_mean": 0.8878,
+      "accuracy_lo": 0.8521,
+      "accuracy_hi": 0.9241,
+      "coverage_mean": 0.6422,
+      "halves_below_min_coverage": 0,
+      "halves": 800,
+      "gate_chosen_most": 0.9,
+      "note": "accuracy_lo and accuracy_hi are the 2.5th and 97.5th percentiles of scores across overlapping half splits: split variability, not a confidence interval for one fixed policy."
+    }
+  }
+}

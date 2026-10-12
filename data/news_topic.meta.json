@@ -1,0 +1,12 @@
+{
+  "dataset": "AG News test",
+  "n": 500,
+  "label_counts": {
+    "business": 125,
+    "sci_tech": 125,
+    "sports": 125,
+    "world": 125
+  },
+  "seed": 11,
+  "excludes_v1_rows": true
+}

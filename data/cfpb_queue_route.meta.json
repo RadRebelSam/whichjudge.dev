@@ -1,0 +1,69 @@
+{
+  "task_id": "cfpb_queue_route",
+  "n": 500,
+  "seed": 11,
+  "excludes_v1_rows": true,
+  "source_text": "BEE-spoke-data/consumer-finance-complaints has-text config (CC0), a mirror of the CFPB Consumer Complaint Database",
+  "source_labels": "files.consumerfinance.gov/ccdb/complaints.csv.zip, the Bureau's own export, joined on Complaint ID",
+  "why_two_sources": "The Bureau's export omits narratives and its search API blocks scripted clients, so text comes from the mirror. Labels never do.",
+  "label_check": {
+    "agree": 31982,
+    "disagree": 0,
+    "not_found": 18
+  },
+  "queues": {
+    "credit_reporting": [
+      "Credit reporting",
+      "Credit reporting or other personal consumer reports",
+      "Credit reporting, credit repair services, or other personal consumer reports"
+    ],
+    "debt_collection": [
+      "Debt collection"
+    ],
+    "cards": [
+      "Credit card",
+      "Credit card or prepaid card",
+      "Prepaid card"
+    ],
+    "bank_account": [
+      "Bank account or service",
+      "Checking or savings account"
+    ],
+    "mortgage": [
+      "Mortgage"
+    ],
+    "money_transfer": [
+      "Money transfer, virtual currency, or money service",
+      "Money transfers",
+      "Virtual currency"
+    ],
+    "loans": [
+      "Consumer Loan",
+      "Payday loan",
+      "Payday loan, title loan, or personal loan",
+      "Payday loan, title loan, personal loan, or advance loan",
+      "Vehicle loan or lease"
+    ],
+    "student_loan": [
+      "Student loan"
+    ]
+  },
+  "narrative_chars": {
+    "min": 203,
+    "median": 960,
+    "max": 3922
+  },
+  "label_caveat": "Product is selected by the consumer filing the complaint, not by an expert annotator, and the Bureau has renamed products over time. Treat it as a real routing signal, not a gold standard.",
+  "pii": "The Bureau redacts personal details as XXXX before publication.",
+  "distribution": {
+    "mortgage": 62,
+    "credit_reporting": 62,
+    "cards": 62,
+    "student_loan": 62,
+    "debt_collection": 63,
+    "loans": 63,
+    "bank_account": 63,
+    "money_transfer": 63
+  },
+  "sha256": "d6d9ae005e10a15d2cdb79c1017970f453312f7b5297004bcc29b09139e66b23"
+}

@@ -1,0 +1,2680 @@
+{
+  "run_id": "2026-09-20T17:35:16.167738+00:00",
+  "calls": [
+    {
+      "target_tokens": 0,
+      "chars": 2,
+      "text_sha256": "c48b5b1a9776c84602de2306d7903a7241158a5077e7a8519af75c33441b8334",
+      "jev": {
+        "latency_ms": 351.4205000246875,
+        "input_tokens": 278,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 0.03
+            }
+          },
+          "usage": {
+            "input_tokens": 278,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "bd56e3924e9ef0801c5a0e7dde96a6ed6a4fefdd9b9bc7b77cad33a2143e1324",
+        "response_sha256": "fd9ff253b4d41c9f1eb9e6b497055d96114d19f61f8e8c50e1518cf13d77ac0a"
+      },
+      "mini": {
+        "latency_ms": 1447.7873999858275,
+        "input_tokens": 41,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjbQOq9iPMIsvwGA1pfy3h3mkXW",
+          "object": "chat.completion",
+          "created": 1789925719,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": false}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 41,
+            "completion_tokens": 5,
+            "total_tokens": 46,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_1bcbffccf6"
+        },
+        "request_sha256": "35027818350c732fc653f56d9521116fa2b8537332808d19655cdda41e9710fe",
+        "response_sha256": "f157cbe1d9b6ed0eaf1a0f0d3247eb26140d6565ddb346b0af718cf9bc5ae613"
+      }
+    },
+    {
+      "target_tokens": 0,
+      "chars": 2,
+      "text_sha256": "c48b5b1a9776c84602de2306d7903a7241158a5077e7a8519af75c33441b8334",
+      "jev": {
+        "latency_ms": 293.49239997100085,
+        "input_tokens": 278,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 0.03
+            }
+          },
+          "usage": {
+            "input_tokens": 278,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "bd56e3924e9ef0801c5a0e7dde96a6ed6a4fefdd9b9bc7b77cad33a2143e1324",
+        "response_sha256": "fd9ff253b4d41c9f1eb9e6b497055d96114d19f61f8e8c50e1518cf13d77ac0a"
+      },
+      "mini": {
+        "latency_ms": 1355.9051000047475,
+        "input_tokens": 41,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjdr0PcfbAVB6Dx0ovExcSgWpls",
+          "object": "chat.completion",
+          "created": 1789925721,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": false}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 41,
+            "completion_tokens": 5,
+            "total_tokens": 46,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_1bcbffccf6"
+        },
+        "request_sha256": "35027818350c732fc653f56d9521116fa2b8537332808d19655cdda41e9710fe",
+        "response_sha256": "cf4cb369d8e6592b638c73a180566c49d6bf9618c2b5bad68ee99ef2070048a0"
+      }
+    },
+    {
+      "target_tokens": 0,
+      "chars": 2,
+      "text_sha256": "c48b5b1a9776c84602de2306d7903a7241158a5077e7a8519af75c33441b8334",
+      "jev": {
+        "latency_ms": 299.63319998933,
+        "input_tokens": 278,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 0.03
+            }
+          },
+          "usage": {
+            "input_tokens": 278,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "bd56e3924e9ef0801c5a0e7dde96a6ed6a4fefdd9b9bc7b77cad33a2143e1324",
+        "response_sha256": "fd9ff253b4d41c9f1eb9e6b497055d96114d19f61f8e8c50e1518cf13d77ac0a"
+      },
+      "mini": {
+        "latency_ms": 571.4311000192538,
+        "input_tokens": 41,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjekPCpHCu2YoT5AfNZcxRavI4R",
+          "object": "chat.completion",
+          "created": 1789925722,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": false}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 41,
+            "completion_tokens": 5,
+            "total_tokens": 46,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_1bcbffccf6"
+        },
+        "request_sha256": "35027818350c732fc653f56d9521116fa2b8537332808d19655cdda41e9710fe",
+        "response_sha256": "c9e11e46319eddf82739eb63eb97041aad8f7c3ceaa07bfba787dcc2d6048d1f"
+      }
+    },
+    {
+      "target_tokens": 25,
+      "chars": 100,
+      "text_sha256": "e7a7ac96e333a7db53cefd3e73d3e36b695c64dd8bae08c0d544d940782de5fb",
+      "jev": {
+        "latency_ms": 376.84310000622645,
+        "input_tokens": 301,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 0.99
+            }
+          },
+          "usage": {
+            "input_tokens": 301,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "4412eb754be692ea2b7e80edfbd38234fea727cc49cce6e5fb52af246e3d1460",
+        "response_sha256": "73bb103b6eed6fbe33166d97585fb3290f984f361201085461e89c83fad532aa"
+      },
+      "mini": {
+        "latency_ms": 980.8864999795333,
+        "input_tokens": 64,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjflFbarBsRo8MwFOvIFKkcvGow",
+          "object": "chat.completion",
+          "created": 1789925723,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 64,
+            "completion_tokens": 5,
+            "total_tokens": 69,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_359379690f"
+        },
+        "request_sha256": "d5d6bfa675120d998fde3e575851ee2a64ebcba9c06f238dad04f5dc0cdbf34e",
+        "response_sha256": "105ea1048ba6eb1ad36df6f36d8629952b4c3746d69b3ae07dc96cfcc2a0bbee"
+      }
+    },
+    {
+      "target_tokens": 25,
+      "chars": 100,
+      "text_sha256": "291f84816c87ea962e0aace2a41ce1664bb1a659abec95edcda9d172ed3ed9fc",
+      "jev": {
+        "latency_ms": 391.7986999731511,
+        "input_tokens": 304,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 0.73
+            }
+          },
+          "usage": {
+            "input_tokens": 304,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "b903d7ee1a17170bb53f78b608379f13c6774bdc881971343c25b6cfb172931b",
+        "response_sha256": "d90da4bbae8147fda206e5411c2411905a0e06f5b03ffad64b3b307b0bf81f35"
+      },
+      "mini": {
+        "latency_ms": 861.4052999764681,
+        "input_tokens": 65,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjgkPCbDevli6v8Zxr3s4mQlHx9",
+          "object": "chat.completion",
+          "created": 1789925724,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 65,
+            "completion_tokens": 5,
+            "total_tokens": 70,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_0cd13b4460"
+        },
+        "request_sha256": "2219f9d2615d0f6ebe2d52ec3bd3bea045c48e95f368960e0374fa65d23e84fc",
+        "response_sha256": "0adf3768029de28028962221c8d3d1049de1f5d6693d867b95a1f5438a39bac8"
+      }
+    },
+    {
+      "target_tokens": 25,
+      "chars": 100,
+      "text_sha256": "3108f5fa4305397ffe616ec55e7bcaec7fc349e04edc2c7a266abc1be9764115",
+      "jev": {
+        "latency_ms": 337.3089999658987,
+        "input_tokens": 304,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 0.7
+            }
+          },
+          "usage": {
+            "input_tokens": 304,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "7378e72017248e34e83d7f2b97d2a310780e764b834aaf026fea816c7d6a2fbe",
+        "response_sha256": "68293ff494885bfcf8899cf7dc15bcb8133975879e6213527ea2fd86570ef6e6"
+      },
+      "mini": {
+        "latency_ms": 633.438799995929,
+        "input_tokens": 64,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjhjp0xwWvJbvzT5IVphLW6j2oS",
+          "object": "chat.completion",
+          "created": 1789925725,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 64,
+            "completion_tokens": 5,
+            "total_tokens": 69,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_1bcbffccf6"
+        },
+        "request_sha256": "63313e897e0fb17d28a29e24ac9a2c197f3c776e380b63d25996e34e4cd666ab",
+        "response_sha256": "e5a06016dc17b293b845259394c1e912f4cde7e155b60bde348ed1716a5f2da0"
+      }
+    },
+    {
+      "target_tokens": 50,
+      "chars": 200,
+      "text_sha256": "4e48463df9adf6bdd60cef500a7fed23f7294b0291b57b7a3e696a4b39202112",
+      "jev": {
+        "latency_ms": 326.9012999953702,
+        "input_tokens": 326,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 326,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "14583e1c05fbe3b48a970a3eb5ad3b9cfbd1ebcbbcb8e985ac8f93e092db634e",
+        "response_sha256": "951ec133868e9399302d6a769c40f6d834d0388c91380ab59a49866efb0c37af"
+      },
+      "mini": {
+        "latency_ms": 606.5879999659956,
+        "input_tokens": 89,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjiT8oEw3KytbWfURNEVyNpUMGI",
+          "object": "chat.completion",
+          "created": 1789925726,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 89,
+            "completion_tokens": 5,
+            "total_tokens": 94,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_b5000e5cda"
+        },
+        "request_sha256": "470a1c960217a07f43a1f50263531fc5eefb6ce13870cc735c978c3cbe898e36",
+        "response_sha256": "56830aa980b82b605aecf538b1fb2ca7dd715b5e410bbedc926df7e6f219b4a4"
+      }
+    },
+    {
+      "target_tokens": 50,
+      "chars": 200,
+      "text_sha256": "2bb6c783b3cf88bb843979d8282061b89295905e7db11c5ef72b6b49ae9ffdda",
+      "jev": {
+        "latency_ms": 331.6895999596454,
+        "input_tokens": 323,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 0.71
+            }
+          },
+          "usage": {
+            "input_tokens": 323,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "5b5ec749f6cd08cbc1e52d44af92a9c4200ced197bfae786186fd6e974ab1ad9",
+        "response_sha256": "ef045e898a022ae5ff37f2ee2313dfd44ba3a85d727d38fcf24a8de6417712a6"
+      },
+      "mini": {
+        "latency_ms": 863.897499977611,
+        "input_tokens": 84,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjjZwm27EOmfybyCnCwLpBlz89A",
+          "object": "chat.completion",
+          "created": 1789925727,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 84,
+            "completion_tokens": 5,
+            "total_tokens": 89,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_2e30314e0f"
+        },
+        "request_sha256": "9432bb74440f7a35165218e69a4feaa670dcddee9016d069d7a407807d5c57dc",
+        "response_sha256": "f037a72234302b5be1a085c98fe470c3b3e01b3a7c178978d559e1b800ed5ed3"
+      }
+    },
+    {
+      "target_tokens": 50,
+      "chars": 200,
+      "text_sha256": "73fa070bbe8cd4b6c619893eee95967d3391766f9645d1fa574e6116114a75f9",
+      "jev": {
+        "latency_ms": 318.49670002702624,
+        "input_tokens": 329,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 0.8
+            }
+          },
+          "usage": {
+            "input_tokens": 329,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "10ba8a00094628c831ff9b61c94aab059fb445ce18d4ffebf99b86d4c05de0cc",
+        "response_sha256": "029617729412afa3a1807b859c41724f3804640f677dae192cdc58b2af3582d0"
+      },
+      "mini": {
+        "latency_ms": 872.1116000087932,
+        "input_tokens": 89,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjlJmuCKKu1NkGm7ZghPKpftitr",
+          "object": "chat.completion",
+          "created": 1789925729,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 89,
+            "completion_tokens": 5,
+            "total_tokens": 94,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_0eb4be9d6c"
+        },
+        "request_sha256": "4314027b906320801ae2b84f7811a539f04171ef564bdb1e7e820b5880326df0",
+        "response_sha256": "65beba280351c1a478875d3b42cc1553a5836b6efc4d65d6ee26bcbb1ec5f59a"
+      }
+    },
+    {
+      "target_tokens": 100,
+      "chars": 400,
+      "text_sha256": "ad017f9a9640b3122915b608866d69a28c8306dc18befa2bf043e60f1009abb9",
+      "jev": {
+        "latency_ms": 326.21590001508594,
+        "input_tokens": 368,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 368,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "d1b08e197994f740300de205191dd727ac2e101db5c7b89493cca39fb7ceaca9",
+        "response_sha256": "0a33988cc7138a2a9d30676de0b5deccc3b15c2f9c3102bd51c1a21c124a2de7"
+      },
+      "mini": {
+        "latency_ms": 906.8115999689326,
+        "input_tokens": 128,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjmQJacstEKgyDVErhYomarUAds",
+          "object": "chat.completion",
+          "created": 1789925730,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 128,
+            "completion_tokens": 5,
+            "total_tokens": 133,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_359379690f"
+        },
+        "request_sha256": "4a1ed0ce36f5bfdea04fe1f779f8d60f51376bce192828b3eedf47c4dc09aef2",
+        "response_sha256": "88db7cf493329c271b1d41533b1dd204f804e1c72cf74e2d32852d74e77b6ad6"
+      }
+    },
+    {
+      "target_tokens": 100,
+      "chars": 400,
+      "text_sha256": "b2639735a3e248bf0d44b48569ac13fbba3e4c60b605cefc977339b9d7d0d256",
+      "jev": {
+        "latency_ms": 311.160099983681,
+        "input_tokens": 364,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 364,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "f80b7d6713bb1f140ab29ab7f7403df34b7a8c9f0e64e6c14351cb27735e9e74",
+        "response_sha256": "53ea31d9a5113a79a99f3779449a3877133aeedd82a5b0989838168f76b14708"
+      },
+      "mini": {
+        "latency_ms": 665.1815999648534,
+        "input_tokens": 122,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjnA64rOYvFQf1kuluG3OVh2RlJ",
+          "object": "chat.completion",
+          "created": 1789925731,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 122,
+            "completion_tokens": 5,
+            "total_tokens": 127,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_bae4e8e4a7"
+        },
+        "request_sha256": "4fcc22e0a63364d5e510990948389e4a7cd45770640e2375355318e284f9edf1",
+        "response_sha256": "3c7dbe8958612f04438e84414818188809978a74943d0e94a101632432575606"
+      }
+    },
+    {
+      "target_tokens": 100,
+      "chars": 400,
+      "text_sha256": "f1fa7a5f8d78bf2d15e824a49a5596330fe47d24f65eff41631372fc4f84bb93",
+      "jev": {
+        "latency_ms": 309.449799999129,
+        "input_tokens": 380,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 0.99
+            }
+          },
+          "usage": {
+            "input_tokens": 380,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "19e3692ffe13729a3bead93705ddd62f27b097654ab291b29b1915d488f7814b",
+        "response_sha256": "68af8ffb3eef1ccd214e0bf5dbe4e14f194f89f9c6ffeb284f8a0f635ea9b876"
+      },
+      "mini": {
+        "latency_ms": 650.1140000182204,
+        "input_tokens": 134,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjoYEdV5TnfrEuyAQfw9ENaVcfi",
+          "object": "chat.completion",
+          "created": 1789925732,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 134,
+            "completion_tokens": 5,
+            "total_tokens": 139,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_1bcbffccf6"
+        },
+        "request_sha256": "d4713109f69d3e10d6384690c38748ee07f767cc0ef57d19aa907654fd8aa548",
+        "response_sha256": "22ccfd176acf355706af819c194804cbad3c911e53bbeb451e135163acb0c1aa"
+      }
+    },
+    {
+      "target_tokens": 200,
+      "chars": 800,
+      "text_sha256": "df260aff7bcb2e023e15facc3fb9cf2919899be1e393b778ca596340e4510a19",
+      "jev": {
+        "latency_ms": 339.7592999972403,
+        "input_tokens": 457,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 457,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "a498c6dd40866142d30dd6d60a0d2b817d2f2189255c76ea94debd6cafe07aa6",
+        "response_sha256": "d028fed3d15e46eac9f00783d011619173a826df950ca740c0019e0d1549083c"
+      },
+      "mini": {
+        "latency_ms": 653.7672999547794,
+        "input_tokens": 212,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjpV8zTqPUwBn2QxOLcUMNqHnPa",
+          "object": "chat.completion",
+          "created": 1789925733,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 212,
+            "completion_tokens": 5,
+            "total_tokens": 217,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_359379690f"
+        },
+        "request_sha256": "8dab4f26fa114ebe7146259a3240367aa1e2b56c9e10144bb00130cf4b5eb9fc",
+        "response_sha256": "c2a4fe700f209c0fa8f3ea150d19a29679c01918aa3d85e6e8939e9140619bf7"
+      }
+    },
+    {
+      "target_tokens": 200,
+      "chars": 800,
+      "text_sha256": "e271dd3db4c73cc03e1dbe92194fbfafea73b6952fb744fde03a1b9886938754",
+      "jev": {
+        "latency_ms": 312.42399994516745,
+        "input_tokens": 452,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 452,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "40648068b4ab9bd481311a5fb821d185dd373d941bf54ef01c2f5dde6443b2f5",
+        "response_sha256": "b7a8fe3441c572a49e272a8554a7352c18bf0a394a92af2a22be99435a491574"
+      },
+      "mini": {
+        "latency_ms": 553.9409999619238,
+        "input_tokens": 206,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjqWHmBfBqMuyR29ZPN55S81gb8",
+          "object": "chat.completion",
+          "created": 1789925734,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 206,
+            "completion_tokens": 5,
+            "total_tokens": 211,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_bae4e8e4a7"
+        },
+        "request_sha256": "4e71df12ef09addf37a5027b66052d70e2757110f74d69e0b7d6b0c929b0c221",
+        "response_sha256": "21ef8ffa09b2d762cf6d1b6bf096f78b0a956f6cdd91c622fb62d8ecf12dceda"
+      }
+    },
+    {
+      "target_tokens": 200,
+      "chars": 800,
+      "text_sha256": "5fd2bbbeeacb077d537a5a9a67a170107630e2a7edfe6357662ef04dfe7a637a",
+      "jev": {
+        "latency_ms": 359.38909999094903,
+        "input_tokens": 485,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 485,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "d76263e81ec3ce49b3e5e64d69435321ef4d995942e8615aba6fc2c0f0b0e059",
+        "response_sha256": "0718b4891d93fd7e2d53d0b7cc3f03be173fa4b3c0d58990c6e741a2bb61331f"
+      },
+      "mini": {
+        "latency_ms": 622.6592999882996,
+        "input_tokens": 228,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjrnZV5cfYI9Ddw8kv1Z38IavRU",
+          "object": "chat.completion",
+          "created": 1789925735,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 228,
+            "completion_tokens": 5,
+            "total_tokens": 233,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_1bcbffccf6"
+        },
+        "request_sha256": "41b51430f237dabf409d77cad889e25a39d446c252a901da0432a2c31ae3d93b",
+        "response_sha256": "1f417444d02b88d49592c5a68231824ff6a1e9c67563ec19ae80e4998cbbb4b4"
+      }
+    },
+    {
+      "target_tokens": 400,
+      "chars": 1600,
+      "text_sha256": "1e729e69536da3c718f5eae0630baa0fe198f2fa3bac726bdf1c661ca0d737a4",
+      "jev": {
+        "latency_ms": 346.2854999816045,
+        "input_tokens": 646,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 646,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "67967a9fa44ca9e18e731606bd95c06ee461717464a1ea90bfe84414a02f87d3",
+        "response_sha256": "e7bfdd678474a7dfb1fb32a1e5069e5f13e83d3aac585a113c2a19e7b5096be6"
+      },
+      "mini": {
+        "latency_ms": 683.6033999570645,
+        "input_tokens": 387,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjsfn9tMepNj6emfYDcGaiF9vzm",
+          "object": "chat.completion",
+          "created": 1789925736,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 387,
+            "completion_tokens": 5,
+            "total_tokens": 392,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_359379690f"
+        },
+        "request_sha256": "915f9ed8afa622f9d2f188f7beb51b1855d60db20add06bc5e925b33a663cffc",
+        "response_sha256": "511816068f8a0f7fb90b93d0ace9ef21bd45ffcc765c16b091c9d0482907445d"
+      }
+    },
+    {
+      "target_tokens": 400,
+      "chars": 1600,
+      "text_sha256": "dd5bb1e2fb53813bd65348ae8f7b6ce1725b80b0cf37f250258d566e56d5e646",
+      "jev": {
+        "latency_ms": 312.03510001068935,
+        "input_tokens": 601,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 601,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "14fda119058d453ba47d93dac75b1e0e2242ff52cfee51e91364175a7875b7d0",
+        "response_sha256": "fb0dfea565f9f63ed6c0a29a689ebddf7e8575bbbc31a0480cbc44b9c4af36a1"
+      },
+      "mini": {
+        "latency_ms": 747.8966999915428,
+        "input_tokens": 351,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjt12r6iOxk7QinSNDNARsbGcZK",
+          "object": "chat.completion",
+          "created": 1789925737,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 351,
+            "completion_tokens": 5,
+            "total_tokens": 356,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_bae4e8e4a7"
+        },
+        "request_sha256": "12635e438f40563614f9855154edcfd70ff87efb80f866e7fcdf496c35aefdbe",
+        "response_sha256": "8a526801fa36b1a97f2ff4ce8ba2dfbe8a0e9f8663e7c79a35332fc55795da25"
+      }
+    },
+    {
+      "target_tokens": 400,
+      "chars": 1600,
+      "text_sha256": "de34d9f9ef47d0d4d02caa14fc3933961ab9ac06115a04eb83fb02e5c853c99b",
+      "jev": {
+        "latency_ms": 331.4906000159681,
+        "input_tokens": 665,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 665,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "9bb4ca65cb9f196bb7516b737464003239519cb1eff49ad801b55f024d645536",
+        "response_sha256": "d0a7022e2cde67578ab84c63bb4bea96395528c1c53aebc699aaf54e77cf4afd"
+      },
+      "mini": {
+        "latency_ms": 814.2859999788925,
+        "input_tokens": 393,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjuJasI0Ga86nu6nGzIusoYGi9m",
+          "object": "chat.completion",
+          "created": 1789925738,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 393,
+            "completion_tokens": 5,
+            "total_tokens": 398,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_1bcbffccf6"
+        },
+        "request_sha256": "f7d6fa34e6823db83786f1f2bee3875a1247beb08f72f43aa4dde129c73f8c10",
+        "response_sha256": "2511187b1ae7a7e428cc484b82a3153c87fd3b5876e2db8701aebd03865e91cd"
+      }
+    },
+    {
+      "target_tokens": 800,
+      "chars": 3200,
+      "text_sha256": "816652d2c8bd8827b2d2142ec827c6a4fa7ec9d981fce82aabedcecd14516399",
+      "jev": {
+        "latency_ms": 318.4824999771081,
+        "input_tokens": 1007,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 1007,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "8ba1290ac1a0ea182eec4b492d5353af96b0b4532f72263cd9e6868965947db2",
+        "response_sha256": "b22613f9addb1b22a249b31bc32feacbaf7edbe204aa734a809c672aee875ada"
+      },
+      "mini": {
+        "latency_ms": 679.7721000039019,
+        "input_tokens": 732,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjvDhmPqC9ERf72XfVzX6WCqlNa",
+          "object": "chat.completion",
+          "created": 1789925739,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 732,
+            "completion_tokens": 5,
+            "total_tokens": 737,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_359379690f"
+        },
+        "request_sha256": "cb560e12840eb3fbd65b975f0fa19050bdff3b55c479f4c68e6f393764b1415f",
+        "response_sha256": "db0327698b19025a9e0c00ec1fe2dc5f57b18b02d5ffc1d498612707d955f36b"
+      }
+    },
+    {
+      "target_tokens": 800,
+      "chars": 3200,
+      "text_sha256": "a132089c7118af2ddc7190aca769050b3f8573c2fc1d236bff02ce7ea858c6a9",
+      "jev": {
+        "latency_ms": 294.60299998754635,
+        "input_tokens": 967,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 967,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "df56e32e785126c893fe6387fc9ff28b3ff2f72a5a1380668da4262cd30c522a",
+        "response_sha256": "ffec92b11518e4468b7a4b388beb7bd53be57fa0cca1ae866d5f8604b8485370"
+      },
+      "mini": {
+        "latency_ms": 577.4494999786839,
+        "input_tokens": 702,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjwpinsCx5IO9WhUjEPpggs1s5a",
+          "object": "chat.completion",
+          "created": 1789925740,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 702,
+            "completion_tokens": 5,
+            "total_tokens": 707,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_bae4e8e4a7"
+        },
+        "request_sha256": "ee14d605fe0181043b3a345bf64b64f126fb81e86d9db67fca6671a27082f230",
+        "response_sha256": "fc0b07180014e89e89d1794b0076937550e584b38d51af074dcb834da55f2b95"
+      }
+    },
+    {
+      "target_tokens": 800,
+      "chars": 3200,
+      "text_sha256": "001354803b57f36f54947d0981fec0fb4456933e92ad129a0b3b66d6e6e005a9",
+      "jev": {
+        "latency_ms": 344.08790001180023,
+        "input_tokens": 1036,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 1036,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "19890554d5192a9efe2626a1dbd843fbe45bfb051a85d18ae70ce213e8858d34",
+        "response_sha256": "e5d5731897a0f6ce6993b52dd6f4cbc778ccd819993a68b3b3cdb5a8c3d68f80"
+      },
+      "mini": {
+        "latency_ms": 713.2220999919809,
+        "input_tokens": 744,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjxBCmZwKuMaABKDihKtfyqZLs6",
+          "object": "chat.completion",
+          "created": 1789925741,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 744,
+            "completion_tokens": 5,
+            "total_tokens": 749,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_1bcbffccf6"
+        },
+        "request_sha256": "e99b9e7adfec770af8fd22cab24a9ebbaba4582d5993da256e5b55955c31db49",
+        "response_sha256": "f5e626d552fce2e988a7f0e7beffe21549e3986f71610d8b035a7887ede3dafb"
+      }
+    },
+    {
+      "target_tokens": 1600,
+      "chars": 6400,
+      "text_sha256": "e0bf7a2a952c567743a1c7b76fb708016ee764592181f98cfc2b0bbd92e0a31b",
+      "jev": {
+        "latency_ms": 339.8691000184044,
+        "input_tokens": 1794,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 1794,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "e544328ae3158ac28740331b362b894fb2510f6d55bb49b5bc96226598bd7072",
+        "response_sha256": "6bd72b24c2f10c9681da18f9eacab15373fd1f5f733db0e3e3ae0cb280afbfbf"
+      },
+      "mini": {
+        "latency_ms": 625.1450000563636,
+        "input_tokens": 1455,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjyWobjGzyx47qZ311PjcFzrgI3",
+          "object": "chat.completion",
+          "created": 1789925742,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1455,
+            "completion_tokens": 5,
+            "total_tokens": 1460,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_359379690f"
+        },
+        "request_sha256": "cd8dc78f9cf14eff41628cc4c44b0a9eed037c8c72de4a3af04005f52ad38d8c",
+        "response_sha256": "e14f02b2a85aa5b1d5ddbe2c6c172187d1235e4ccd5618700fdf16b7244da2a0"
+      }
+    },
+    {
+      "target_tokens": 1600,
+      "chars": 6400,
+      "text_sha256": "9fd6ebf47eb4fab4b09b28ac9ed69a390bb1e42ee7522aeae741a4798aa95017",
+      "jev": {
+        "latency_ms": 371.246800001245,
+        "input_tokens": 1652,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 1652,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "a5aa29a845f738ede21f21ebb919be35f567201e15edcd85a654bff7653816b5",
+        "response_sha256": "65e1abe9b8127e7de74c85b41c5d9093d017561784d402c763b15b522156e9dc"
+      },
+      "mini": {
+        "latency_ms": 635.5667999596335,
+        "input_tokens": 1353,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFjzTwsZ7tLQMdqCj1M2PmCu3UqT",
+          "object": "chat.completion",
+          "created": 1789925743,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1353,
+            "completion_tokens": 5,
+            "total_tokens": 1358,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_bae4e8e4a7"
+        },
+        "request_sha256": "1a60bae15690dd2ae4d16817f4b111914c37ae6b1bb5d7b5a8879519bfbeb33a",
+        "response_sha256": "26de3bf17ebf14de0ef025be02855a96251ffcb27e0a047e8c2f42fbbf21b00a"
+      }
+    },
+    {
+      "target_tokens": 1600,
+      "chars": 6400,
+      "text_sha256": "c57b1f2040e386a3833023cb34d1fa762190ba96edddd80e821a22a2dd00f734",
+      "jev": {
+        "latency_ms": 348.81850000238046,
+        "input_tokens": 1729,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 1729,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "8d373e70260695e4cf1a99b39a15c0aba1fcaa73fb5c92a247b6852cf10f19d6",
+        "response_sha256": "90090d8b995dc312ab2ab6c513ed32466d68dcf8fa66e08f8cbf344deba65c71"
+      },
+      "mini": {
+        "latency_ms": 558.24169999687,
+        "input_tokens": 1399,
+        "output_tokens": 5,
+        "cached_tokens": 0,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFk0bkTOUuLO9WV6qKtDnpI58hrw",
+          "object": "chat.completion",
+          "created": 1789925744,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1399,
+            "completion_tokens": 5,
+            "total_tokens": 1404,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_1bcbffccf6"
+        },
+        "request_sha256": "701abe7c7a8e255f12dda31d9204f26a5c093a0d21bf03ab74f65bea042cefb4",
+        "response_sha256": "42ba4f5572d8fe12969221cfe0555cfb810452d6925f87f44f6dab2c2a054311"
+      }
+    },
+    {
+      "target_tokens": 3200,
+      "chars": 12800,
+      "text_sha256": "5ef4889b971165604d35cbb1e16b73b55f8a282c99833f7bab9d613aba23b588",
+      "jev": {
+        "latency_ms": 356.40990000683814,
+        "input_tokens": 3182,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 3182,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "cc2634fc1cfa53fc5a518cb37869bc16654cc3aec5b3cafeff25169c1d58e461",
+        "response_sha256": "6ee871abd91a0caeff180ddce2a9ceb5aee8e77994d55aea95794d88b3974b31"
+      },
+      "mini": {
+        "latency_ms": 717.3464999650605,
+        "input_tokens": 2786,
+        "output_tokens": 5,
+        "cached_tokens": 1408,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFk1rXLYcX1qmjeybXhZrnm4GJoF",
+          "object": "chat.completion",
+          "created": 1789925745,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 2786,
+            "completion_tokens": 5,
+            "total_tokens": 2791,
+            "prompt_tokens_details": {
+              "cached_tokens": 1408,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_359379690f"
+        },
+        "request_sha256": "97db710a6f76229409d2d3b610ddc0589654a8c054afbe218e201c2ab80efa1a",
+        "response_sha256": "607cf8fa58b08548d65301bf970f9b88b8f705dda9bb940945edc551cb367a1b"
+      }
+    },
+    {
+      "target_tokens": 3200,
+      "chars": 12800,
+      "text_sha256": "6890e4dc6647307afed1276de567e1935abc74252fd3ea7fdc3f00f3d8ff3393",
+      "jev": {
+        "latency_ms": 347.5375000271015,
+        "input_tokens": 3118,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 3118,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "d9427574750c070d39eea6150fa6d12f09bfb535ff9f6cbdc88ecd19e39d3b69",
+        "response_sha256": "c7c9221fafb8bef0ea22e0123627e09ab4c3745b5ae2598a77cfd4e06621ccad"
+      },
+      "mini": {
+        "latency_ms": 717.1960000414401,
+        "input_tokens": 2714,
+        "output_tokens": 5,
+        "cached_tokens": 1280,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFk2oHYcZMAVLYnQOFh1uknSs8si",
+          "object": "chat.completion",
+          "created": 1789925746,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 2714,
+            "completion_tokens": 5,
+            "total_tokens": 2719,
+            "prompt_tokens_details": {
+              "cached_tokens": 1280,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_bae4e8e4a7"
+        },
+        "request_sha256": "c01cd890567e286b88d99e25241d554d87ce7c641be33c27248ea039d04cd0be",
+        "response_sha256": "0c67bba935b556f4e504c6aaadf548137473c81008d278cb7cc80c85a376c935"
+      }
+    },
+    {
+      "target_tokens": 3200,
+      "chars": 12800,
+      "text_sha256": "ba477c4832c31e29e9a16384fef770e6daeb9bad9e1139ec89c2f1dfd8f1b010",
+      "jev": {
+        "latency_ms": 314.5166999893263,
+        "input_tokens": 3269,
+        "output_tokens": 21,
+        "model_returned": "jev-1.13.0",
+        "request": {
+          "state": null,
+          "model": "jev-latest",
+          "questions": {
+            "mentions_company": {
+              "type": "noul",
+              "instructions": "Does this text name at least one company or organisation?"
+            }
+          }
+        },
+        "response": {
+          "model": "jev-1.13.0",
+          "answers": {
+            "mentions_company": {
+              "type": "noul",
+              "noul": 1.0
+            }
+          },
+          "usage": {
+            "input_tokens": 3269,
+            "output_tokens": 21
+          }
+        },
+        "request_sha256": "ac13d6316de633adec1a53dbc7f9f70719932d35947446009660fa4f549ca1c2",
+        "response_sha256": "183297b64c5bd3c512fcfdb19e2de2f3888c171e755c3c32f720da11e7bfb368"
+      },
+      "mini": {
+        "latency_ms": 935.0203999783844,
+        "input_tokens": 2851,
+        "output_tokens": 5,
+        "cached_tokens": 1280,
+        "model_returned": "gpt-4o-mini-2024-07-18",
+        "request": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 20,
+          "response_format": {
+            "type": "json_object"
+          },
+          "messages": [
+            {
+              "role": "system",
+              "content": "Does this text name at least one company or organisation? Reply with JSON {\"answer\": true} or {\"answer\": false}. Only output JSON."
+            },
+            {
+              "role": "user",
+              "content": null
+            }
+          ]
+        },
+        "response": {
+          "id": "chatcmpl-EQFk3w5QPrpQmuwGSZo00ib3jrdmN",
+          "object": "chat.completion",
+          "created": 1789925747,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answer\": true}",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 2851,
+            "completion_tokens": 5,
+            "total_tokens": 2856,
+            "prompt_tokens_details": {
+              "cached_tokens": 1280,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_1bcbffccf6"
+        },
+        "request_sha256": "1b4616f917752f1a0d516798c27593364a0a734b2ad626488bb8f4c500e58d42",
+        "response_sha256": "cb961cd103a04d7d29d097544111f8218c8de8b4dbb679b9aab5f3e082f87cc4"
+      }
+    }
+  ],
+  "text_redacted": true,
+  "redaction_note": "Inputs were built by concatenating sentences from the frozen samples, so they inherit those datasets' terms. text_sha256 on each call still identifies the input; token counts and latency are unaffected."
+}

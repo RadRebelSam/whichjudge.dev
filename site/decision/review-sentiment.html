@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review polarity: Jev vs 7 other models, measured | WhichJudge</title>
+<meta name="description" content="Review polarity on SST-2 validation, the 356 rows left after v1, n=356 frozen gold. Jev 96.3%, gpt-4o-mini 95.5%, TF-IDF 84.8%. Verdict: ns. ECE 0.03.">
+<link rel="canonical" href="https://whichjudge.dev/decision/review-sentiment.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Review polarity: Jev vs 7 other models, measured | WhichJudge">
+<meta property="og:description" content="Review polarity on SST-2 validation, the 356 rows left after v1, n=356 frozen gold. Jev 96.3%, gpt-4o-mini 95.5%, TF-IDF 84.8%. Verdict: ns. ECE 0.03.">
+<meta property="og:url" content="https://whichjudge.dev/decision/review-sentiment.html">
+<meta name="twitter:card" content="summary">
+<meta name="whichjudge-build" content="e6d1f683a4">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Review polarity - cheap decision model bake-off", "description": "Review polarity on SST-2 validation, the 356 rows left after v1, n=356 frozen gold. Jev 96.3%, gpt-4o-mini 95.5%, TF-IDF 84.8%. Verdict: ns. ECE 0.03.", "url": "https://whichjudge.dev/decision/review-sentiment.html", "creator": {"@type": "Organization", "name": "WhichJudge", "url": "https://whichjudge.dev"}, "isBasedOn": "SST-2 validation, the 356 rows left after v1", "dateModified": "2026-09-21", "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://whichjudge.dev/receipts/review_sentiment.json"}], "variableMeasured": [{"@type": "PropertyValue", "name": "jev accuracy", "value": 0.9634831460674157}, {"@type": "PropertyValue", "name": "gpt-4o-mini accuracy", "value": 0.9550561797752809}, {"@type": "PropertyValue", "name": "tfidf accuracy", "value": 0.848314606741573}, {"@type": "PropertyValue", "name": "expected calibration error", "value": 0.03}]}</script>
+<style>body{max-width:46rem;margin:0 auto;padding:2rem 1rem;font:15px/1.6 ui-sans-serif,system-ui,sans-serif;color:#18181b;background:#fafafa}.table-wrap{overflow-x:auto;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:0}th,td{border-bottom:1px solid #e4e4e7;padding:.5rem .6rem;text-align:left;font-variant-numeric:tabular-nums}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#52525b}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}pre{overflow-x:auto}pre:focus,.table-wrap:focus{outline:2px solid #52525b;outline-offset:2px}.verdict{display:inline-block;border:1px solid #d4d4d8;border-radius:999px;padding:.1rem .6rem;font-size:12px}.scope{margin-left:.5rem;font-size:12px;color:#52525b}.stamp{margin-top:2rem;font:11px ui-monospace,monospace;color:#52525b}.caveats{margin:.5rem 0 0;padding-left:1.1rem;color:#b45309;font-size:14px}a{color:#18181b}@media (prefers-color-scheme:dark){body{color:#e4e4e7;background:#09090b}th,td{border-color:#27272a}a{color:#e4e4e7}th,.scope,.stamp{color:#a1a1aa}.caveats{color:#fbbf24}.verdict{border-color:#52525b}}</style>
+</head>
+<body>
+<p><a href="../index.html">WhichJudge</a> / decision</p>
+<h1>Review polarity</h1>
+<p><span class="verdict">ns</span>
+<span class="scope">compares Jev with 4o-mini only</span></p>
+
+<p>Tied: Jev 96.3% vs Mini 95.5% (Holm p=1). TF-IDF drops to 84.8%, so the models earn their keep against classical, not against each other. n=356 because v1 used the rest of the split.</p>
+<p><strong>Replaces:</strong> Binary review sentiment<br>
+<strong>Gold:</strong> <a href="https://huggingface.co/datasets/stanfordnlp/sst2" rel="noopener">stanfordnlp/sst2</a>
+
+- SST-2 validation, the 356 rows left after v1, n=356, seed=11<br>
+<strong>Labels:</strong> <code>negative / positive</code></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Results table"><table>
+  <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>Latency (p50 unless stated)</th><th>Cost per 1M decisions</th></tr></thead>
+  <tbody>
+        <tr><td>Jev jev-1.13.0</td><td>96.3%</td><td>[93.9% - 97.9%]</td><td>720 ms</td><td>$14.06</td></tr>
+        <tr><td>gpt-4o-mini-2024-07-18</td><td>95.5%</td><td>[92.8% - 97.2%]</td><td>1007 ms</td><td>$14.96</td></tr>
+        <tr><td>gpt-5.4-mini-2026-03-17</td><td>97.2%</td><td>[94.9% - 98.5%]</td><td>857 ms</td><td>unpriced (84.6 tok/call)</td></tr>
+        <tr><td>Laya (self-hosted, convaiinnovations/laya)</td><td>91.6%</td><td>[88.2% - 94.0%]</td><td>160 ms local cpu, no network</td><td>$0 API, compute not priced</td></tr>
+        <tr><td>gpt-6-luna (OpenAI Decisions API)</td><td>93.8%</td><td>[90.8% - 95.9%]</td><td>1339 ms, one client, region unset, includes network</td><td>$13.82 (list $0.10 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>@cf/cloudflare/clef (Cloudflare Workers AI)</td><td>96.9%</td><td>[94.6% - 98.3%]</td><td>941 ms, one client, region unset, includes network</td><td>$36.68 (list $0.24 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>@cf/cloudflare/clef-flash (Cloudflare Workers AI)</td><td>96.6%</td><td>[94.2% - 98.1%]</td><td>664 ms, one client, region unset, includes network</td><td>$13.76 (list $0.09 per 1M input tokens, 2026-10-09)</td></tr>
+        <tr><td>TF-IDF + LR (train n=67,349)</td><td>84.8%</td><td>[80.7% - 88.2%]</td><td>37 us mean per row, batched</td><td>$0</td></tr>
+  </tbody>
+</table></div>
+<p><strong>McNemar Jev vs Mini:</strong> ns, p=0.546
+(7 Jev-only correct, 4 Mini-only correct).
+<strong>TF-IDF vs Jev:</strong> jev.</p>
+<h2>Quit line</h2>
+<p>At &gt;=0.8: 97.9% on 93.3% of reviews, 1.5pt above ungated. There is no headroom left, and ECE 0.030 says the confidence may be quoted.</p>
+<p><strong>Auto slice:</strong> at Jev confidence &ge; 0.8,
+97.9% accurate on 93.3% of traffic, which is
++1.5pt against 96.3% ungated. That threshold is the strongest
+one still covering at least half the traffic, picked by rule from the measured gates.</p>
+<p><strong>Calibration:</strong> ECE 0.03 (max bin gap 0.217).
+ECE says whether the confidence can be read as a probability. It does not say whether
+gating helps: thresholding only needs the model to rank its own answers, so a badly
+calibrated task can still gate well. High ECE costs you the right to quote the number,
+not the right to threshold on it.</p>
+<h2>Verify this</h2>
+<p>Frozen samples <code>05ae16616476</code>, schema <code>f3bdb40526a0</code>.
+<a href="../receipts/review_sentiment.json">receipts/review_sentiment.json</a> here is the slim copy: per call,
+the id, gold, prediction, confidence, latency and the SHA-256 of the request and response.
+The full request and response bodies are in the repository at
+<a href="https://github.com/RadRebelSam/whichjudge.dev/blob/main/results/receipts/review_sentiment.json">results/receipts/review_sentiment.json</a>
+(text replaced by its hash; scripts/rehydrate.py restores it).</p>
+<pre tabindex="0"><code>git clone https://github.com/RadRebelSam/whichjudge.dev
+python3 scripts/verify_run.py   # recounts this table from the receipts, no API key
+python3 scripts/run_eval.py     # hits the APIs again with your own keys</code></pre>
+<p>Independent bench, not affiliated with TypeSafe AI. Public gold labels, n=356,
+not a procurement study. <a href="../index.html">All 11 decisions</a> &middot;
+<a href="https://github.com/RadRebelSam/whichjudge.dev">source and data</a> &middot;
+<a href="mailto:contact@radrebeldeveloper.com">contact@radrebeldeveloper.com</a></p>
+<p class="stamp">build e6d1f683a4 &middot; this row from run 1 of 1, 2026-09-21T06:23Z</p>
+</body>
+</html>

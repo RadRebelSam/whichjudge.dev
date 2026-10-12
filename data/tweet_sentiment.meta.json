@@ -1,0 +1,11 @@
+{
+  "dataset": "tweet_eval sentiment test",
+  "n": 500,
+  "label_counts": {
+    "neutral": 167,
+    "negative": 167,
+    "positive": 166
+  },
+  "seed": 11,
+  "excludes_v1_rows": true
+}
