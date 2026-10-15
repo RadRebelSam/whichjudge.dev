@@ -1,0 +1,33 @@
+{
+ "name": "WhichJudge",
+ "slug": "whichjudge",
+ "domain": "whichjudge.dev",
+ "tagline": "TODO(ask)",
+ "generated": "2026-10-14",
+ "note": "Machine-readable brand file. Edit palette.json and the logo files first, then keep this in step.",
+ "colors": {
+  "ground": "#18181B",
+  "accent": "#34D399",
+  "accent_text_on_light": "#197F58",
+  "accent_bright_on_dark": "#34D399"
+ },
+ "fonts": [
+  "TODO(ask)"
+ ],
+ "voice": [
+  "TODO(ask)",
+  "TODO(ask)",
+  "TODO(ask)"
+ ],
+ "logo": {
+  "primary": "brand/logo-mark.svg",
+  "files": [
+   "brand/logo-mark.svg",
+   "brand/source/favicon.svg"
+  ]
+ },
+ "favicon": [
+  "brand/source/favicon.svg"
+ ],
+ "social": []
+}

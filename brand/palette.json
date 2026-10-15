@@ -1,0 +1,20 @@
+{
+ "generated": "2026-10-14",
+ "source": "read from the logo SVG files in brand/; contrast measured (WCAG 2.x)",
+ "ground": "#18181B",
+ "accent": "#34D399",
+ "accent_text_on_light": "#197F58",
+ "accent_bright_on_dark": "#34D399",
+ "colors_found_in_logo_files": [
+  "#34D399",
+  "#A1A1AA",
+  "#18181B",
+  "#52525B"
+ ],
+ "contrast": {
+  "accent_on_ground": 9.22,
+  "accent_text_on_light_vs_white": 4.98,
+  "accent_bright_on_dark_vs_18181B": 9.22,
+  "white_on_ground": 17.72
+ }
+}
