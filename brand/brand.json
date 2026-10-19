@@ -2,7 +2,7 @@
  "name": "WhichJudge",
  "slug": "whichjudge",
  "domain": "whichjudge.dev",
- "tagline": "TODO(ask)",
+ "tagline": "Which model for this decision",
  "generated": "2026-10-14",
  "note": "Machine-readable brand file. Edit palette.json and the logo files first, then keep this in step.",
  "colors": {
