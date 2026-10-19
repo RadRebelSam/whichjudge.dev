@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 600" width="1050" height="600">
-  <rect width="1050" height="600" fill="#FFFFFF"/><svg x="70" y="70" width="120" height="120" viewBox="0 0 512 512"><g transform="scale(16)"><rect width="32" height="32" rx="7" fill="#18181b"/>
-  
-  <line x1="6" y1="19" x2="26" y2="19" stroke="#52525b" stroke-width="2" stroke-dasharray="3 3"/>
-  <circle cx="11" cy="11" r="3.2" fill="#34d399"/>
-  <circle cx="19" cy="9"  r="3.2" fill="#34d399"/>
-  <circle cx="14" cy="25" r="3.2" fill="#a1a1aa"/>
-  <circle cx="23" cy="24" r="3.2" fill="#a1a1aa"/></g></svg><text x="90" y="340" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="52" font-weight="400" letter-spacing="2.08" fill="#14161C" >Your Name (placeholder)</text><text x="90" y="396" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="30" fill="#197F58" >Title (placeholder)</text><text x="90" y="470" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="26" fill="#14161C" opacity="0.85">name@whichjudge.dev</text><text x="90" y="510" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="26" fill="#14161C" opacity="0.85">whichjudge.dev</text>
-</svg>
