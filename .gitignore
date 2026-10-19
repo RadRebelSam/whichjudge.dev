@@ -40,3 +40,7 @@ results/receipts/*.partial.jsonl
 
 # Laya checkpoints, same rule as the API runs
 results/receipts/*.laya.partial.jsonl
+
+# Generated and local-only files (2026-10-18)
+RECOVER.md
+brand/business/

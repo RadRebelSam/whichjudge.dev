@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#FFFFFF"/><svg x="1700" y="70" width="110" height="110" viewBox="0 0 512 512"><g transform="scale(16)"><rect width="32" height="32" rx="7" fill="#18181b"/>
+  
+  <line x1="6" y1="19" x2="26" y2="19" stroke="#52525b" stroke-width="2" stroke-dasharray="3 3"/>
+  <circle cx="11" cy="11" r="3.2" fill="#34d399"/>
+  <circle cx="19" cy="9"  r="3.2" fill="#34d399"/>
+  <circle cx="14" cy="25" r="3.2" fill="#a1a1aa"/>
+  <circle cx="23" cy="24" r="3.2" fill="#a1a1aa"/></g></svg><text x="140" y="250" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="84" font-weight="400" letter-spacing="3.36" fill="#14161C" >Slide title (placeholder)</text><rect x="140" y="290" width="160" height="10" rx="5" fill="#34D399"/><circle cx="170" cy="408" r="9" fill="#34D399"/><text x="210" y="420" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="44" fill="#14161C" >First point goes here (placeholder)</text><circle cx="170" cy="508" r="9" fill="#34D399"/><text x="210" y="520" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="44" fill="#14161C" >Second point goes here (placeholder)</text><circle cx="170" cy="608" r="9" fill="#34D399"/><text x="210" y="620" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="44" fill="#14161C" >Third point goes here (placeholder)</text><text x="140" y="1010" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="28" fill="#197F58" >WhichJudge</text>
+</svg>

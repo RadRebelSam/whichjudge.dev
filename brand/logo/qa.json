@@ -1,0 +1,22 @@
+[
+ {
+  "level": "ok",
+  "text": "one-colour shape keeps 96% of its form at 32 px"
+ },
+ {
+  "level": "ok",
+  "text": "one-colour shape keeps 91% of its form at 16 px"
+ },
+ {
+  "level": "ok",
+  "text": "drawing against its tile: 6.0:1"
+ },
+ {
+  "level": "ok",
+  "text": "tile on white page: 17.7:1"
+ },
+ {
+  "level": "warn",
+  "text": "tile on dark page: 1.1:1: the tile blends into the page, add a keyline"
+ }
+]

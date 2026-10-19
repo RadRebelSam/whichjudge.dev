@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600" width="1440" height="600">
+  <rect width="1440" height="600" fill="#18181B"/><text x="120" y="230" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="96" font-weight="400" letter-spacing="3.84" fill="#FFFFFF" >WhichJudge</text><text x="124" y="300" text-anchor="start" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="34" fill="#34D399" >Tagline (placeholder)</text><rect x="120" y="360" width="240" height="64" rx="32" fill="#34D399"/><text x="240" y="402" text-anchor="middle" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="26" fill="#18181B" font-weight="600">Get started (placeholder)</text><svg x="900" y="120" width="360" height="360" viewBox="0 0 512 512"><g transform="scale(16)"><rect width="32" height="32" rx="7" fill="#18181b"/>
+  
+  <line x1="6" y1="19" x2="26" y2="19" stroke="#52525b" stroke-width="2" stroke-dasharray="3 3"/>
+  <circle cx="11" cy="11" r="3.2" fill="#34d399"/>
+  <circle cx="19" cy="9"  r="3.2" fill="#34d399"/>
+  <circle cx="14" cy="25" r="3.2" fill="#a1a1aa"/>
+  <circle cx="23" cy="24" r="3.2" fill="#a1a1aa"/></g></svg>
+</svg>
